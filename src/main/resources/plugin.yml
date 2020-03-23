@@ -1,0 +1,7 @@
+name: CombatPlus
+version: ${project.version}
+main: me.nik.combatplus.CombatPlus
+api-version: 1.13
+authors: [Nik]
+description: Fully control your server's Combat System.
+website: https://discord.gg/m7j2Y9H
