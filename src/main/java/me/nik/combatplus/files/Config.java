@@ -47,9 +47,18 @@ public class Config {
         Config.get().addDefault("combat.settings.old_pvp", true);
         Config.get().addDefault("combat.settings.old_weapon_damage", true);
         Config.get().addDefault("combat.settings.old_tool_damage", true);
+        Config.get().addDefault("combat.settings.old_sharpness", true);
         Config.get().addDefault("combat.settings.disable_sweep_attacks", true);
         Config.get().addDefault("combat.settings.disable_arrow_boost", true);
-        Config.get().addDefault("advanced.settings.old_pvp.attack_speed", 23);
+        Config.get().addDefault("general.settings.golden_apple_cooldown.enabled", true);
+        Config.get().addDefault("general.settings.golden_apple_cooldown.enchanted_golden_apple", true);
+        Config.get().addDefault("general.settings.golden_apple_cooldown.golden_apple", true);
+        Config.get().addDefault("general.settings.golden_apple_cooldown.cooldown", 30);
+        Config.get().addDefault("advanced.settings.old_pvp.attack_speed", 24);
         Config.get().addDefault("advanced.settings.new_pvp.attack_speed", 4);
+        Config.get().addDefault("advanced.settings.modifiers.old_swords_damage", 1);
+        Config.get().addDefault("advanced.settings.modifiers.old_shovels_damage", -0.5);
+        Config.get().addDefault("advanced.settings.modifiers.old_axes_damage", -2);
+        Config.get().addDefault("advanced.settings.modifiers.old_pickaxes_damage", 1);
     }
 }

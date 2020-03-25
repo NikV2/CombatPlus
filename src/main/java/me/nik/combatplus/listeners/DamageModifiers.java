@@ -1,10 +1,9 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.files.Lang;
-import me.nik.combatplus.utils.ColourUtils;
-import org.bukkit.Bukkit;
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,60 +25,74 @@ public class DamageModifiers implements Listener {
         double z = e.getEntity().getVelocity().getZ();
         if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
             if (player.hasPermission("cp.admin")) {
-                player.sendMessage(ColourUtils.format(Lang.get().getString("prefix")) + ChatColor.GREEN + "Canceled Sweep: " + canceled + ChatColor.RED + " Velocity: " + "X: " + x + " Y: " + y + " Z: " + z);
+                player.sendMessage(Messenger.prefix(ChatColor.GREEN + "Canceled Sweep: " + canceled + ChatColor.RED + " Velocity: " + "X: " + x + " Y: " + y + " Z: " + z));
             }
         }
     }
 
     private void oldPickaxeDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
         double damageDealt = e.getDamage();
-        double newDmg = damageDealt + 1;
+        double newDmg = damageDealt + Config.get().getDouble("advanced.settings.modifiers.old_pickaxes_damage");
         e.setDamage(newDmg);
         if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
             if (player.hasPermission("cp.admin")) {
-                player.sendMessage(ColourUtils.format(Lang.get().getString("prefix")) + ChatColor.AQUA + "Tool: " + handItem + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt);
+                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Tool: " + "Pickaxe" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
             }
         }
     }
 
     private void oldAxeDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
         double damageDealt = e.getDamage();
-        double newDmg = damageDealt - 3;
+        double newDmg = damageDealt + Config.get().getDouble("advanced.settings.modifiers.old_axes_damage");
         e.setDamage(newDmg);
         if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
             if (player.hasPermission("cp.admin")) {
-                player.sendMessage(ColourUtils.format(Lang.get().getString("prefix")) + ChatColor.AQUA + "Tool: " + handItem + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt);
+                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Tool: " + "Axe" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
             }
         }
     }
 
     private void oldShovelDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
         double damageDealt = e.getDamage();
-        double newDmg = damageDealt - 0.5;
+        double newDmg = damageDealt + Config.get().getDouble("advanced.settings.modifiers.old_shovels_damage");
         e.setDamage(newDmg);
         if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
             if (player.hasPermission("cp.admin")) {
-                player.sendMessage(ColourUtils.format(Lang.get().getString("prefix")) + ChatColor.AQUA + "Tool: " + handItem + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt);
+                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Tool: " + "Shovel" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
             }
         }
     }
 
     private void oldSwordDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
         double damageDealt = e.getDamage();
-        double newDmg = damageDealt - 1;
+        double newDmg = damageDealt + Config.get().getDouble("advanced.settings.modifiers.old_swords_damage");
         e.setDamage(newDmg);
         if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
             if (player.hasPermission("cp.admin")) {
-                player.sendMessage(ColourUtils.format(Lang.get().getString("prefix")) + ChatColor.AQUA + "Weapon: " + handItem + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt);
+                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Weapon: " + "Sword" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
+            }
+        }
+    }
+
+    private void oldSharpDamage(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
+        if (handItem.containsEnchantment(Enchantment.DAMAGE_ALL)) {
+            double damageDealt = e.getDamage();
+            double sharpLvl = handItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
+            double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
+            double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8
+            double total = damageDealt + newSharpDmg;
+            e.setDamage(damageDealt + newSharpDmg);
+            if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
+                if (player.hasPermission("cp.admin")) {
+                    player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Weapon: " + "Sword" + ChatColor.GREEN + " Total Damage Dealt: " + total + ChatColor.GREEN + " Modified Sharp Damage: " + newSharpDmg + ChatColor.RED + " Default Sharp Damage: " + oldSharpDmg));
+                }
             }
         }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player)) {
-            return;
-        }
+        if (!(e.getDamager() instanceof Player)) return;
         Player player = (Player) e.getDamager();
         ItemStack handItem = player.getInventory().getItemInMainHand();
         if (Config.get().getBoolean("combat.settings.old_weapon_damage")) {
@@ -97,11 +110,12 @@ public class DamageModifiers implements Listener {
             }
         }
         if (Config.get().getBoolean("combat.settings.disable_sweep_attacks")) {
-            if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")) {
-                return;
-            } else if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
                 disableSweep(e, player);
             }
+        }
+        if (Config.get().getBoolean("combat.settings.old_sharpness")) {
+            oldSharpDamage(e, player, handItem);
         }
     }
 }

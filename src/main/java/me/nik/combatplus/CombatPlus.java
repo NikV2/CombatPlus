@@ -2,12 +2,8 @@ package me.nik.combatplus;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
-import me.nik.combatplus.listeners.AttackSpeed;
-import me.nik.combatplus.listeners.BowBoost;
-import me.nik.combatplus.listeners.DamageModifiers;
-import me.nik.combatplus.utils.ColourUtils;
-import me.nik.combatplus.utils.ResetStats;
-import me.nik.combatplus.utils.SetAttackSpeed;
+import me.nik.combatplus.listeners.EnchGapple;
+import me.nik.combatplus.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,25 +29,14 @@ public final class CombatPlus extends JavaPlugin {
         System.out.println("             " + ChatColor.BOLD + "Author: " + ChatColor.UNDERLINE + "Nik");
         System.out.println();
 
+        //1.8 - 1.7 Check
+        new UnsupportedCheck().check();
+        //1.9 - 1.10 Check
+        new UnsupportedListeners().check();
+
         //Load Listeners
-        if (Config.get().getBoolean("combat.settings.old_pvp")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new AttackSpeed(), this);
-            System.out.println(ColourUtils.format(Lang.get().getString("prefix")) + ColourUtils.format(Lang.get().getString("console.old_pvp_on")));
-        } else {
-            System.out.println(ColourUtils.format(Lang.get().getString("prefix")) + ColourUtils.format(Lang.get().getString("console.old_pvp_off")));
-        }
-        if (Config.get().getBoolean("combat.settings.old_weapon_damage") || Config.get().getBoolean("combat.settings.old_tool_damage") || Config.get().getBoolean("combat.settings.disable_sweep_attacks")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new DamageModifiers(), this);
-            System.out.println(ColourUtils.format(Lang.get().getString("prefix")) + ColourUtils.format(Lang.get().getString("console.modifiers_on")));
-        } else {
-            System.out.println(ColourUtils.format(Lang.get().getString("prefix")) + ColourUtils.format(Lang.get().getString("console.modifiers_off")));
-        }
-        if (Config.get().getBoolean("combat.settings.disable_arrow_boost")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new BowBoost(), this);
-            System.out.println(ColourUtils.format(Lang.get().getString("prefix")) + ColourUtils.format(Lang.get().getString("console.arrow_boost_on")));
-        } else {
-            System.out.println(ColourUtils.format(Lang.get().getString("prefix")) + ColourUtils.format(Lang.get().getString("console.arrow_boost_off")));
-        }
+        new Initializer().initialize();
+        Bukkit.getServer().getPluginManager().registerEvents(new EnchGapple(), this);
 
         //Load Player Stats to allow reloading compability
         if (Config.get().getBoolean("combat.settings.old_pvp")) {

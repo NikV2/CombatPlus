@@ -13,23 +13,17 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class AttackSpeed implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {
-        if (!Config.get().getBoolean("combat.settings.old_pvp")) {
-            return;
-        }
+        if (!Config.get().getBoolean("combat.settings.old_pvp")) return;
         new SetAttackSpeed().setAttackSpd(e.getPlayer());
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onLeave(PlayerQuitEvent e){
-        if (!Config.get().getBoolean("combat.settings.old_pvp")){
-            return;
-        }
+        if (!Config.get().getBoolean("combat.settings.old_pvp")) return;
         new ResetStats().Reset(e.getPlayer());
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChange(PlayerChangedWorldEvent e){
-        if (!Config.get().getBoolean("combat.settings.old_pvp")){
-            return;
-        }
+        if (!Config.get().getBoolean("combat.settings.old_pvp")) return;
         new SetAttackSpeed().setAttackSpd(e.getPlayer());
     }
 }
