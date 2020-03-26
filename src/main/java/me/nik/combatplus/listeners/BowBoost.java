@@ -16,6 +16,9 @@ public class BowBoost implements Listener {
     public void onArrowDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;
+        for (String world : Config.get().getStringList("combat.settings.disabled_worlds")) {
+            if (e.getEntity().getWorld().getName().equalsIgnoreCase(world)) return;
+        }
         Player player = (Player) e.getEntity();
         Arrow arrow = (Arrow) e.getDamager();
         ProjectileSource holder = arrow.getShooter();

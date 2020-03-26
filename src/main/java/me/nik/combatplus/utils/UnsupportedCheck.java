@@ -21,9 +21,17 @@ public class UnsupportedCheck {
             if (Config.get().getBoolean("combat.settings.disable_sweep_attacks")) {
                 Config.get().set("combat.settings.disable_sweep_attacks", false);
             }
+            if (Config.get().getBoolean("general.settings.golden_apple_cooldown.enchanted_golden_apple.enabled")) {
+                Config.get().set("general.settings.golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            }
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
+        } else if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")) {
+            Config.get().set("combat.settings.disable_sweep_attacks", false);
+            Config.save();
+            Config.reload();
+            System.out.println(Messenger.message("console.unsupported_sweep_attack"));
         }
     }
 }

@@ -5,7 +5,7 @@ import me.nik.combatplus.files.Config;
 import me.nik.combatplus.listeners.AttackSpeed;
 import me.nik.combatplus.listeners.BowBoost;
 import me.nik.combatplus.listeners.DamageModifiers;
-import me.nik.combatplus.listeners.EnchGapple;
+import me.nik.combatplus.listeners.Gapple;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -32,7 +32,7 @@ public class Initializer {
             System.out.println(Messenger.message("console.arrow_boost_off"));
         }
         if (Config.get().getBoolean("general.settings.golden_apple_cooldown.enabled")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new EnchGapple(), plugin);
+            Bukkit.getServer().getPluginManager().registerEvents(new Gapple(), plugin);
             System.out.println(Messenger.message("console.golden_apple_cooldown_on"));
         } else {
             System.out.println(Messenger.message("console.golden_apple_cooldown_off"));

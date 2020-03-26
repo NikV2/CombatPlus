@@ -2,10 +2,12 @@ package me.nik.combatplus;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
-import me.nik.combatplus.listeners.EnchGapple;
-import me.nik.combatplus.utils.*;
+import me.nik.combatplus.utils.Initializer;
+import me.nik.combatplus.utils.SetAttackSpeed;
+import me.nik.combatplus.utils.UnsupportedCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CombatPlus extends JavaPlugin {
@@ -29,14 +31,11 @@ public final class CombatPlus extends JavaPlugin {
         System.out.println("             " + ChatColor.BOLD + "Author: " + ChatColor.UNDERLINE + "Nik");
         System.out.println();
 
-        //1.8 - 1.7 Check
+        //Unsupported Version Checker
         new UnsupportedCheck().check();
-        //1.9 - 1.10 Check
-        new UnsupportedListeners().check();
 
         //Load Listeners
         new Initializer().initialize();
-        Bukkit.getServer().getPluginManager().registerEvents(new EnchGapple(), this);
 
         //Load Player Stats to allow reloading compability
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
@@ -48,9 +47,13 @@ public final class CombatPlus extends JavaPlugin {
     @Override
     public void onDisable() {
         //Load Default Stats to avoid server damage
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            new ResetStats().Reset(player);
-        });
+        if (Config.get().getBoolean("combat.settings.old_pvp")) {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
+                player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(defaultAttSpd);
+                player.saveData();
+            });
+        }
         //Reload Files
         Config.reload();
         Config.save();
