@@ -1,6 +1,7 @@
-package me.nik.combatplus.utils;
+package me.nik.combatplus.handlers;
 
 import me.nik.combatplus.files.Config;
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 
 public class UnsupportedCheck {
@@ -21,8 +22,8 @@ public class UnsupportedCheck {
             if (Config.get().getBoolean("combat.settings.disable_sweep_attacks")) {
                 Config.get().set("combat.settings.disable_sweep_attacks", false);
             }
-            if (Config.get().getBoolean("general.settings.golden_apple_cooldown.enchanted_golden_apple.enabled")) {
-                Config.get().set("general.settings.golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            if (Config.get().getBoolean("combat.settings.old_player_regen")) {
+                Config.get().set("combat.settings.old_player_regen", false);
             }
             Config.save();
             Config.reload();

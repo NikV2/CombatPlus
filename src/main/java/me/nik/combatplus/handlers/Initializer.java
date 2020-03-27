@@ -1,11 +1,9 @@
-package me.nik.combatplus.utils;
+package me.nik.combatplus.handlers;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.listeners.AttackSpeed;
-import me.nik.combatplus.listeners.BowBoost;
-import me.nik.combatplus.listeners.DamageModifiers;
-import me.nik.combatplus.listeners.Gapple;
+import me.nik.combatplus.listeners.*;
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -36,6 +34,12 @@ public class Initializer {
             System.out.println(Messenger.message("console.golden_apple_cooldown_on"));
         } else {
             System.out.println(Messenger.message("console.golden_apple_cooldown_off"));
+        }
+        if (Config.get().getBoolean("combat.settings.old_player_regen")) {
+            Bukkit.getServer().getPluginManager().registerEvents(new PlayerRegen(), plugin);
+            System.out.println(Messenger.message("console.old_regen_on"));
+        } else {
+            System.out.println(Messenger.message("console.old_regen_off"));
         }
     }
 }

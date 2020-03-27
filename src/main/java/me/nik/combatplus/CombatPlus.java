@@ -2,9 +2,9 @@ package me.nik.combatplus;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
-import me.nik.combatplus.utils.Initializer;
+import me.nik.combatplus.handlers.Initializer;
+import me.nik.combatplus.handlers.UnsupportedCheck;
 import me.nik.combatplus.utils.SetAttackSpeed;
-import me.nik.combatplus.utils.UnsupportedCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;

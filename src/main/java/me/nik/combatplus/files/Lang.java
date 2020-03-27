@@ -52,6 +52,8 @@ public class Lang {
         Lang.get().addDefault("console.arrow_boost_off", "&f&lArrow Boost Listener Is Turned Off, Skipping.");
         Lang.get().addDefault("console.golden_apple_cooldown_on", "&f&lInitialized Golden Apple Cooldown Module");
         Lang.get().addDefault("console.golden_apple_cooldown_off", "&f&lGolden Apple Cooldown Module Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.old_regen_on", "&f&lInitialized Old Player Regeneration Listener");
+        Lang.get().addDefault("console.old_regen_off", "&f&lOld Player Regeneration Listener Is Turned Off, Skipping.");
         Lang.get().addDefault("console.unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
         Lang.get().addDefault("console.unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
     }

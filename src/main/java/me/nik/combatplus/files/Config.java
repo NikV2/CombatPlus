@@ -60,6 +60,7 @@ public class Config {
         Config.get().addDefault("combat.settings.old_sharpness", true);
         Config.get().addDefault("combat.settings.disable_sweep_attacks", true);
         Config.get().addDefault("combat.settings.disable_arrow_boost", true);
+        Config.get().addDefault("combat.settings.old_player_regen", true);
         Config.get().addDefault("combat.settings.disabled_worlds", combatlist);
         Config.get().addDefault("general.settings.golden_apple_cooldown.enabled", true);
         Config.get().addDefault("general.settings.golden_apple_cooldown.cooldown", 10);
@@ -70,5 +71,8 @@ public class Config {
         Config.get().addDefault("advanced.settings.modifiers.old_shovels_damage", -0.5);
         Config.get().addDefault("advanced.settings.modifiers.old_axes_damage", -2);
         Config.get().addDefault("advanced.settings.modifiers.old_pickaxes_damage", 1);
+        Config.get().addDefault("advanced.settings.old_regen.frequency", 3);
+        Config.get().addDefault("advanced.settings.old_regen.amount", 1);
+        Config.get().addDefault("advanced.settings.old_regen.exhaustion", 3);
     }
 }
