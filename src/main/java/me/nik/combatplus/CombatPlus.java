@@ -8,6 +8,7 @@ import me.nik.combatplus.utils.SetAttackSpeed;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CombatPlus extends JavaPlugin {
@@ -15,14 +16,7 @@ public final class CombatPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         //Load Files
-        Config.setup();
-        Config.addDefaults();
-        Config.get().options().copyDefaults(true);
-        Config.save();
-        Lang.setup();
-        Lang.addDefaults();
-        Lang.get().options().copyDefaults(true);
-        Lang.save();
+        new Initializer().initializeFiles();
 
         //Startup Message
         System.out.println();
@@ -37,7 +31,7 @@ public final class CombatPlus extends JavaPlugin {
         //Load Listeners
         new Initializer().initialize();
 
-        //Load Player Stats to allow reloading compability
+        //Load Player Stats to allow reloading availability
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 new SetAttackSpeed().setAttackSpd(player);
@@ -50,7 +44,8 @@ public final class CombatPlus extends JavaPlugin {
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
-                player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(defaultAttSpd);
+                final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+                playerAttSpeed.setBaseValue(defaultAttSpd);
                 player.saveData();
             });
         }

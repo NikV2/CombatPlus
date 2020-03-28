@@ -1,45 +1,54 @@
 package me.nik.combatplus.handlers;
 
-import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.files.Config;
+import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.listeners.*;
 import me.nik.combatplus.utils.Messenger;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
-public class Initializer {
-    Plugin plugin = CombatPlus.getPlugin(CombatPlus.class);
+public class Initializer extends Manager {
 
     public void initialize() {
-        if (Config.get().getBoolean("combat.settings.old_pvp")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new AttackSpeed(), plugin);
+        if (configBoolean("combat.settings.old_pvp")) {
+            registerEvent(new AttackSpeed());
             System.out.println(Messenger.message("console.old_pvp_on"));
         } else {
             System.out.println(Messenger.message("console.old_pvp_off"));
         }
-        if (Config.get().getBoolean("combat.settings.old_weapon_damage") || Config.get().getBoolean("combat.settings.old_tool_damage") || Config.get().getBoolean("combat.settings.disable_sweep_attacks")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new DamageModifiers(), plugin);
+        if (configBoolean("combat.settings.old_weapon_damage") || configBoolean("combat.settings.old_tool_damage") || configBoolean("combat.settings.disable_sweep_attacks")) {
+            registerEvent(new DamageModifiers());
             System.out.println(Messenger.message("console.modifiers_on"));
         } else {
             System.out.println(Messenger.message("console.modifiers_off"));
         }
-        if (Config.get().getBoolean("combat.settings.disable_arrow_boost")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new BowBoost(), plugin);
+        if (configBoolean("combat.settings.disable_arrow_boost")) {
+            registerEvent(new BowBoost());
             System.out.println(Messenger.message("console.arrow_boost_on"));
         } else {
             System.out.println(Messenger.message("console.arrow_boost_off"));
         }
-        if (Config.get().getBoolean("general.settings.golden_apple_cooldown.enabled")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new Gapple(), plugin);
+        if (configBoolean("general.settings.golden_apple_cooldown.enabled")) {
+            registerEvent(new Gapple());
             System.out.println(Messenger.message("console.golden_apple_cooldown_on"));
         } else {
             System.out.println(Messenger.message("console.golden_apple_cooldown_off"));
         }
-        if (Config.get().getBoolean("combat.settings.old_player_regen")) {
-            Bukkit.getServer().getPluginManager().registerEvents(new PlayerRegen(), plugin);
+        if (configBoolean("combat.settings.old_player_regen")) {
+            registerEvent(new PlayerRegen());
             System.out.println(Messenger.message("console.old_regen_on"));
         } else {
             System.out.println(Messenger.message("console.old_regen_off"));
         }
+    }
+
+    public void initializeFiles() {
+        Config.setup();
+        Config.addDefaults();
+        Config.get().options().copyDefaults(true);
+        Config.save();
+        Lang.setup();
+        Lang.addDefaults();
+        Lang.get().options().copyDefaults(true);
+        Lang.save();
     }
 }

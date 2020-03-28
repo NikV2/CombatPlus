@@ -1,43 +1,34 @@
 package me.nik.combatplus.utils;
 
-import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.api.Manager;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class ResetStats {
-    private double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
-    CombatPlus plugin = CombatPlus.getPlugin(CombatPlus.class);
+public class ResetStats extends Manager {
+    private double defaultAttSpd = configDouble("advanced.settings.new_pvp.attack_speed");
 
     public void Reset(Player player) {
-        if (!Config.get().getBoolean("settings.async")) {
-            player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(defaultAttSpd);
+        AttributeInstance baseAttSpd = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        if (!isAsync()) {
+            baseAttSpd.setBaseValue(defaultAttSpd);
             player.saveData();
-            if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
-                if (player.hasPermission("cp.admin")) {
-                    player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Stats" + ChatColor.GREEN + " Status" + " Done" + ChatColor.YELLOW + " Async:" + " False"));
-                    return;
-                }
-            } else return;
+            if (debug(player)) {
+                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Stats" + ChatColor.GREEN + " Status" + " Done" + ChatColor.YELLOW + " Async:" + " False"));
+            }
         } else {
             final Player pAnonymous = player;
+            final AttributeInstance pBaseAttSpd = pAnonymous.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    pAnonymous.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(defaultAttSpd);
+                    pBaseAttSpd.setBaseValue(defaultAttSpd);
                     pAnonymous.saveData();
-                    if (Config.get().getBoolean("settings.developer_mode")) { //Developer Mode
-                        if (pAnonymous.hasPermission("cp.admin")) {
-                            pAnonymous.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Stats" + ChatColor.GREEN + " TaskID: " + getTaskId() + ChatColor.YELLOW + " Async:" + " True"));
-                            cancel();
-                            return;
-                        }
-                    } else {
-                        cancel();
-                        return;
-                    }
+                    if (debug(pAnonymous)) {
+                        pAnonymous.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Stats" + ChatColor.GREEN + " TaskID: " + getTaskId() + ChatColor.YELLOW + " Async:" + " True"));
+                    } else cancel();
                 }
             }.runTaskAsynchronously(plugin);
         }
