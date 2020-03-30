@@ -4,6 +4,7 @@ import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.listeners.*;
+import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.utils.Messenger;
 
 public class Initializer extends Manager {
@@ -38,6 +39,30 @@ public class Initializer extends Manager {
             System.out.println(Messenger.message("console.old_regen_on"));
         } else {
             System.out.println(Messenger.message("console.old_regen_off"));
+        }
+        if (configBoolean("general.settings.disabled_items.enabled")) {
+            registerEvent(new DisabledItems());
+            System.out.println(Messenger.message("console.disabled_items_on"));
+        } else {
+            System.out.println(Messenger.message("console.disabled_items_off"));
+        }
+        if (configBoolean("general.settings.disable_item_frame_rotation.enabled")) {
+            registerEvent(new ItemFrameRotate());
+            System.out.println(Messenger.message("console.item_frame_rotation_on"));
+        } else {
+            System.out.println(Messenger.message("console.item_frame_rotation_off"));
+        }
+        if (configBoolean("general.settings.disable_offhand.enabled")) {
+            registerEvent(new Offhand());
+            System.out.println(Messenger.message("console.disable_offhand_on"));
+        } else {
+            System.out.println(Messenger.message("console.disable_offhand_off"));
+        }
+        if (configBoolean("general.settings.fixes.projectile_fixer")) {
+            registerEvent(new Projectiles());
+            System.out.println(Messenger.message("console.fixes_on"));
+        } else {
+            System.out.println(Messenger.message("console.fixes_off"));
         }
     }
 

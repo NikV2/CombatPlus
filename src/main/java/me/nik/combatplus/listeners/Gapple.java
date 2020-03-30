@@ -27,10 +27,13 @@ public class Gapple extends Manager {
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
 
+    // This Listener adds a cooldown between eating Golden Apples
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEat(PlayerItemConsumeEvent e) {
         if (!configBoolean("general.settings.golden_apple_cooldown.enabled")) return;
         if (gappleDisabledWorlds(e.getPlayer())) return;
+        if (e.getPlayer().hasPermission("cb.gapple.bypass")) return;
         final String handItem = e.getItem().getType().name();
         if (handItem.contains("GOLDEN_APPLE")) {
             final UUID p = e.getPlayer().getUniqueId();
@@ -46,5 +49,5 @@ public class Gapple extends Manager {
                 }
             }
         }
+        }
     }
-}

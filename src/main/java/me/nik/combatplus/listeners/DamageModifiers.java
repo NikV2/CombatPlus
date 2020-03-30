@@ -161,6 +161,9 @@ public class DamageModifiers extends Manager {
             }
         }
     }
+
+    // This Listener Changes the Damage Dealt to All Entities to the Old Values
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
@@ -181,6 +184,9 @@ public class DamageModifiers extends Manager {
                 oldShovelDmg(e, player, handItem);
             }
         }
+
+        // This one disables Sweep Attacks
+
         if (configBoolean("combat.settings.disable_sweep_attacks")) {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
                 disableSweep(e, player);

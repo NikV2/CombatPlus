@@ -11,6 +11,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 public class BowBoost extends Manager {
+
+    // Disables the ability to Boost yourself up using a Bow, By shooting yourself
+    // This Listener prevents players hitting themselves with a bow
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onArrowDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;

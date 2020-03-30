@@ -50,6 +50,15 @@ public class Config {
         gapplelist.add("world_nether");
         gapplelist.add("world_the_end");
         //actual config
+        List<String> itemslist = Config.get().getStringList("general.settings.disabled_items.items");
+        itemslist.add("item_frame");
+        itemslist.add("armor_stand");
+        List<String> disableditemsworlds = Config.get().getStringList("general.settings.disabled_items.disabled_worlds");
+        disableditemsworlds.add("world_nether");
+        disableditemsworlds.add("world_the_end");
+        List<String> offhandworlds = Config.get().getStringList("general.settings.disable_offhand.disabled_worlds");
+        offhandworlds.add("world_nether");
+        offhandworlds.add("world_the_end");
         Config.get().options().header("+----------------------------------------------------------------------------------------------+" + "\n" + "|                                                                                              |" + "\n" + "|                                           Combat Plus                                        |" + "\n" + "|                                                                                              |" + "\n" + "|                               Discord: https://discord.gg/m7j2Y9H                            |" + "\n" + "|                                                                                              |" + "\n" + "|                                           Author: Nik                                        |" + "\n" + "|                                                                                              |" + "\n" + "+----------------------------------------------------------------------------------------------+" + "\n");
         Config.get().addDefault("settings.check_for_updates", true);
         Config.get().addDefault("settings.async", true);
@@ -65,6 +74,13 @@ public class Config {
         Config.get().addDefault("general.settings.golden_apple_cooldown.enabled", true);
         Config.get().addDefault("general.settings.golden_apple_cooldown.cooldown", 10);
         Config.get().addDefault("general.settings.golden_apple_cooldown.disabled_worlds", gapplelist);
+        Config.get().addDefault("general.settings.disabled_items.enabled", false);
+        Config.get().addDefault("general.settings.disabled_items.items", itemslist);
+        Config.get().addDefault("general.settings.disabled_items.disabled_worlds", disableditemsworlds);
+        Config.get().addDefault("general.settings.disable_item_frame_rotation.enabled", true);
+        Config.get().addDefault("general.settings.disable_offhand.enabled", true);
+        Config.get().addDefault("general.settings.disable_offhand.disabled_worlds", offhandworlds);
+        Config.get().addDefault("general.settings.fixes.projectile_fixer", true);
         Config.get().addDefault("advanced.settings.old_pvp.attack_speed", 24);
         Config.get().addDefault("advanced.settings.new_pvp.attack_speed", 4);
         Config.get().addDefault("advanced.settings.modifiers.old_swords_damage", 1);

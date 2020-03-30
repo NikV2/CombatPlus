@@ -3,6 +3,7 @@ package me.nik.combatplus.api;
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -22,6 +23,22 @@ public abstract class Manager implements Listener {
 
     public boolean combatDisabledWorlds(Player player) {
         for (String world : configStringList("combat.settings.disabled_worlds")) {
+            if (player.getWorld().getName().equalsIgnoreCase(world))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean noCraftingDisabledWorlds(World disWorld) {
+        for (String world : configStringList("general.settings.disabled_items.disabled_worlds")) {
+            if (disWorld.getName().equalsIgnoreCase(world))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean offHandDisabledWorlds(Player player) {
+        for (String world : configStringList("general.settings.disable_offhand.disabled_worlds")) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }

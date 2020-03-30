@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class AttackSpeed extends Manager {
 
+    // Changes the attribute of the player to the Old Attack Speed (On Join)
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {
         if (!configBoolean("combat.settings.old_pvp")) return;
@@ -19,12 +21,16 @@ public class AttackSpeed extends Manager {
         new SetAttackSpeed().setAttackSpd(player);
     }
 
+    // Changes the attribute of the player to the Old Attack Speed (On Join)
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onLeave(PlayerQuitEvent e) {
         if (!configBoolean("combat.settings.old_pvp")) return;
         final Player player = e.getPlayer();
         new ResetStats().Reset(player);
     }
+
+    // Changes the attribute of the player to the Old Attack Speed (On Join)
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onWorldChange(PlayerChangedWorldEvent e) {

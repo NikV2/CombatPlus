@@ -54,6 +54,14 @@ public class Lang {
         Lang.get().addDefault("console.golden_apple_cooldown_off", "&f&lGolden Apple Cooldown Module Is Turned Off, Skipping.");
         Lang.get().addDefault("console.old_regen_on", "&f&lInitialized Old Player Regeneration Listener");
         Lang.get().addDefault("console.old_regen_off", "&f&lOld Player Regeneration Listener Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.disabled_items_on", "&f&lInitialized Disabled Items Manager");
+        Lang.get().addDefault("console.disabled_items_off", "&f&lDisabled Items Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.item_frame_rotation_on", "&f&lInitialized Item Frame Rotation Blocker");
+        Lang.get().addDefault("console.item_frame_rotation_off", "&f&lItem Frame Rotation Blocker Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.disable_offhand_on", "&f&lInitialized Offhand Listener");
+        Lang.get().addDefault("console.disable_offhand_off", "&f&lOffhand Listener Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.fixes_on", "&f&lInitialized Fixing Modules");
+        Lang.get().addDefault("console.fixes_off", "&f&lFixes Are Turned Off, Skipping.");
         Lang.get().addDefault("console.unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
         Lang.get().addDefault("console.unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
     }

@@ -18,6 +18,8 @@ import java.util.UUID;
 public class PlayerRegen extends Manager {
     private Map<UUID, Long> healTimes = new HashMap<>();
 
+    // This Listener Makes the player's health regen work just like in 1.8
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRegen(EntityRegainHealthEvent e) {
         if (!configBoolean("combat.settings.old_player_regen")) return;
