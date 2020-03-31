@@ -48,7 +48,11 @@ public class Lang {
         Lang.get().addDefault("reloaded", "&fYou have successfully reloaded the plugin!");
         Lang.get().addDefault("golden_apple_cooldown", "&fYou cannot eat a Golden Apple yet, You must wait ");
         Lang.get().addDefault("enchanted_golden_apple_cooldown", "&fYou cannot eat an Enchanted Golden Apple yet, You must wait ");
-        Lang.get().addDefault("gui.main", "&c&lCombat Plus - Settings");
+        Lang.get().addDefault("cannot_craft_this", "&cYou cannot craft this item!");
+        Lang.get().addDefault("gui.main", "&c&lCombatPlus Menu");
+        Lang.get().addDefault("gui.plugin", "&c&lPlugin Settings");
+        Lang.get().addDefault("gui.combat", "&c&lCombat Settings");
+        Lang.get().addDefault("gui.general", "&c&lGeneral Settings");
         Lang.get().addDefault("console.commands", "&c&lYou cannot run this command through the console :(");
         Lang.get().addDefault("console.old_pvp_on", "&f&lInitialized Old PVP");
         Lang.get().addDefault("console.old_pvp_off", "&f&lOld PVP Is Turned Off, Skipping.");

@@ -30,7 +30,7 @@ public final class CombatPlus extends JavaPlugin {
         new UnsupportedCheck().check();
 
         //Load Commands
-        getCommand("cp").setExecutor(new CommandManager());
+        getCommand("combatplus").setExecutor(new CommandManager());
 
         //Load Listeners
         new Initializer().initialize();

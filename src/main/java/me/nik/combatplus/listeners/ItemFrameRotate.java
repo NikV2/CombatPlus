@@ -1,6 +1,8 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.utils.Messenger;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
@@ -15,8 +17,12 @@ public class ItemFrameRotate extends Manager {
     public void onRotate(PlayerInteractEntityEvent e) {
         if (e.isCancelled()) return;
         if (!(e.getRightClicked() instanceof ItemFrame)) return;
+        if (e.getPlayer().hasPermission("cp.bypass.rotate")) return;
+        if (itemFrameRotationDisabledWorlds(e.getPlayer())) return;
         if (((ItemFrame) e.getRightClicked()).getItem().getType().equals(Material.AIR)) return;
-        if ((e.getPlayer().hasPermission("cp.bypass.rotate"))) return;
         e.setCancelled(true);
+        if (debug(e.getPlayer())) {
+            e.getPlayer().sendMessage(Messenger.prefix(ChatColor.AQUA + "Rotation Canceled: " + "True" + ChatColor.GREEN + " Player: " + e.getPlayer().getName()));
+        }
     }
 }

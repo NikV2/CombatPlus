@@ -44,21 +44,19 @@ public class Config {
         //config.yml
         //string lists
         List<String> combatlist = Config.get().getStringList("combat.settings.disabled_worlds");
-        combatlist.add("world_nether");
-        combatlist.add("world_the_end");
+        combatlist.add("example_world");
         List<String> gapplelist = Config.get().getStringList("general.settings.golden_apple_cooldown.disabled_worlds");
-        gapplelist.add("world_nether");
-        gapplelist.add("world_the_end");
+        gapplelist.add("example_world");
         //actual config
         List<String> itemslist = Config.get().getStringList("general.settings.disabled_items.items");
         itemslist.add("item_frame");
         itemslist.add("armor_stand");
-        List<String> disableditemsworlds = Config.get().getStringList("general.settings.disabled_items.disabled_worlds");
-        disableditemsworlds.add("world_nether");
-        disableditemsworlds.add("world_the_end");
         List<String> offhandworlds = Config.get().getStringList("general.settings.disable_offhand.disabled_worlds");
-        offhandworlds.add("world_nether");
-        offhandworlds.add("world_the_end");
+        offhandworlds.add("example_world");
+        List<String> craftingworlds = Config.get().getStringList("disabled_items.disabled_worlds");
+        craftingworlds.add("example_world");
+        List<String> itemframerotation = Config.get().getStringList("disable_item_frame_rotation.disabled_worlds");
+        itemframerotation.add("example_world");
         Config.get().options().header("+----------------------------------------------------------------------------------------------+" + "\n" + "|                                                                                              |" + "\n" + "|                                           Combat Plus                                        |" + "\n" + "|                                                                                              |" + "\n" + "|                               Discord: https://discord.gg/m7j2Y9H                            |" + "\n" + "|                                                                                              |" + "\n" + "|                                           Author: Nik                                        |" + "\n" + "|                                                                                              |" + "\n" + "+----------------------------------------------------------------------------------------------+" + "\n");
         Config.get().addDefault("settings.check_for_updates", true);
         Config.get().addDefault("settings.async", true);
@@ -78,8 +76,9 @@ public class Config {
         Config.get().addDefault("golden_apple_cooldown.disabled_worlds", gapplelist);
         Config.get().addDefault("disabled_items.enabled", false);
         Config.get().addDefault("disabled_items.items", itemslist);
-        Config.get().addDefault("disabled_items.disabled_worlds", disableditemsworlds);
+        Config.get().addDefault("disabled_items.disabled_worlds", craftingworlds);
         Config.get().addDefault("disable_item_frame_rotation.enabled", true);
+        Config.get().addDefault("disable_item_frame_rotation.disabled_worlds", itemframerotation);
         Config.get().addDefault("disable_offhand.enabled", true);
         Config.get().addDefault("disable_offhand.disabled_worlds", offhandworlds);
         Config.get().addDefault("fixes.projectile_fixer", true);
