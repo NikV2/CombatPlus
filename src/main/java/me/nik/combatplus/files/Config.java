@@ -59,7 +59,7 @@ public class Config {
         itemframerotation.add("example_world");
         Config.get().options().header("+----------------------------------------------------------------------------------------------+" + "\n" + "|                                                                                              |" + "\n" + "|                                           Combat Plus                                        |" + "\n" + "|                                                                                              |" + "\n" + "|                               Discord: https://discord.gg/m7j2Y9H                            |" + "\n" + "|                                                                                              |" + "\n" + "|                                           Author: Nik                                        |" + "\n" + "|                                                                                              |" + "\n" + "+----------------------------------------------------------------------------------------------+" + "\n");
         Config.get().addDefault("settings.check_for_updates", true);
-        Config.get().addDefault("settings.async", true);
+        Config.get().addDefault("settings.async", false);
         Config.get().addDefault("settings.developer_mode", false);
         Config.get().addDefault("combat.settings.old_pvp", true);
         Config.get().addDefault("combat.settings.old_weapon_damage", true);
