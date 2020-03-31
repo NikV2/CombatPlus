@@ -13,11 +13,10 @@ public class ItemFrameRotate extends Manager {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onRotate(PlayerInteractEntityEvent e) {
-        if (!configBoolean("general.settings.disable_item_frame_rotation.enabled")) return;
         if (e.isCancelled()) return;
         if (!(e.getRightClicked() instanceof ItemFrame)) return;
         if (((ItemFrame) e.getRightClicked()).getItem().getType().equals(Material.AIR)) return;
-        if (!(e.getPlayer().hasPermission("cb.bypass.rotate"))) return;
+        if ((e.getPlayer().hasPermission("cp.bypass.rotate"))) return;
         e.setCancelled(true);
     }
 }

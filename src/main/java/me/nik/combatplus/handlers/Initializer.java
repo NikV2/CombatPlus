@@ -28,42 +28,49 @@ public class Initializer extends Manager {
         } else {
             System.out.println(Messenger.message("console.arrow_boost_off"));
         }
-        if (configBoolean("general.settings.golden_apple_cooldown.enabled")) {
-            registerEvent(new Gapple());
-            System.out.println(Messenger.message("console.golden_apple_cooldown_on"));
-        } else {
-            System.out.println(Messenger.message("console.golden_apple_cooldown_off"));
-        }
         if (configBoolean("combat.settings.old_player_regen")) {
             registerEvent(new PlayerRegen());
             System.out.println(Messenger.message("console.old_regen_on"));
         } else {
             System.out.println(Messenger.message("console.old_regen_off"));
         }
-        if (configBoolean("general.settings.disabled_items.enabled")) {
+        if (configBoolean("disabled_items.enabled")) {
             registerEvent(new DisabledItems());
             System.out.println(Messenger.message("console.disabled_items_on"));
         } else {
             System.out.println(Messenger.message("console.disabled_items_off"));
         }
-        if (configBoolean("general.settings.disable_item_frame_rotation.enabled")) {
+        if (configBoolean("disable_item_frame_rotation.enabled")) {
             registerEvent(new ItemFrameRotate());
             System.out.println(Messenger.message("console.item_frame_rotation_on"));
         } else {
             System.out.println(Messenger.message("console.item_frame_rotation_off"));
         }
-        if (configBoolean("general.settings.disable_offhand.enabled")) {
+        if (configBoolean("disable_offhand.enabled")) {
             registerEvent(new Offhand());
             System.out.println(Messenger.message("console.disable_offhand_on"));
         } else {
             System.out.println(Messenger.message("console.disable_offhand_off"));
         }
-        if (configBoolean("general.settings.fixes.projectile_fixer")) {
+        if (configBoolean("fixes.projectile_fixer")) {
             registerEvent(new Projectiles());
             System.out.println(Messenger.message("console.fixes_on"));
         } else {
             System.out.println(Messenger.message("console.fixes_off"));
         }
+        if (configBoolean("golden_apple_cooldown.golden_apple.enabled")) {
+            registerEvent(new GoldenApple());
+            System.out.println(Messenger.message("console.golden_apple_cooldown_on"));
+        } else {
+            System.out.println(Messenger.message("console.golden_apple_cooldown_off"));
+        }
+        if (configBoolean("golden_apple_cooldown.enchanted_golden_apple.enabled")) {
+            registerEvent(new EnchantedGoldenApple());
+            System.out.println(Messenger.message("console.enchanted_golden_apple_cooldown_on"));
+        } else {
+            System.out.println(Messenger.message("console.enchanted_golden_apple_cooldown_off"));
+        }
+        registerEvent(new GUIListener());
     }
 
     public void initializeFiles() {

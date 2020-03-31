@@ -43,7 +43,13 @@ public class Lang {
         //lang.yml
         Lang.get().options().header("+----------------------------------------------------------------------------------------------+" + "\n" + "|                                                                                              |" + "\n" + "|                                           Combat Plus                                        |" + "\n" + "|                                                                                              |" + "\n" + "|                               Discord: https://discord.gg/m7j2Y9H                            |" + "\n" + "|                                                                                              |" + "\n" + "|                                           Author: Nik                                        |" + "\n" + "|                                                                                              |" + "\n" + "+----------------------------------------------------------------------------------------------+" + "\n");
         Lang.get().addDefault("prefix", "&f&l[&cCombat+&f&l]&f: ");
+        Lang.get().addDefault("no_perm", "&cYou do not have permission to do that!");
+        Lang.get().addDefault("reloading", "&fReloading the plugin...");
+        Lang.get().addDefault("reloaded", "&fYou have successfully reloaded the plugin!");
         Lang.get().addDefault("golden_apple_cooldown", "&fYou cannot eat a Golden Apple yet, You must wait ");
+        Lang.get().addDefault("enchanted_golden_apple_cooldown", "&fYou cannot eat an Enchanted Golden Apple yet, You must wait ");
+        Lang.get().addDefault("gui.main", "&c&lCombat Plus - Settings");
+        Lang.get().addDefault("console.commands", "&c&lYou cannot run this command through the console :(");
         Lang.get().addDefault("console.old_pvp_on", "&f&lInitialized Old PVP");
         Lang.get().addDefault("console.old_pvp_off", "&f&lOld PVP Is Turned Off, Skipping.");
         Lang.get().addDefault("console.modifiers_on", "&f&lInitialized Modifiers");
@@ -52,6 +58,8 @@ public class Lang {
         Lang.get().addDefault("console.arrow_boost_off", "&f&lArrow Boost Listener Is Turned Off, Skipping.");
         Lang.get().addDefault("console.golden_apple_cooldown_on", "&f&lInitialized Golden Apple Cooldown Module");
         Lang.get().addDefault("console.golden_apple_cooldown_off", "&f&lGolden Apple Cooldown Module Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.enchanted_golden_apple_cooldown_on", "&f&lInitialized Enchanted Golden Apple Cooldown Module");
+        Lang.get().addDefault("console.enchanted_golden_apple_cooldown_off", "&f&lEnchanted Golden Apple Cooldown Module Is Turned Off, Skipping.");
         Lang.get().addDefault("console.old_regen_on", "&f&lInitialized Old Player Regeneration Listener");
         Lang.get().addDefault("console.old_regen_off", "&f&lOld Player Regeneration Listener Is Turned Off, Skipping.");
         Lang.get().addDefault("console.disabled_items_on", "&f&lInitialized Disabled Items Manager");

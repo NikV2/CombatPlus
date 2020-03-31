@@ -1,5 +1,6 @@
 package me.nik.combatplus;
 
+import me.nik.combatplus.commands.CommandManager;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.handlers.Initializer;
@@ -27,6 +28,9 @@ public final class CombatPlus extends JavaPlugin {
 
         //Unsupported Version Checker
         new UnsupportedCheck().check();
+
+        //Load Commands
+        getCommand("cp").setExecutor(new CommandManager());
 
         //Load Listeners
         new Initializer().initialize();

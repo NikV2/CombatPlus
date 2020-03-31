@@ -26,6 +26,12 @@ public class UnsupportedCheck extends Manager {
             if (configBoolean("combat.settings.old_player_regen")) {
                 booleanSet("combat.settings.old_player_regen", false);
             }
+            if (configBoolean("golden_apple_cooldown.golden_apple.enabled")) {
+                booleanSet("golden_apple_cooldown.golden_apple.enabled", false);
+            }
+            if (configBoolean("golden_apple_cooldown.enchanted_golden_apple.enabled")) {
+                booleanSet("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            }
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
@@ -34,6 +40,12 @@ public class UnsupportedCheck extends Manager {
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_sweep_attack"));
+        } else if (Bukkit.getVersion().contains("1.11") || Bukkit.getVersion().contains("1.12")) {
+            booleanSet("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            booleanSet("golden_apple_cooldown.golden_apple.enabled", false);
+            Config.save();
+            Config.reload();
+            System.out.println(Messenger.message("console.unsupported_version"));
         }
     }
 }

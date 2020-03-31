@@ -21,16 +21,14 @@ public class Offhand extends Manager {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
-        if (!configBoolean("general.settings.disable_offhand.enabled")) return;
-        if (e.getPlayer().hasPermission("cb.bypass.offhand")) return;
+        if (e.getPlayer().hasPermission("cp.bypass.offhand")) return;
         if (offHandDisabledWorlds(e.getPlayer())) return;
         e.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClickOffHand(InventoryClickEvent e) {
-        if (!configBoolean("general.settings.disable_offhand.enabled")) return;
-        if (e.getWhoClicked().hasPermission("cb.bypass.offhand")) return;
+        if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
         if (offHandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != OFFHAND_SLOT) return;
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
@@ -41,8 +39,7 @@ public class Offhand extends Manager {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDrag(InventoryDragEvent e) {
-        if (!configBoolean("general.settings.disable_offhand.enabled")) return;
-        if (e.getWhoClicked().hasPermission("cb.bypass.offhand")) return;
+        if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
         if (offHandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(OFFHAND_SLOT))
             return;

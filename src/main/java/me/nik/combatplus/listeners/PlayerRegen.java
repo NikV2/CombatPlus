@@ -22,7 +22,6 @@ public class PlayerRegen extends Manager {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRegen(EntityRegainHealthEvent e) {
-        if (!configBoolean("combat.settings.old_player_regen")) return;
         if (e.getEntityType() != EntityType.PLAYER || e.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) {
             return;
         }

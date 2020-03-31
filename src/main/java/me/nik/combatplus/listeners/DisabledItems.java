@@ -2,6 +2,7 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -18,7 +19,7 @@ public class DisabledItems extends Manager {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCraft(PrepareItemCraftEvent e) {
-        if (!configBoolean("general.settings.disabled_items.enabled")) return;
+        if (((Player) e.getViewers()).hasPermission("cp.bypass.items")) return;
         if (e.getViewers().size() < 1) return;
         if (disabledItems == null) return;
         World world = e.getViewers().get(0).getWorld();

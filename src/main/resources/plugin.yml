@@ -3,5 +3,41 @@ version: 1.0.0
 main: me.nik.combatplus.CombatPlus
 api-version: 1.13
 authors: [Nik]
-description: Fully control your server's Combat System.
+prefix: CombatPlus
+load: STARTUP
+description: Fully control your server's Combat System!
 website: https://discord.gg/m7j2Y9H
+commands:
+  cp:
+    description: Fully control your server's Combat System!
+    usage: /<command>
+    aliases:
+      - combatplus
+permissions:
+  cp.admin:
+    description: Gives access to all admin commands
+    default: op
+  cp.bypass.*:
+    description: Gives access to bypass all the bypass-able settings in the plugin
+    default: false
+    children:
+      cp.bypass.gapple: true
+      cp.bypass.items: true
+      cp.bypass.rotate: true
+      cp.bypass.offhand: true
+      cp.bypass.bowboost: true
+  cp.bypass.gapple:
+    description: Gives access to bypass the golden apple cooldown
+    default: false
+  cp.bypass.items:
+    description: Gives access to bypass the disabled items crafting
+    default: false
+  cp.bypass.rotate:
+    description: Gives access to bypass the item frame rotation disable option
+    default: false
+  cp.bypass.offhand:
+    description: Gives access to bypass the disabled offhand option
+    default: false
+  cp.bypass.bowboost:
+    description: Gives access to bypass the bow boost disabled option
+    default: false

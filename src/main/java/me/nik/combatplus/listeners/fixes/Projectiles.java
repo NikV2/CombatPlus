@@ -19,7 +19,6 @@ public class Projectiles extends Manager {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onProjectileShoot(ProjectileLaunchEvent e) {
-        if (!configBoolean("general.settings.fixes.projectile_fixer")) return;
         final Projectile projectile = e.getEntity();
         final ProjectileSource holder = projectile.getShooter();
         if (holder instanceof Player) {

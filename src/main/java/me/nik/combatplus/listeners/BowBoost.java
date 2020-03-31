@@ -20,6 +20,7 @@ public class BowBoost extends Manager {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;
         Player player = (Player) e.getEntity();
+        if (player.hasPermission("cp.bypass.bowboost")) return;
         Arrow arrow = (Arrow) e.getDamager();
         if (combatDisabledWorlds(player)) return;
         ProjectileSource holder = arrow.getShooter();

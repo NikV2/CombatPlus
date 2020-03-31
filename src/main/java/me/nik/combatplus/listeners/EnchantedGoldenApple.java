@@ -3,6 +3,7 @@ package me.nik.combatplus.listeners;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,9 +13,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Gapple extends Manager {
+public class EnchantedGoldenApple extends Manager {
     private HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
-    private int cdtime = configInt("general.settings.golden_apple_cooldown.cooldown");
+    private int cdtime = configInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
 
     private void taskRun(PlayerItemConsumeEvent e) {
         cooldown.put(e.getPlayer().getUniqueId(), System.currentTimeMillis());
@@ -27,21 +28,20 @@ public class Gapple extends Manager {
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
 
-    // This Listener adds a cooldown between eating Golden Apples
+    // This Listener adds a cooldown between eating Enchanted Golden Apples
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEat(PlayerItemConsumeEvent e) {
-        if (!configBoolean("general.settings.golden_apple_cooldown.enabled")) return;
+    public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
         if (gappleDisabledWorlds(e.getPlayer())) return;
-        if (e.getPlayer().hasPermission("cb.gapple.bypass")) return;
-        final String handItem = e.getItem().getType().name();
-        if (handItem.contains("GOLDEN_APPLE")) {
+        if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;
+        final Material handItem = e.getItem().getType();
+        if (handItem == Material.ENCHANTED_GOLDEN_APPLE) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
                 e.setCancelled(true);
                 long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                player.sendMessage(Messenger.message("golden_apple_cooldown") + secondsleft + " Seconds.");
+                player.sendMessage(Messenger.message("enchanted_golden_apple_cooldown") + secondsleft + " Seconds.");
             } else {
                 taskRun(e);
                 if (debug(player)) {
@@ -49,5 +49,5 @@ public class Gapple extends Manager {
                 }
             }
         }
-        }
     }
+}
