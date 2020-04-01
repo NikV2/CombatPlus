@@ -63,6 +63,14 @@ public final class CombatPlus extends JavaPlugin {
                 player.saveData();
             });
         }
+        if (Config.get().getBoolean("custom.player_health.enabled")) {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
+                final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                playerMaxHealth.setBaseValue(defaultHealth);
+                player.saveData();
+            });
+        }
         //Reload Files
         Config.reload();
         Config.save();

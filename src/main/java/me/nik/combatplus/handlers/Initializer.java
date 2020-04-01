@@ -10,11 +10,11 @@ import me.nik.combatplus.utils.Messenger;
 public class Initializer extends Manager {
 
     public void initialize() {
-        if (configBoolean("combat.settings.old_pvp")) {
-            registerEvent(new AttackSpeed());
-            System.out.println(Messenger.message("console.old_pvp_on"));
+        if (configBoolean("combat.settings.old_pvp") || configBoolean("custom.player_health.enabled")) {
+            registerEvent(new AttributesSet());
+            System.out.println(Messenger.message("console.attribute_modifiers_on"));
         } else {
-            System.out.println(Messenger.message("console.old_pvp_off"));
+            System.out.println(Messenger.message("console.attribute_modifiers_off"));
         }
         if (configBoolean("combat.settings.old_weapon_damage") || configBoolean("combat.settings.old_tool_damage") || configBoolean("combat.settings.disable_sweep_attacks")) {
             registerEvent(new DamageModifiers());
@@ -70,6 +70,7 @@ public class Initializer extends Manager {
         } else {
             System.out.println(Messenger.message("console.enchanted_golden_apple_cooldown_off"));
         }
+        //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener());
     }
 

@@ -57,8 +57,8 @@ public class Lang {
         Lang.get().addDefault("console.update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
         Lang.get().addDefault("console.update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
         Lang.get().addDefault("console.commands", "&c&lYou cannot run this command through the console :(");
-        Lang.get().addDefault("console.old_pvp_on", "&f&lInitialized Old PVP");
-        Lang.get().addDefault("console.old_pvp_off", "&f&lOld PVP Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.attribute_modifiers_on", "&f&lInitialized Attribute Modifiers");
+        Lang.get().addDefault("console.attribute_modifiers_off", "&f&lAttribute Modifiers Are Turned Off, Skipping.");
         Lang.get().addDefault("console.modifiers_on", "&f&lInitialized Modifiers");
         Lang.get().addDefault("console.modifiers_off", "&f&lModifiers Are Turned Off, Skipping.");
         Lang.get().addDefault("console.arrow_boost_on", "&f&lInitialized Arrow Boost Listener");

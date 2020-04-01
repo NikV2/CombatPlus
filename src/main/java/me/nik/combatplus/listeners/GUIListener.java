@@ -199,6 +199,15 @@ public class GUIListener extends Manager {
                     saveAndReload();
                 }
                 break;
+            case "§6Custom Player Health":
+                if (configBoolean("custom.player_health.enabled")) {
+                    booleanSet("custom.player_health.enabled", false);
+                    saveAndReload();
+                } else {
+                    booleanSet("custom.player_health.enabled", true);
+                    saveAndReload();
+                }
+                break;
         }
         e.setCancelled(true);
         if (e.getClick() == ClickType.SHIFT_RIGHT) {

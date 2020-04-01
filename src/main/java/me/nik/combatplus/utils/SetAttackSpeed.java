@@ -11,7 +11,7 @@ public class SetAttackSpeed extends Manager {
 
     public void setAttackSpd(Player player) {
         if (combatDisabledWorlds(player)) {
-            new ResetStats().Reset(player);
+            new ResetStats().resetAttackSpeed(player);
         } else {
             if (!isAsync()) {
                 player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(attackSpeed);

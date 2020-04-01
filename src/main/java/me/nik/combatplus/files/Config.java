@@ -82,6 +82,8 @@ public class Config {
         Config.get().addDefault("disable_offhand.enabled", true);
         Config.get().addDefault("disable_offhand.disabled_worlds", offhandworlds);
         Config.get().addDefault("fixes.projectile_fixer", true);
+        Config.get().addDefault("custom.player_health.enabled", false);
+        Config.get().addDefault("custom.player_health.max_health", 20);
         Config.get().addDefault("advanced.settings.old_pvp.attack_speed", 24);
         Config.get().addDefault("advanced.settings.new_pvp.attack_speed", 4);
         Config.get().addDefault("advanced.settings.modifiers.old_swords_damage", 1);
@@ -91,5 +93,6 @@ public class Config {
         Config.get().addDefault("advanced.settings.old_regen.frequency", 3);
         Config.get().addDefault("advanced.settings.old_regen.amount", 1);
         Config.get().addDefault("advanced.settings.old_regen.exhaustion", 3);
+        Config.get().addDefault("advanced.settings.base_player_health", 20);
     }
 }

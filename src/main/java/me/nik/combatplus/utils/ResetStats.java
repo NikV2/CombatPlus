@@ -9,14 +9,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ResetStats extends Manager {
     private double defaultAttSpd = configDouble("advanced.settings.new_pvp.attack_speed");
+    private double defaultMaxHealth = configDouble("advanced.settings.base_player_health");
 
-    public void Reset(Player player) {
+    public void resetAttackSpeed(Player player) {
         AttributeInstance baseAttSpd = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         if (!isAsync()) {
             baseAttSpd.setBaseValue(defaultAttSpd);
             player.saveData();
             if (debug(player)) {
-                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Stats" + ChatColor.GREEN + " Status" + " Done" + ChatColor.YELLOW + " Async:" + " False"));
+                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Attack Speed" + ChatColor.GREEN + " Status" + " Done" + ChatColor.YELLOW + " Async:" + " False"));
             }
         } else {
             final Player pAnonymous = player;
@@ -27,7 +28,31 @@ public class ResetStats extends Manager {
                     pBaseAttSpd.setBaseValue(defaultAttSpd);
                     pAnonymous.saveData();
                     if (debug(pAnonymous)) {
-                        pAnonymous.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Stats" + ChatColor.GREEN + " TaskID: " + getTaskId() + ChatColor.YELLOW + " Async:" + " True"));
+                        pAnonymous.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Attack Speed" + ChatColor.GREEN + " TaskID: " + getTaskId() + ChatColor.YELLOW + " Async:" + " True"));
+                    } else cancel();
+                }
+            }.runTaskAsynchronously(plugin);
+        }
+    }
+
+    public void resetMaxHealth(Player player) {
+        AttributeInstance baseMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (!isAsync()) {
+            baseMaxHealth.setBaseValue(defaultMaxHealth);
+            player.saveData();
+            if (debug(player)) {
+                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Max Health" + ChatColor.GREEN + " Status" + " Done" + ChatColor.YELLOW + " Async:" + " False"));
+            }
+        } else {
+            final Player pAnonymous = player;
+            final AttributeInstance pBaseMaxHealth = pAnonymous.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    pBaseMaxHealth.setBaseValue(defaultMaxHealth);
+                    pAnonymous.saveData();
+                    if (debug(pAnonymous)) {
+                        pAnonymous.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Max Health" + ChatColor.GREEN + " TaskID: " + getTaskId() + ChatColor.YELLOW + " Async:" + " True"));
                     } else cancel();
                 }
             }.runTaskAsynchronously(plugin);

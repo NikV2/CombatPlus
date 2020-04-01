@@ -330,15 +330,30 @@ public class GUIManager {
                 projLore.add(ChatColor.WHITE + "Not always going straight");
                 proj_meta.setLore(projLore);
                 proj.setItemMeta(proj_meta);
+                //custom health
+                ItemStack health = new ItemStack(Material.PAPER, 1);
+                ItemMeta health_meta = health.getItemMeta();
+                health_meta.setDisplayName("§6Custom Player Health");
+                ArrayList<String> healthLore = new ArrayList<>();
+                healthLore.add("");
+                healthLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("custom.player_health.enabled"));
+                healthLore.add("");
+                healthLore.add(ChatColor.WHITE + "Would you like your Players");
+                healthLore.add(ChatColor.WHITE + "To have Customized Max Health?");
+                healthLore.add("");
+                healthLore.add(ChatColor.GRAY + "More options in the Config.yml");
+                health_meta.setLore(healthLore);
+                health.setItemMeta(health_meta);
 
                 ItemStack back = new ItemStack(Material.BARRIER, 1);
                 ItemMeta back_meta = back.getItemMeta();
                 back_meta.setDisplayName("§cBack");
                 back.setItemMeta(back_meta);
 
-                generalGUI.setItem(11, gapple);
-                generalGUI.setItem(13, gappleE);
-                generalGUI.setItem(15, disItems);
+                generalGUI.setItem(10, gapple);
+                generalGUI.setItem(12, gappleE);
+                generalGUI.setItem(14, disItems);
+                generalGUI.setItem(16, health);
                 generalGUI.setItem(29, disRotate);
                 generalGUI.setItem(31, offh);
                 generalGUI.setItem(33, proj);
