@@ -1,6 +1,8 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.utils.Messenger;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -24,6 +26,9 @@ public class Offhand extends Manager {
         if (e.getPlayer().hasPermission("cp.bypass.offhand")) return;
         if (offHandDisabledWorlds(e.getPlayer())) return;
         e.setCancelled(true);
+        if (debug(e.getPlayer())) {
+            e.getPlayer().sendMessage(Messenger.prefix(ChatColor.AQUA + "Offhand Canceled: " + "True" + ChatColor.GREEN + " Player: " + e.getPlayer().getName()));
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -34,6 +39,9 @@ public class Offhand extends Manager {
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
+            if (debug((Player) e.getWhoClicked())) {
+                e.getWhoClicked().sendMessage(Messenger.prefix(ChatColor.AQUA + "Offhand Canceled: " + "True" + ChatColor.GREEN + " Player: " + e.getWhoClicked().getName()));
+            }
         }
     }
 
@@ -46,6 +54,9 @@ public class Offhand extends Manager {
         if (itemCheck(e.getOldCursor())) {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
+            if (debug((Player) e.getWhoClicked())) {
+                e.getWhoClicked().sendMessage(Messenger.prefix(ChatColor.AQUA + "Offhand Canceled: " + "True" + ChatColor.GREEN + " Player: " + e.getWhoClicked().getName()));
+            }
         }
     }
 
