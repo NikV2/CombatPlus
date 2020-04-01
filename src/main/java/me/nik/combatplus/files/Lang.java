@@ -53,6 +53,9 @@ public class Lang {
         Lang.get().addDefault("gui.plugin", "&c&lPlugin Settings");
         Lang.get().addDefault("gui.combat", "&c&lCombat Settings");
         Lang.get().addDefault("gui.general", "&c&lGeneral Settings");
+        Lang.get().addDefault("console.update_found", "&a&lThere is an Update available on Spigot!");
+        Lang.get().addDefault("console.update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
+        Lang.get().addDefault("console.update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
         Lang.get().addDefault("console.commands", "&c&lYou cannot run this command through the console :(");
         Lang.get().addDefault("console.old_pvp_on", "&f&lInitialized Old PVP");
         Lang.get().addDefault("console.old_pvp_off", "&f&lOld PVP Is Turned Off, Skipping.");

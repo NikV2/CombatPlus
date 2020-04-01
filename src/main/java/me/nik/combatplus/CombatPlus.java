@@ -5,12 +5,15 @@ import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.handlers.Initializer;
 import me.nik.combatplus.handlers.UnsupportedCheck;
+import me.nik.combatplus.handlers.UpdateChecker;
+import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.SetAttackSpeed;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
@@ -40,6 +43,13 @@ public final class CombatPlus extends JavaPlugin {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 new SetAttackSpeed().setAttackSpd(player);
             });
+        }
+
+        //Check for Updates
+        if (Config.get().getBoolean("settings.check_for_updates")) {
+            BukkitTask UpdateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
+        } else {
+            System.out.println(Messenger.message("console.update_disabled"));
         }
     }
     @Override

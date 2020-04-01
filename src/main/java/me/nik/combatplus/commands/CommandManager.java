@@ -39,7 +39,7 @@ public class CommandManager implements TabExecutor {
                 helpMessage(sender);
                 return true;
             } else {
-                sender.sendMessage(Messenger.message("console_message"));
+                sender.sendMessage(Messenger.message("console.commands"));
                 return true;
             }
         } else {
