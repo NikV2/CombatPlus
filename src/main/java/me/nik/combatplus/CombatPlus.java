@@ -8,6 +8,7 @@ import me.nik.combatplus.handlers.UnsupportedCheck;
 import me.nik.combatplus.handlers.UpdateChecker;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.SetAttackSpeed;
+import me.nik.combatplus.utils.SetCustomHealth;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -42,6 +43,11 @@ public final class CombatPlus extends JavaPlugin {
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 new SetAttackSpeed().setAttackSpd(player);
+            });
+        }
+        if (Config.get().getBoolean("custom.player_health.enabled")) {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                new SetCustomHealth().setHealth(player);
             });
         }
 
