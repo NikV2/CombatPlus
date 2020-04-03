@@ -9,6 +9,7 @@ import me.nik.combatplus.handlers.UpdateChecker;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.SetAttackSpeed;
 import me.nik.combatplus.utils.SetCustomHealth;
+import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -57,6 +58,10 @@ public final class CombatPlus extends JavaPlugin {
         } else {
             System.out.println(Messenger.message("console.update_disabled"));
         }
+
+        //Load bStats
+        int pluginID = 6982;
+        MetricsLite metricsLite = new MetricsLite(this, pluginID);
     }
     @Override
     public void onDisable() {
