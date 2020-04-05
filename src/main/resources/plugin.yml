@@ -1,6 +1,7 @@
 name: CombatPlus
 version: 1.0.6
 main: me.nik.combatplus.CombatPlus
+api-version: 1.13
 authors: [Nik]
 prefix: CombatPlus
 load: STARTUP
