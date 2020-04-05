@@ -34,7 +34,7 @@ public class PlayerRegen extends Manager {
         long currentTime = System.currentTimeMillis() / 1000;
         long lastHealTime = healTimes.computeIfAbsent(playerID, id -> System.currentTimeMillis() / 1000);
         if (currentTime - lastHealTime < configInt("advanced.settings.old_regen.frequency")) return;
-        double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        final double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         if (playerHealth < maxHealth) {
             p.setHealth(clamp(playerHealth + configInt("advanced.settings.old_regen.amount"), 0.0, maxHealth));
             healTimes.put(playerID, currentTime);

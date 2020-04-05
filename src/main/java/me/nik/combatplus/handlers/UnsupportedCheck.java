@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 
 public class UnsupportedCheck extends Manager {
     public void check() {
-        if (Bukkit.getVersion().contains("1.8") || Bukkit.getVersion().contains("1.7")) {
+        if (Bukkit.getVersion().contains("1.8")) {
             if (configBoolean("combat.settings.old_pvp")) {
                 booleanSet("combat.settings.old_pvp", false);
             }
