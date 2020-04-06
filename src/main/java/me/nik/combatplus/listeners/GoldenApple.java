@@ -32,6 +32,7 @@ public class GoldenApple extends Manager {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
+        if (e.isCancelled()) return;
         if (gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;
         final Material handItem = e.getItem().getType();

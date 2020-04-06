@@ -1,5 +1,6 @@
 package me.nik.combatplus.files;
 
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,8 +17,8 @@ public class Lang {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (IOException e) {
-                //Does not exist
+            } catch (IOException ignored) {
+                System.out.println(Messenger.prefix(Messenger.format("&cError creating the lang.yml, Please try restarting your Server!")));
             }
         }
         lang = YamlConfiguration.loadConfiguration(file);
@@ -30,8 +31,8 @@ public class Lang {
     public static void save() {
         try {
             lang.save(file);
-        } catch (IOException e) {
-            //Cannot save file
+        } catch (IOException ignored) {
+            System.out.println(Messenger.prefix(Messenger.format("&cError saving the lang.yml, Please try restarting your Server!")));
         }
     }
 
