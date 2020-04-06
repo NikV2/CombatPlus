@@ -1,6 +1,5 @@
 package me.nik.combatplus.files;
 
-import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,7 +18,6 @@ public class Config {
             try {
                 file.createNewFile();
             } catch (IOException ignored) {
-                System.out.println(Messenger.prefix(Messenger.format("&cError creating the config.yml, Please try restarting your Server!")));
             }
         }
         config = YamlConfiguration.loadConfiguration(file);
@@ -33,7 +31,6 @@ public class Config {
         try {
             config.save(file);
         } catch (IOException ignored) {
-            System.out.println(Messenger.prefix(Messenger.format("&cError saving the config.yml, Please try restarting your Server!")));
         }
     }
 
