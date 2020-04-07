@@ -76,26 +76,21 @@ public final class CombatPlus extends JavaPlugin {
     @Override
     public void onDisable() {
         //Load Default Stats to avoid server damage
-        if (Config.get().getBoolean("combat.settings.old_pvp")) {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
-                final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-                playerAttSpeed.setBaseValue(defaultAttSpd);
-                player.saveData();
-            });
-        }
-        if (Config.get().getBoolean("custom.player_health.enabled")) {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
-                final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                playerMaxHealth.setBaseValue(defaultHealth);
-                player.saveData();
-            });
-        }
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
+            final double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
+            final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+            final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            playerAttSpeed.setBaseValue(defaultAttSpd);
+            playerMaxHealth.setBaseValue(defaultHealth);
+            player.saveData();
+        });
+
         //Reload Files
         Config.reload();
         Config.save();
         Lang.reload();
         Lang.save();
+        System.out.println(Messenger.message("console.disabled"));
     }
 }

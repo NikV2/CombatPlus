@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class SetAttackSpeed extends Manager {
-    private double attackSpeed = configDouble("advanced.settings.old_pvp.attack_speed");
+    private final double attackSpeed = configDouble("advanced.settings.old_pvp.attack_speed");
 
     public void setAttackSpd(Player player) {
         if (combatDisabledWorlds(player)) {

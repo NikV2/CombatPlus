@@ -77,5 +77,6 @@ public class Lang {
         Lang.get().addDefault("console.fixes_off", "&f&lFixes Are Turned Off, Skipping.");
         Lang.get().addDefault("console.unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
         Lang.get().addDefault("console.unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
+        Lang.get().addDefault("console.disabled", "&f&lAll Player Stats Have Been Set Back To Their Default Values! Goodbye.");
     }
 }

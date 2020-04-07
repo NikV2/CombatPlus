@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ResetStats extends Manager {
-    private double defaultAttSpd = configDouble("advanced.settings.new_pvp.attack_speed");
-    private double defaultMaxHealth = configDouble("advanced.settings.base_player_health");
+    private final double defaultAttSpd = configDouble("advanced.settings.new_pvp.attack_speed");
+    private final double defaultMaxHealth = configDouble("advanced.settings.base_player_health");
 
     public void resetAttackSpeed(Player player) {
         AttributeInstance baseAttSpd = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);

@@ -30,7 +30,7 @@ public class AttributesSet extends Manager {
             new SetCustomHealth().setHealth(player);
         } else {
             final Player player = e.getPlayer();
-            new ResetStats().resetAttackSpeed(player);
+            new ResetStats().resetMaxHealth(player);
         }
 
     }
