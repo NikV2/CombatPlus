@@ -20,11 +20,19 @@ public class AttributesSet extends Manager {
         if (configBoolean("combat.settings.old_pvp")) {
             final Player player = e.getPlayer();
             new SetAttackSpeed().setAttackSpd(player);
+        } else {
+            final Player player = e.getPlayer();
+            new ResetStats().resetAttackSpeed(player);
         }
+
         if (configBoolean("custom.player_health.enabled")) {
             final Player player = e.getPlayer();
             new SetCustomHealth().setHealth(player);
+        } else {
+            final Player player = e.getPlayer();
+            new ResetStats().resetAttackSpeed(player);
         }
+
     }
     // Resets the attribute of the player to the New Attack Speed (On Leave)
 
@@ -40,7 +48,7 @@ public class AttributesSet extends Manager {
         }
     }
 
-    // Changes the attribute of the player to the Old Attack Speed (On Join)
+    // Changes the attribute of the player to the Old Attack Speed (On World Change)
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onWorldChange(PlayerChangedWorldEvent e) {

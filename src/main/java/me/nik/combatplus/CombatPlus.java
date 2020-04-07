@@ -7,6 +7,7 @@ import me.nik.combatplus.handlers.Initializer;
 import me.nik.combatplus.handlers.UnsupportedCheck;
 import me.nik.combatplus.handlers.UpdateChecker;
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
 import me.nik.combatplus.utils.SetCustomHealth;
 import org.bstats.bukkit.MetricsLite;
@@ -45,10 +46,19 @@ public final class CombatPlus extends JavaPlugin {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 new SetAttackSpeed().setAttackSpd(player);
             });
+        } else {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                new ResetStats().resetAttackSpeed(player);
+            });
         }
+
         if (Config.get().getBoolean("custom.player_health.enabled")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 new SetCustomHealth().setHealth(player);
+            });
+        } else {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                new ResetStats().resetMaxHealth(player);
             });
         }
 
