@@ -32,15 +32,15 @@ public class GUIListener extends Manager {
             // Main GUI
             case "§6Plugin Settings":
                 p.closeInventory();
-                GUIManager.openPluginGUI(p);
+                new GUIManager(plugin).openPluginGUI(p);
                 break;
             case "§eCombat Settings":
                 p.closeInventory();
-                GUIManager.openCombatGUI(p);
+                new GUIManager(plugin).openCombatGUI(p);
                 break;
             case "§aGeneral Settings":
                 p.closeInventory();
-                GUIManager.openGeneralGUI(p);
+                new GUIManager(plugin).openGeneralGUI(p);
                 break;
             case "§bLooking for Support?":
                 p.closeInventory();
@@ -80,7 +80,7 @@ public class GUIListener extends Manager {
                 break;
             case "§cBack":
                 p.closeInventory();
-                GUIManager.openMainGUI(p);
+                new GUIManager(plugin).openMainGUI(p);
                 break;
             // Combat Settings GUI
             case "§6Old PvP":

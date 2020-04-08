@@ -18,18 +18,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 
 public class GUIManager {
-    private static CombatPlus plugin;
-
-    public GUIManager(CombatPlus plugin) {
-        GUIManager.plugin = plugin;
-    }
 
     private static Inventory mainGUI;
     private static Inventory pluginGUI;
     private static Inventory combatGUI;
     private static Inventory generalGUI;
 
-    public static void openMainGUI(Player p) {
+    private CombatPlus plugin;
+
+    public GUIManager(CombatPlus plugin) {
+        this.plugin = plugin;
+    }
+
+    public void openMainGUI(Player p) {
         Inventory mainGUI = Bukkit.createInventory(new CombatPlusHolder(), 36, Messenger.format(Lang.get().getString("gui.main")));
         ItemStack settings = new ItemStack(Material.BOOK, 1);
         ItemMeta settings_meta = settings.getItemMeta();
@@ -64,7 +65,7 @@ public class GUIManager {
         p.openInventory(mainGUI);
     }
 
-    public static void openPluginGUI(Player p) {
+    public void openPluginGUI(Player p) {
         Inventory pluginGUI = Bukkit.createInventory(new CombatPlusHolder(), 36, Messenger.format(Lang.get().getString("gui.plugin")));
         p.openInventory(pluginGUI);
         final Player pNon = p;
@@ -126,7 +127,7 @@ public class GUIManager {
         }.runTaskTimer(plugin, 1, 5);
     }
 
-    public static void openCombatGUI(Player p) {
+    public void openCombatGUI(Player p) {
         Inventory combatGUI = Bukkit.createInventory(new CombatPlusHolder(), 45, Messenger.format(Lang.get().getString("gui.combat")));
         p.openInventory(combatGUI);
         final Player pNon = p;
@@ -241,7 +242,7 @@ public class GUIManager {
         }.runTaskTimer(plugin, 1, 5);
     }
 
-    public static void openGeneralGUI(Player p) {
+    public void openGeneralGUI(Player p) {
         Inventory generalGUI = Bukkit.createInventory(new CombatPlusHolder(), 54, Messenger.format(Lang.get().getString("gui.general")));
         p.openInventory(generalGUI);
         final Player pNon = p;
