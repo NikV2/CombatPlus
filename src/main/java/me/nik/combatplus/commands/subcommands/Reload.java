@@ -8,6 +8,13 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class Reload extends SubCommand {
+
+    private CombatPlus plugin;
+
+    public Reload(CombatPlus plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public String getName() {
         return "reload";
@@ -25,7 +32,6 @@ public class Reload extends SubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
-        CombatPlus plugin = CombatPlus.getPlugin(CombatPlus.class);
         if (args.length == 1) {
             if (!player.hasPermission("cp.admin")) {
                 player.sendMessage(Messenger.message("no_perm"));

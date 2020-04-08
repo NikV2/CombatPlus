@@ -1,5 +1,6 @@
 package me.nik.combatplus.utils;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -9,9 +10,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class SetAttackSpeed extends Manager {
     private final double attackSpeed = configDouble("advanced.settings.old_pvp.attack_speed");
 
+    public SetAttackSpeed(CombatPlus plugin) {
+        super(plugin);
+    }
+
     public void setAttackSpd(Player player) {
         if (combatDisabledWorlds(player)) {
-            new ResetStats().resetAttackSpeed(player);
+            new ResetStats(plugin).resetAttackSpeed(player);
         } else {
             if (!isAsync()) {
                 player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(attackSpeed);

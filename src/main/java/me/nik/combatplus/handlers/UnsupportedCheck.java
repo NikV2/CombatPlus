@@ -1,11 +1,16 @@
 package me.nik.combatplus.handlers;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 
 public class UnsupportedCheck extends Manager {
+    public UnsupportedCheck(CombatPlus plugin) {
+        super(plugin);
+    }
+
     public void check() {
         if (Bukkit.getVersion().contains("1.8")) {
             if (configBoolean("combat.settings.old_pvp")) {

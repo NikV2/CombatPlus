@@ -9,19 +9,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager implements TabExecutor {
-    public Plugin plugin = CombatPlus.getPlugin(CombatPlus.class);
+    public CombatPlus plugin;
 
     private ArrayList<SubCommand> subCommands = new ArrayList<>();
 
-    public CommandManager() {
+    public CommandManager(CombatPlus plugin) {
+        this.plugin = plugin;
         subCommands.add(new Menu());
-        subCommands.add(new Reload());
+        subCommands.add(new Reload(plugin));
     }
 
     @Override

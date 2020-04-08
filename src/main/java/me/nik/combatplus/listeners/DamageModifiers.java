@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -15,6 +16,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class DamageModifiers extends Manager {
+    public DamageModifiers(CombatPlus plugin) {
+        super(plugin);
+    }
+
     private void disableSweep(EntityDamageEvent e, Entity player) {
         Entity ent = e.getEntity();
         double x = ent.getVelocity().getX();

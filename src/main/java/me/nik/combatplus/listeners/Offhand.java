@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -18,6 +19,10 @@ import org.bukkit.inventory.ItemStack;
 public class Offhand extends Manager {
 
     private static final int OFFHAND_SLOT = 40;
+
+    public Offhand(CombatPlus plugin) {
+        super(plugin);
+    }
 
     // This Listener completely disables the use of the Offhand
 

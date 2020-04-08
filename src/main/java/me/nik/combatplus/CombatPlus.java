@@ -23,7 +23,14 @@ public final class CombatPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         //Load Files
-        new Initializer().initializeFiles();
+        Config.setup();
+        Config.addDefaults();
+        Config.get().options().copyDefaults(true);
+        Config.save();
+        Lang.setup();
+        Lang.addDefaults();
+        Lang.get().options().copyDefaults(true);
+        Lang.save();
 
         //Startup Message
         System.out.println();
@@ -33,32 +40,32 @@ public final class CombatPlus extends JavaPlugin {
         System.out.println();
 
         //Unsupported Version Checker
-        new UnsupportedCheck().check();
+        new UnsupportedCheck(this).check();
 
         //Load Commands
-        getCommand("combatplus").setExecutor(new CommandManager());
+        getCommand("combatplus").setExecutor(new CommandManager(this));
 
         //Load Listeners
-        new Initializer().initialize();
+        new Initializer(this).initialize();
 
         //Load Player Stats to allow reloading availability
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetAttackSpeed().setAttackSpd(player);
+                new SetAttackSpeed(this).setAttackSpd(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats().resetAttackSpeed(player);
+                new ResetStats(this).resetAttackSpeed(player);
             });
         }
 
         if (Config.get().getBoolean("custom.player_health.enabled")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetCustomHealth().setHealth(player);
+                new SetCustomHealth(this).setHealth(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats().resetMaxHealth(player);
+                new ResetStats(this).resetMaxHealth(player);
             });
         }
 

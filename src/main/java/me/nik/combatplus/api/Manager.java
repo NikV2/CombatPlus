@@ -5,12 +5,15 @@ import me.nik.combatplus.files.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 
 public abstract class Manager implements Listener {
-    public Plugin plugin = CombatPlus.getPlugin(CombatPlus.class);
+    public CombatPlus plugin;
+
+    public Manager(CombatPlus plugin) {
+        this.plugin = plugin;
+    }
 
     public boolean gappleDisabledWorlds(Player player) {
         for (String world : configStringList("golden_apple_cooldown.disabled_worlds")) {

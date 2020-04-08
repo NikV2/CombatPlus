@@ -1,5 +1,6 @@
 package me.nik.combatplus.utils;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -8,6 +9,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class SetCustomHealth extends Manager {
     private double maxHealth = configDouble("custom.player_health.max_health");
+
+    public SetCustomHealth(CombatPlus plugin) {
+        super(plugin);
+    }
 
     public void setHealth(Player player) {
         if (!isAsync()) {

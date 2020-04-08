@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -15,6 +16,10 @@ import java.util.List;
 public class DisabledItems extends Manager {
 
     private List<String> disabledItems = configStringList("disabled_items.items");
+
+    public DisabledItems(CombatPlus plugin) {
+        super(plugin);
+    }
 
     // This Listener Disables the crafting of the items defined in the Config
 

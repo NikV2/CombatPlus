@@ -18,6 +18,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 
 public class GUIManager {
+    private static CombatPlus plugin;
+
+    public GUIManager(CombatPlus plugin) {
+        GUIManager.plugin = plugin;
+    }
 
     private static Inventory mainGUI;
     private static Inventory pluginGUI;
@@ -60,7 +65,6 @@ public class GUIManager {
     }
 
     public static void openPluginGUI(Player p) {
-        CombatPlus plugin = CombatPlus.getPlugin(CombatPlus.class);
         Inventory pluginGUI = Bukkit.createInventory(new CombatPlusHolder(), 36, Messenger.format(Lang.get().getString("gui.plugin")));
         p.openInventory(pluginGUI);
         final Player pNon = p;
@@ -123,7 +127,6 @@ public class GUIManager {
     }
 
     public static void openCombatGUI(Player p) {
-        CombatPlus plugin = CombatPlus.getPlugin(CombatPlus.class);
         Inventory combatGUI = Bukkit.createInventory(new CombatPlusHolder(), 45, Messenger.format(Lang.get().getString("gui.combat")));
         p.openInventory(combatGUI);
         final Player pNon = p;
@@ -239,7 +242,6 @@ public class GUIManager {
     }
 
     public static void openGeneralGUI(Player p) {
-        CombatPlus plugin = CombatPlus.getPlugin(CombatPlus.class);
         Inventory generalGUI = Bukkit.createInventory(new CombatPlusHolder(), 54, Messenger.format(Lang.get().getString("gui.general")));
         p.openInventory(generalGUI);
         final Player pNon = p;
