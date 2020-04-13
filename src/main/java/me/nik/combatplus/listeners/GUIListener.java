@@ -55,27 +55,15 @@ public class GUIListener extends Manager {
                 break;
             // Plugin Settings GUI
             case "§6Check for Updates":
-                if (configBoolean("settings.check_for_updates")) {
-                    booleanSet("settings.check_for_updates", false);
-                } else {
-                    booleanSet("settings.check_for_updates", true);
-                }
+                booleanSet("settings.check_for_updates", !configBoolean("settings.check_for_updates"));
                 saveAndReload();
                 break;
             case "§6Run Asynchronously":
-                if (configBoolean("settings.async")) {
-                    booleanSet("settings.async", false);
-                } else {
-                    booleanSet("settings.async", true);
-                }
+                booleanSet("settings.async", !configBoolean("settings.async"));
                 saveAndReload();
                 break;
             case "§6Developer Mode":
-                if (configBoolean("settings.developer_mode")) {
-                    booleanSet("settings.developer_mode", false);
-                } else {
-                    booleanSet("settings.developer_mode", true);
-                }
+                booleanSet("settings.developer_mode", !configBoolean("settings.developer_mode"));
                 saveAndReload();
                 break;
             case "§cBack":
@@ -84,116 +72,60 @@ public class GUIListener extends Manager {
                 break;
             // Combat Settings GUI
             case "§6Old PvP":
-                if (configBoolean("combat.settings.old_pvp")) {
-                    booleanSet("combat.settings.old_pvp", false);
-                } else {
-                    booleanSet("combat.settings.old_pvp", true);
-                }
+                booleanSet("combat.settings.old_pvp", !configBoolean("combat.settings.old_pvp"));
                 saveAndReload();
                 break;
             case "§6Old Weapon Damage":
-                if (configBoolean("combat.settings.old_weapon_damage")) {
-                    booleanSet("combat.settings.old_weapon_damage", false);
-                } else {
-                    booleanSet("combat.settings.old_weapon_damage", true);
-                }
+                booleanSet("combat.settings.old_weapon_damage", !configBoolean("combat.settings.old_weapon_damage"));
                 saveAndReload();
                 break;
             case "§6Old Tool Damage":
-                if (configBoolean("combat.settings.old_tool_damage")) {
-                    booleanSet("combat.settings.old_tool_damage", false);
-                } else {
-                    booleanSet("combat.settings.old_tool_damage", true);
-                }
+                booleanSet("combat.settings.old_tool_damage", !configBoolean("combat.settings.old_tool_damage"));
                 saveAndReload();
                 break;
             case "§6Old Sharpness":
-                if (configBoolean("combat.settings.old_sharpness")) {
-                    booleanSet("combat.settings.old_sharpness", false);
-                } else {
-                    booleanSet("combat.settings.old_sharpness", true);
-                }
+                booleanSet("combat.settings.old_sharpness", !configBoolean("combat.settings.old_sharpness"));
                 saveAndReload();
                 break;
             case "§6Disable Sweep Attacks":
-                if (configBoolean("combat.settings.disable_sweep_attacks")) {
-                    booleanSet("combat.settings.disable_sweep_attacks", false);
-                } else {
-                    booleanSet("combat.settings.disable_sweep_attacks", true);
-                }
+                booleanSet("combat.settings.disable_sweep_attacks.enabled", !configBoolean("combat.settings.disable_sweep_attacks.enabled"));
                 saveAndReload();
                 break;
             case "§6Disable Arrow Boost":
-                if (configBoolean("combat.settings.disable_arrow_boost")) {
-                    booleanSet("combat.settings.disable_arrow_boost", false);
-                } else {
-                    booleanSet("combat.settings.disable_arrow_boost", true);
-                }
+                booleanSet("combat.settings.disable_arrow_boost", !configBoolean("combat.settings.disable_arrow_boost"));
                 saveAndReload();
                 break;
             case "§6Old Player Regen":
-                if (configBoolean("combat.settings.old_player_regen")) {
-                    booleanSet("combat.settings.old_player_regen", false);
-                } else {
-                    booleanSet("combat.settings.old_player_regen", true);
-                }
+                booleanSet("combat.settings.old_player_regen", !configBoolean("combat.settings.old_player_regen"));
                 saveAndReload();
                 break;
             // General GUI Settings
             case "§6Golden Apple Cooldown":
-                if (configBoolean("golden_apple_cooldown.golden_apple.enabled")) {
-                    booleanSet("golden_apple_cooldown.golden_apple.enabled", false);
-                } else {
-                    booleanSet("golden_apple_cooldown.golden_apple.enabled", true);
-                }
+                booleanSet("golden_apple_cooldown.golden_apple.enabled", !configBoolean("golden_apple_cooldown.golden_apple.enabled"));
                 saveAndReload();
                 break;
             case "§6Enchanted Golden Apple Cooldown":
-                if (configBoolean("golden_apple_cooldown.enchanted_golden_apple.enabled")) {
-                    booleanSet("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
-                } else {
-                    booleanSet("golden_apple_cooldown.enchanted_golden_apple.enabled", true);
-                }
+                booleanSet("golden_apple_cooldown.enchanted_golden_apple.enabled", !configBoolean("golden_apple_cooldown.enchanted_golden_apple.enabled"));
                 saveAndReload();
                 break;
             case "§6Disabled Items":
-                if (configBoolean("disabled_items.enabled")) {
-                    booleanSet("disabled_items.enabled", false);
-                } else {
-                    booleanSet("disabled_items.enabled", true);
-                }
+                booleanSet("disabled_items.enabled", !configBoolean("disabled_items.enabled"));
                 saveAndReload();
                 break;
             case "§6Disable Item Frame Rotation":
-                if (configBoolean("disable_item_frame_rotation.enabled")) {
-                    booleanSet("disable_item_frame_rotation.enabled", false);
-                } else {
-                    booleanSet("disable_item_frame_rotation.enabled", true);
-                }
+                booleanSet("disable_item_frame_rotation.enabled", !configBoolean("disable_item_frame_rotation.enabled"));
                 saveAndReload();
                 break;
             case "§6Disable Offhand":
-                if (configBoolean("disable_offhand.enabled")) {
-                    booleanSet("disable_offhand.enabled", false);
-                } else {
-                    booleanSet("disable_offhand.enabled", true);
-                }
+                booleanSet("disable_offhand.enabled", !configBoolean("disable_offhand.enabled"));
                 saveAndReload();
                 break;
             case "§6Projectile Fixer":
-                if (configBoolean("fixes.projectile_fixer")) {
-                    booleanSet("fixes.projectile_fixer", false);
-                } else {
-                    booleanSet("fixes.projectile_fixer", true);
-                }
+                booleanSet("fixes.projectile_fixer", !configBoolean("fixes.projectile_fixer"));
                 saveAndReload();
                 break;
             case "§6Custom Player Health":
-                if (configBoolean("custom.player_health.enabled")) {
-                    booleanSet("custom.player_health.enabled", false);
-                } else {
-                    booleanSet("custom.player_health.enabled", true);
-                }
+                booleanSet("custom.player_health.enabled", !configBoolean("custom.player_health.enabled"));
                 saveAndReload();
                 break;
         }

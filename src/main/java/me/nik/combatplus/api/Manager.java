@@ -62,6 +62,10 @@ public abstract class Manager implements Listener {
         return false;
     }
 
+    public boolean ignoreSweepingEdge() {
+        return configBoolean("combat.settings.disable_sweep_attacks.ignore_sweeping_edge");
+    }
+
     public boolean configBoolean(String booleans) {
         return Config.get().getBoolean(booleans);
     }

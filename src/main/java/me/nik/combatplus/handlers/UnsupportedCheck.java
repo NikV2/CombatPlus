@@ -25,8 +25,8 @@ public class UnsupportedCheck extends Manager {
             if (configBoolean("combat.settings.old_sharpness")) {
                 booleanSet("combat.settings.old_sharpness", false);
             }
-            if (configBoolean("combat.settings.disable_sweep_attacks")) {
-                booleanSet("combat.settings.disable_sweep_attacks", false);
+            if (configBoolean("combat.settings.disable_sweep_attacks.enabled")) {
+                booleanSet("combat.settings.disable_sweep_attacks.enabled", false);
             }
             if (configBoolean("combat.settings.old_player_regen")) {
                 booleanSet("combat.settings.old_player_regen", false);
@@ -41,7 +41,7 @@ public class UnsupportedCheck extends Manager {
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
         } else if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")) {
-            booleanSet("combat.settings.disable_sweep_attacks", false);
+            booleanSet("combat.settings.disable_sweep_attacks.enabled", false);
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_sweep_attack"));

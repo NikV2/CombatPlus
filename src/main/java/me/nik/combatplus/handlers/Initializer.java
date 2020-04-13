@@ -19,7 +19,7 @@ public class Initializer extends Manager {
         } else {
             System.out.println(Messenger.message("console.attribute_modifiers_off"));
         }
-        if (configBoolean("combat.settings.old_weapon_damage") || configBoolean("combat.settings.old_tool_damage") || configBoolean("combat.settings.disable_sweep_attacks")) {
+        if (configBoolean("combat.settings.old_weapon_damage") || configBoolean("combat.settings.old_tool_damage") || configBoolean("combat.settings.disable_sweep_attacks.enabled")) {
             registerEvent(new DamageModifiers(plugin));
             System.out.println(Messenger.message("console.modifiers_on"));
         } else {

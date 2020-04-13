@@ -63,7 +63,8 @@ public class Config {
         Config.get().addDefault("combat.settings.old_weapon_damage", true);
         Config.get().addDefault("combat.settings.old_tool_damage", true);
         Config.get().addDefault("combat.settings.old_sharpness", true);
-        Config.get().addDefault("combat.settings.disable_sweep_attacks", true);
+        Config.get().addDefault("combat.settings.disable_sweep_attacks.enabled", true);
+        Config.get().addDefault("combat.settings.disable_sweep_attacks.ignore_sweeping_edge", false);
         Config.get().addDefault("combat.settings.disable_arrow_boost", true);
         Config.get().addDefault("combat.settings.old_player_regen", true);
         Config.get().addDefault("combat.settings.disabled_worlds", combatlist);
