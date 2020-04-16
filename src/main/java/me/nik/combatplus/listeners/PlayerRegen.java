@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -17,11 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerRegen extends Manager {
-    private Map<UUID, Long> healTimes = new HashMap<>();
-
-    public PlayerRegen(CombatPlus plugin) {
-        super(plugin);
-    }
+    private final Map<UUID, Long> healTimes = new HashMap<>();
 
     // This Listener Makes the player's health regen work just like in 1.8
 

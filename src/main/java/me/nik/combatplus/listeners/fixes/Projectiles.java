@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners.fixes;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -14,9 +13,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class Projectiles extends Manager {
-    public Projectiles(CombatPlus plugin) {
-        super(plugin);
-    }
 
     // This Module Makes Arrows Go Straight (To where they're supposed to land)
     // Removes Randomness

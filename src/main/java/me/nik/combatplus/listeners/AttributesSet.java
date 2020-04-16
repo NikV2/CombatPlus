@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
@@ -13,9 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class AttributesSet extends Manager {
-    public AttributesSet(CombatPlus plugin) {
-        super(plugin);
-    }
 
     // Changes the attribute of the player to the Old Attack Speed (On Join)
 
@@ -23,18 +19,18 @@ public class AttributesSet extends Manager {
     public void onJoin(PlayerJoinEvent e) {
         if (configBoolean("combat.settings.old_pvp")) {
             final Player player = e.getPlayer();
-            new SetAttackSpeed(plugin).setAttackSpd(player);
+            new SetAttackSpeed().setAttackSpd(player);
         } else {
             final Player player = e.getPlayer();
-            new ResetStats(plugin).resetAttackSpeed(player);
+            new ResetStats().resetAttackSpeed(player);
         }
 
         if (configBoolean("custom.player_health.enabled")) {
             final Player player = e.getPlayer();
-            new SetCustomHealth(plugin).setHealth(player);
+            new SetCustomHealth().setHealth(player);
         } else {
             final Player player = e.getPlayer();
-            new ResetStats(plugin).resetMaxHealth(player);
+            new ResetStats().resetMaxHealth(player);
         }
 
     }
@@ -44,11 +40,11 @@ public class AttributesSet extends Manager {
     public void onLeave(PlayerQuitEvent e) {
         if (configBoolean("combat.settings.old_pvp")) {
             final Player player = e.getPlayer();
-            new ResetStats(plugin).resetAttackSpeed(player);
+            new ResetStats().resetAttackSpeed(player);
         }
         if (configBoolean("custom.player_health.enabled")) {
             final Player player = e.getPlayer();
-            new ResetStats(plugin).resetMaxHealth(player);
+            new ResetStats().resetMaxHealth(player);
         }
     }
 
@@ -58,6 +54,6 @@ public class AttributesSet extends Manager {
     public void onWorldChange(PlayerChangedWorldEvent e) {
         if (!configBoolean("combat.settings.old_pvp")) return;
         final Player player = e.getPlayer();
-        new SetAttackSpeed(plugin).setAttackSpd(player);
+        new SetAttackSpeed().setAttackSpd(player);
     }
 }

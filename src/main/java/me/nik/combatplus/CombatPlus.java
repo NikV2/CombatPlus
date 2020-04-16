@@ -20,8 +20,11 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
+    private static CombatPlus instance;
+
     @Override
     public void onEnable() {
+        instance = this;
         //Load Files
         Config.setup();
         Config.addDefaults();
@@ -40,32 +43,32 @@ public final class CombatPlus extends JavaPlugin {
         System.out.println();
 
         //Unsupported Version Checker
-        new UnsupportedCheck(this).check();
+        new UnsupportedCheck().check();
 
         //Load Commands
-        getCommand("combatplus").setExecutor(new CommandManager(this));
+        getCommand("combatplus").setExecutor(new CommandManager());
 
         //Load Listeners
-        new Initializer(this).initialize();
+        new Initializer().initialize();
 
         //Load Player Stats to allow reloading availability
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetAttackSpeed(this).setAttackSpd(player);
+                new SetAttackSpeed().setAttackSpd(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats(this).resetAttackSpeed(player);
+                new ResetStats().resetAttackSpeed(player);
             });
         }
 
         if (Config.get().getBoolean("custom.player_health.enabled")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetCustomHealth(this).setHealth(player);
+                new SetCustomHealth().setHealth(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats(this).resetMaxHealth(player);
+                new ResetStats().resetMaxHealth(player);
             });
         }
 
@@ -99,5 +102,9 @@ public final class CombatPlus extends JavaPlugin {
         Lang.reload();
         Lang.save();
         System.out.println(Messenger.message("console.disabled"));
+    }
+
+    public static CombatPlus getInstance() {
+        return instance;
     }
 }

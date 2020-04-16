@@ -24,11 +24,7 @@ public class GUIManager {
     private static Inventory combatGUI;
     private static Inventory generalGUI;
 
-    private CombatPlus plugin;
-
-    public GUIManager(CombatPlus plugin) {
-        this.plugin = plugin;
-    }
+    private final CombatPlus plugin = CombatPlus.getInstance();
 
     public void openMainGUI(Player p) {
         Inventory mainGUI = Bukkit.createInventory(new CombatPlusHolder(), 36, Messenger.format(Lang.get().getString("gui.main")));

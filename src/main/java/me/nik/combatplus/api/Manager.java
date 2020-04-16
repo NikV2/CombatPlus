@@ -8,12 +8,9 @@ import org.bukkit.event.Listener;
 
 import java.util.List;
 
-public abstract class Manager implements Listener {
-    public CombatPlus plugin;
+public class Manager implements Listener {
 
-    public Manager(CombatPlus plugin) {
-        this.plugin = plugin;
-    }
+    protected CombatPlus plugin = CombatPlus.getInstance();
 
     public boolean gappleDisabledWorlds(Player player) {
         for (String world : configStringList("golden_apple_cooldown.disabled_worlds")) {
@@ -76,10 +73,6 @@ public abstract class Manager implements Listener {
 
     public double configDouble(String doubles) {
         return Config.get().getDouble(doubles);
-    }
-
-    public String configString(String string) {
-        return Config.get().getString(string);
     }
 
     public List<String> configStringList(String stringList) {

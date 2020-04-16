@@ -1,6 +1,5 @@
 package me.nik.combatplus.commands.subcommands;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.GUIManager;
 import me.nik.combatplus.commands.SubCommand;
 import me.nik.combatplus.utils.Messenger;
@@ -9,12 +8,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class Menu extends SubCommand {
-
-    private CombatPlus plugin;
-
-    public Menu(CombatPlus plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public String getName() {
@@ -37,7 +30,7 @@ public class Menu extends SubCommand {
             if (!player.hasPermission("cp.admin")) {
                 player.sendMessage(Messenger.message("no_perm"));
             } else {
-                new GUIManager(plugin).openMainGUI(player);
+                new GUIManager().openMainGUI(player);
             }
         }
     }

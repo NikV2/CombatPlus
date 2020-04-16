@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -15,12 +14,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class EnchantedGoldenApple extends Manager {
-    private HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
-    private int cdtime = configInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
-
-    public EnchantedGoldenApple(CombatPlus plugin) {
-        super(plugin);
-    }
+    private final HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
+    private final int cdtime = configInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
 
     private void taskRun(PlayerItemConsumeEvent e) {
         cooldown.put(e.getPlayer().getUniqueId(), System.currentTimeMillis());

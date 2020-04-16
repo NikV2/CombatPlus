@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -15,9 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class DamageModifiers extends Manager {
-    public DamageModifiers(CombatPlus plugin) {
-        super(plugin);
-    }
 
     private void disableSweep(EntityDamageEvent e, Entity player, ItemStack handItem) {
         if (handItem.containsEnchantment(Enchantment.SWEEPING_EDGE) && ignoreSweepingEdge()) return;

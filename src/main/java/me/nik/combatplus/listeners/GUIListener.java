@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.GUIManager;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.handlers.CombatPlusHolder;
@@ -17,10 +16,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class GUIListener extends Manager {
 
-    public GUIListener(CombatPlus plugin) {
-        super(plugin);
-    }
-
     @EventHandler(priority = EventPriority.NORMAL)
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
@@ -32,15 +27,15 @@ public class GUIListener extends Manager {
             // Main GUI
             case "§6Plugin Settings":
                 p.closeInventory();
-                new GUIManager(plugin).openPluginGUI(p);
+                new GUIManager().openPluginGUI(p);
                 break;
             case "§eCombat Settings":
                 p.closeInventory();
-                new GUIManager(plugin).openCombatGUI(p);
+                new GUIManager().openCombatGUI(p);
                 break;
             case "§aGeneral Settings":
                 p.closeInventory();
-                new GUIManager(plugin).openGeneralGUI(p);
+                new GUIManager().openGeneralGUI(p);
                 break;
             case "§bLooking for Support?":
                 p.closeInventory();
@@ -68,7 +63,7 @@ public class GUIListener extends Manager {
                 break;
             case "§cBack":
                 p.closeInventory();
-                new GUIManager(plugin).openMainGUI(p);
+                new GUIManager().openMainGUI(p);
                 break;
             // Combat Settings GUI
             case "§6Old PvP":

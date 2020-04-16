@@ -14,14 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager implements TabExecutor {
-    private CombatPlus plugin;
+    private final CombatPlus plugin = CombatPlus.getInstance();
 
-    private ArrayList<SubCommand> subCommands = new ArrayList<>();
+    private final ArrayList<SubCommand> subCommands = new ArrayList<>();
 
-    public CommandManager(CombatPlus plugin) {
-        this.plugin = plugin;
-        subCommands.add(new Menu(plugin));
-        subCommands.add(new Reload(plugin));
+    public CommandManager() {
+        subCommands.add(new Menu());
+        subCommands.add(new Reload());
     }
 
     @Override
