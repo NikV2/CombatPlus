@@ -17,6 +17,8 @@ permissions:
   cp.admin:
     description: Gives access to all admin commands
     default: op
+    children:
+      cp.debug: true
   cp.bypass.*:
     description: Gives access to bypass all the bypass-able settings in the plugin
     default: false
@@ -40,4 +42,7 @@ permissions:
     default: false
   cp.bypass.bowboost:
     description: Gives access to bypass the bow boost disabled option
+    default: false
+  cp.debug:
+    description: See debug messages
     default: false

@@ -54,7 +54,7 @@ public class Manager implements Listener {
 
     public boolean debug(Player player) {
         if (configBoolean("settings.developer_mode")) {
-            return player.hasPermission("cp.admin");
+            return player.hasPermission("cp.debug");
         }
         return false;
     }
