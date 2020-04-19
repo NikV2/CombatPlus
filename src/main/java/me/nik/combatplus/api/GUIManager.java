@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class GUIManager {
 
-    private static Inventory mainGUI;
-    private static Inventory pluginGUI;
-    private static Inventory combatGUI;
-    private static Inventory generalGUI;
+    private Inventory mainGUI;
+    private Inventory pluginGUI;
+    private Inventory combatGUI;
+    private Inventory generalGUI;
 
     private final CombatPlus plugin = CombatPlus.getInstance();
 
@@ -355,6 +355,8 @@ public class GUIManager {
                 epearlLore.add(ChatColor.WHITE + "Between using Ender Pearls?");
                 epearlLore.add("");
                 epearlLore.add(ChatColor.GRAY + "More options in the Config.yml");
+                epearl_meta.setLore(epearlLore);
+                epearl.setItemMeta(epearl_meta);
 
                 ItemStack back = new ItemStack(Material.BARRIER, 1);
                 ItemMeta back_meta = back.getItemMeta();
