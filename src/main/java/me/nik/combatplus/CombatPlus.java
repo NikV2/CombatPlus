@@ -219,10 +219,13 @@ public final class CombatPlus extends JavaPlugin {
             System.out.println(Messenger.message("console.unsupported_version"));
         } else if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
+            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.save();
             Config.reload();
+            System.out.println(Messenger.message("console.unsupported_version"));
             System.out.println(Messenger.message("console.unsupported_sweep_attack"));
-        } else if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10") || Bukkit.getVersion().contains("1.11") || Bukkit.getVersion().contains("1.12")) {
+        } else if (Bukkit.getVersion().contains("1.11") || Bukkit.getVersion().contains("1.12")) {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.save();
