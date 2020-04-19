@@ -73,6 +73,8 @@ public class Config {
         Config.get().addDefault("golden_apple_cooldown.enchanted_golden_apple.enabled", true);
         Config.get().addDefault("golden_apple_cooldown.enchanted_golden_apple.cooldown", 20);
         Config.get().addDefault("golden_apple_cooldown.disabled_worlds", gapplelist);
+        Config.get().addDefault("enderpearl_cooldown.enabled", true);
+        Config.get().addDefault("enderpearl_cooldown.cooldown", 10);
         Config.get().addDefault("disabled_items.enabled", false);
         Config.get().addDefault("disabled_items.items", itemslist);
         Config.get().addDefault("disabled_items.disabled_worlds", craftingworlds);

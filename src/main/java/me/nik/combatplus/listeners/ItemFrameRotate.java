@@ -13,9 +13,8 @@ public class ItemFrameRotate extends Manager {
 
     // This Listener removes the ability to rotate item frames
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onRotate(PlayerInteractEntityEvent e) {
-        if (e.isCancelled()) return;
         if (!(e.getRightClicked() instanceof ItemFrame)) return;
         if (e.getPlayer().hasPermission("cp.bypass.rotate")) return;
         if (itemFrameRotationDisabledWorlds(e.getPlayer())) return;

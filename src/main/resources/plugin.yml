@@ -1,5 +1,5 @@
 name: CombatPlus
-version: 1.1.3
+version: 1.1.4
 main: me.nik.combatplus.CombatPlus
 api-version: 1.13
 authors: [Nik]
@@ -23,6 +23,7 @@ permissions:
     description: Gives access to bypass all the bypass-able settings in the plugin
     default: false
     children:
+      cp.bypass.epearl: true
       cp.bypass.gapple: true
       cp.bypass.items: true
       cp.bypass.rotate: true
@@ -45,4 +46,7 @@ permissions:
     default: false
   cp.debug:
     description: See debug messages
+    default: false
+  cp.bypass.epearl:
+    description: Gives access to bypass the ender pearl cooldown
     default: false

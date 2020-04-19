@@ -46,6 +46,7 @@ public class Lang {
         Lang.get().addDefault("reloaded", "&fYou have successfully reloaded the plugin!");
         Lang.get().addDefault("golden_apple_cooldown", "&fYou cannot eat a Golden Apple yet, You must wait ");
         Lang.get().addDefault("enchanted_golden_apple_cooldown", "&fYou cannot eat an Enchanted Golden Apple yet, You must wait ");
+        Lang.get().addDefault("enderpearl_cooldown", "&fYou cannot use an Ender Pearl yet, You must wait ");
         Lang.get().addDefault("cannot_craft_this", "&cYou cannot craft this item!");
         Lang.get().addDefault("gui.main", "&c&lCombatPlus Menu");
         Lang.get().addDefault("gui.plugin", "&c&lPlugin Settings");
@@ -65,6 +66,8 @@ public class Lang {
         Lang.get().addDefault("console.golden_apple_cooldown_off", "&f&lGolden Apple Cooldown Module Is Turned Off, Skipping.");
         Lang.get().addDefault("console.enchanted_golden_apple_cooldown_on", "&f&lInitialized Enchanted Golden Apple Cooldown Module");
         Lang.get().addDefault("console.enchanted_golden_apple_cooldown_off", "&f&lEnchanted Golden Apple Cooldown Module Is Turned Off, Skipping.");
+        Lang.get().addDefault("console.enderpearl_cooldown_on", "&f&lInitialized Ender Pearl Cooldown Module");
+        Lang.get().addDefault("console.enderpearl_cooldown_off", "&f&lEnder Pearl Cooldown Module Is Turned Off, Skipping.");
         Lang.get().addDefault("console.old_regen_on", "&f&lInitialized Old Player Regeneration Listener");
         Lang.get().addDefault("console.old_regen_off", "&f&lOld Player Regeneration Listener Is Turned Off, Skipping.");
         Lang.get().addDefault("console.disabled_items_on", "&f&lInitialized Disabled Items Manager");
