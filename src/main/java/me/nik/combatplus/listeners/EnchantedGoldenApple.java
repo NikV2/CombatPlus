@@ -45,7 +45,7 @@ public class EnchantedGoldenApple extends Manager {
             } else {
                 taskRun(e);
                 if (debug(player)) {
-                    player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Eating Canceled: " + "True" + ChatColor.GREEN + " Player: " + player.getName() + ChatColor.YELLOW + " Added to cooldown: " + cooldown.containsKey(p)));
+                    player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Enchanted Golden Apple Cooldown:" + ChatColor.GREEN + " Player: " + player.getName() + ChatColor.YELLOW + " Added to cooldown: " + cooldown.containsKey(p)));
                 }
             }
         }

@@ -29,25 +29,30 @@ public class Enderpearl extends Manager {
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
 
+    private boolean holdsEnderPearl(Player p) {
+        return p.getInventory().getItemInMainHand().getType() == Material.ENDER_PEARL || p.getInventory().getItemInOffHand().getType() == Material.ENDER_PEARL;
+    }
+
     // This Listener Adds a cooldown between using Ender Pearls
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onInteract(PlayerInteractEvent e) {
-        if (!configBoolean("enderpearl_cooldown.enabled")) return;
-        if (!(e.getAction() == Action.RIGHT_CLICK_AIR || !(e.getAction() == Action.RIGHT_CLICK_BLOCK))) return;
-        Player p = e.getPlayer();
-        if (!(p.getInventory().getItemInMainHand().getType() == Material.ENDER_PEARL || !(p.getInventory().getItemInOffHand().getType() == Material.ENDER_PEARL)))
-            return;
-        if (p.hasPermission("cp.bypass.epearl")) return;
-        UUID pUUID = p.getUniqueId();
-        if (cooldown.containsKey(pUUID)) {
-            e.setCancelled(true);
-            long secondsLeft = ((cooldown.get(pUUID) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-            p.sendMessage(Messenger.message("enderpearl_cooldown") + secondsLeft + " Seconds.");
-        } else {
-            taskRun(e);
-            if (debug(p)) {
-                p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Ender Pearl Cooldown: " + ChatColor.GREEN + "Added to cooldown: True" + ChatColor.GOLD + " Player: " + p.getName()));
+        if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            Player p = e.getPlayer();
+            if (holdsEnderPearl(p)) {
+                if (p.hasPermission("cp.bypass.epearl")) return;
+                UUID pUUID = p.getUniqueId();
+                if (cooldown.containsKey(pUUID)) {
+                    e.setCancelled(true);
+                    p.updateInventory();
+                    long secondsLeft = ((cooldown.get(pUUID) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                    p.sendMessage(Messenger.message("enderpearl_cooldown") + secondsLeft + " Seconds.");
+                } else {
+                    taskRun(e);
+                    if (debug(p)) {
+                        p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Ender Pearl Cooldown: " + ChatColor.GREEN + "Added to cooldown: True" + ChatColor.GOLD + " Player: " + p.getName()));
+                    }
+                }
             }
         }
     }

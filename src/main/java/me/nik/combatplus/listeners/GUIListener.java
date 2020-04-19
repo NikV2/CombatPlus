@@ -123,6 +123,10 @@ public class GUIListener extends Manager {
                 booleanSet("custom.player_health.enabled", !configBoolean("custom.player_health.enabled"));
                 saveAndReload();
                 break;
+            case "§6Ender Pearl Cooldown":
+                booleanSet("enderpearl_cooldown.enabled", !configBoolean("enderpearl_cooldown.enabled"));
+                saveAndReload();
+                break;
         }
         e.setCancelled(true);
         if (e.getClick() == ClickType.SHIFT_RIGHT) {

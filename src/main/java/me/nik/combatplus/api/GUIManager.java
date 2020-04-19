@@ -343,6 +343,18 @@ public class GUIManager {
                 healthLore.add(ChatColor.GRAY + "More options in the Config.yml");
                 health_meta.setLore(healthLore);
                 health.setItemMeta(health_meta);
+                //epearl cooldown
+                ItemStack epearl = new ItemStack(Material.PAPER, 1);
+                ItemMeta epearl_meta = epearl.getItemMeta();
+                epearl_meta.setDisplayName("§6Ender Pearl Cooldown");
+                ArrayList<String> epearlLore = new ArrayList<>();
+                epearlLore.add("");
+                epearlLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("enderpearl_cooldown.enabled"));
+                epearlLore.add("");
+                epearlLore.add(ChatColor.WHITE + "Would you like a Cooldown");
+                epearlLore.add(ChatColor.WHITE + "Between using Ender Pearls?");
+                epearlLore.add("");
+                epearlLore.add(ChatColor.GRAY + "More options in the Config.yml");
 
                 ItemStack back = new ItemStack(Material.BARRIER, 1);
                 ItemMeta back_meta = back.getItemMeta();
@@ -353,9 +365,10 @@ public class GUIManager {
                 generalGUI.setItem(12, gappleE);
                 generalGUI.setItem(14, disItems);
                 generalGUI.setItem(16, health);
-                generalGUI.setItem(29, disRotate);
-                generalGUI.setItem(31, offh);
-                generalGUI.setItem(33, proj);
+                generalGUI.setItem(28, disRotate);
+                generalGUI.setItem(30, offh);
+                generalGUI.setItem(32, proj);
+                generalGUI.setItem(34, epearl);
                 generalGUI.setItem(49, back);
             }
         }.runTaskTimer(plugin, 1, 5);
