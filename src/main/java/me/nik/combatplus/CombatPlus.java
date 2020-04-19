@@ -180,9 +180,9 @@ public final class CombatPlus extends JavaPlugin {
         }
         if (Config.get().getBoolean("enderpearl_cooldown.enabled")) {
             registerEvent(new Enderpearl());
-            System.out.println(Messenger.message("enderpearl_cooldown_on"));
+            System.out.println(Messenger.message("console.enderpearl_cooldown_on"));
         } else {
-            System.out.println(Messenger.message("enderpearl_cooldown_off"));
+            System.out.println(Messenger.message("console.enderpearl_cooldown_off"));
         }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener());
