@@ -26,7 +26,7 @@ public class Criticals implements Listener {
             if ((p.getLocation().getY() % 1.0 == 0 || p.getLocation().getY() % 0.5 == 0) && p.getLocation().clone().subtract(0, 1.0, 0).getBlock().getType().isSolid()) {
                 e.setCancelled(true);
                 if (debug(p)) {
-                    p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Criticals: " + "Blocked: true" + ChatColor.GREEN + " Y: " + p.getLocation().getY()));
+                    p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Criticals: " + "Blocked: true" + ChatColor.GREEN + " Velocity: " + p.getVelocity().getY()));
                 }
             }
         }
