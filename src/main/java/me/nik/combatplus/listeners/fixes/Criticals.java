@@ -16,7 +16,9 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Criticals implements Listener {
 
-    @EventHandler(priority = EventPriority.LOW)
+    // Patches the Criticals Cheat if a player crits while he's on the ground
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public static void onCritical(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player) || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return;
         Player p = (Player) e.getDamager();

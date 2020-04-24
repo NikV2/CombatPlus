@@ -17,7 +17,7 @@ public class Projectiles extends Manager {
     // This Module Makes Projectiles Go Straight (To where they're supposed to land)
     // Removes Randomness
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onProjectileShoot(ProjectileLaunchEvent e) {
         final Projectile projectile = e.getEntity();
         final ProjectileSource holder = projectile.getShooter();

@@ -168,12 +168,13 @@ public final class CombatPlus extends JavaPlugin {
             System.out.println(Messenger.message("console.disable_offhand_off"));
         }
         if (isEnabled("fixes.projectile_fixer") || isEnabled("fixes.invalid_criticals")) {
-            System.out.println(Messenger.message("console.fixes_on"));
             if (isEnabled("fixes.projectile_fixer")) {
                 registerEvent(new Projectiles());
-            } else if (isEnabled("fixes.invalid_criticals")) {
+            }
+            if (isEnabled("fixes.invalid_criticals")) {
                 registerEvent(new Criticals());
             }
+            System.out.println(Messenger.message("console.fixes_on"));
         } else {
             System.out.println(Messenger.message("console.fixes_off"));
         }
