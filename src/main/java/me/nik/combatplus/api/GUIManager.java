@@ -23,35 +23,36 @@ public class GUIManager {
     private Inventory pluginGUI;
     private Inventory combatGUI;
     private Inventory generalGUI;
+    private Inventory generalTwoGUI;
 
     private final CombatPlus plugin = CombatPlus.getInstance();
 
     public void openMainGUI(Player p) {
         Inventory mainGUI = Bukkit.createInventory(new CombatPlusHolder(), 36, Messenger.format(Lang.get().getString("gui.main")));
         ItemStack settings = new ItemStack(Material.BOOK, 1);
-        ItemMeta settings_meta = settings.getItemMeta();
-        settings_meta.setDisplayName("§6Plugin Settings");
-        settings.setItemMeta(settings_meta);
+        ItemMeta settingsMeta = settings.getItemMeta();
+        settingsMeta.setDisplayName("§6Plugin Settings");
+        settings.setItemMeta(settingsMeta);
 
         ItemStack combatSettings = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
-        ItemMeta combatSettings_meta = combatSettings.getItemMeta();
-        combatSettings_meta.setDisplayName("§eCombat Settings");
-        combatSettings.setItemMeta(combatSettings_meta);
+        ItemMeta combatSettingsMeta = combatSettings.getItemMeta();
+        combatSettingsMeta.setDisplayName("§eCombat Settings");
+        combatSettings.setItemMeta(combatSettingsMeta);
 
         ItemStack generalSettings = new ItemStack(Material.NAME_TAG, 1);
-        ItemMeta generalSettings_meta = generalSettings.getItemMeta();
-        generalSettings_meta.setDisplayName("§aGeneral Settings");
-        generalSettings.setItemMeta(generalSettings_meta);
+        ItemMeta generalSettingsMeta = generalSettings.getItemMeta();
+        generalSettingsMeta.setDisplayName("§aGeneral Settings");
+        generalSettings.setItemMeta(generalSettingsMeta);
 
         ItemStack support = new ItemStack(Material.DIAMOND, 1);
-        ItemMeta support_meta = support.getItemMeta();
-        support_meta.setDisplayName("§bLooking for Support?");
-        support.setItemMeta(support_meta);
+        ItemMeta supportMeta = support.getItemMeta();
+        supportMeta.setDisplayName("§bLooking for Support?");
+        support.setItemMeta(supportMeta);
 
         ItemStack close = new ItemStack(Material.BARRIER, 1);
-        ItemMeta close_meta = close.getItemMeta();
-        close_meta.setDisplayName("§cReload and Exit");
-        close.setItemMeta(close_meta);
+        ItemMeta closeMeta = close.getItemMeta();
+        closeMeta.setDisplayName("§cReload and Exit");
+        close.setItemMeta(closeMeta);
 
         mainGUI.setItem(31, close);
         mainGUI.setItem(16, support);
@@ -75,45 +76,45 @@ public class GUIManager {
                     return;
                 }
                 ItemStack checkUpdates = new ItemStack(Material.PAPER, 1);
-                ItemMeta checkUpdates_meta = checkUpdates.getItemMeta();
-                checkUpdates_meta.setDisplayName("§6Check for Updates");
+                ItemMeta checkUpdatesMeta = checkUpdates.getItemMeta();
+                checkUpdatesMeta.setDisplayName("§6Check for Updates");
                 ArrayList<String> updatesLore = new ArrayList<>();
                 updatesLore.add("");
                 updatesLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("settings.check_for_updates"));
                 updatesLore.add("");
                 updatesLore.add(ChatColor.WHITE + "Would you like the plugin");
                 updatesLore.add(ChatColor.WHITE + "To Check for Updates?");
-                checkUpdates_meta.setLore(updatesLore);
-                checkUpdates.setItemMeta(checkUpdates_meta);
+                checkUpdatesMeta.setLore(updatesLore);
+                checkUpdates.setItemMeta(checkUpdatesMeta);
 
                 ItemStack async = new ItemStack(Material.PAPER, 1);
-                ItemMeta async_meta = async.getItemMeta();
-                async_meta.setDisplayName("§6Run Asynchronously");
+                ItemMeta asyncMeta = async.getItemMeta();
+                asyncMeta.setDisplayName("§6Run Asynchronously");
                 ArrayList<String> asyncLore = new ArrayList<>();
                 asyncLore.add("");
                 asyncLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("settings.async"));
                 asyncLore.add("");
                 asyncLore.add(ChatColor.WHITE + "Would you like the plugin");
                 asyncLore.add(ChatColor.WHITE + "To run tasks Asynchronously?");
-                async_meta.setLore(asyncLore);
-                async.setItemMeta(async_meta);
+                asyncMeta.setLore(asyncLore);
+                async.setItemMeta(asyncMeta);
 
                 ItemStack dev = new ItemStack(Material.PAPER, 1);
-                ItemMeta dev_meta = dev.getItemMeta();
-                dev_meta.setDisplayName("§6Developer Mode");
+                ItemMeta devMeta = dev.getItemMeta();
+                devMeta.setDisplayName("§6Developer Mode");
                 ArrayList<String> devLore = new ArrayList<>();
                 devLore.add("");
                 devLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("settings.developer_mode"));
                 devLore.add("");
                 devLore.add(ChatColor.WHITE + "Would you like to receive");
                 devLore.add(ChatColor.WHITE + "Debugging Information?");
-                dev_meta.setLore(devLore);
-                dev.setItemMeta(dev_meta);
+                devMeta.setLore(devLore);
+                dev.setItemMeta(devMeta);
 
                 ItemStack back = new ItemStack(Material.BARRIER, 1);
-                ItemMeta back_meta = back.getItemMeta();
-                back_meta.setDisplayName("§cBack");
-                back.setItemMeta(back_meta);
+                ItemMeta backMeta = back.getItemMeta();
+                backMeta.setDisplayName("§cBack");
+                back.setItemMeta(backMeta);
 
                 pluginGUI.setItem(11, checkUpdates);
                 pluginGUI.setItem(13, async);
@@ -138,93 +139,93 @@ public class GUIManager {
                 }
                 //old att speed
                 ItemStack oldPvp = new ItemStack(Material.PAPER, 1);
-                ItemMeta oldPvp_meta = oldPvp.getItemMeta();
-                oldPvp_meta.setDisplayName("§6Old PvP");
+                ItemMeta oldPvpMeta = oldPvp.getItemMeta();
+                oldPvpMeta.setDisplayName("§6Old PvP");
                 ArrayList<String> oldPvpLore = new ArrayList<>();
                 oldPvpLore.add("");
                 oldPvpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_pvp"));
                 oldPvpLore.add("");
                 oldPvpLore.add(ChatColor.WHITE + "Would you like your server to use");
                 oldPvpLore.add(ChatColor.WHITE + "1.8 PvP Combat?");
-                oldPvp_meta.setLore(oldPvpLore);
-                oldPvp.setItemMeta(oldPvp_meta);
+                oldPvpMeta.setLore(oldPvpLore);
+                oldPvp.setItemMeta(oldPvpMeta);
                 //old wep dmg
                 ItemStack oldWepDmg = new ItemStack(Material.PAPER, 1);
-                ItemMeta oldWepDmg_meta = oldWepDmg.getItemMeta();
-                oldWepDmg_meta.setDisplayName("§6Old Weapon Damage");
+                ItemMeta oldWepDmgMeta = oldWepDmg.getItemMeta();
+                oldWepDmgMeta.setDisplayName("§6Old Weapon Damage");
                 ArrayList<String> oldWepDmgLore = new ArrayList<>();
                 oldWepDmgLore.add("");
                 oldWepDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_weapon_damage"));
                 oldWepDmgLore.add("");
                 oldWepDmgLore.add(ChatColor.WHITE + "Would you like Swords to Deal");
                 oldWepDmgLore.add(ChatColor.WHITE + "Damage just like in 1.8?");
-                oldWepDmg_meta.setLore(oldWepDmgLore);
-                oldWepDmg.setItemMeta(oldWepDmg_meta);
+                oldWepDmgMeta.setLore(oldWepDmgLore);
+                oldWepDmg.setItemMeta(oldWepDmgMeta);
                 //old tool dmg
                 ItemStack oldToolDmg = new ItemStack(Material.PAPER, 1);
-                ItemMeta oldToolDmg_meta = oldToolDmg.getItemMeta();
-                oldToolDmg_meta.setDisplayName("§6Old Tool Damage");
+                ItemMeta oldToolDmgMeta = oldToolDmg.getItemMeta();
+                oldToolDmgMeta.setDisplayName("§6Old Tool Damage");
                 ArrayList<String> oldToolDmgLore = new ArrayList<>();
                 oldToolDmgLore.add("");
                 oldToolDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_tool_damage"));
                 oldToolDmgLore.add("");
                 oldToolDmgLore.add(ChatColor.WHITE + "Would you like Tools to Deal");
                 oldToolDmgLore.add(ChatColor.WHITE + "Damage just like in 1.8?");
-                oldToolDmg_meta.setLore(oldToolDmgLore);
-                oldToolDmg.setItemMeta(oldToolDmg_meta);
+                oldToolDmgMeta.setLore(oldToolDmgLore);
+                oldToolDmg.setItemMeta(oldToolDmgMeta);
                 //old sharp
                 ItemStack oldSharp = new ItemStack(Material.PAPER, 1);
-                ItemMeta oldSharp_meta = oldSharp.getItemMeta();
-                oldSharp_meta.setDisplayName("§6Old Sharpness");
+                ItemMeta oldSharpMeta = oldSharp.getItemMeta();
+                oldSharpMeta.setDisplayName("§6Old Sharpness");
                 ArrayList<String> oldSharpLore = new ArrayList<>();
                 oldSharpLore.add("");
                 oldSharpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_sharpness"));
                 oldSharpLore.add("");
                 oldSharpLore.add(ChatColor.WHITE + "Would you like Sharpness");
                 oldSharpLore.add(ChatColor.WHITE + "To work just like in 1.8?");
-                oldSharp_meta.setLore(oldSharpLore);
-                oldSharp.setItemMeta(oldSharp_meta);
+                oldSharpMeta.setLore(oldSharpLore);
+                oldSharp.setItemMeta(oldSharpMeta);
                 //disable sweep
                 ItemStack disableSweep = new ItemStack(Material.PAPER, 1);
-                ItemMeta disableSweep_meta = disableSweep.getItemMeta();
-                disableSweep_meta.setDisplayName("§6Disable Sweep Attacks");
+                ItemMeta disableSweepMeta = disableSweep.getItemMeta();
+                disableSweepMeta.setDisplayName("§6Disable Sweep Attacks");
                 ArrayList<String> disableSweepLore = new ArrayList<>();
                 disableSweepLore.add("");
                 disableSweepLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.disable_sweep_attacks"));
                 disableSweepLore.add("");
                 disableSweepLore.add(ChatColor.WHITE + "Would you like to Disable");
                 disableSweepLore.add(ChatColor.WHITE + "Sweep Attacks?");
-                disableSweep_meta.setLore(disableSweepLore);
-                disableSweep.setItemMeta(disableSweep_meta);
+                disableSweepMeta.setLore(disableSweepLore);
+                disableSweep.setItemMeta(disableSweepMeta);
                 //bow boost
                 ItemStack disableBoost = new ItemStack(Material.PAPER, 1);
-                ItemMeta disableBoost_meta = disableBoost.getItemMeta();
-                disableBoost_meta.setDisplayName("§6Disable Arrow Boost");
+                ItemMeta disableBoostMeta = disableBoost.getItemMeta();
+                disableBoostMeta.setDisplayName("§6Disable Arrow Boost");
                 ArrayList<String> disableBoostLore = new ArrayList<>();
                 disableBoostLore.add("");
                 disableBoostLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.disable_arrow_boost"));
                 disableBoostLore.add("");
                 disableBoostLore.add(ChatColor.WHITE + "Would you like to Prevent");
                 disableBoostLore.add(ChatColor.WHITE + "Players from Boosting themselves?");
-                disableBoost_meta.setLore(disableBoostLore);
-                disableBoost.setItemMeta(disableBoost_meta);
+                disableBoostMeta.setLore(disableBoostLore);
+                disableBoost.setItemMeta(disableBoostMeta);
                 //old regen
                 ItemStack oldRegen = new ItemStack(Material.PAPER, 1);
-                ItemMeta oldRegen_meta = oldRegen.getItemMeta();
-                oldRegen_meta.setDisplayName("§6Old Player Regen");
+                ItemMeta oldRegenMeta = oldRegen.getItemMeta();
+                oldRegenMeta.setDisplayName("§6Old Player Regen");
                 ArrayList<String> oldRegenLore = new ArrayList<>();
                 oldRegenLore.add("");
                 oldRegenLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_player_regen"));
                 oldRegenLore.add("");
                 oldRegenLore.add(ChatColor.WHITE + "Would you like Regeneration");
                 oldRegenLore.add(ChatColor.WHITE + "To work just like in 1.8?");
-                oldRegen_meta.setLore(oldRegenLore);
-                oldRegen.setItemMeta(oldRegen_meta);
+                oldRegenMeta.setLore(oldRegenLore);
+                oldRegen.setItemMeta(oldRegenMeta);
 
                 ItemStack back = new ItemStack(Material.BARRIER, 1);
-                ItemMeta back_meta = back.getItemMeta();
-                back_meta.setDisplayName("§cBack");
-                back.setItemMeta(back_meta);
+                ItemMeta backMeta = back.getItemMeta();
+                backMeta.setDisplayName("§cBack");
+                back.setItemMeta(backMeta);
 
                 combatGUI.setItem(10, oldPvp);
                 combatGUI.setItem(12, oldWepDmg);
@@ -253,8 +254,8 @@ public class GUIManager {
                 }
                 //golden apple
                 ItemStack gapple = new ItemStack(Material.PAPER, 1);
-                ItemMeta gapple_meta = gapple.getItemMeta();
-                gapple_meta.setDisplayName("§6Golden Apple Cooldown");
+                ItemMeta gappleMeta = gapple.getItemMeta();
+                gappleMeta.setDisplayName("§6Golden Apple Cooldown");
                 ArrayList<String> gappleLore = new ArrayList<>();
                 gappleLore.add("");
                 gappleLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("golden_apple_cooldown.golden_apple.enabled"));
@@ -263,12 +264,12 @@ public class GUIManager {
                 gappleLore.add(ChatColor.WHITE + "Between eating Golden Apples?");
                 gappleLore.add("");
                 gappleLore.add(ChatColor.GRAY + "More options in the Config.yml");
-                gapple_meta.setLore(gappleLore);
-                gapple.setItemMeta(gapple_meta);
+                gappleMeta.setLore(gappleLore);
+                gapple.setItemMeta(gappleMeta);
                 //god apple
                 ItemStack gappleE = new ItemStack(Material.PAPER, 1);
-                ItemMeta gappleE_meta = gappleE.getItemMeta();
-                gappleE_meta.setDisplayName("§6Enchanted Golden Apple Cooldown");
+                ItemMeta gappleEMeta = gappleE.getItemMeta();
+                gappleEMeta.setDisplayName("§6Enchanted Golden Apple Cooldown");
                 ArrayList<String> gappleELore = new ArrayList<>();
                 gappleELore.add("");
                 gappleELore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("golden_apple_cooldown.enchanted_golden_apple.enabled"));
@@ -277,12 +278,12 @@ public class GUIManager {
                 gappleELore.add(ChatColor.WHITE + "Between eating Enchanted Golden Apples?");
                 gappleELore.add("");
                 gappleELore.add(ChatColor.GRAY + "More options in the Config.yml");
-                gappleE_meta.setLore(gappleELore);
-                gappleE.setItemMeta(gappleE_meta);
+                gappleEMeta.setLore(gappleELore);
+                gappleE.setItemMeta(gappleEMeta);
                 //disabled items
                 ItemStack disItems = new ItemStack(Material.PAPER, 1);
-                ItemMeta disItems_meta = disItems.getItemMeta();
-                disItems_meta.setDisplayName("§6Disabled Items");
+                ItemMeta disItemsMeta = disItems.getItemMeta();
+                disItemsMeta.setDisplayName("§6Disabled Items");
                 ArrayList<String> disItemsLore = new ArrayList<>();
                 disItemsLore.add("");
                 disItemsLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("disabled_items.enabled"));
@@ -291,48 +292,48 @@ public class GUIManager {
                 disItemsLore.add(ChatColor.WHITE + "Items from being Crafted?");
                 disItemsLore.add("");
                 disItemsLore.add(ChatColor.GRAY + "More options in the Config.yml");
-                disItems_meta.setLore(disItemsLore);
-                disItems.setItemMeta(disItems_meta);
+                disItemsMeta.setLore(disItemsLore);
+                disItems.setItemMeta(disItemsMeta);
                 //disable item frame rotation
                 ItemStack disRotate = new ItemStack(Material.PAPER, 1);
-                ItemMeta disRotate_meta = disRotate.getItemMeta();
-                disRotate_meta.setDisplayName("§6Disable Item Frame Rotation");
+                ItemMeta disRotateMeta = disRotate.getItemMeta();
+                disRotateMeta.setDisplayName("§6Disable Item Frame Rotation");
                 ArrayList<String> disRotateLore = new ArrayList<>();
                 disRotateLore.add("");
                 disRotateLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("disable_item_frame_rotation.enabled"));
                 disRotateLore.add("");
                 disRotateLore.add(ChatColor.WHITE + "Would you like to Prevent");
                 disRotateLore.add(ChatColor.WHITE + "Items inside Item Frames from Rotating?");
-                disRotate_meta.setLore(disRotateLore);
-                disRotate.setItemMeta(disRotate_meta);
+                disRotateMeta.setLore(disRotateLore);
+                disRotate.setItemMeta(disRotateMeta);
                 //disable offhand
                 ItemStack offh = new ItemStack(Material.PAPER, 1);
-                ItemMeta offh_meta = offh.getItemMeta();
-                offh_meta.setDisplayName("§6Disable Offhand");
+                ItemMeta offhMeta = offh.getItemMeta();
+                offhMeta.setDisplayName("§6Disable Offhand");
                 ArrayList<String> offhLore = new ArrayList<>();
                 offhLore.add("");
                 offhLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("disable_offhand.enabled"));
                 offhLore.add("");
                 offhLore.add(ChatColor.WHITE + "Would you like to Prevent");
                 offhLore.add(ChatColor.WHITE + "Players from using the Offhand?");
-                offh_meta.setLore(offhLore);
-                offh.setItemMeta(offh_meta);
+                offhMeta.setLore(offhLore);
+                offh.setItemMeta(offhMeta);
                 //projectile fixer
                 ItemStack proj = new ItemStack(Material.PAPER, 1);
-                ItemMeta proj_meta = proj.getItemMeta();
-                proj_meta.setDisplayName("§6Projectile Fixer");
+                ItemMeta projMeta = proj.getItemMeta();
+                projMeta.setDisplayName("§6Projectile Fixer");
                 ArrayList<String> projLore = new ArrayList<>();
                 projLore.add("");
                 projLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("fixes.projectile_fixer"));
                 projLore.add("");
                 projLore.add(ChatColor.WHITE + "Fixes a Bug with Projectiles");
                 projLore.add(ChatColor.WHITE + "Not always going straight");
-                proj_meta.setLore(projLore);
-                proj.setItemMeta(proj_meta);
+                projMeta.setLore(projLore);
+                proj.setItemMeta(projMeta);
                 //custom health
                 ItemStack health = new ItemStack(Material.PAPER, 1);
-                ItemMeta health_meta = health.getItemMeta();
-                health_meta.setDisplayName("§6Custom Player Health");
+                ItemMeta healthMeta = health.getItemMeta();
+                healthMeta.setDisplayName("§6Custom Player Health");
                 ArrayList<String> healthLore = new ArrayList<>();
                 healthLore.add("");
                 healthLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("custom.player_health.enabled"));
@@ -341,12 +342,12 @@ public class GUIManager {
                 healthLore.add(ChatColor.WHITE + "To have Customized Max Health?");
                 healthLore.add("");
                 healthLore.add(ChatColor.GRAY + "More options in the Config.yml");
-                health_meta.setLore(healthLore);
-                health.setItemMeta(health_meta);
+                healthMeta.setLore(healthLore);
+                health.setItemMeta(healthMeta);
                 //epearl cooldown
                 ItemStack epearl = new ItemStack(Material.PAPER, 1);
-                ItemMeta epearl_meta = epearl.getItemMeta();
-                epearl_meta.setDisplayName("§6Ender Pearl Cooldown");
+                ItemMeta epearlMeta = epearl.getItemMeta();
+                epearlMeta.setDisplayName("§6Ender Pearl Cooldown");
                 ArrayList<String> epearlLore = new ArrayList<>();
                 epearlLore.add("");
                 epearlLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("enderpearl_cooldown.enabled"));
@@ -355,13 +356,18 @@ public class GUIManager {
                 epearlLore.add(ChatColor.WHITE + "Between using Ender Pearls?");
                 epearlLore.add("");
                 epearlLore.add(ChatColor.GRAY + "More options in the Config.yml");
-                epearl_meta.setLore(epearlLore);
-                epearl.setItemMeta(epearl_meta);
+                epearlMeta.setLore(epearlLore);
+                epearl.setItemMeta(epearlMeta);
 
                 ItemStack back = new ItemStack(Material.BARRIER, 1);
-                ItemMeta back_meta = back.getItemMeta();
-                back_meta.setDisplayName("§cBack");
-                back.setItemMeta(back_meta);
+                ItemMeta backMeta = back.getItemMeta();
+                backMeta.setDisplayName("§cBack");
+                back.setItemMeta(backMeta);
+
+                ItemStack next = new ItemStack(Material.BOOK, 1);
+                ItemMeta nextMeta = back.getItemMeta();
+                nextMeta.setDisplayName("§eNext Page");
+                next.setItemMeta(nextMeta);
 
                 generalGUI.setItem(10, gapple);
                 generalGUI.setItem(12, gappleE);
@@ -372,6 +378,44 @@ public class GUIManager {
                 generalGUI.setItem(32, proj);
                 generalGUI.setItem(34, epearl);
                 generalGUI.setItem(49, back);
+                generalGUI.setItem(53, next);
+            }
+        }.runTaskTimer(plugin, 1, 5);
+    }
+
+    public void openGeneralTwoGUI(Player p) {
+        Inventory generalTwoGUI = Bukkit.createInventory(new CombatPlusHolder(), 54, Messenger.format(Lang.get().getString("gui.general")));
+        p.openInventory(generalTwoGUI);
+        final Player pNon = p;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                InventoryView guiView = pNon.getOpenInventory();
+                if (!(guiView.getTopInventory().getHolder() instanceof CombatPlusHolder)) {
+                    cancel();
+                    return;
+                }
+                //Back
+                ItemStack back = new ItemStack(Material.BARRIER, 1);
+                ItemMeta backMeta = back.getItemMeta();
+                backMeta.setDisplayName("§cBack");
+                back.setItemMeta(backMeta);
+
+                //invalid criticals
+                ItemStack crit = new ItemStack(Material.PAPER, 1);
+                ItemMeta critMeta = crit.getItemMeta();
+                critMeta.setDisplayName("§6Invalid Criticals");
+                ArrayList<String> critLore = new ArrayList<>();
+                critLore.add("");
+                critLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("fixes.invalid_criticals"));
+                critLore.add("");
+                critLore.add(ChatColor.WHITE + "This check detects and cancels Invalid");
+                critLore.add(ChatColor.WHITE + "Critical Hits (Cheat Detection)");
+                critMeta.setLore(critLore);
+                crit.setItemMeta(critMeta);
+
+                generalTwoGUI.setItem(10, crit);
+                generalTwoGUI.setItem(49, back);
             }
         }.runTaskTimer(plugin, 1, 5);
     }

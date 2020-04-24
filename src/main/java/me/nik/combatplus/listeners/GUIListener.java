@@ -127,6 +127,14 @@ public class GUIListener extends Manager {
                 booleanSet("enderpearl_cooldown.enabled", !configBoolean("enderpearl_cooldown.enabled"));
                 saveAndReload();
                 break;
+            case "§eNext Page":
+                p.closeInventory();
+                new GUIManager().openGeneralTwoGUI(p);
+                break;
+            case "§6Invalid Criticals":
+                booleanSet("fixes.invalid_criticals", !configBoolean("fixes.invalid_criticals"));
+                saveAndReload();
+                break;
         }
         e.setCancelled(true);
         if (e.getClick() == ClickType.SHIFT_RIGHT) {

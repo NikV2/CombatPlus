@@ -2,7 +2,6 @@ package me.nik.combatplus.api;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -59,10 +58,6 @@ public class Manager implements Listener {
         return false;
     }
 
-    public boolean ignoreSweepingEdge() {
-        return configBoolean("combat.settings.disable_sweep_attacks.ignore_sweeping_edge");
-    }
-
     public boolean configBoolean(String booleans) {
         return Config.get().getBoolean(booleans);
     }
@@ -90,9 +85,5 @@ public class Manager implements Listener {
     public void saveAndReload() {
         Config.save();
         Config.reload();
-    }
-
-    public void registerEvent(Listener listener) {
-        Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
     }
 }

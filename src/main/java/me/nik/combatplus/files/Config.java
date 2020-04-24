@@ -83,6 +83,7 @@ public class Config {
         Config.get().addDefault("disable_offhand.enabled", true);
         Config.get().addDefault("disable_offhand.disabled_worlds", offhandworlds);
         Config.get().addDefault("fixes.projectile_fixer", true);
+        Config.get().addDefault("fixes.invalid_criticals", true);
         Config.get().addDefault("custom.player_health.enabled", false);
         Config.get().addDefault("custom.player_health.max_health", 20);
         Config.get().addDefault("advanced.settings.old_pvp.attack_speed", 24);

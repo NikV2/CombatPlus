@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class UpdateChecker extends BukkitRunnable {
 
-    private CombatPlus plugin;
+    private final CombatPlus plugin;
 
     public UpdateChecker(CombatPlus plugin) {
         this.plugin = plugin;
