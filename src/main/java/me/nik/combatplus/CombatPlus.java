@@ -64,12 +64,14 @@ public final class CombatPlus extends JavaPlugin {
     public void onDisable() {
         //Load Default Stats to avoid server damage
         Bukkit.getOnlinePlayers().forEach(player -> {
-            final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
             final double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
-            final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
             final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-            playerAttSpeed.setBaseValue(defaultAttSpd);
             playerMaxHealth.setBaseValue(defaultHealth);
+            if (!serverVersion("1.8")) {
+                final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
+                final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+                playerAttSpeed.setBaseValue(defaultAttSpd);
+            }
             player.saveData();
         });
 
