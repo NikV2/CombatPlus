@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Criticals implements Listener {
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW)
     public static void onCritical(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player) || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return;
         Player p = (Player) e.getDamager();

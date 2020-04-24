@@ -51,7 +51,7 @@ public final class CombatPlus extends JavaPlugin {
 
         //Check for Updates
         if (isEnabled("settings.check_for_updates")) {
-            BukkitTask UpdateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
+            BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
         } else {
             System.out.println(Messenger.message("console.update_disabled"));
         }

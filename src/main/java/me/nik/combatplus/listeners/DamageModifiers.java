@@ -82,7 +82,7 @@ public class DamageModifiers implements Listener {
 
     // This Listener Changes the Damage Dealt to All Entities to the Old Values
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public static void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
         Player player = (Player) e.getDamager();
