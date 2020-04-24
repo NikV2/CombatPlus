@@ -191,7 +191,7 @@ public class GUIManager {
                 disableSweepMeta.setDisplayName("§6Disable Sweep Attacks");
                 ArrayList<String> disableSweepLore = new ArrayList<>();
                 disableSweepLore.add("");
-                disableSweepLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.disable_sweep_attacks"));
+                disableSweepLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.disable_sweep_attacks.enabled"));
                 disableSweepLore.add("");
                 disableSweepLore.add(ChatColor.WHITE + "Would you like to Disable");
                 disableSweepLore.add(ChatColor.WHITE + "Sweep Attacks?");

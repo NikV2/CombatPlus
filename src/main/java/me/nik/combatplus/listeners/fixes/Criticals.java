@@ -1,5 +1,8 @@
 package me.nik.combatplus.listeners.fixes;
 
+import me.nik.combatplus.files.Config;
+import me.nik.combatplus.utils.Messenger;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,6 +23,9 @@ public class Criticals implements Listener {
         if (isCritical(p)) {
             if ((p.getLocation().getY() % 1.0 == 0 || p.getLocation().getY() % 0.5 == 0) && p.getLocation().clone().subtract(0, 1.0, 0).getBlock().getType().isSolid()) {
                 e.setCancelled(true);
+                if (debug(p)) {
+                    p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Criticals: " + "Blocked: true" + ChatColor.GREEN + " Y: " + p.getLocation().getY()));
+                }
             }
         }
     }
@@ -45,5 +51,12 @@ public class Criticals implements Listener {
 
     private static boolean isAtWater(Location loc) {
         return isAtWater(loc, 25);
+    }
+
+    private static boolean debug(Player player) {
+        if (Config.get().getBoolean("settings.developer_mode")) {
+            return player.hasPermission("cp.debug");
+        }
+        return false;
     }
 }

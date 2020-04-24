@@ -39,7 +39,7 @@ public class Projectiles extends Manager {
                     public void run() {
                         projectile.setVelocity(eVelocity);
                         if (debug(p)) {
-                            p.sendMessage(Messenger.prefix(ChatColor.AQUA + "ProjectileFixer " + "Fixed: True" + ChatColor.GREEN + " Velocity: " + eVelocity + ChatColor.YELLOW + " Async: " + "True"));
+                            p.sendMessage(Messenger.prefix(ChatColor.AQUA + "ProjectileFixer: " + "Fixed: True" + ChatColor.GREEN + " Velocity: " + eVelocity + ChatColor.YELLOW + " Async: " + "True"));
                         } else cancel();
                     }
                 }.runTaskAsynchronously(plugin);
