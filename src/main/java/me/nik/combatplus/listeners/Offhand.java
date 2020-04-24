@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Offhand extends Manager {
 
-    private static final int OFFHAND_SLOT = 40;
+    private static final int offhandSlot = 40;
 
     // This Listener completely disables the use of the Offhand
 
@@ -35,7 +35,7 @@ public class Offhand extends Manager {
     public void onClickOffHand(InventoryClickEvent e) {
         if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
         if (offHandDisabledWorlds((Player) e.getWhoClicked())) return;
-        if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != OFFHAND_SLOT) return;
+        if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != offhandSlot) return;
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
@@ -49,7 +49,7 @@ public class Offhand extends Manager {
     public void onDrag(InventoryDragEvent e) {
         if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
         if (offHandDisabledWorlds((Player) e.getWhoClicked())) return;
-        if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(OFFHAND_SLOT))
+        if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(offhandSlot))
             return;
         if (itemCheck(e.getOldCursor())) {
             e.setResult(Event.Result.DENY);

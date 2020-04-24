@@ -1,6 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -9,17 +9,16 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
-public class Criticals implements Listener {
+public class Criticals extends Manager {
 
     // Patches the Criticals Cheat if a player crits while he's on the ground
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public static void onCritical(EntityDamageByEntityEvent e) {
+    public void onCritical(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player) || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return;
         Player p = (Player) e.getDamager();
         if (isCritical(p)) {
@@ -32,7 +31,7 @@ public class Criticals implements Listener {
         }
     }
 
-    private static boolean isCritical(Player p) {
+    private boolean isCritical(Player p) {
         return p.getFallDistance() > 0.0f
                 && !p.isOnGround()
                 && !p.isInsideVehicle()
@@ -41,7 +40,7 @@ public class Criticals implements Listener {
                 && p.getEyeLocation().getBlock().getType() != Material.LADDER;
     }
 
-    private static boolean isAtWater(Location loc, int blocks) {
+    private boolean isAtWater(Location loc, int blocks) {
         for (int i = loc.getBlockY(); i > loc.getBlockY() - blocks; i--) {
             Block block = (new Location(loc.getWorld(), loc.getBlockX(), i, loc.getBlockZ())).getBlock();
             if (block.getType() != Material.AIR) {
@@ -51,14 +50,7 @@ public class Criticals implements Listener {
         return false;
     }
 
-    private static boolean isAtWater(Location loc) {
+    private boolean isAtWater(Location loc) {
         return isAtWater(loc, 25);
-    }
-
-    private static boolean debug(Player player) {
-        if (Config.get().getBoolean("settings.developer_mode")) {
-            return player.hasPermission("cp.debug");
-        }
-        return false;
     }
 }
