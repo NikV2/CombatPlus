@@ -2,7 +2,6 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,12 +45,10 @@ public class Enderpearl extends Manager {
                     e.setCancelled(true);
                     p.updateInventory();
                     long secondsLeft = ((cooldown.get(pUUID) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                    p.sendMessage(Messenger.message("enderpearl_cooldown") + secondsLeft + " Seconds.");
+                    p.sendMessage(Messenger.message("enderpearl_cooldown").replaceAll("%seconds%", String.valueOf(secondsLeft)));
                 } else {
                     taskRun(e);
-                    if (debug(p)) {
-                        p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Ender Pearl Cooldown: " + ChatColor.GREEN + "Added to cooldown: True" + ChatColor.GOLD + " Player: " + p.getName()));
-                    }
+                    debug(p, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
                 }
             }
         }

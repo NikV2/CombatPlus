@@ -1,7 +1,6 @@
 package me.nik.combatplus.utils;
 
 import me.nik.combatplus.api.Manager;
-import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -16,9 +15,7 @@ public class ResetStats extends Manager {
         if (!isAsync()) {
             baseAttSpd.setBaseValue(defaultAttSpd);
             player.saveData();
-            if (debug(player)) {
-                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Attack Speed" + ChatColor.GREEN + " Status" + " Done" + ChatColor.YELLOW + " Async:" + " False"));
-            }
+            debug(player, "&6Set Attack Speed to: &a" + defaultAttSpd);
         } else {
             final Player pAnonymous = player;
             final AttributeInstance pBaseAttSpd = pAnonymous.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
@@ -27,9 +24,7 @@ public class ResetStats extends Manager {
                 public void run() {
                     pBaseAttSpd.setBaseValue(defaultAttSpd);
                     pAnonymous.saveData();
-                    if (debug(pAnonymous)) {
-                        pAnonymous.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Attack Speed" + ChatColor.GREEN + " TaskID: " + getTaskId() + ChatColor.YELLOW + " Async:" + " True"));
-                    } else cancel();
+                    debug(player, "&6Set Attack Speed to: &a" + defaultAttSpd + " &bAsync: true");
                 }
             }.runTaskAsynchronously(plugin);
         }
@@ -40,9 +35,7 @@ public class ResetStats extends Manager {
         if (!isAsync()) {
             baseMaxHealth.setBaseValue(defaultMaxHealth);
             player.saveData();
-            if (debug(player)) {
-                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Max Health" + ChatColor.GREEN + " Status" + " Done" + ChatColor.YELLOW + " Async:" + " False"));
-            }
+            debug(player, "&6Set Maximum Health to: &a" + defaultMaxHealth);
         } else {
             final Player pAnonymous = player;
             final AttributeInstance pBaseMaxHealth = pAnonymous.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -51,9 +44,7 @@ public class ResetStats extends Manager {
                 public void run() {
                     pBaseMaxHealth.setBaseValue(defaultMaxHealth);
                     pAnonymous.saveData();
-                    if (debug(pAnonymous)) {
-                        pAnonymous.sendMessage(Messenger.prefix(ChatColor.AQUA + "Task: " + "Reset Max Health" + ChatColor.GREEN + " TaskID: " + getTaskId() + ChatColor.YELLOW + " Async:" + " True"));
-                    } else cancel();
+                    debug(pAnonymous, "&6Set Maximum Health to: &a" + defaultMaxHealth + " &bAsync: true");
                 }
             }.runTaskAsynchronously(plugin);
         }

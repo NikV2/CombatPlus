@@ -1,8 +1,6 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
-import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,11 +26,7 @@ public class BowBoost extends Manager {
             Player holderPlayer = (Player) holder;
             if (player.getUniqueId().equals(holderPlayer.getUniqueId())) {
                 e.setCancelled(true);
-                if (debug(player)) {
-                    boolean isCanceled = e.isCancelled();
-                    double damageDealt = e.getDamage();
-                    player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Bow Boost Canceled: " + isCanceled + ChatColor.GREEN + " Damage Dealt: " + damageDealt));
-                }
+                debug(player, "&3Bow Boost &f&l>> &6Canceled: &a" + e.isCancelled());
             }
         }
     }

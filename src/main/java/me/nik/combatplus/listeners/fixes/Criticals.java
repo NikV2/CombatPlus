@@ -1,8 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
 import me.nik.combatplus.api.Manager;
-import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,16 +15,15 @@ public class Criticals extends Manager {
 
     // Patches the Criticals Cheat if a player crits while he's on the ground
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW)
     public void onCritical(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player) || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return;
         Player p = (Player) e.getDamager();
+        Location pLoc = p.getLocation();
         if (isCritical(p)) {
-            if ((p.getLocation().getY() % 1.0 == 0 || p.getLocation().getY() % 0.5 == 0) && p.getLocation().clone().subtract(0, 1.0, 0).getBlock().getType().isSolid()) {
+            if ((pLoc.getY() % 1.0 == 0 || pLoc.getY() % 0.5 == 0) && pLoc.clone().subtract(0, 1.0, 0).getBlock().getType().isSolid()) {
                 e.setCancelled(true);
-                if (debug(p)) {
-                    p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Criticals: " + "Blocked: true" + ChatColor.GREEN + " Velocity: " + p.getVelocity().getY()));
-                }
+                debug(p, "&3Criticals &f&l>> &6Canceled: &a" + e.isCancelled() + " &6Invalid: &atrue");
             }
         }
     }

@@ -4,8 +4,19 @@ import me.nik.combatplus.commands.CommandManager;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.handlers.UpdateChecker;
-import me.nik.combatplus.listeners.*;
+import me.nik.combatplus.listeners.AttributesSet;
+import me.nik.combatplus.listeners.BowBoost;
+import me.nik.combatplus.listeners.DamageModifiers;
+import me.nik.combatplus.listeners.DisabledItems;
+import me.nik.combatplus.listeners.EnchantedGoldenApple;
+import me.nik.combatplus.listeners.Enderpearl;
+import me.nik.combatplus.listeners.GUIListener;
+import me.nik.combatplus.listeners.GoldenApple;
+import me.nik.combatplus.listeners.ItemFrameRotate;
+import me.nik.combatplus.listeners.Offhand;
+import me.nik.combatplus.listeners.PlayerRegen;
 import me.nik.combatplus.listeners.fixes.Criticals;
+import me.nik.combatplus.listeners.fixes.HealthSpoof;
 import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.ResetStats;
@@ -50,11 +61,7 @@ public final class CombatPlus extends JavaPlugin {
         loadStats();
 
         //Check for Updates
-        if (isEnabled("settings.check_for_updates")) {
-            BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
-        } else {
-            System.out.println(Messenger.message("console.update_disabled"));
-        }
+        checkForUpdates();
 
         //Load bStats
         int pluginID = 6982;
@@ -63,17 +70,7 @@ public final class CombatPlus extends JavaPlugin {
     @Override
     public void onDisable() {
         //Load Default Stats to avoid server damage
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            final double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
-            final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-            playerMaxHealth.setBaseValue(defaultHealth);
-            if (!serverVersion("1.8")) {
-                final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
-                final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-                playerAttSpeed.setBaseValue(defaultAttSpd);
-            }
-            player.saveData();
-        });
+        setDefaultStats();
 
         //Reload Files
         Config.reload();
@@ -102,6 +99,28 @@ public final class CombatPlus extends JavaPlugin {
         Lang.addDefaults();
         Lang.get().options().copyDefaults(true);
         Lang.save();
+    }
+
+    private void checkForUpdates() {
+        if (isEnabled("settings.check_for_updates")) {
+            BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
+        } else {
+            System.out.println(Messenger.message("console.update_disabled"));
+        }
+    }
+
+    private void setDefaultStats() {
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            final double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
+            final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            playerMaxHealth.setBaseValue(defaultHealth);
+            if (!serverVersion("1.8")) {
+                final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
+                final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+                playerAttSpeed.setBaseValue(defaultAttSpd);
+            }
+            player.saveData();
+        });
     }
 
     private void loadStats() {
@@ -169,12 +188,15 @@ public final class CombatPlus extends JavaPlugin {
         } else {
             System.out.println(Messenger.message("console.disable_offhand_off"));
         }
-        if (isEnabled("fixes.projectile_fixer") || isEnabled("fixes.invalid_criticals")) {
+        if (isEnabled("fixes.projectile_fixer") || isEnabled("fixes.invalid_criticals") || isEnabled("fixes.health_spoof")) {
             if (isEnabled("fixes.projectile_fixer")) {
                 registerEvent(new Projectiles());
             }
             if (isEnabled("fixes.invalid_criticals")) {
                 registerEvent(new Criticals());
+            }
+            if (isEnabled("fixes.health_spoof")) {
+                registerEvent(new HealthSpoof());
             }
             System.out.println(Messenger.message("console.fixes_on"));
         } else {

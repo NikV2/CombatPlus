@@ -9,7 +9,7 @@ public class Messenger {
     }
 
     public static String prefix(String msg) {
-        return format(Lang.get().getString("prefix")) + msg;
+        return format(Lang.get().getString("prefix")) + format(msg);
     }
 
     public static String message(String msg) {

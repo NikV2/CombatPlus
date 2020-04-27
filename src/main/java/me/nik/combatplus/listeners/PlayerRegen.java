@@ -1,8 +1,6 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
-import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -48,9 +46,7 @@ public class PlayerRegen extends Manager {
                 @Override
                 public void run() {
                     p.setExhaustion(previousExhaustion + exhaustionToApply);
-                    if (debug(p)) {
-                        p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Listener: " + "PlayerRegen" + ChatColor.GREEN + " Old exhaustion: " + previousExhaustion + ChatColor.YELLOW + " New exhaustion: " + p.getExhaustion() + ChatColor.DARK_GREEN + " Saturation: " + playerSaturation + ChatColor.WHITE + " Async: " + "False"));
-                    } else cancel();
+                    debug(p, "&3Regeneration &f&l>> &6Old exhaustion: &a" + previousExhaustion + " &6New exhaustion: &a" + exhaustionToApply + " &6Saturation: &a" + playerSaturation);
                 }
             }.runTaskLater(plugin, 1);
         } else {
@@ -59,9 +55,7 @@ public class PlayerRegen extends Manager {
                 @Override
                 public void run() {
                     p.setExhaustion(previousExhaustion + exhaustionToApply);
-                    if (debug(p)) {
-                        p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Listener: " + "PlayerRegen" + ChatColor.GREEN + " Old exhaustion: " + previousExhaustion + ChatColor.YELLOW + " New exhaustion: " + p.getExhaustion() + ChatColor.DARK_GREEN + " Saturation: " + playerSaturation + ChatColor.WHITE + " Async: " + "True"));
-                    } else cancel();
+                    debug(p, "&3Regeneration &f&l>> &6Old exhaustion: &a" + previousExhaustion + " &6New exhaustion: &a" + exhaustionToApply + " &6Saturation: &a" + playerSaturation + " &bAsync: true");
                 }
             }.runTaskLaterAsynchronously(plugin, 1);
         }

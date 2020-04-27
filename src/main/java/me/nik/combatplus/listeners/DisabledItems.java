@@ -2,7 +2,6 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,9 +29,7 @@ public class DisabledItems extends Manager {
         if (result != null && disabledItems.contains(result.getType().name().toLowerCase())) {
             inv.setResult(null);
             p.sendMessage(Messenger.message("cannot_craft_this"));
-            if (debug(p)) {
-                p.sendMessage(Messenger.prefix(ChatColor.AQUA + "Crafting Canceled: " + "True" + ChatColor.GREEN + " Player: " + p.getName()));
-            }
+            debug(p, "&3Disabled Items &f&l>> &6Canceled: &atrue");
         }
     }
 }

@@ -2,6 +2,7 @@ package me.nik.combatplus.api;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -51,11 +52,10 @@ public class Manager implements Listener {
         return false;
     }
 
-    public boolean debug(Player player) {
-        if (configBoolean("settings.developer_mode")) {
-            return player.hasPermission("cp.debug");
+    public void debug(Player player, String message) {
+        if (configBoolean("settings.developer_mode") && player.hasPermission("cp.debug")) {
+            player.sendMessage(Messenger.prefix(message));
         }
-        return false;
     }
 
     public boolean configBoolean(String booleans) {

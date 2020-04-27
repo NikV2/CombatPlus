@@ -1,8 +1,6 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
-import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,45 +22,35 @@ public class DamageModifiers extends Manager {
         double z = ent.getVelocity().getZ();
         e.setCancelled(true);
         ent.setVelocity(new Vector().zero());
-        if (debug((Player) player)) {
-            player.sendMessage(Messenger.prefix(ChatColor.GREEN + "Canceled Sweep: " + e.isCancelled() + ChatColor.RED + " Velocity: " + "X: " + x + " Y: " + y + " Z: " + z));
-        }
+        debug((Player) player, "&3Damage Modifier &f&l>> &6Canceled Sweep Attack: &a" + e.isCancelled() + " &6Velocity: X = &a" + x + " &6Y = &a" + y + " &6Z = &a" + z);
     }
 
     private void oldPickaxeDmg(EntityDamageByEntityEvent e, Entity player) {
         double damageDealt = e.getDamage();
         double newDmg = damageDealt + configDouble("advanced.settings.modifiers.old_pickaxes_damage");
         e.setDamage(newDmg);
-        if (debug((Player) player)) {
-            player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Tool: " + "Pickaxe" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
-        }
+        debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aPickaxe &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
     private void oldAxeDmg(EntityDamageByEntityEvent e, Entity player) {
         double damageDealt = e.getDamage();
         double newDmg = damageDealt + configDouble("advanced.settings.modifiers.old_axes_damage");
         e.setDamage(newDmg);
-        if (debug((Player) player)) {
-            player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Tool: " + "Axe" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
-        }
+        debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aAxe &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
     private void oldShovelDmg(EntityDamageByEntityEvent e, Entity player) {
         double damageDealt = e.getDamage();
         double newDmg = damageDealt + configDouble("advanced.settings.modifiers.old_shovels_damage");
         e.setDamage(newDmg);
-        if (debug((Player) player)) {
-            player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Tool: " + "Shovel" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
-        }
+        debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aShovel &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
     private void oldSwordDmg(EntityDamageByEntityEvent e, Entity player) {
         double damageDealt = e.getDamage();
         double newDmg = damageDealt + configDouble("advanced.settings.modifiers.old_swords_damage");
         e.setDamage(newDmg);
-        if (debug((Player) player)) {
-            player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Weapon: " + "Sword" + ChatColor.GREEN + " Damage Dealt: " + newDmg + ChatColor.RED + " Default Damage: " + damageDealt));
-        }
+        debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aSword &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
     private void oldSharpDamage(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
@@ -72,10 +60,8 @@ public class DamageModifiers extends Manager {
             double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
             double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8
             double total = damageDealt + newSharpDmg;
-            e.setDamage(damageDealt + newSharpDmg);
-            if (debug((Player) player)) {
-                player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Weapon: " + "Sword" + ChatColor.GREEN + " Total Damage Dealt: " + total + ChatColor.GREEN + " Modified Sharp Damage: " + newSharpDmg + ChatColor.RED + " Default Sharp Damage: " + oldSharpDmg));
-            }
+            e.setDamage(total);
+            debug((Player) player, "&3Damage Modifier &f&l>> &6Old Sharpness Damage: &a" + oldSharpDmg + " &6New Sharpness Damage: &a" + newSharpDmg);
         }
     }
 

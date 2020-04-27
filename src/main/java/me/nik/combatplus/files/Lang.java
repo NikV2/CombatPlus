@@ -44,9 +44,9 @@ public class Lang {
         Lang.get().addDefault("no_perm", "&cYou do not have permission to do that!");
         Lang.get().addDefault("reloading", "&fReloading the plugin...");
         Lang.get().addDefault("reloaded", "&fYou have successfully reloaded the plugin!");
-        Lang.get().addDefault("golden_apple_cooldown", "&fYou cannot eat a Golden Apple yet, You must wait ");
-        Lang.get().addDefault("enchanted_golden_apple_cooldown", "&fYou cannot eat an Enchanted Golden Apple yet, You must wait ");
-        Lang.get().addDefault("enderpearl_cooldown", "&fYou cannot use an Ender Pearl yet, You must wait ");
+        Lang.get().addDefault("golden_apple_cooldown", "&fYou cannot eat a Golden Apple yet, You must wait %seconds% seconds.");
+        Lang.get().addDefault("enchanted_golden_apple_cooldown", "&fYou cannot eat an Enchanted Golden Apple yet, You must wait %seconds% seconds.");
+        Lang.get().addDefault("enderpearl_cooldown", "&fYou cannot use an Ender Pearl yet, You must wait %seconds% seconds.");
         Lang.get().addDefault("cannot_craft_this", "&cYou cannot craft this item!");
         Lang.get().addDefault("gui.main", "&c&lCombatPlus Menu");
         Lang.get().addDefault("gui.plugin", "&c&lPlugin Settings");

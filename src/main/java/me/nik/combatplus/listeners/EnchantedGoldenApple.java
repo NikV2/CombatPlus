@@ -2,7 +2,6 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,12 +40,10 @@ public class EnchantedGoldenApple extends Manager {
             if (cooldown.containsKey(p)) {
                 e.setCancelled(true);
                 long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                player.sendMessage(Messenger.message("enchanted_golden_apple_cooldown") + secondsleft + " Seconds.");
+                player.sendMessage(Messenger.message("enchanted_golden_apple_cooldown").replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 taskRun(e);
-                if (debug(player)) {
-                    player.sendMessage(Messenger.prefix(ChatColor.AQUA + "Enchanted Golden Apple Cooldown:" + ChatColor.GREEN + " Player: " + player.getName() + ChatColor.YELLOW + " Added to cooldown: " + cooldown.containsKey(p)));
-                }
+                debug(player, "&3Enchanted Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
             }
         }
     }

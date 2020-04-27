@@ -16,6 +16,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class GUIListener extends Manager {
 
+    private final GUIManager gui = new GUIManager();
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
@@ -27,15 +29,16 @@ public class GUIListener extends Manager {
             // Main GUI
             case "§6Plugin Settings":
                 p.closeInventory();
-                new GUIManager().openPluginGUI(p);
+                gui.openPluginGUI(p);
                 break;
             case "§eCombat Settings":
                 p.closeInventory();
-                new GUIManager().openCombatGUI(p);
+                gui.openCombatGUI(p);
                 break;
             case "§aGeneral Settings":
+            case "§ePrevious Page":
                 p.closeInventory();
-                new GUIManager().openGeneralGUI(p);
+                gui.openGeneralGUI(p);
                 break;
             case "§bLooking for Support?":
                 p.closeInventory();
@@ -63,7 +66,7 @@ public class GUIListener extends Manager {
                 break;
             case "§cBack":
                 p.closeInventory();
-                new GUIManager().openMainGUI(p);
+                gui.openMainGUI(p);
                 break;
             // Combat Settings GUI
             case "§6Old PvP":
@@ -129,10 +132,15 @@ public class GUIListener extends Manager {
                 break;
             case "§eNext Page":
                 p.closeInventory();
-                new GUIManager().openGeneralTwoGUI(p);
+                gui.openGeneralTwoGUI(p);
                 break;
+            // General Two Settings
             case "§6Invalid Criticals":
                 booleanSet("fixes.invalid_criticals", !configBoolean("fixes.invalid_criticals"));
+                saveAndReload();
+                break;
+            case "§6Health Spoof":
+                booleanSet("fixes.health_spoof", !configBoolean("fixes.health_spoof"));
                 saveAndReload();
                 break;
         }

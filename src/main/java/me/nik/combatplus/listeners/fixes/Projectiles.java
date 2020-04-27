@@ -1,8 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
 import me.nik.combatplus.api.Manager;
-import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -27,9 +25,7 @@ public class Projectiles extends Manager {
                 final Vector pDirection = p.getLocation().getDirection().normalize();
                 final Vector eVelocity = pDirection.multiply(projectile.getVelocity().length());
                 projectile.setVelocity(eVelocity);
-                if (debug(p)) {
-                    p.sendMessage(Messenger.prefix(ChatColor.AQUA + "ProjectileFixer " + "Fixed: True" + ChatColor.GREEN + " Velocity: " + eVelocity + ChatColor.YELLOW + " Async: " + "False"));
-                }
+                debug(p, "&3Projectile Fixer &f&l>> &6Fixed Velocity: &atrue &6Direction: &a" + pDirection);
             } else {
                 final Vector pDirection = p.getLocation().getDirection().normalize();
                 final Vector eVelocity = pDirection.multiply(projectile.getVelocity().length());
@@ -38,9 +34,7 @@ public class Projectiles extends Manager {
                     @Override
                     public void run() {
                         projectile.setVelocity(eVelocity);
-                        if (debug(p)) {
-                            p.sendMessage(Messenger.prefix(ChatColor.AQUA + "ProjectileFixer: " + "Fixed: True" + ChatColor.GREEN + " Velocity: " + eVelocity + ChatColor.YELLOW + " Async: " + "True"));
-                        } else cancel();
+                        debug(p, "&3Projectile Fixer &f&l>> &6Fixed Velocity: &atrue &6Direction: &a" + pDirection + " &bAsync: true");
                     }
                 }.runTaskAsynchronously(plugin);
             }

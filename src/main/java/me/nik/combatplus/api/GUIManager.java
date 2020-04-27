@@ -19,12 +19,6 @@ import java.util.ArrayList;
 
 public class GUIManager {
 
-    private Inventory mainGUI;
-    private Inventory pluginGUI;
-    private Inventory combatGUI;
-    private Inventory generalGUI;
-    private Inventory generalTwoGUI;
-
     private final CombatPlus plugin = CombatPlus.getInstance();
 
     public void openMainGUI(Player p) {
@@ -401,6 +395,12 @@ public class GUIManager {
                 backMeta.setDisplayName("§cBack");
                 back.setItemMeta(backMeta);
 
+                //previous page
+                ItemStack pp = new ItemStack(Material.BOOK, 1);
+                ItemMeta ppMeta = pp.getItemMeta();
+                ppMeta.setDisplayName("§ePrevious Page");
+                pp.setItemMeta(ppMeta);
+
                 //invalid criticals
                 ItemStack crit = new ItemStack(Material.PAPER, 1);
                 ItemMeta critMeta = crit.getItemMeta();
@@ -409,12 +409,27 @@ public class GUIManager {
                 critLore.add("");
                 critLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("fixes.invalid_criticals"));
                 critLore.add("");
-                critLore.add(ChatColor.WHITE + "This check detects and cancels Invalid");
-                critLore.add(ChatColor.WHITE + "Critical Hits (Cheat Detection)");
+                critLore.add(ChatColor.WHITE + "Detects and cancels Invalid Critical Hits");
+                critLore.add(ChatColor.WHITE + "Caused by Hacking Clients");
                 critMeta.setLore(critLore);
                 crit.setItemMeta(critMeta);
 
+                //health spoof
+                ItemStack hs = new ItemStack(Material.PAPER, 1);
+                ItemMeta hsMeta = hs.getItemMeta();
+                hsMeta.setDisplayName("§6Health Spoof");
+                ArrayList<String> hsLore = new ArrayList<>();
+                hsLore.add("");
+                hsLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("fixes.health_spoof"));
+                hsLore.add("");
+                hsLore.add(ChatColor.WHITE + "Prevents Hacking Clients from Exploiting");
+                hsLore.add(ChatColor.WHITE + "Their current Health");
+                hsMeta.setLore(hsLore);
+                hs.setItemMeta(hsMeta);
+
+                generalTwoGUI.setItem(12, hs);
                 generalTwoGUI.setItem(10, crit);
+                generalTwoGUI.setItem(45, pp);
                 generalTwoGUI.setItem(49, back);
             }
         }.runTaskTimer(plugin, 1, 5);
