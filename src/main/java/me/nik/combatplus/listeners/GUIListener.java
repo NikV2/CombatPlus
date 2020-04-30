@@ -143,6 +143,10 @@ public class GUIListener extends Manager {
                 booleanSet("fixes.health_spoof", !configBoolean("fixes.health_spoof"));
                 saveAndReload();
                 break;
+            case "§6Kill Aura":
+                booleanSet("fixes.kill_aura", !configBoolean("fixes.kill_aura"));
+                saveAndReload();
+                break;
         }
         e.setCancelled(true);
         if (e.getClick() == ClickType.SHIFT_RIGHT) {

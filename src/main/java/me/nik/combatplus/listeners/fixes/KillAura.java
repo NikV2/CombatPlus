@@ -22,6 +22,7 @@ public class KillAura extends Manager {
     private final int ticks = configInt("advanced.settings.kill_aura.teleport_ticks");
     private final int duration = configInt("advanced.settings.kill_aura.ticks_duration");
     private final boolean ignoreCreative = configBoolean("advanced.settings.kill_aura.ignore_creative");
+    private final int range = configInt("advanced.settings.kill_aura.range");
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {
@@ -30,6 +31,7 @@ public class KillAura extends Manager {
         if (ignoreCreative && p.getGameMode() == GameMode.CREATIVE) return;
         if (timer.contains(p.getUniqueId())) return;
         spawnNPC(p);
+        debug(p, "&3Kill Aura &f&l>> &6Spawned NPC: &atrue &6Entity: &a" + entity + " &6Duration: &a" + duration + " Ticks &6Range: &a" + range);
     }
 
     private void spawnNPC(Player p) {
@@ -45,7 +47,7 @@ public class KillAura extends Manager {
             @Override
             public void run() {
                 if (npc.isValid()) {
-                    npc.teleport(p.getLocation().add(p.getLocation().getDirection().multiply(-3)));
+                    npc.teleport(p.getLocation().add(p.getLocation().getDirection().multiply(range)));
                 } else {
                     timer.remove(p.getUniqueId());
                     cancel();

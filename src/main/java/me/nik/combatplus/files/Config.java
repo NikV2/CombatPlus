@@ -102,5 +102,6 @@ public class Config {
         Config.get().addDefault("advanced.settings.kill_aura.teleport_ticks", 1);
         Config.get().addDefault("advanced.settings.kill_aura.ticks_duration", 300);
         Config.get().addDefault("advanced.settings.kill_aura.ignore_creative", true);
+        Config.get().addDefault("advanced.settings.kill_aura.range", -2.5);
     }
 }

@@ -74,7 +74,7 @@ public class GUIManager {
                 checkUpdatesMeta.setDisplayName("§6Check for Updates");
                 ArrayList<String> updatesLore = new ArrayList<>();
                 updatesLore.add("");
-                updatesLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("settings.check_for_updates"));
+                updatesLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("settings.check_for_updates"));
                 updatesLore.add("");
                 updatesLore.add(ChatColor.WHITE + "Would you like the plugin");
                 updatesLore.add(ChatColor.WHITE + "To Check for Updates?");
@@ -86,7 +86,7 @@ public class GUIManager {
                 asyncMeta.setDisplayName("§6Run Asynchronously");
                 ArrayList<String> asyncLore = new ArrayList<>();
                 asyncLore.add("");
-                asyncLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("settings.async"));
+                asyncLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("settings.async"));
                 asyncLore.add("");
                 asyncLore.add(ChatColor.WHITE + "Would you like the plugin");
                 asyncLore.add(ChatColor.WHITE + "To run tasks Asynchronously?");
@@ -98,7 +98,7 @@ public class GUIManager {
                 devMeta.setDisplayName("§6Developer Mode");
                 ArrayList<String> devLore = new ArrayList<>();
                 devLore.add("");
-                devLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("settings.developer_mode"));
+                devLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("settings.developer_mode"));
                 devLore.add("");
                 devLore.add(ChatColor.WHITE + "Would you like to receive");
                 devLore.add(ChatColor.WHITE + "Debugging Information?");
@@ -137,7 +137,7 @@ public class GUIManager {
                 oldPvpMeta.setDisplayName("§6Old PvP");
                 ArrayList<String> oldPvpLore = new ArrayList<>();
                 oldPvpLore.add("");
-                oldPvpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_pvp"));
+                oldPvpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_pvp"));
                 oldPvpLore.add("");
                 oldPvpLore.add(ChatColor.WHITE + "Would you like your server to use");
                 oldPvpLore.add(ChatColor.WHITE + "1.8 PvP Combat?");
@@ -149,7 +149,7 @@ public class GUIManager {
                 oldWepDmgMeta.setDisplayName("§6Old Weapon Damage");
                 ArrayList<String> oldWepDmgLore = new ArrayList<>();
                 oldWepDmgLore.add("");
-                oldWepDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_weapon_damage"));
+                oldWepDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_weapon_damage"));
                 oldWepDmgLore.add("");
                 oldWepDmgLore.add(ChatColor.WHITE + "Would you like Swords to Deal");
                 oldWepDmgLore.add(ChatColor.WHITE + "Damage just like in 1.8?");
@@ -161,7 +161,7 @@ public class GUIManager {
                 oldToolDmgMeta.setDisplayName("§6Old Tool Damage");
                 ArrayList<String> oldToolDmgLore = new ArrayList<>();
                 oldToolDmgLore.add("");
-                oldToolDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_tool_damage"));
+                oldToolDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_tool_damage"));
                 oldToolDmgLore.add("");
                 oldToolDmgLore.add(ChatColor.WHITE + "Would you like Tools to Deal");
                 oldToolDmgLore.add(ChatColor.WHITE + "Damage just like in 1.8?");
@@ -173,7 +173,7 @@ public class GUIManager {
                 oldSharpMeta.setDisplayName("§6Old Sharpness");
                 ArrayList<String> oldSharpLore = new ArrayList<>();
                 oldSharpLore.add("");
-                oldSharpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_sharpness"));
+                oldSharpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_sharpness"));
                 oldSharpLore.add("");
                 oldSharpLore.add(ChatColor.WHITE + "Would you like Sharpness");
                 oldSharpLore.add(ChatColor.WHITE + "To work just like in 1.8?");
@@ -185,7 +185,7 @@ public class GUIManager {
                 disableSweepMeta.setDisplayName("§6Disable Sweep Attacks");
                 ArrayList<String> disableSweepLore = new ArrayList<>();
                 disableSweepLore.add("");
-                disableSweepLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.disable_sweep_attacks.enabled"));
+                disableSweepLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.disable_sweep_attacks.enabled"));
                 disableSweepLore.add("");
                 disableSweepLore.add(ChatColor.WHITE + "Would you like to Disable");
                 disableSweepLore.add(ChatColor.WHITE + "Sweep Attacks?");
@@ -197,7 +197,7 @@ public class GUIManager {
                 disableBoostMeta.setDisplayName("§6Disable Arrow Boost");
                 ArrayList<String> disableBoostLore = new ArrayList<>();
                 disableBoostLore.add("");
-                disableBoostLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.disable_arrow_boost"));
+                disableBoostLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.disable_arrow_boost"));
                 disableBoostLore.add("");
                 disableBoostLore.add(ChatColor.WHITE + "Would you like to Prevent");
                 disableBoostLore.add(ChatColor.WHITE + "Players from Boosting themselves?");
@@ -209,7 +209,7 @@ public class GUIManager {
                 oldRegenMeta.setDisplayName("§6Old Player Regen");
                 ArrayList<String> oldRegenLore = new ArrayList<>();
                 oldRegenLore.add("");
-                oldRegenLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("combat.settings.old_player_regen"));
+                oldRegenLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_player_regen"));
                 oldRegenLore.add("");
                 oldRegenLore.add(ChatColor.WHITE + "Would you like Regeneration");
                 oldRegenLore.add(ChatColor.WHITE + "To work just like in 1.8?");
@@ -252,7 +252,7 @@ public class GUIManager {
                 gappleMeta.setDisplayName("§6Golden Apple Cooldown");
                 ArrayList<String> gappleLore = new ArrayList<>();
                 gappleLore.add("");
-                gappleLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("golden_apple_cooldown.golden_apple.enabled"));
+                gappleLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("golden_apple_cooldown.golden_apple.enabled"));
                 gappleLore.add("");
                 gappleLore.add(ChatColor.WHITE + "Would you like a Cooldown");
                 gappleLore.add(ChatColor.WHITE + "Between eating Golden Apples?");
@@ -266,7 +266,7 @@ public class GUIManager {
                 gappleEMeta.setDisplayName("§6Enchanted Golden Apple Cooldown");
                 ArrayList<String> gappleELore = new ArrayList<>();
                 gappleELore.add("");
-                gappleELore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("golden_apple_cooldown.enchanted_golden_apple.enabled"));
+                gappleELore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("golden_apple_cooldown.enchanted_golden_apple.enabled"));
                 gappleELore.add("");
                 gappleELore.add(ChatColor.WHITE + "Would you like a Cooldown");
                 gappleELore.add(ChatColor.WHITE + "Between eating Enchanted Golden Apples?");
@@ -280,7 +280,7 @@ public class GUIManager {
                 disItemsMeta.setDisplayName("§6Disabled Items");
                 ArrayList<String> disItemsLore = new ArrayList<>();
                 disItemsLore.add("");
-                disItemsLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("disabled_items.enabled"));
+                disItemsLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("disabled_items.enabled"));
                 disItemsLore.add("");
                 disItemsLore.add(ChatColor.WHITE + "Would you like to Disable specific");
                 disItemsLore.add(ChatColor.WHITE + "Items from being Crafted?");
@@ -294,7 +294,7 @@ public class GUIManager {
                 disRotateMeta.setDisplayName("§6Disable Item Frame Rotation");
                 ArrayList<String> disRotateLore = new ArrayList<>();
                 disRotateLore.add("");
-                disRotateLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("disable_item_frame_rotation.enabled"));
+                disRotateLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("disable_item_frame_rotation.enabled"));
                 disRotateLore.add("");
                 disRotateLore.add(ChatColor.WHITE + "Would you like to Prevent");
                 disRotateLore.add(ChatColor.WHITE + "Items inside Item Frames from Rotating?");
@@ -306,7 +306,7 @@ public class GUIManager {
                 offhMeta.setDisplayName("§6Disable Offhand");
                 ArrayList<String> offhLore = new ArrayList<>();
                 offhLore.add("");
-                offhLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("disable_offhand.enabled"));
+                offhLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("disable_offhand.enabled"));
                 offhLore.add("");
                 offhLore.add(ChatColor.WHITE + "Would you like to Prevent");
                 offhLore.add(ChatColor.WHITE + "Players from using the Offhand?");
@@ -318,7 +318,7 @@ public class GUIManager {
                 projMeta.setDisplayName("§6Projectile Fixer");
                 ArrayList<String> projLore = new ArrayList<>();
                 projLore.add("");
-                projLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("fixes.projectile_fixer"));
+                projLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.projectile_fixer"));
                 projLore.add("");
                 projLore.add(ChatColor.WHITE + "Fixes a Bug with Projectiles");
                 projLore.add(ChatColor.WHITE + "Not always going straight");
@@ -330,7 +330,7 @@ public class GUIManager {
                 healthMeta.setDisplayName("§6Custom Player Health");
                 ArrayList<String> healthLore = new ArrayList<>();
                 healthLore.add("");
-                healthLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("custom.player_health.enabled"));
+                healthLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("custom.player_health.enabled"));
                 healthLore.add("");
                 healthLore.add(ChatColor.WHITE + "Would you like your Players");
                 healthLore.add(ChatColor.WHITE + "To have Customized Max Health?");
@@ -344,7 +344,7 @@ public class GUIManager {
                 epearlMeta.setDisplayName("§6Ender Pearl Cooldown");
                 ArrayList<String> epearlLore = new ArrayList<>();
                 epearlLore.add("");
-                epearlLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("enderpearl_cooldown.enabled"));
+                epearlLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("enderpearl_cooldown.enabled"));
                 epearlLore.add("");
                 epearlLore.add(ChatColor.WHITE + "Would you like a Cooldown");
                 epearlLore.add(ChatColor.WHITE + "Between using Ender Pearls?");
@@ -407,7 +407,7 @@ public class GUIManager {
                 critMeta.setDisplayName("§6Invalid Criticals");
                 ArrayList<String> critLore = new ArrayList<>();
                 critLore.add("");
-                critLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("fixes.invalid_criticals"));
+                critLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.invalid_criticals"));
                 critLore.add("");
                 critLore.add(ChatColor.WHITE + "Detects and cancels Invalid Critical Hits");
                 critLore.add(ChatColor.WHITE + "Caused by Hacking Clients");
@@ -420,18 +420,36 @@ public class GUIManager {
                 hsMeta.setDisplayName("§6Health Spoof");
                 ArrayList<String> hsLore = new ArrayList<>();
                 hsLore.add("");
-                hsLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + Config.get().getBoolean("fixes.health_spoof"));
+                hsLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.health_spoof"));
                 hsLore.add("");
                 hsLore.add(ChatColor.WHITE + "Prevents Hacking Clients from Exploiting");
                 hsLore.add(ChatColor.WHITE + "Their current Health");
                 hsMeta.setLore(hsLore);
                 hs.setItemMeta(hsMeta);
 
+                //kill aura
+                ItemStack aura = new ItemStack(Material.PAPER, 1);
+                ItemMeta auraMeta = aura.getItemMeta();
+                auraMeta.setDisplayName("§6Kill Aura");
+                ArrayList<String> auraLore = new ArrayList<>();
+                auraLore.add("");
+                auraLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.kill_aura"));
+                auraLore.add("");
+                auraLore.add(ChatColor.WHITE + "Reduces the usage of Kill Aura by");
+                auraLore.add(ChatColor.WHITE + "Spawning an Entity behind the Attacker");
+                auraMeta.setLore(auraLore);
+                aura.setItemMeta(auraMeta);
+
+                generalTwoGUI.setItem(14, aura);
                 generalTwoGUI.setItem(12, hs);
                 generalTwoGUI.setItem(10, crit);
                 generalTwoGUI.setItem(45, pp);
                 generalTwoGUI.setItem(49, back);
             }
         }.runTaskTimer(plugin, 1, 5);
+    }
+
+    private boolean isEnabled(String path) {
+        return Config.get().getBoolean(path);
     }
 }

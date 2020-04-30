@@ -57,7 +57,7 @@ public class Lang {
         Lang.get().addDefault("console.update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
         Lang.get().addDefault("console.update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
         Lang.get().addDefault("console.commands", "&c&lYou cannot run this command through the console :(");
-        Lang.get().addDefault("console.initialize", "&f&lInitialing Listeners...");
+        Lang.get().addDefault("console.initialize", "&f&lInitializing Listeners...");
         Lang.get().addDefault("console.unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
         Lang.get().addDefault("console.unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
         Lang.get().addDefault("console.disabled", "&f&lAll Player Stats Have Been Set Back To Their Default Values! Goodbye.");
