@@ -17,6 +17,7 @@ public class UpdateChecker extends BukkitRunnable {
     public UpdateChecker(CombatPlus plugin) {
         this.plugin = plugin;
     }
+    public static boolean hasUpdate = false;
 
     @Override
     public void run() {
@@ -26,6 +27,7 @@ public class UpdateChecker extends BukkitRunnable {
 
             if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
                 System.out.println(Messenger.message("console.update_found"));
+                hasUpdate = true;
             } else {
                 System.out.println(Messenger.message("console.update_not_found"));
             }

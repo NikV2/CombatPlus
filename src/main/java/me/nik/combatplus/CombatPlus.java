@@ -15,8 +15,10 @@ import me.nik.combatplus.listeners.GoldenApple;
 import me.nik.combatplus.listeners.ItemFrameRotate;
 import me.nik.combatplus.listeners.Offhand;
 import me.nik.combatplus.listeners.PlayerRegen;
+import me.nik.combatplus.listeners.UpdateReminder;
 import me.nik.combatplus.listeners.fixes.Criticals;
 import me.nik.combatplus.listeners.fixes.HealthSpoof;
+import me.nik.combatplus.listeners.fixes.KillAura;
 import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.ResetStats;
@@ -104,6 +106,7 @@ public final class CombatPlus extends JavaPlugin {
     private void checkForUpdates() {
         if (isEnabled("settings.check_for_updates")) {
             BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
+            registerEvent(new UpdateReminder());
         } else {
             System.out.println(Messenger.message("console.update_disabled"));
         }
@@ -146,79 +149,48 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     private void initialize() {
+        System.out.println(Messenger.message("console.initialize"));
         if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
             registerEvent(new AttributesSet());
-            System.out.println(Messenger.message("console.attribute_modifiers_on"));
-        } else {
-            System.out.println(Messenger.message("console.attribute_modifiers_off"));
         }
         if (isEnabled("combat.settings.old_weapon_damage") || isEnabled("combat.settings.old_tool_damage") || isEnabled("combat.settings.disable_sweep_attacks.enabled")) {
             registerEvent(new DamageModifiers());
-            System.out.println(Messenger.message("console.modifiers_on"));
-        } else {
-            System.out.println(Messenger.message("console.modifiers_off"));
         }
         if (isEnabled("combat.settings.disable_arrow_boost")) {
             registerEvent(new BowBoost());
-            System.out.println(Messenger.message("console.arrow_boost_on"));
-        } else {
-            System.out.println(Messenger.message("console.arrow_boost_off"));
         }
         if (isEnabled("combat.settings.old_player_regen")) {
             registerEvent(new PlayerRegen());
-            System.out.println(Messenger.message("console.old_regen_on"));
-        } else {
-            System.out.println(Messenger.message("console.old_regen_off"));
         }
         if (isEnabled("disabled_items.enabled")) {
             registerEvent(new DisabledItems());
-            System.out.println(Messenger.message("console.disabled_items_on"));
-        } else {
-            System.out.println(Messenger.message("console.disabled_items_off"));
         }
         if (isEnabled("disable_item_frame_rotation.enabled")) {
             registerEvent(new ItemFrameRotate());
-            System.out.println(Messenger.message("console.item_frame_rotation_on"));
-        } else {
-            System.out.println(Messenger.message("console.item_frame_rotation_off"));
         }
         if (isEnabled("disable_offhand.enabled")) {
             registerEvent(new Offhand());
-            System.out.println(Messenger.message("console.disable_offhand_on"));
-        } else {
-            System.out.println(Messenger.message("console.disable_offhand_off"));
         }
-        if (isEnabled("fixes.projectile_fixer") || isEnabled("fixes.invalid_criticals") || isEnabled("fixes.health_spoof")) {
-            if (isEnabled("fixes.projectile_fixer")) {
-                registerEvent(new Projectiles());
-            }
-            if (isEnabled("fixes.invalid_criticals")) {
-                registerEvent(new Criticals());
-            }
-            if (isEnabled("fixes.health_spoof")) {
-                registerEvent(new HealthSpoof());
-            }
-            System.out.println(Messenger.message("console.fixes_on"));
-        } else {
-            System.out.println(Messenger.message("console.fixes_off"));
+        if (isEnabled("fixes.projectile_fixer")) {
+            registerEvent(new Projectiles());
+        }
+        if (isEnabled("fixes.invalid_criticals")) {
+            registerEvent(new Criticals());
+        }
+        if (isEnabled("fixes.health_spoof")) {
+            registerEvent(new HealthSpoof());
+        }
+        if (isEnabled("fixes.kill_aura")) {
+            registerEvent(new KillAura());
         }
         if (isEnabled("golden_apple_cooldown.golden_apple.enabled")) {
             registerEvent(new GoldenApple());
-            System.out.println(Messenger.message("console.golden_apple_cooldown_on"));
-        } else {
-            System.out.println(Messenger.message("console.golden_apple_cooldown_off"));
         }
         if (isEnabled("golden_apple_cooldown.enchanted_golden_apple.enabled")) {
             registerEvent(new EnchantedGoldenApple());
-            System.out.println(Messenger.message("console.enchanted_golden_apple_cooldown_on"));
-        } else {
-            System.out.println(Messenger.message("console.enchanted_golden_apple_cooldown_off"));
         }
         if (isEnabled("enderpearl_cooldown.enabled")) {
             registerEvent(new Enderpearl());
-            System.out.println(Messenger.message("console.enderpearl_cooldown_on"));
-        } else {
-            System.out.println(Messenger.message("console.enderpearl_cooldown_off"));
         }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener());
@@ -226,34 +198,30 @@ public final class CombatPlus extends JavaPlugin {
 
     private void checkSupported() {
         if (serverVersion("1.8")) {
-            if (isEnabled("combat.settings.old_pvp")) {
-                Config.get().set("combat.settings.old_pvp", false);
-            }
-            if (isEnabled("combat.settings.old_weapon_damage")) {
-                Config.get().set("combat.settings.old_weapon_damage", false);
-            }
-            if (isEnabled("combat.settings.old_tool_damage")) {
-                Config.get().set("combat.settings.old_tool_damage", false);
-            }
-            if (isEnabled("combat.settings.old_sharpness")) {
-                Config.get().set("combat.settings.old_sharpness", false);
-            }
-            if (isEnabled("combat.settings.disable_sweep_attacks.enabled")) {
-                Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
-            }
-            if (isEnabled("combat.settings.old_player_regen")) {
-                Config.get().set("combat.settings.old_player_regen", false);
-            }
-            if (isEnabled("golden_apple_cooldown.golden_apple.enabled")) {
-                Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
-            }
-            if (isEnabled("golden_apple_cooldown.enchanted_golden_apple.enabled")) {
-                Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
-            }
+            Config.get().set("combat.settings.old_pvp", false);
+            Config.get().set("combat.settings.old_weapon_damage", false);
+            Config.get().set("combat.settings.old_tool_damage", false);
+            Config.get().set("combat.settings.old_sharpness", false);
+            Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
+            Config.get().set("combat.settings.old_player_regen", false);
+            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
+            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            Config.get().set("fixes.kill_aura", false);
+            Config.get().set("enderpearl_cooldown.enabled", false);
+            Config.get().set("disable_offhand.enabled", false);
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
-        } else if (serverVersion("1.9") || serverVersion("1.10")) {
+        } else if (serverVersion("1.9")) {
+            Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
+            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
+            Config.get().set("fixes.kill_aura", false);
+            Config.save();
+            Config.reload();
+            System.out.println(Messenger.message("console.unsupported_version"));
+            System.out.println(Messenger.message("console.unsupported_sweep_attack"));
+        } else if (serverVersion("1.10")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);

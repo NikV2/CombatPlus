@@ -29,7 +29,7 @@ public class GoldenApple extends Manager {
 
     // This Listener adds a cooldown between eating Golden Apples
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
         if (gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;

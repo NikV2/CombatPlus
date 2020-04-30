@@ -12,7 +12,7 @@ public class Manager implements Listener {
 
     protected CombatPlus plugin = CombatPlus.getInstance();
 
-    public boolean gappleDisabledWorlds(Player player) {
+    protected boolean gappleDisabledWorlds(Player player) {
         for (String world : configStringList("golden_apple_cooldown.disabled_worlds")) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
@@ -20,7 +20,7 @@ public class Manager implements Listener {
         return false;
     }
 
-    public boolean combatDisabledWorlds(Player player) {
+    protected boolean combatDisabledWorlds(Player player) {
         for (String world : configStringList("combat.settings.disabled_worlds")) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
@@ -28,7 +28,7 @@ public class Manager implements Listener {
         return false;
     }
 
-    public boolean offHandDisabledWorlds(Player player) {
+    protected boolean offHandDisabledWorlds(Player player) {
         for (String world : configStringList("disable_offhand.disabled_worlds")) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
@@ -36,7 +36,7 @@ public class Manager implements Listener {
         return false;
     }
 
-    public boolean noCraftingDisabledWorlds(Player player) {
+    protected boolean noCraftingDisabledWorlds(Player player) {
         for (String world : configStringList("disabled_items.disabled_worlds")) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
@@ -44,7 +44,7 @@ public class Manager implements Listener {
         return false;
     }
 
-    public boolean itemFrameRotationDisabledWorlds(Player player) {
+    protected boolean itemFrameRotationDisabledWorlds(Player player) {
         for (String world : configStringList("disable_item_frame_rotation.disabled_worlds")) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
@@ -52,37 +52,41 @@ public class Manager implements Listener {
         return false;
     }
 
-    public void debug(Player player, String message) {
+    protected void debug(Player player, String message) {
         if (configBoolean("settings.developer_mode") && player.hasPermission("cp.debug")) {
             player.sendMessage(Messenger.prefix(message));
         }
     }
 
-    public boolean configBoolean(String booleans) {
+    protected boolean configBoolean(String booleans) {
         return Config.get().getBoolean(booleans);
     }
 
-    public int configInt(String ints) {
+    protected int configInt(String ints) {
         return Config.get().getInt(ints);
     }
 
-    public double configDouble(String doubles) {
+    protected String configString(String string) {
+        return Config.get().getString(string);
+    }
+
+    protected double configDouble(String doubles) {
         return Config.get().getDouble(doubles);
     }
 
-    public List<String> configStringList(String stringList) {
+    protected List<String> configStringList(String stringList) {
         return Config.get().getStringList(stringList);
     }
 
-    public void booleanSet(String path, boolean value) {
+    protected void booleanSet(String path, boolean value) {
         Config.get().set(path, value);
     }
 
-    public boolean isAsync() {
+    protected boolean isAsync() {
         return configBoolean("settings.async");
     }
 
-    public void saveAndReload() {
+    protected void saveAndReload() {
         Config.save();
         Config.reload();
     }

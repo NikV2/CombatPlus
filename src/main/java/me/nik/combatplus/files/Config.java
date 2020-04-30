@@ -82,6 +82,7 @@ public class Config {
         Config.get().addDefault("disable_item_frame_rotation.disabled_worlds", itemframerotation);
         Config.get().addDefault("disable_offhand.enabled", true);
         Config.get().addDefault("disable_offhand.disabled_worlds", offhandworlds);
+        Config.get().addDefault("fixes.kill_aura", true);
         Config.get().addDefault("fixes.projectile_fixer", true);
         Config.get().addDefault("fixes.invalid_criticals", true);
         Config.get().addDefault("fixes.health_spoof", true);
@@ -97,5 +98,9 @@ public class Config {
         Config.get().addDefault("advanced.settings.old_regen.amount", 1);
         Config.get().addDefault("advanced.settings.old_regen.exhaustion", 3);
         Config.get().addDefault("advanced.settings.base_player_health", 20);
+        Config.get().addDefault("advanced.settings.kill_aura.entity", "BAT");
+        Config.get().addDefault("advanced.settings.kill_aura.teleport_ticks", 1);
+        Config.get().addDefault("advanced.settings.kill_aura.ticks_duration", 300);
+        Config.get().addDefault("advanced.settings.kill_aura.ignore_creative", true);
     }
 }

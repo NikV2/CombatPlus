@@ -34,7 +34,7 @@ public class Enderpearl extends Manager {
 
     // This Listener Adds a cooldown between using Ender Pearls
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Player p = e.getPlayer();
