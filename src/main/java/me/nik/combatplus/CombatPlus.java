@@ -20,6 +20,7 @@ import me.nik.combatplus.listeners.fixes.Criticals;
 import me.nik.combatplus.listeners.fixes.HealthSpoof;
 import me.nik.combatplus.listeners.fixes.KillAura;
 import me.nik.combatplus.listeners.fixes.Projectiles;
+import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
@@ -192,6 +193,9 @@ public final class CombatPlus extends JavaPlugin {
         if (isEnabled("enderpearl_cooldown.enabled")) {
             registerEvent(new Enderpearl(this));
         }
+        if (isEnabled("recipes.enchanted_golden_apple")) {
+            Bukkit.addRecipe(new CustomRecipes(this).enchantedGoldenAppleRecipe());
+        }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener(this));
     }
@@ -209,6 +213,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("fixes.kill_aura", false);
             Config.get().set("enderpearl_cooldown.enabled", false);
             Config.get().set("disable_offhand.enabled", false);
+            Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
@@ -217,6 +222,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("fixes.kill_aura", false);
+            Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
@@ -225,13 +231,22 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
+            Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
             System.out.println(Messenger.message("console.unsupported_sweep_attack"));
-        } else if (serverVersion("1.11") || serverVersion("1.12")) {
+        } else if (serverVersion("1.11")) {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
+            Config.get().set("recipes.enchanted_golden_apple", false);
+            Config.save();
+            Config.reload();
+            System.out.println(Messenger.message("console.unsupported_version"));
+        } else if (serverVersion("1.12")) {
+            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
+            Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
             System.out.println(Messenger.message("console.unsupported_version"));
