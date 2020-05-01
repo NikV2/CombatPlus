@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -11,6 +12,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class Projectiles extends Manager {
+
+    public Projectiles(CombatPlus plugin) {
+        super(plugin);
+    }
 
     // This Module Makes Projectiles Go Straight (To where they're supposed to land)
     // Removes Randomness

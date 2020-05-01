@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
@@ -14,6 +15,10 @@ import java.util.List;
 public class DisabledItems extends Manager {
 
     private final List<String> disabledItems = configStringList("disabled_items.items");
+
+    public DisabledItems(CombatPlus plugin) {
+        super(plugin);
+    }
 
     // This Listener Disables the crafting of the items defined in the Config
 

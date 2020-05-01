@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,6 +24,10 @@ public class KillAura extends Manager {
     private final int duration = configInt("advanced.settings.kill_aura.ticks_duration");
     private final boolean ignoreCreative = configBoolean("advanced.settings.kill_aura.ignore_creative");
     private final int range = configInt("advanced.settings.kill_aura.range");
+
+    public KillAura(CombatPlus plugin) {
+        super(plugin);
+    }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {

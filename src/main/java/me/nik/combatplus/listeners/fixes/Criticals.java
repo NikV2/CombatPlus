@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,6 +13,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class Criticals extends Manager {
+
+    public Criticals(CombatPlus plugin) {
+        super(plugin);
+    }
 
     // Patches the Criticals Cheat if a player crits while he's on the ground
 

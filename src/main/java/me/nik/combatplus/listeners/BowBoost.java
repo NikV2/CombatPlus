@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -9,6 +10,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 public class BowBoost extends Manager {
+
+    public BowBoost(CombatPlus plugin) {
+        super(plugin);
+    }
 
     // Disables the ability to Boost yourself up using a Bow, By shooting yourself
     // This Listener prevents players hitting themselves with a bow

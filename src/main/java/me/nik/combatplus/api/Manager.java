@@ -10,7 +10,11 @@ import java.util.List;
 
 public class Manager implements Listener {
 
-    protected CombatPlus plugin = CombatPlus.getInstance();
+    protected final CombatPlus plugin;
+
+    public Manager(CombatPlus plugin) {
+        this.plugin = plugin;
+    }
 
     protected boolean gappleDisabledWorlds(Player player) {
         for (String world : configStringList("golden_apple_cooldown.disabled_worlds")) {
@@ -46,6 +50,22 @@ public class Manager implements Listener {
 
     protected boolean itemFrameRotationDisabledWorlds(Player player) {
         for (String world : configStringList("disable_item_frame_rotation.disabled_worlds")) {
+            if (player.getWorld().getName().equalsIgnoreCase(world))
+                return true;
+        }
+        return false;
+    }
+
+    protected boolean enderpearlDisabledWorlds(Player player) {
+        for (String world : configStringList("enderpearl_cooldown.disabled_worlds")) {
+            if (player.getWorld().getName().equalsIgnoreCase(world))
+                return true;
+        }
+        return false;
+    }
+
+    protected boolean customStatsWorlds(Player player) {
+        for (String world : configStringList("custom.disabled_worlds")) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }

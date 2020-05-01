@@ -129,21 +129,21 @@ public final class CombatPlus extends JavaPlugin {
     private void loadStats() {
         if (isEnabled("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetAttackSpeed().setAttackSpd(player);
+                new SetAttackSpeed(this).setAttackSpd(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats().resetAttackSpeed(player);
+                new ResetStats(this).resetAttackSpeed(player);
             });
         }
 
         if (isEnabled("custom.player_health.enabled")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetCustomHealth().setHealth(player);
+                new SetCustomHealth(this).setHealth(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats().resetMaxHealth(player);
+                new ResetStats(this).resetMaxHealth(player);
             });
         }
     }
@@ -151,49 +151,49 @@ public final class CombatPlus extends JavaPlugin {
     private void initialize() {
         System.out.println(Messenger.message("console.initialize"));
         if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
-            registerEvent(new AttributesSet());
+            registerEvent(new AttributesSet(this));
         }
         if (isEnabled("combat.settings.old_weapon_damage") || isEnabled("combat.settings.old_tool_damage") || isEnabled("combat.settings.disable_sweep_attacks.enabled")) {
-            registerEvent(new DamageModifiers());
+            registerEvent(new DamageModifiers(this));
         }
         if (isEnabled("combat.settings.disable_arrow_boost")) {
-            registerEvent(new BowBoost());
+            registerEvent(new BowBoost(this));
         }
         if (isEnabled("combat.settings.old_player_regen")) {
-            registerEvent(new PlayerRegen());
+            registerEvent(new PlayerRegen(this));
         }
         if (isEnabled("disabled_items.enabled")) {
-            registerEvent(new DisabledItems());
+            registerEvent(new DisabledItems(this));
         }
         if (isEnabled("disable_item_frame_rotation.enabled")) {
-            registerEvent(new ItemFrameRotate());
+            registerEvent(new ItemFrameRotate(this));
         }
         if (isEnabled("disable_offhand.enabled")) {
-            registerEvent(new Offhand());
+            registerEvent(new Offhand(this));
         }
         if (isEnabled("fixes.projectile_fixer")) {
-            registerEvent(new Projectiles());
+            registerEvent(new Projectiles(this));
         }
         if (isEnabled("fixes.invalid_criticals")) {
-            registerEvent(new Criticals());
+            registerEvent(new Criticals(this));
         }
         if (isEnabled("fixes.health_spoof")) {
-            registerEvent(new HealthSpoof());
+            registerEvent(new HealthSpoof(this));
         }
         if (isEnabled("fixes.kill_aura")) {
-            registerEvent(new KillAura());
+            registerEvent(new KillAura(this));
         }
         if (isEnabled("golden_apple_cooldown.golden_apple.enabled")) {
-            registerEvent(new GoldenApple());
+            registerEvent(new GoldenApple(this));
         }
         if (isEnabled("golden_apple_cooldown.enchanted_golden_apple.enabled")) {
-            registerEvent(new EnchantedGoldenApple());
+            registerEvent(new EnchantedGoldenApple(this));
         }
         if (isEnabled("enderpearl_cooldown.enabled")) {
-            registerEvent(new Enderpearl());
+            registerEvent(new Enderpearl(this));
         }
         //GUI Listener (Do not remove this, idiot nik)
-        registerEvent(new GUIListener());
+        registerEvent(new GUIListener(this));
     }
 
     private void checkSupported() {

@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,6 +9,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class HealthSpoof extends Manager {
+
+    public HealthSpoof(CombatPlus plugin) {
+        super(plugin);
+    }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCloseToDeath(EntityDamageEvent e) {

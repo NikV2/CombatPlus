@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.GUIManager;
 import me.nik.combatplus.api.Manager;
 import me.nik.combatplus.handlers.CombatPlusHolder;
@@ -17,6 +18,10 @@ import org.bukkit.inventory.ItemStack;
 public class GUIListener extends Manager {
 
     private final GUIManager gui = new GUIManager();
+
+    public GUIListener(CombatPlus plugin) {
+        super(plugin);
+    }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onClick(InventoryClickEvent e) {

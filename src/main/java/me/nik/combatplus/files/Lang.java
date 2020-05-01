@@ -46,8 +46,11 @@ public class Lang {
         Lang.get().addDefault("reloaded", "&fYou have successfully reloaded the plugin!");
         Lang.get().addDefault("update_reminder", "&eThere is a new Version of &c&lCombat Plus&e available. Make sure to stay up to date!");
         Lang.get().addDefault("golden_apple_cooldown", "&fYou cannot eat a Golden Apple yet, You must wait %seconds% seconds.");
+        Lang.get().addDefault("golden_apple_cooldown_actionbar", "&6You can eat a Golden Apple again in &a%seconds% &6seconds.");
         Lang.get().addDefault("enchanted_golden_apple_cooldown", "&fYou cannot eat an Enchanted Golden Apple yet, You must wait %seconds% seconds.");
+        Lang.get().addDefault("enchanted_golden_apple_cooldown_actionbar", "&6You can eat an Enchanted Golden Apple again in &a%seconds% &6seconds.");
         Lang.get().addDefault("enderpearl_cooldown", "&fYou cannot use an Ender Pearl yet, You must wait %seconds% seconds.");
+        Lang.get().addDefault("enderpearl_cooldown_actionbar", "&6You can use an Ender Pearl again in &a%seconds% &6seconds.");
         Lang.get().addDefault("cannot_craft_this", "&cYou cannot craft this item!");
         Lang.get().addDefault("gui.main", "&c&lCombatPlus Menu");
         Lang.get().addDefault("gui.plugin", "&c&lPlugin Settings");
