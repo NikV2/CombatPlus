@@ -2,6 +2,7 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.utils.Messenger;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -58,7 +59,8 @@ public class EnchantedGoldenApple extends Manager {
                         public void run() {
                             if (cooldown.containsKey(p)) {
                                 long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.sendLang("enchanted_golden_apple_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft))));
+                                String message = Lang.get().getString("enchanted_golden_apple_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft));
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(message)));
                             } else {
                                 cancel();
                             }

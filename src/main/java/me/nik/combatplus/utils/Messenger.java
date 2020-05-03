@@ -15,8 +15,4 @@ public class Messenger {
     public static String message(String msg) {
         return format(Lang.get().getString("prefix") + format(Lang.get().getString(msg)));
     }
-
-    public static String sendLang(String msg) {
-        return format(Lang.get().getString(msg));
-    }
 }
