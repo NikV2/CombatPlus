@@ -89,7 +89,7 @@ public class Config {
         Config.get().addDefault("disable_item_frame_rotation.disabled_worlds", itemFrameRotation);
         Config.get().addDefault("disable_offhand.enabled", true);
         Config.get().addDefault("disable_offhand.disabled_worlds", offhandWorlds);
-        Config.get().addDefault("recipes.enchanted_golden_apple", true);
+        Config.get().addDefault("recipes.enchanted_golden_apple", false);
         Config.get().addDefault("fixes.kill_aura", false);
         Config.get().addDefault("fixes.projectile_fixer", true);
         Config.get().addDefault("fixes.invalid_criticals", true);
