@@ -440,6 +440,20 @@ public class GUIManager {
                 auraMeta.setLore(auraLore);
                 aura.setItemMeta(auraMeta);
 
+                //enchanted golden apple crafting
+                ItemStack ega = new ItemStack(Material.PAPER, 1);
+                ItemMeta egaMeta = ega.getItemMeta();
+                egaMeta.setDisplayName("§6Enchanted Golden Apple Crafting");
+                ArrayList<String> egaLore = new ArrayList<>();
+                egaLore.add("");
+                egaLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("recipes.enchanted_golden_apple"));
+                egaLore.add("");
+                egaLore.add(ChatColor.WHITE + "Makes Enchanted Golden Apples");
+                egaLore.add(ChatColor.WHITE + "Able to be Crafted");
+                egaMeta.setLore(egaLore);
+                ega.setItemMeta(egaMeta);
+
+                generalTwoGUI.setItem(16, ega);
                 generalTwoGUI.setItem(14, aura);
                 generalTwoGUI.setItem(12, hs);
                 generalTwoGUI.setItem(10, crit);

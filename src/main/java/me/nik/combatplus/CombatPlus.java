@@ -45,11 +45,11 @@ public final class CombatPlus extends JavaPlugin {
         loadFiles();
 
         //Startup Message
-        System.out.println();
-        System.out.println("          " + ChatColor.RED + "CombatPlus " + ChatColor.UNDERLINE + "v" + this.getDescription().getVersion());
-        System.out.println();
-        System.out.println("             " + ChatColor.BOLD + "Author: " + ChatColor.UNDERLINE + "Nik");
-        System.out.println();
+        consoleMessage("");
+        consoleMessage("          " + ChatColor.RED + "CombatPlus " + ChatColor.UNDERLINE + "v" + this.getDescription().getVersion());
+        consoleMessage("");
+        consoleMessage("             " + ChatColor.BOLD + "Author: " + ChatColor.UNDERLINE + "Nik");
+        consoleMessage("");
 
         //Unsupported Version Checker
         checkSupported();
@@ -83,10 +83,10 @@ public final class CombatPlus extends JavaPlugin {
 
         //Unload Instances
         instance = null;
-        this.getCommand("combatplus").setExecutor(null);
+        getCommand("combatplus").setExecutor(null);
 
         //Done
-        System.out.println(Messenger.message("console.disabled"));
+        consoleMessage(Messenger.message("console.disabled"));
     }
 
     public static CombatPlus getInstance() {
@@ -109,7 +109,7 @@ public final class CombatPlus extends JavaPlugin {
             BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
             registerEvent(new UpdateReminder());
         } else {
-            System.out.println(Messenger.message("console.update_disabled"));
+            consoleMessage(Messenger.message("console.update_disabled"));
         }
     }
 
@@ -150,7 +150,8 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     private void initialize() {
-        System.out.println(Messenger.message("console.initialize"));
+        consoleMessage(Messenger.message("console.initialize"));
+
         if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
             registerEvent(new AttributesSet(this));
         }
@@ -194,7 +195,10 @@ public final class CombatPlus extends JavaPlugin {
             registerEvent(new Enderpearl(this));
         }
         if (isEnabled("recipes.enchanted_golden_apple")) {
-            Bukkit.addRecipe(new CustomRecipes(this).enchantedGoldenAppleRecipe());
+            try {
+                this.getServer().addRecipe(new CustomRecipes(this).enchantedGoldenAppleRecipe());
+            } catch (Exception ignored) {
+            }
         }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener(this));
@@ -216,7 +220,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
-            System.out.println(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message("console.unsupported_version"));
         } else if (serverVersion("1.9")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
@@ -225,8 +229,8 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
-            System.out.println(Messenger.message("console.unsupported_version"));
-            System.out.println(Messenger.message("console.unsupported_sweep_attack"));
+            consoleMessage(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
         } else if (serverVersion("1.10")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
@@ -234,22 +238,22 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
-            System.out.println(Messenger.message("console.unsupported_version"));
-            System.out.println(Messenger.message("console.unsupported_sweep_attack"));
+            consoleMessage(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
         } else if (serverVersion("1.11")) {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
-            System.out.println(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message("console.unsupported_version"));
         } else if (serverVersion("1.12")) {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.save();
             Config.reload();
-            System.out.println(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message("console.unsupported_version"));
         }
     }
 
@@ -263,5 +267,9 @@ public final class CombatPlus extends JavaPlugin {
 
     private boolean isEnabled(String path) {
         return Config.get().getBoolean(path);
+    }
+
+    private void consoleMessage(String message) {
+        this.getServer().getConsoleSender().sendMessage(message);
     }
 }

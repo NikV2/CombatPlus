@@ -152,6 +152,10 @@ public class GUIListener extends Manager {
                 booleanSet("fixes.kill_aura", !configBoolean("fixes.kill_aura"));
                 saveAndReload();
                 break;
+            case "§6Enchanted Golden Apple Crafting":
+                booleanSet("recipes.enchanted_golden_apple", !configBoolean("recipes.enchanted_golden_apple"));
+                saveAndReload();
+                break;
         }
         e.setCancelled(true);
         if (e.getClick() == ClickType.SHIFT_RIGHT) {
