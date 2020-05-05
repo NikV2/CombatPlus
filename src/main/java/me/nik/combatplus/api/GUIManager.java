@@ -453,7 +453,7 @@ public class GUIManager {
                 nofallLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.no_fall"));
                 nofallLore.add("");
                 nofallLore.add(ChatColor.WHITE + "Detects and Cancels some types");
-                nofallLore.add(ChatColor.WHITE + "Of No Fall Damage Hacks");
+                nofallLore.add(ChatColor.WHITE + "Of No Fall Damage Exploits");
                 nofallMeta.setLore(nofallLore);
                 nofall.setItemMeta(nofallMeta);
 
