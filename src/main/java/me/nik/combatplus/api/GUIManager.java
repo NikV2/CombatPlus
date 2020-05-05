@@ -460,7 +460,7 @@ public class GUIManager {
                 //speed
                 ItemStack speed = new ItemStack(Material.PAPER, 1);
                 ItemMeta speedMeta = speed.getItemMeta();
-                nofallMeta.setDisplayName("§6Speed");
+                speedMeta.setDisplayName("§6Speed");
                 ArrayList<String> speedLore = new ArrayList<>();
                 speedLore.add("");
                 speedLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.speed"));
