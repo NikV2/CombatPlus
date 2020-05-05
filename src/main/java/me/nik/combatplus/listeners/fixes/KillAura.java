@@ -2,6 +2,7 @@ package me.nik.combatplus.listeners.fixes;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -36,7 +37,7 @@ public class KillAura extends Manager {
         if (ignoreCreative && p.getGameMode() == GameMode.CREATIVE) return;
         if (timer.contains(p.getUniqueId())) return;
         spawnNPC(p);
-        debug(p, "&3Kill Aura &f&l>> &6Spawned NPC: &atrue &6Entity: &a" + entity + " &6Duration: &a" + duration + " Ticks &6Range: &a" + range);
+        Messenger.debug(p, "&3Kill Aura &f&l>> &6Spawned NPC: &atrue &6Entity: &a" + entity + " &6Duration: &a" + duration + " Ticks &6Range: &a" + range);
     }
 
     private void spawnNPC(Player p) {

@@ -1,6 +1,7 @@
 package me.nik.combatplus.handlers;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.listeners.UpdateReminder;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,7 +18,8 @@ public class UpdateChecker extends BukkitRunnable {
     public UpdateChecker(CombatPlus plugin) {
         this.plugin = plugin;
     }
-    public static boolean hasUpdate = false;
+
+    public static String VERSION = null;
 
     @Override
     public void run() {
@@ -26,10 +28,11 @@ public class UpdateChecker extends BukkitRunnable {
             String version = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
 
             if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-                System.out.println(Messenger.message("console.update_found"));
-                hasUpdate = true;
+                VERSION = version;
+                plugin.consoleMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", VERSION));
+                plugin.registerEvent(new UpdateReminder(plugin));
             } else {
-                System.out.println(Messenger.message("console.update_not_found"));
+                plugin.consoleMessage(Messenger.message("console.update_not_found"));
             }
         } catch (IOException ignored) {
         }

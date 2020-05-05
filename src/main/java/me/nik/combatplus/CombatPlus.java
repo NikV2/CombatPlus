@@ -15,11 +15,12 @@ import me.nik.combatplus.listeners.GoldenApple;
 import me.nik.combatplus.listeners.ItemFrameRotate;
 import me.nik.combatplus.listeners.Offhand;
 import me.nik.combatplus.listeners.PlayerRegen;
-import me.nik.combatplus.listeners.UpdateReminder;
 import me.nik.combatplus.listeners.fixes.Criticals;
 import me.nik.combatplus.listeners.fixes.HealthSpoof;
 import me.nik.combatplus.listeners.fixes.KillAura;
+import me.nik.combatplus.listeners.fixes.NoFall;
 import me.nik.combatplus.listeners.fixes.Projectiles;
+import me.nik.combatplus.listeners.fixes.Speed;
 import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.ResetStats;
@@ -36,11 +37,8 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
-    private static CombatPlus instance;
-
     @Override
     public void onEnable() {
-        instance = this;
         //Load Files
         loadFiles();
 
@@ -55,7 +53,7 @@ public final class CombatPlus extends JavaPlugin {
         checkSupported();
 
         //Load Commands
-        getCommand("combatplus").setExecutor(new CommandManager());
+        getCommand("combatplus").setExecutor(new CommandManager(this));
 
         //Load Listeners
         initialize();
@@ -82,15 +80,10 @@ public final class CombatPlus extends JavaPlugin {
         Lang.save();
 
         //Unload Instances
-        instance = null;
         getCommand("combatplus").setExecutor(null);
 
         //Done
         consoleMessage(Messenger.message("console.disabled"));
-    }
-
-    public static CombatPlus getInstance() {
-        return instance;
     }
 
     private void loadFiles() {
@@ -107,7 +100,6 @@ public final class CombatPlus extends JavaPlugin {
     private void checkForUpdates() {
         if (isEnabled("settings.check_for_updates")) {
             BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
-            registerEvent(new UpdateReminder());
         } else {
             consoleMessage(Messenger.message("console.update_disabled"));
         }
@@ -130,21 +122,21 @@ public final class CombatPlus extends JavaPlugin {
     private void loadStats() {
         if (isEnabled("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetAttackSpeed(this).setAttackSpd(player);
+                new SetAttackSpeed().setAttackSpd(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats(this).resetAttackSpeed(player);
+                new ResetStats().resetAttackSpeed(player);
             });
         }
 
         if (isEnabled("custom.player_health.enabled")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetCustomHealth(this).setHealth(player);
+                new SetCustomHealth().setHealth(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats(this).resetMaxHealth(player);
+                new ResetStats().resetMaxHealth(player);
             });
         }
     }
@@ -156,28 +148,28 @@ public final class CombatPlus extends JavaPlugin {
             registerEvent(new AttributesSet(this));
         }
         if (isEnabled("combat.settings.old_weapon_damage") || isEnabled("combat.settings.old_tool_damage") || isEnabled("combat.settings.disable_sweep_attacks.enabled")) {
-            registerEvent(new DamageModifiers(this));
+            registerEvent(new DamageModifiers());
         }
         if (isEnabled("combat.settings.disable_arrow_boost")) {
-            registerEvent(new BowBoost(this));
+            registerEvent(new BowBoost());
         }
         if (isEnabled("combat.settings.old_player_regen")) {
             registerEvent(new PlayerRegen(this));
         }
         if (isEnabled("disabled_items.enabled")) {
-            registerEvent(new DisabledItems(this));
+            registerEvent(new DisabledItems());
         }
         if (isEnabled("disable_item_frame_rotation.enabled")) {
-            registerEvent(new ItemFrameRotate(this));
+            registerEvent(new ItemFrameRotate());
         }
         if (isEnabled("disable_offhand.enabled")) {
-            registerEvent(new Offhand(this));
+            registerEvent(new Offhand());
         }
         if (isEnabled("fixes.projectile_fixer")) {
-            registerEvent(new Projectiles(this));
+            registerEvent(new Projectiles());
         }
         if (isEnabled("fixes.invalid_criticals")) {
-            registerEvent(new Criticals(this));
+            registerEvent(new Criticals());
         }
         if (isEnabled("fixes.health_spoof")) {
             registerEvent(new HealthSpoof(this));
@@ -199,6 +191,12 @@ public final class CombatPlus extends JavaPlugin {
                 this.getServer().addRecipe(new CustomRecipes(this).enchantedGoldenAppleRecipe());
             } catch (Exception ignored) {
             }
+        }
+        if (isEnabled("fixes.no_fall")) {
+            registerEvent(new NoFall());
+        }
+        if (isEnabled("fixes.speed")) {
+            registerEvent(new Speed());
         }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener(this));
@@ -261,7 +259,7 @@ public final class CombatPlus extends JavaPlugin {
         return Bukkit.getVersion().contains(version);
     }
 
-    private void registerEvent(Listener listener) {
+    public void registerEvent(Listener listener) {
         Bukkit.getServer().getPluginManager().registerEvents(listener, this);
     }
 
@@ -269,7 +267,7 @@ public final class CombatPlus extends JavaPlugin {
         return Config.get().getBoolean(path);
     }
 
-    private void consoleMessage(String message) {
+    public void consoleMessage(String message) {
         this.getServer().getConsoleSender().sendMessage(message);
     }
 }

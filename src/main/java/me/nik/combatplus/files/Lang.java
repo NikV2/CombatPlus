@@ -44,7 +44,7 @@ public class Lang {
         Lang.get().addDefault("no_perm", "&cYou do not have permission to do that!");
         Lang.get().addDefault("reloading", "&fReloading the plugin...");
         Lang.get().addDefault("reloaded", "&fYou have successfully reloaded the plugin!");
-        Lang.get().addDefault("update_reminder", "&eThere is a new Version of &c&lCombat Plus&e available. Make sure to stay up to date!");
+        Lang.get().addDefault("update_reminder", "&6There is a new version available, Your version &a%current%&6 new version &a%new%");
         Lang.get().addDefault("golden_apple_cooldown", "&fYou cannot eat a Golden Apple yet, You must wait %seconds% seconds.");
         Lang.get().addDefault("golden_apple_cooldown_actionbar", "&6You can eat a Golden Apple again in &a%seconds% &6seconds.");
         Lang.get().addDefault("enchanted_golden_apple_cooldown", "&fYou cannot eat an Enchanted Golden Apple yet, You must wait %seconds% seconds.");
@@ -56,7 +56,6 @@ public class Lang {
         Lang.get().addDefault("gui.plugin", "&c&lPlugin Settings");
         Lang.get().addDefault("gui.combat", "&c&lCombat Settings");
         Lang.get().addDefault("gui.general", "&c&lGeneral Settings");
-        Lang.get().addDefault("console.update_found", "&a&lThere is an Update available on Spigot!");
         Lang.get().addDefault("console.update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
         Lang.get().addDefault("console.update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
         Lang.get().addDefault("console.commands", "&c&lYou cannot run this command through the console :(");

@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class GUIListener extends Manager {
 
-    private final GUIManager gui = new GUIManager();
+    private final GUIManager gui = new GUIManager(plugin);
 
     public GUIListener(CombatPlus plugin) {
         super(plugin);
@@ -59,10 +59,6 @@ public class GUIListener extends Manager {
             // Plugin Settings GUI
             case "§6Check for Updates":
                 booleanSet("settings.check_for_updates", !configBoolean("settings.check_for_updates"));
-                saveAndReload();
-                break;
-            case "§6Run Asynchronously":
-                booleanSet("settings.async", !configBoolean("settings.async"));
                 saveAndReload();
                 break;
             case "§6Developer Mode":
@@ -154,6 +150,14 @@ public class GUIListener extends Manager {
                 break;
             case "§6Enchanted Golden Apple Crafting":
                 booleanSet("recipes.enchanted_golden_apple", !configBoolean("recipes.enchanted_golden_apple"));
+                saveAndReload();
+                break;
+            case "§6No Fall":
+                booleanSet("fixes.no_fall", !configBoolean("fixes.no_fall"));
+                saveAndReload();
+                break;
+            case "§6Speed":
+                booleanSet("fixes.speed", !configBoolean("fixes.speed"));
                 saveAndReload();
                 break;
         }

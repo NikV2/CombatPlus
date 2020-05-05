@@ -19,7 +19,11 @@ import java.util.ArrayList;
 
 public class GUIManager {
 
-    private final CombatPlus plugin = CombatPlus.getInstance();
+    private final CombatPlus plugin;
+
+    public GUIManager(CombatPlus plugin) {
+        this.plugin = plugin;
+    }
 
     public void openMainGUI(Player p) {
         Inventory mainGUI = Bukkit.createInventory(new CombatPlusHolder(), 36, Messenger.format(Lang.get().getString("gui.main")));
@@ -81,18 +85,6 @@ public class GUIManager {
                 checkUpdatesMeta.setLore(updatesLore);
                 checkUpdates.setItemMeta(checkUpdatesMeta);
 
-                ItemStack async = new ItemStack(Material.PAPER, 1);
-                ItemMeta asyncMeta = async.getItemMeta();
-                asyncMeta.setDisplayName("§6Run Asynchronously");
-                ArrayList<String> asyncLore = new ArrayList<>();
-                asyncLore.add("");
-                asyncLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("settings.async"));
-                asyncLore.add("");
-                asyncLore.add(ChatColor.WHITE + "Would you like the plugin");
-                asyncLore.add(ChatColor.WHITE + "To run tasks Asynchronously?");
-                asyncMeta.setLore(asyncLore);
-                async.setItemMeta(asyncMeta);
-
                 ItemStack dev = new ItemStack(Material.PAPER, 1);
                 ItemMeta devMeta = dev.getItemMeta();
                 devMeta.setDisplayName("§6Developer Mode");
@@ -110,9 +102,8 @@ public class GUIManager {
                 backMeta.setDisplayName("§cBack");
                 back.setItemMeta(backMeta);
 
-                pluginGUI.setItem(11, checkUpdates);
-                pluginGUI.setItem(13, async);
-                pluginGUI.setItem(15, dev);
+                pluginGUI.setItem(12, checkUpdates);
+                pluginGUI.setItem(14, dev);
                 pluginGUI.setItem(31, back);
             }
         }.runTaskTimer(plugin, 1, 5);
@@ -453,6 +444,34 @@ public class GUIManager {
                 egaMeta.setLore(egaLore);
                 ega.setItemMeta(egaMeta);
 
+                //nofall
+                ItemStack nofall = new ItemStack(Material.PAPER, 1);
+                ItemMeta nofallMeta = nofall.getItemMeta();
+                nofallMeta.setDisplayName("§6No Fall");
+                ArrayList<String> nofallLore = new ArrayList<>();
+                nofallLore.add("");
+                nofallLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.no_fall"));
+                nofallLore.add("");
+                nofallLore.add(ChatColor.WHITE + "Detects and Cancels some types");
+                nofallLore.add(ChatColor.WHITE + "Of No Fall Damage Hacks");
+                nofallMeta.setLore(nofallLore);
+                nofall.setItemMeta(nofallMeta);
+
+                //speed
+                ItemStack speed = new ItemStack(Material.PAPER, 1);
+                ItemMeta speedMeta = speed.getItemMeta();
+                nofallMeta.setDisplayName("§6Speed");
+                ArrayList<String> speedLore = new ArrayList<>();
+                speedLore.add("");
+                speedLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.speed"));
+                speedLore.add("");
+                speedLore.add(ChatColor.WHITE + "Detects and Cancels some types");
+                speedLore.add(ChatColor.WHITE + "Of Speed & Fly Exploits");
+                speedMeta.setLore(speedLore);
+                speed.setItemMeta(speedMeta);
+
+                generalTwoGUI.setItem(30, speed);
+                generalTwoGUI.setItem(28, nofall);
                 generalTwoGUI.setItem(16, ega);
                 generalTwoGUI.setItem(14, aura);
                 generalTwoGUI.setItem(12, hs);

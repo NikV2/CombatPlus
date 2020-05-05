@@ -1,13 +1,10 @@
 package me.nik.combatplus.commands;
 
-import me.nik.combatplus.CombatPlus;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public abstract class SubCommand {
-
-    protected CombatPlus plugin = CombatPlus.getInstance();
 
     public abstract String getName();
 

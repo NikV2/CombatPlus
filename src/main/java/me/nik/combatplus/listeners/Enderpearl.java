@@ -1,7 +1,7 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.utils.Messenger;
 import net.md_5.bungee.api.ChatMessageType;
@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,12 +18,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Enderpearl extends Manager {
+public class Enderpearl implements Listener {
+
+    private final CombatPlus plugin;
+
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
-    private final int cdtime = configInt("enderpearl_cooldown.cooldown");
+    private final int cdtime = Config.get().getInt("enderpearl_cooldown.cooldown");
 
     public Enderpearl(CombatPlus plugin) {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     private void taskRun(UUID uuid) {
@@ -56,8 +60,8 @@ public class Enderpearl extends Manager {
                     player.sendMessage(Messenger.message("enderpearl_cooldown").replaceAll("%seconds%", String.valueOf(secondsLeft)));
                 } else {
                     taskRun(p);
-                    debug(player, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
-                    if (configBoolean("enderpearl_cooldown.actionbar")) {
+                    Messenger.debug(player, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
+                    if (Config.get().getBoolean("enderpearl_cooldown.actionbar")) {
                         new BukkitRunnable() {
 
                             @Override
@@ -75,5 +79,13 @@ public class Enderpearl extends Manager {
                 }
             }
         }
+    }
+
+    private boolean enderpearlDisabledWorlds(Player player) {
+        for (String world : Config.get().getStringList("enderpearl_cooldown.disabled_worlds")) {
+            if (player.getWorld().getName().equalsIgnoreCase(world))
+                return true;
+        }
+        return false;
     }
 }

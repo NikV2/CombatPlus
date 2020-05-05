@@ -1,7 +1,7 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.utils.Messenger;
 import net.md_5.bungee.api.ChatMessageType;
@@ -10,18 +10,22 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-public class EnchantedGoldenApple extends Manager {
+public class EnchantedGoldenApple implements Listener {
+
+    private final CombatPlus plugin;
+
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
-    private final int cdtime = configInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
+    private final int cdtime = Config.get().getInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
 
     public EnchantedGoldenApple(CombatPlus plugin) {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     private void taskRun(UUID uuid) {
@@ -51,8 +55,8 @@ public class EnchantedGoldenApple extends Manager {
                 player.sendMessage(Messenger.message("enchanted_golden_apple_cooldown").replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 taskRun(p);
-                debug(player, "&3Enchanted Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
-                if (configBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar")) {
+                Messenger.debug(player, "&3Enchanted Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
+                if (Config.get().getBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar")) {
                     new BukkitRunnable() {
 
                         @Override
@@ -69,5 +73,13 @@ public class EnchantedGoldenApple extends Manager {
                 }
             }
         }
+    }
+
+    private boolean gappleDisabledWorlds(Player player) {
+        for (String world : Config.get().getStringList("golden_apple_cooldown.disabled_worlds")) {
+            if (player.getWorld().getName().equalsIgnoreCase(world))
+                return true;
+        }
+        return false;
     }
 }

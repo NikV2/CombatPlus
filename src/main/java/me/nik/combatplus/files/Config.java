@@ -41,26 +41,17 @@ public class Config {
     public static void addDefaults() {
         //config.yml
         //string lists
-        List<String> combatList = Config.get().getStringList("combat.settings.disabled_worlds");
-        combatList.add("example_world");
         List<String> gappleList = Config.get().getStringList("general.settings.golden_apple_cooldown.disabled_worlds");
         gappleList.add("example_world");
         List<String> itemsList = Config.get().getStringList("general.settings.disabled_items.items");
         itemsList.add("item_frame");
         itemsList.add("armor_stand");
-        List<String> offhandWorlds = Config.get().getStringList("general.settings.disable_offhand.disabled_worlds");
-        offhandWorlds.add("example_world");
-        List<String> craftingWorlds = Config.get().getStringList("disabled_items.disabled_worlds");
-        craftingWorlds.add("example_world");
         List<String> itemFrameRotation = Config.get().getStringList("disable_item_frame_rotation.disabled_worlds");
         itemFrameRotation.add("example_world");
         List<String> epearlList = Config.get().getStringList("enderpearl_cooldown.disabled_worlds");
         epearlList.add("example_world");
-        List<String> customStats = Config.get().getStringList("custom.disabled_worlds");
-        customStats.add("example_world");
         Config.get().options().header("+----------------------------------------------------------------------------------------------+" + "\n" + "|                                                                                              |" + "\n" + "|                                           Combat Plus                                        |" + "\n" + "|                                                                                              |" + "\n" + "|                               Discord: https://discord.gg/m7j2Y9H                            |" + "\n" + "|                                                                                              |" + "\n" + "|                                           Author: Nik                                        |" + "\n" + "|                                                                                              |" + "\n" + "+----------------------------------------------------------------------------------------------+" + "\n");
         Config.get().addDefault("settings.check_for_updates", true);
-        Config.get().addDefault("settings.async", false);
         Config.get().addDefault("settings.developer_mode", false);
         Config.get().addDefault("combat.settings.old_pvp", true);
         Config.get().addDefault("combat.settings.old_weapon_damage", true);
@@ -70,7 +61,6 @@ public class Config {
         Config.get().addDefault("combat.settings.disable_sweep_attacks.ignore_sweeping_edge", false);
         Config.get().addDefault("combat.settings.disable_arrow_boost", true);
         Config.get().addDefault("combat.settings.old_player_regen", true);
-        Config.get().addDefault("combat.settings.disabled_worlds", combatList);
         Config.get().addDefault("golden_apple_cooldown.golden_apple.enabled", true);
         Config.get().addDefault("golden_apple_cooldown.golden_apple.cooldown", 10);
         Config.get().addDefault("golden_apple_cooldown.golden_apple.actionbar", true);
@@ -84,19 +74,18 @@ public class Config {
         Config.get().addDefault("enderpearl_cooldown.disabled_worlds", epearlList);
         Config.get().addDefault("disabled_items.enabled", false);
         Config.get().addDefault("disabled_items.items", itemsList);
-        Config.get().addDefault("disabled_items.disabled_worlds", craftingWorlds);
         Config.get().addDefault("disable_item_frame_rotation.enabled", true);
         Config.get().addDefault("disable_item_frame_rotation.disabled_worlds", itemFrameRotation);
         Config.get().addDefault("disable_offhand.enabled", true);
-        Config.get().addDefault("disable_offhand.disabled_worlds", offhandWorlds);
         Config.get().addDefault("recipes.enchanted_golden_apple", false);
         Config.get().addDefault("fixes.kill_aura", false);
         Config.get().addDefault("fixes.projectile_fixer", true);
         Config.get().addDefault("fixes.invalid_criticals", true);
         Config.get().addDefault("fixes.health_spoof", true);
+        Config.get().addDefault("fixes.no_fall", false);
+        Config.get().addDefault("fixes.speed", false);
         Config.get().addDefault("custom.player_health.enabled", false);
         Config.get().addDefault("custom.player_health.max_health", 20);
-        Config.get().addDefault("custom.disabled_worlds", customStats);
         Config.get().addDefault("advanced.settings.old_pvp.attack_speed", 24);
         Config.get().addDefault("advanced.settings.new_pvp.attack_speed", 4);
         Config.get().addDefault("advanced.settings.modifiers.old_swords_damage", 1);

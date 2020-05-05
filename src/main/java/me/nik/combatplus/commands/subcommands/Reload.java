@@ -1,5 +1,6 @@
 package me.nik.combatplus.commands.subcommands;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.commands.SubCommand;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
@@ -7,6 +8,12 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class Reload extends SubCommand {
+
+    private final CombatPlus plugin;
+
+    public Reload(CombatPlus plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public String getName() {
