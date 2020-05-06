@@ -15,6 +15,7 @@ import me.nik.combatplus.listeners.GoldenApple;
 import me.nik.combatplus.listeners.ItemFrameRotate;
 import me.nik.combatplus.listeners.Offhand;
 import me.nik.combatplus.listeners.PlayerRegen;
+import me.nik.combatplus.listeners.fixes.BadPackets;
 import me.nik.combatplus.listeners.fixes.Criticals;
 import me.nik.combatplus.listeners.fixes.HealthSpoof;
 import me.nik.combatplus.listeners.fixes.KillAura;
@@ -198,6 +199,9 @@ public final class CombatPlus extends JavaPlugin {
         if (isEnabled("fixes.speed")) {
             registerEvent(new Speed());
         }
+        if (isEnabled("fixes.bad_packets")) {
+            registerEvent(new BadPackets());
+        }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener(this));
     }
@@ -216,6 +220,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("enderpearl_cooldown.enabled", false);
             Config.get().set("disable_offhand.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
+            Config.get().set("fixes.health_spoof", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));

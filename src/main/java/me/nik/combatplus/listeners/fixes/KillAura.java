@@ -1,7 +1,7 @@
 package me.nik.combatplus.listeners.fixes;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -11,23 +11,26 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
 import java.util.UUID;
 
-public class KillAura extends Manager {
+public class KillAura implements Listener {
+
+    private final CombatPlus plugin;
 
     private final HashSet<UUID> timer = new HashSet<>();
-    private final String entity = configString("advanced.settings.kill_aura.entity");
-    private final int ticks = configInt("advanced.settings.kill_aura.teleport_ticks");
-    private final int duration = configInt("advanced.settings.kill_aura.ticks_duration");
-    private final boolean ignoreCreative = configBoolean("advanced.settings.kill_aura.ignore_creative");
-    private final int range = configInt("advanced.settings.kill_aura.range");
+    private final String entity = Config.get().getString("advanced.settings.kill_aura.entity");
+    private final int ticks = Config.get().getInt("advanced.settings.kill_aura.teleport_ticks");
+    private final int duration = Config.get().getInt("advanced.settings.kill_aura.ticks_duration");
+    private final boolean ignoreCreative = Config.get().getBoolean("advanced.settings.kill_aura.ignore_creative");
+    private final int range = Config.get().getInt("advanced.settings.kill_aura.range");
 
     public KillAura(CombatPlus plugin) {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)

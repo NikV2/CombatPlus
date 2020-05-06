@@ -2,6 +2,7 @@ package me.nik.combatplus.listeners.fixes;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.utils.Messenger;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,6 +22,7 @@ public class HealthSpoof implements Listener {
     public void onCloseToDeath(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player p = (Player) e.getEntity();
+        if (holdsTotem(p)) return;
         if (shouldDie(e, p)) {
             new BukkitRunnable() {
 
@@ -39,5 +41,10 @@ public class HealthSpoof implements Listener {
         double health = p.getHealth();
         double damage = e.getFinalDamage();
         return damage >= health || health < 1;
+    }
+
+    private boolean holdsTotem(Player p) {
+        Material totem = Material.TOTEM_OF_UNDYING;
+        return p.getInventory().getItemInMainHand().getType() == totem || p.getInventory().getItemInOffHand().getType() == totem;
     }
 }

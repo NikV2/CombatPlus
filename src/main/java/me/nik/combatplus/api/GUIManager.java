@@ -470,6 +470,20 @@ public class GUIManager {
                 speedMeta.setLore(speedLore);
                 speed.setItemMeta(speedMeta);
 
+                //badpackets
+                ItemStack bp = new ItemStack(Material.PAPER, 1);
+                ItemMeta bpMeta = bp.getItemMeta();
+                bpMeta.setDisplayName("§6Bad Packets");
+                ArrayList<String> bpLore = new ArrayList<>();
+                bpLore.add("");
+                bpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("fixes.bad_packets"));
+                bpLore.add("");
+                bpLore.add(ChatColor.WHITE + "Detects and Cancels some types");
+                bpLore.add(ChatColor.WHITE + "Of Bad & Illegal Packets");
+                bpMeta.setLore(bpLore);
+                bp.setItemMeta(bpMeta);
+
+                generalTwoGUI.setItem(32, bp);
                 generalTwoGUI.setItem(30, speed);
                 generalTwoGUI.setItem(28, nofall);
                 generalTwoGUI.setItem(16, ega);

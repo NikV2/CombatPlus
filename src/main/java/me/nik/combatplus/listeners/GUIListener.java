@@ -2,7 +2,7 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.api.GUIManager;
-import me.nik.combatplus.api.Manager;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.handlers.CombatPlusHolder;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
@@ -11,16 +11,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class GUIListener extends Manager {
+public class GUIListener implements Listener {
 
-    private final GUIManager gui = new GUIManager(plugin);
+    private final CombatPlus plugin;
 
     public GUIListener(CombatPlus plugin) {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -30,6 +31,7 @@ public class GUIListener extends Manager {
         if (!(e.getInventory().getHolder() instanceof CombatPlusHolder)) return;
         if (null == clickedItem) return;
         if (clickedItem.getType().equals(Material.AIR)) return;
+        GUIManager gui = new GUIManager(plugin);
         switch (clickedItem.getItemMeta().getDisplayName()) {
             // Main GUI
             case "§6Plugin Settings":
@@ -160,11 +162,29 @@ public class GUIListener extends Manager {
                 booleanSet("fixes.speed", !configBoolean("fixes.speed"));
                 saveAndReload();
                 break;
+            case "§6Bad Packets":
+                booleanSet("fixes.bad_packets", !configBoolean("fixes.bad_packets"));
+                saveAndReload();
+                break;
         }
         e.setCancelled(true);
         if (e.getClick() == ClickType.SHIFT_RIGHT) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
         }
+    }
+
+    private boolean configBoolean(String booleans) {
+        return Config.get().getBoolean(booleans);
+    }
+
+    private void booleanSet(String path, boolean value) {
+        Config.get().set(path, value);
+    }
+
+    private void saveAndReload() {
+        Config.save();
+        Config.reload();
+        Config.save();
     }
 }
