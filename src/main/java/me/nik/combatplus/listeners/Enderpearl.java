@@ -22,6 +22,7 @@ import java.util.UUID;
 public class Enderpearl implements Listener {
 
     private final CombatPlus plugin;
+    private final WorldUtils worldUtils = new WorldUtils();
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("enderpearl_cooldown.cooldown");
@@ -49,7 +50,7 @@ public class Enderpearl implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteract(PlayerInteractEvent e) {
-        if (WorldUtils.enderpearlDisabledWorlds(e.getPlayer())) return;
+        if (worldUtils.enderpearlDisabledWorlds(e.getPlayer())) return;
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Player player = e.getPlayer();
             if (holdsEnderPearl(player)) {

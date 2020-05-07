@@ -20,6 +20,7 @@ import java.util.UUID;
 public class PlayerRegen implements Listener {
 
     private final CombatPlus plugin;
+    private final WorldUtils worldUtils = new WorldUtils();
 
     private final Map<UUID, Long> healTimes = new HashMap<>();
     private final int oldRegenFrequency = Config.get().getInt("advanced.settings.old_regen.frequency");
@@ -36,7 +37,7 @@ public class PlayerRegen implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRegen(EntityRegainHealthEvent e) {
-        if (WorldUtils.combatDisabledWorlds((Player) e.getEntity())) return;
+        if (worldUtils.combatDisabledWorlds((Player) e.getEntity())) return;
         if (e.getEntityType() != EntityType.PLAYER || e.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) {
             return;
         }

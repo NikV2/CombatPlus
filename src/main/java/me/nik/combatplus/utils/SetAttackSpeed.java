@@ -6,9 +6,10 @@ import org.bukkit.entity.Player;
 
 public class SetAttackSpeed {
     private final double attackSpeed = Config.get().getDouble("advanced.settings.old_pvp.attack_speed");
+    private final WorldUtils worldUtils = new WorldUtils();
 
     public void setAttackSpd(Player player) {
-        if (WorldUtils.combatDisabledWorlds(player)) {
+        if (worldUtils.combatDisabledWorlds(player)) {
             new ResetStats().resetAttackSpeed(player);
             return;
         }

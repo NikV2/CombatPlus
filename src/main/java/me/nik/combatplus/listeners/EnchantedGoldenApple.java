@@ -21,6 +21,7 @@ import java.util.UUID;
 public class EnchantedGoldenApple implements Listener {
 
     private final CombatPlus plugin;
+    private final WorldUtils worldUtils = new WorldUtils();
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
@@ -44,7 +45,7 @@ public class EnchantedGoldenApple implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL)
     public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
-        if (WorldUtils.gappleDisabledWorlds(e.getPlayer())) return;
+        if (worldUtils.gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;
         final Material handItem = e.getItem().getType();
         if (handItem == Material.ENCHANTED_GOLDEN_APPLE) {

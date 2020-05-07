@@ -16,6 +16,8 @@ import org.bukkit.util.Vector;
 
 public class DamageModifiers implements Listener {
 
+    private final WorldUtils worldUtils = new WorldUtils();
+
     private final double oldPickaxeDamage = Config.get().getDouble("advanced.settings.modifiers.old_pickaxes_damage");
     private final double oldAxeDamage = Config.get().getDouble("advanced.settings.modifiers.old_axes_damage");
     private final double oldShovelDamage = Config.get().getDouble("advanced.settings.modifiers.old_shovels_damage");
@@ -80,7 +82,7 @@ public class DamageModifiers implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
-        if (WorldUtils.combatDisabledWorlds((Player) e.getDamager())) return;
+        if (worldUtils.combatDisabledWorlds((Player) e.getDamager())) return;
         Player player = (Player) e.getDamager();
         ItemStack handItem = player.getInventory().getItemInMainHand();
         String isWeapon = handItem.getType().name();

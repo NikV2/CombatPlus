@@ -7,46 +7,46 @@ import java.util.List;
 
 public class WorldUtils {
 
-    private static final List<String> COMBATWORLDS = Config.get().getStringList("combat.settings.disabled_worlds");
-    private static final List<String> ITEMFRAMEWORLDS = Config.get().getStringList("disable_item_frame_rotation.disabled_worlds");
-    private static final List<String> GAPPLEWORLDS = Config.get().getStringList("golden_apple_cooldown.disabled_worlds");
-    private static final List<String> EPEARLWORLDS = Config.get().getStringList("enderpearl_cooldown.disabled_worlds");
-    private static final List<String> OFFHANDWORLDS = Config.get().getStringList("disable_offhand.disabled_worlds");
+    private final List<String> combatWorlds = Config.get().getStringList("combat.settings.disabled_worlds");
+    private final List<String> itemFrameWorlds = Config.get().getStringList("disable_item_frame_rotation.disabled_worlds");
+    private final List<String> gappleWorlds = Config.get().getStringList("golden_apple_cooldown.disabled_worlds");
+    private final List<String> epearlWorlds = Config.get().getStringList("enderpearl_cooldown.disabled_worlds");
+    private final List<String> offhandWorlds = Config.get().getStringList("disable_offhand.disabled_worlds");
 
-    public static boolean combatDisabledWorlds(Player player) {
-        for (String world : COMBATWORLDS) {
+    public boolean combatDisabledWorlds(Player player) {
+        for (String world : combatWorlds) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }
         return false;
     }
 
-    public static boolean itemFrameRotationDisabledWorlds(Player player) {
-        for (String world : ITEMFRAMEWORLDS) {
+    public boolean itemFrameRotationDisabledWorlds(Player player) {
+        for (String world : itemFrameWorlds) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }
         return false;
     }
 
-    public static boolean gappleDisabledWorlds(Player player) {
-        for (String world : GAPPLEWORLDS) {
+    public boolean gappleDisabledWorlds(Player player) {
+        for (String world : gappleWorlds) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }
         return false;
     }
 
-    public static boolean enderpearlDisabledWorlds(Player player) {
-        for (String world : EPEARLWORLDS) {
+    public boolean enderpearlDisabledWorlds(Player player) {
+        for (String world : epearlWorlds) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }
         return false;
     }
 
-    public static boolean offhandDisabledWorlds(Player player) {
-        for (String world : OFFHANDWORLDS) {
+    public boolean offhandDisabledWorlds(Player player) {
+        for (String world : offhandWorlds) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }

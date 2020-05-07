@@ -12,6 +12,8 @@ import org.bukkit.projectiles.ProjectileSource;
 
 public class BowBoost implements Listener {
 
+    private final WorldUtils worldUtils = new WorldUtils();
+
     /*
      Disables the ability to Boost yourself up using a Bow, By shooting yourself
      This Listener prevents players hitting themselves with a bow
@@ -22,7 +24,7 @@ public class BowBoost implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;
         Player player = (Player) e.getEntity();
-        if (WorldUtils.combatDisabledWorlds(player)) return;
+        if (worldUtils.combatDisabledWorlds(player)) return;
         if (player.hasPermission("cp.bypass.bowboost")) return;
         Arrow arrow = (Arrow) e.getDamager();
         ProjectileSource holder = arrow.getShooter();

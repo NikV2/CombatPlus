@@ -11,6 +11,8 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class ItemFrameRotate implements Listener {
 
+    private final WorldUtils worldUtils = new WorldUtils();
+
     /*
      This Listener removes the ability to rotate item frames
      */
@@ -19,7 +21,7 @@ public class ItemFrameRotate implements Listener {
     public void onRotate(PlayerInteractEntityEvent e) {
         if (!(e.getRightClicked() instanceof ItemFrame)) return;
         if (e.getPlayer().hasPermission("cp.bypass.rotate")) return;
-        if (WorldUtils.itemFrameRotationDisabledWorlds(e.getPlayer())) return;
+        if (worldUtils.itemFrameRotationDisabledWorlds(e.getPlayer())) return;
         if (((ItemFrame) e.getRightClicked()).getItem().getType().equals(Material.AIR)) return;
         e.setCancelled(true);
         Messenger.debug(e.getPlayer(), "&3Item Frame Rotation &f&l>> &6Canceled: &a" + e.isCancelled());
