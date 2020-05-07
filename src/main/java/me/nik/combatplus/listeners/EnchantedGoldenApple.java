@@ -4,6 +4,7 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
@@ -43,7 +44,7 @@ public class EnchantedGoldenApple implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL)
     public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
-        if (gappleDisabledWorlds(e.getPlayer())) return;
+        if (WorldUtils.gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;
         final Material handItem = e.getItem().getType();
         if (handItem == Material.ENCHANTED_GOLDEN_APPLE) {
@@ -73,13 +74,5 @@ public class EnchantedGoldenApple implements Listener {
                 }
             }
         }
-    }
-
-    private boolean gappleDisabledWorlds(Player player) {
-        for (String world : Config.get().getStringList("golden_apple_cooldown.disabled_worlds")) {
-            if (player.getWorld().getName().equalsIgnoreCase(world))
-                return true;
-        }
-        return false;
     }
 }

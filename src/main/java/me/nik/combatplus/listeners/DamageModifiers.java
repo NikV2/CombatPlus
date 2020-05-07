@@ -2,6 +2,7 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -79,6 +80,7 @@ public class DamageModifiers implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
+        if (WorldUtils.combatDisabledWorlds((Player) e.getDamager())) return;
         Player player = (Player) e.getDamager();
         ItemStack handItem = player.getInventory().getItemInMainHand();
         String isWeapon = handItem.getType().name();

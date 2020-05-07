@@ -4,6 +4,7 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
@@ -48,9 +49,10 @@ public class Enderpearl implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteract(PlayerInteractEvent e) {
+        if (WorldUtils.enderpearlDisabledWorlds(e.getPlayer())) return;
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             Player player = e.getPlayer();
-            if (holdsEnderPearl(player) && !enderpearlDisabledWorlds(player)) {
+            if (holdsEnderPearl(player)) {
                 if (player.hasPermission("cp.bypass.epearl")) return;
                 final UUID p = player.getUniqueId();
                 if (cooldown.containsKey(p)) {
@@ -79,13 +81,5 @@ public class Enderpearl implements Listener {
                 }
             }
         }
-    }
-
-    private boolean enderpearlDisabledWorlds(Player player) {
-        for (String world : Config.get().getStringList("enderpearl_cooldown.disabled_worlds")) {
-            if (player.getWorld().getName().equalsIgnoreCase(world))
-                return true;
-        }
-        return false;
     }
 }

@@ -1,6 +1,7 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +22,7 @@ public class BowBoost implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;
         Player player = (Player) e.getEntity();
+        if (WorldUtils.combatDisabledWorlds(player)) return;
         if (player.hasPermission("cp.bypass.bowboost")) return;
         Arrow arrow = (Arrow) e.getDamager();
         ProjectileSource holder = arrow.getShooter();

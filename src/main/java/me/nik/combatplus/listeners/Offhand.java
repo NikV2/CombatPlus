@@ -1,6 +1,7 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -16,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Offhand implements Listener {
 
-    private static final int OFFHAND_SLOT = 40;
+    private static final int OFFHANDSLOT = 40;
 
     /*
      This Listener completely disables the use of the Offhand
@@ -24,6 +25,7 @@ public class Offhand implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
+        if (WorldUtils.offhandDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.offhand")) return;
         e.setCancelled(true);
         Messenger.debug(e.getPlayer(), "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
@@ -31,8 +33,9 @@ public class Offhand implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClickOffHand(InventoryClickEvent e) {
+        if (WorldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
-        if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != OFFHAND_SLOT) return;
+        if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != OFFHANDSLOT) return;
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
@@ -42,8 +45,9 @@ public class Offhand implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDrag(InventoryDragEvent e) {
+        if (WorldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
-        if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(OFFHAND_SLOT))
+        if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(OFFHANDSLOT))
             return;
         if (itemCheck(e.getOldCursor())) {
             e.setResult(Event.Result.DENY);
