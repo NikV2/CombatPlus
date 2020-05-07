@@ -18,7 +18,9 @@ public class Offhand implements Listener {
 
     private static final int OFFHAND_SLOT = 40;
 
-    // This Listener completely disables the use of the Offhand
+    /*
+     This Listener completely disables the use of the Offhand
+     */
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSwapHands(PlayerSwapHandItemsEvent e) {

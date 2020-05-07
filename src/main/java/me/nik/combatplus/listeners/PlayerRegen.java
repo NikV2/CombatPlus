@@ -29,7 +29,9 @@ public class PlayerRegen implements Listener {
         this.plugin = plugin;
     }
 
-    // This Listener Makes the player's health regen work just like in 1.8
+    /*
+     This Listener Makes the player's health regen work just like in 1.8
+     */
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRegen(EntityRegainHealthEvent e) {
