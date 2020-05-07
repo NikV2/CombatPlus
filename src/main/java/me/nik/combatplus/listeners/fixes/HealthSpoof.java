@@ -2,7 +2,6 @@ package me.nik.combatplus.listeners.fixes;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.utils.Messenger;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -44,7 +43,6 @@ public class HealthSpoof implements Listener {
     }
 
     private boolean holdsTotem(Player p) {
-        Material totem = Material.TOTEM_OF_UNDYING;
-        return p.getInventory().getItemInMainHand().getType() == totem || p.getInventory().getItemInOffHand().getType() == totem;
+        return p.getInventory().getItemInMainHand().getType().name().contains("TOTEM") || p.getInventory().getItemInOffHand().getType().name().contains("TOTEM");
     }
 }

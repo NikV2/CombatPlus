@@ -230,6 +230,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("fixes.kill_aura", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
+            Config.get().set("fixes.health_spoof", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
@@ -239,6 +240,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
+            Config.get().set("fixes.health_spoof", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
@@ -247,6 +249,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
+            Config.get().set("fixes.health_spoof", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));

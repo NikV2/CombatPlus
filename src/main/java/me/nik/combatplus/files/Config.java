@@ -81,8 +81,8 @@ public class Config {
         Config.get().addDefault("fixes.kill_aura", false);
         Config.get().addDefault("fixes.projectile_fixer", true);
         Config.get().addDefault("fixes.invalid_criticals", true);
-        Config.get().addDefault("fixes.health_spoof", true);
-        Config.get().addDefault("fixes.no_fall", true);
+        Config.get().addDefault("fixes.health_spoof", false);
+        Config.get().addDefault("fixes.no_fall", false);
         Config.get().addDefault("fixes.speed", false);
         Config.get().addDefault("fixes.bad_packets", true);
         Config.get().addDefault("custom.player_health.enabled", false);
