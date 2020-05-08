@@ -82,8 +82,8 @@ public class DamageModifiers implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
-        if (worldUtils.combatDisabledWorlds((Player) e.getDamager())) return;
         Player player = (Player) e.getDamager();
+        if (worldUtils.combatDisabledWorlds(player)) return;
         ItemStack handItem = player.getInventory().getItemInMainHand();
         String isWeapon = handItem.getType().name();
         if (isEnabled("combat.settings.old_weapon_damage")) {

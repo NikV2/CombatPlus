@@ -37,11 +37,11 @@ public class PlayerRegen implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRegen(EntityRegainHealthEvent e) {
-        if (worldUtils.combatDisabledWorlds((Player) e.getEntity())) return;
         if (e.getEntityType() != EntityType.PLAYER || e.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) {
             return;
         }
         final Player p = (Player) e.getEntity();
+        if (worldUtils.combatDisabledWorlds(p)) return;
         final UUID playerID = p.getUniqueId();
         double playerHealth = p.getHealth();
         double playerSaturation = p.getSaturation();
