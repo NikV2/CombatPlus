@@ -1,5 +1,5 @@
 name: CombatPlus
-version: 1.2.6
+version: 1.2.7
 main: me.nik.combatplus.CombatPlus
 api-version: 1.13
 authors: [Nik]
@@ -10,9 +10,7 @@ website: https://discord.gg/m7j2Y9H
 commands:
   combatplus:
     description: The all in one Combat System!
-    usage: /combatplus
-    aliases:
-      - cp
+    aliases: [cp]
 permissions:
   cp.admin:
     description: Gives access to all admin commands

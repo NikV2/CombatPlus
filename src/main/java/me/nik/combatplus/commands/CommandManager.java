@@ -29,19 +29,21 @@ public class CommandManager implements TabExecutor {
         if (!(sender instanceof Player)) {
             if (args.length == 0) {
                 helpMessage(sender);
-            } else if (args[0].equalsIgnoreCase("reload")) {
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("reload")) {
                 sender.sendMessage(Messenger.message("reloading"));
                 sender.getServer().getPluginManager().disablePlugin(plugin);
                 sender.getServer().getPluginManager().enablePlugin(plugin);
                 sender.sendMessage(Messenger.message("reloaded"));
                 return true;
-            } else if (args[0].equalsIgnoreCase("help")) {
+            }
+            if (args[0].equalsIgnoreCase("help")) {
                 helpMessage(sender);
                 return true;
-            } else {
-                sender.sendMessage(Messenger.message("console.commands"));
-                return true;
             }
+            sender.sendMessage(Messenger.message("console.commands"));
+            return true;
         } else {
             Player p = (Player) sender;
             if (args.length > 0) {
@@ -49,7 +51,8 @@ public class CommandManager implements TabExecutor {
                     if (args[0].equalsIgnoreCase(getSubcommands().get(i).getName())) {
                         getSubcommands().get(i).perform(p, args);
                         return true;
-                    } else if (args[0].equalsIgnoreCase("help")) {
+                    }
+                    if (args[0].equalsIgnoreCase("help")) {
                         helpMessage(p);
                         return true;
                     }
