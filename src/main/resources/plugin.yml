@@ -7,6 +7,7 @@ prefix: CombatPlus
 load: POSTWORLD
 description: The all in one Combat System!
 website: https://discord.gg/m7j2Y9H
+softdepend: [PlaceholderAPI]
 commands:
   combatplus:
     description: The all in one Combat System!

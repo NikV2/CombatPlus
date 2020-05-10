@@ -3,6 +3,7 @@ package me.nik.combatplus;
 import me.nik.combatplus.commands.CommandManager;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
+import me.nik.combatplus.handlers.PapiHook;
 import me.nik.combatplus.handlers.UpdateChecker;
 import me.nik.combatplus.listeners.AttributesSet;
 import me.nik.combatplus.listeners.BowBoost;
@@ -24,6 +25,7 @@ import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.listeners.fixes.Speed;
 import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
 import me.nik.combatplus.utils.SetCustomHealth;
@@ -54,7 +56,7 @@ public final class CombatPlus extends JavaPlugin {
         checkSupported();
 
         //Load Commands
-        getCommand("combatplus").setExecutor(new CommandManager(this));
+        this.getCommand("combatplus").setExecutor(new CommandManager(this));
 
         //Load Listeners
         initialize();
@@ -68,6 +70,11 @@ public final class CombatPlus extends JavaPlugin {
         //Load bStats
         int pluginID = 6982;
         MetricsLite metricsLite = new MetricsLite(this, pluginID);
+
+        //Hook PlaceholderAPI
+        if (MiscUtils.isPlaceholderApiEnabled()) {
+            new PapiHook(this).register();
+        }
     }
     @Override
     public void onDisable() {
@@ -81,7 +88,7 @@ public final class CombatPlus extends JavaPlugin {
         Lang.save();
 
         //Unload Instances
-        getCommand("combatplus").setExecutor(null);
+        this.getCommand("combatplus").setExecutor(null);
 
         //Done
         consoleMessage(Messenger.message("console.disabled"));

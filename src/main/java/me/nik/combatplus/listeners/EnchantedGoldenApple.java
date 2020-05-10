@@ -4,6 +4,7 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -25,6 +26,7 @@ public class EnchantedGoldenApple implements Listener {
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
+    public static String PAPICOOLDOWN = "Ready";
 
     public EnchantedGoldenApple(CombatPlus plugin) {
         this.plugin = plugin;
@@ -37,6 +39,7 @@ public class EnchantedGoldenApple implements Listener {
             @Override
             public void run() {
                 cooldown.remove(uuid);
+                PAPICOOLDOWN = "Ready";
             }
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
@@ -57,6 +60,9 @@ public class EnchantedGoldenApple implements Listener {
                 player.sendMessage(Messenger.message("enchanted_golden_apple_cooldown").replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 taskRun(p);
+                if (MiscUtils.isPlaceholderApiEnabled()) {
+                    setupPlaceholder(p);
+                }
                 Messenger.debug(player, "&3Enchanted Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
                 if (Config.get().getBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar")) {
                     new BukkitRunnable() {
@@ -75,5 +81,21 @@ public class EnchantedGoldenApple implements Listener {
                 }
             }
         }
+    }
+
+    private void setupPlaceholder(UUID p) {
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                if (cooldown.containsKey(p)) {
+                    long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                    PAPICOOLDOWN = String.valueOf(secondsleft);
+                } else {
+                    cancel();
+                }
+            }
+        }.runTaskTimerAsynchronously(plugin, 0, 20);
     }
 }
