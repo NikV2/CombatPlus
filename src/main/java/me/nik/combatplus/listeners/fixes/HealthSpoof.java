@@ -17,9 +17,10 @@ public class HealthSpoof implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onCloseToDeath(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
+        if (e.isCancelled()) return;
         Player p = (Player) e.getEntity();
         if (holdsTotem(p)) return;
         if (shouldDie(e, p)) {
