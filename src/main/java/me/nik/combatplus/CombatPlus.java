@@ -23,6 +23,7 @@ import me.nik.combatplus.listeners.fixes.KillAura;
 import me.nik.combatplus.listeners.fixes.NoFall;
 import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.listeners.fixes.Speed;
+import me.nik.combatplus.utils.ACManager;
 import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
@@ -56,7 +57,7 @@ public final class CombatPlus extends JavaPlugin {
         checkSupported();
 
         //Load Commands
-        this.getCommand("combatplus").setExecutor(new CommandManager(this));
+        getCommand("combatplus").setExecutor(new CommandManager(this));
 
         //Load Listeners
         initialize();
@@ -75,6 +76,9 @@ public final class CombatPlus extends JavaPlugin {
         if (MiscUtils.isPlaceholderApiEnabled()) {
             new PapiHook(this).register();
         }
+
+        //Hook AntiCheat
+        new ACManager().hookAntiCheat();
     }
     @Override
     public void onDisable() {
@@ -88,7 +92,7 @@ public final class CombatPlus extends JavaPlugin {
         Lang.save();
 
         //Unload Instances
-        this.getCommand("combatplus").setExecutor(null);
+        getCommand("combatplus").setExecutor(null);
 
         //Done
         consoleMessage(Messenger.message("console.disabled"));
