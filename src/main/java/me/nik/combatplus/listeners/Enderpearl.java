@@ -51,7 +51,7 @@ public class Enderpearl implements Listener {
 
     // This Listener Adds a cooldown between using Ender Pearls
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent e) {
         if (worldUtils.enderpearlDisabledWorlds(e.getPlayer())) return;
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {

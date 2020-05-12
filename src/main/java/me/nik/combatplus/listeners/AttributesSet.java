@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
@@ -14,12 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class AttributesSet implements Listener {
-
-    private final CombatPlus plugin;
-
-    public AttributesSet(CombatPlus plugin) {
-        this.plugin = plugin;
-    }
 
     /*
      Changes the attribute of the player to the Old Attack Speed (On Join)
@@ -44,6 +37,7 @@ public class AttributesSet implements Listener {
         }
 
     }
+
     /*
      Resets the attribute of the player to the New Attack Speed (On Leave)
      */

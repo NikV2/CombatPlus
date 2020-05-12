@@ -91,9 +91,6 @@ public final class CombatPlus extends JavaPlugin {
         Lang.reload();
         Lang.save();
 
-        //Unload Instances
-        getCommand("combatplus").setExecutor(null);
-
         //Done
         consoleMessage(Messenger.message("console.disabled"));
     }
@@ -157,7 +154,7 @@ public final class CombatPlus extends JavaPlugin {
         consoleMessage(Messenger.message("console.initialize"));
 
         if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
-            registerEvent(new AttributesSet(this));
+            registerEvent(new AttributesSet());
         }
         if (isEnabled("combat.settings.old_weapon_damage") || isEnabled("combat.settings.old_tool_damage") || isEnabled("combat.settings.disable_sweep_attacks.enabled")) {
             registerEvent(new DamageModifiers());

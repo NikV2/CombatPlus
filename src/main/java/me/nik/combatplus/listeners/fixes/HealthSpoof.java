@@ -17,13 +17,14 @@ public class HealthSpoof implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCloseToDeath(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
-        if (e.isCancelled()) return;
         Player p = (Player) e.getEntity();
         if (holdsTotem(p)) return;
-        if (shouldDie(e, p)) {
+        double health = p.getHealth();
+        double damage = e.getFinalDamage();
+        if (damage >= health || health < 1) {
             new BukkitRunnable() {
 
                 @Override
@@ -35,12 +36,6 @@ public class HealthSpoof implements Listener {
                 }
             }.runTaskLater(plugin, 1);
         }
-    }
-
-    private boolean shouldDie(EntityDamageEvent e, Player p) {
-        double health = p.getHealth();
-        double damage = e.getFinalDamage();
-        return damage >= health || health < 1;
     }
 
     private boolean holdsTotem(Player p) {
