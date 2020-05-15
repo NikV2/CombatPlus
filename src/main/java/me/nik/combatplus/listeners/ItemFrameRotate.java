@@ -17,7 +17,7 @@ public class ItemFrameRotate implements Listener {
      This Listener removes the ability to rotate item frames
      */
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onRotate(PlayerInteractEntityEvent e) {
         if (!(e.getRightClicked() instanceof ItemFrame)) return;
         if (e.getPlayer().hasPermission("cp.bypass.rotate")) return;

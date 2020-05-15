@@ -19,7 +19,7 @@ public class BowBoost implements Listener {
      This Listener prevents players hitting themselves with a bow
      */
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOW)
     public void onArrowDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;

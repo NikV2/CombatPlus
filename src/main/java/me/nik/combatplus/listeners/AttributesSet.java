@@ -18,7 +18,7 @@ public class AttributesSet implements Listener {
      Changes the attribute of the player to the Old Attack Speed (On Join)
      */
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent e) {
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
             final Player player = e.getPlayer();
@@ -42,7 +42,7 @@ public class AttributesSet implements Listener {
      Resets the attribute of the player to the New Attack Speed (On Leave)
      */
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onLeave(PlayerQuitEvent e) {
         if (Config.get().getBoolean("combat.settings.old_pvp")) {
             final Player player = e.getPlayer();
@@ -58,7 +58,7 @@ public class AttributesSet implements Listener {
      Changes the attribute of the player to the Old Attack Speed (On World Change)
      */
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onWorldChange(PlayerChangedWorldEvent e) {
         if (!Config.get().getBoolean("combat.settings.old_pvp")) return;
         final Player player = e.getPlayer();
