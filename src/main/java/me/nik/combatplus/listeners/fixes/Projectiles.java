@@ -4,7 +4,6 @@ import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.projectiles.ProjectileSource;
@@ -17,7 +16,7 @@ public class Projectiles implements Listener {
     Removes Randomness
      */
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onProjectileShoot(ProjectileLaunchEvent e) {
         final Projectile projectile = e.getEntity();
         final ProjectileSource holder = projectile.getShooter();

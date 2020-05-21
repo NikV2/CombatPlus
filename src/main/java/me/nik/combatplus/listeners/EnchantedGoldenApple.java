@@ -11,7 +11,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,7 +45,7 @@ public class EnchantedGoldenApple implements Listener {
 
     // This Listener adds a cooldown between eating Enchanted Golden Apples
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL)
+    @EventHandler(ignoreCancelled = true)
     public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
         if (worldUtils.gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;

@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -18,7 +17,7 @@ public class Criticals implements Listener {
      Patches the Criticals Cheat if a player crits while he's on the ground
      */
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler
     public void onCritical(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player) || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return;
         Player p = (Player) e.getDamager();

@@ -4,7 +4,6 @@ import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -12,7 +11,7 @@ public class NoFall implements Listener {
 
     private boolean lastOnGround, lastLastOnGround;
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler
     public void onMove(PlayerMoveEvent e) {
         if (e.getPlayer().getAllowFlight()) return;
         boolean onGround = isNearGround(e.getTo());

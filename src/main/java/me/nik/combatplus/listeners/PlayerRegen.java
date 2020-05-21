@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -53,7 +54,6 @@ public class PlayerRegen implements Listener {
         if (playerHealth < maxHealth) {
             p.setHealth(clamp(playerHealth + oldRegenAmount, 0.0, maxHealth));
             healTimes.put(playerID, currentTime);
-            //disable heal check from anticheat here
         }
         final float previousExhaustion = p.getExhaustion();
         final float exhaustionToApply = oldRegenExhaustion;
@@ -77,5 +77,12 @@ public class PlayerRegen implements Listener {
             value = realMax;
         }
         return value;
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        UUID pUuid = e.getPlayer().getUniqueId();
+        if (!healTimes.containsKey(pUuid)) return;
+        healTimes.remove(pUuid);
     }
 }

@@ -6,6 +6,7 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 
 public class ResetStats {
+
     private final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
     private final double defaultMaxHealth = Config.get().getDouble("advanced.settings.base_player_health");
 

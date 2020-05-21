@@ -1,8 +1,6 @@
 package me.nik.combatplus.listeners.fixes;
 
-import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,14 +32,8 @@ public class Speed implements Listener {
         if (!onGround && !lastOnGround) {
             if (scaledEqualness >= 1.0) {
                 e.setCancelled(true);
-                debug(e.getPlayer());
+                Messenger.debug(e.getPlayer(), "&3Speed &f&l>> &6Canceled: &atrue");
             }
-        }
-    }
-
-    private void debug(Player player) {
-        if (Config.get().getBoolean("settings.developer_mode") && player.hasPermission("cp.debug")) {
-            player.sendMessage(Messenger.prefix("&3Speed &f&l>> &6Canceled: &atrue"));
         }
     }
 }

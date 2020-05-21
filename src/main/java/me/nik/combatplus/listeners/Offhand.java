@@ -19,7 +19,7 @@ public class Offhand implements Listener {
 
     private final WorldUtils worldUtils = new WorldUtils();
 
-    private static final int OFFHANDSLOT = 40;
+    private final static int OFFHANDSLOT = 40;
 
     /*
      This Listener completely disables the use of the Offhand

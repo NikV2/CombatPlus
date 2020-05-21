@@ -5,6 +5,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 public class SetCustomHealth {
+
     private final double maxHealth = Config.get().getDouble("custom.player_health.max_health");
 
     public void setHealth(Player player) {

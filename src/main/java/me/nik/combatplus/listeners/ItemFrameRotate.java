@@ -5,7 +5,6 @@ import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
@@ -17,7 +16,7 @@ public class ItemFrameRotate implements Listener {
      This Listener removes the ability to rotate item frames
      */
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler
     public void onRotate(PlayerInteractEntityEvent e) {
         if (!(e.getRightClicked() instanceof ItemFrame)) return;
         if (e.getPlayer().hasPermission("cp.bypass.rotate")) return;
