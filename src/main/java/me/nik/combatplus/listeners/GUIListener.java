@@ -42,7 +42,7 @@ public class GUIListener implements Listener {
                 gui.openCombatGUI(p);
                 break;
             case "§aGeneral Settings":
-            case "§ePrevious Page":
+            case "§ePrevious Page 2/2":
                 p.closeInventory();
                 gui.openGeneralGUI(p);
                 break;
@@ -132,7 +132,7 @@ public class GUIListener implements Listener {
                 booleanSet("enderpearl_cooldown.enabled", !configBoolean("enderpearl_cooldown.enabled"));
                 saveAndReload();
                 break;
-            case "§eNext Page":
+            case "§eNext Page 1/2":
                 p.closeInventory();
                 gui.openGeneralTwoGUI(p);
                 break;
@@ -163,6 +163,10 @@ public class GUIListener implements Listener {
                 break;
             case "§6Bad Packets":
                 booleanSet("fixes.bad_packets", !configBoolean("fixes.bad_packets"));
+                saveAndReload();
+                break;
+            case "§6Fishing Rod Knockback":
+                booleanSet("knockback.fishing_rod.enabled", !configBoolean("knockback.fishing_rod.enabled"));
                 saveAndReload();
                 break;
         }

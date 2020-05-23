@@ -351,7 +351,7 @@ public class GUIManager {
 
                 ItemStack next = new ItemStack(Material.BOOK, 1);
                 ItemMeta nextMeta = back.getItemMeta();
-                nextMeta.setDisplayName("§eNext Page");
+                nextMeta.setDisplayName("§eNext Page 1/2");
                 next.setItemMeta(nextMeta);
 
                 generalGUI.setItem(10, gapple);
@@ -389,7 +389,7 @@ public class GUIManager {
                 //previous page
                 ItemStack pp = new ItemStack(Material.BOOK, 1);
                 ItemMeta ppMeta = pp.getItemMeta();
-                ppMeta.setDisplayName("§ePrevious Page");
+                ppMeta.setDisplayName("§ePrevious Page 2/2");
                 pp.setItemMeta(ppMeta);
 
                 //invalid criticals
@@ -483,6 +483,22 @@ public class GUIManager {
                 bpMeta.setLore(bpLore);
                 bp.setItemMeta(bpMeta);
 
+                //fishing rod knockback
+                ItemStack frk = new ItemStack(Material.PAPER, 1);
+                ItemMeta frkMeta = frk.getItemMeta();
+                frkMeta.setDisplayName("§6Fishing Rod Knockback");
+                ArrayList<String> frkLore = new ArrayList<>();
+                frkLore.add("");
+                frkLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("knockback.fishing_rod.enabled"));
+                frkLore.add("");
+                frkLore.add(ChatColor.WHITE + "Makes Fishing Rods Knockback");
+                frkLore.add(ChatColor.WHITE + "Players just like in 1.8");
+                frkLore.add("");
+                frkLore.add(ChatColor.GRAY + "More options in the Config.yml");
+                frkMeta.setLore(frkLore);
+                frk.setItemMeta(frkMeta);
+
+                generalTwoGUI.setItem(34, frk);
                 generalTwoGUI.setItem(32, bp);
                 generalTwoGUI.setItem(30, speed);
                 generalTwoGUI.setItem(28, nofall);
