@@ -11,6 +11,7 @@ import me.nik.combatplus.listeners.DamageModifiers;
 import me.nik.combatplus.listeners.DisabledItems;
 import me.nik.combatplus.listeners.EnchantedGoldenApple;
 import me.nik.combatplus.listeners.Enderpearl;
+import me.nik.combatplus.listeners.FishingRodKnockback;
 import me.nik.combatplus.listeners.GUIListener;
 import me.nik.combatplus.listeners.GoldenApple;
 import me.nik.combatplus.listeners.ItemFrameRotate;
@@ -210,6 +211,9 @@ public final class CombatPlus extends JavaPlugin {
         if (isEnabled("fixes.bad_packets")) {
             registerEvent(new BadPackets());
         }
+        if (isEnabled("knockback.fishing_rod.enabled")) {
+            registerEvent(new FishingRodKnockback());
+        }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GUIListener(this));
     }
@@ -229,6 +233,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("disable_offhand.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("fixes.health_spoof", false);
+            Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
@@ -239,6 +244,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("fixes.kill_aura", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("fixes.health_spoof", false);
+            Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
@@ -249,6 +255,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("fixes.health_spoof", false);
+            Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
@@ -258,6 +265,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("fixes.health_spoof", false);
+            Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
@@ -265,6 +273,7 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
             Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
+            Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));

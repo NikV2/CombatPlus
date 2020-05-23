@@ -77,6 +77,8 @@ public class Config {
         Config.get().addDefault("enderpearl_cooldown.cooldown", 10);
         Config.get().addDefault("enderpearl_cooldown.actionbar", true);
         Config.get().addDefault("enderpearl_cooldown.disabled_worlds", epearlList);
+        Config.get().addDefault("knockback.fishing_rod.enabled", true);
+        Config.get().addDefault("knockback.fishing_rod.cancel_dragging", true);
         Config.get().addDefault("disabled_items.enabled", false);
         Config.get().addDefault("disabled_items.items", itemsList);
         Config.get().addDefault("disable_item_frame_rotation.enabled", true);
@@ -103,6 +105,8 @@ public class Config {
         Config.get().addDefault("advanced.settings.old_regen.amount", 1);
         Config.get().addDefault("advanced.settings.old_regen.exhaustion", 3);
         Config.get().addDefault("advanced.settings.base_player_health", 20);
+        Config.get().addDefault("advanced_settings.knockback.fishing_rod.damage", 0.01);
+        Config.get().addDefault("advanced.settings.knockback.fishing_rod.entity_damage_event", false);
         Config.get().addDefault("advanced.settings.kill_aura.entity", "BAT");
         Config.get().addDefault("advanced.settings.kill_aura.teleport_ticks", 1);
         Config.get().addDefault("advanced.settings.kill_aura.ticks_duration", 300);
