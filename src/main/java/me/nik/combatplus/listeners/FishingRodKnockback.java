@@ -22,7 +22,7 @@ import org.bukkit.util.Vector;
 
 public class FishingRodKnockback implements Listener {
 
-    private final double fishingRodDamage = Config.get().getDouble("advanced_settings.knockback.fishing_rod.damage");
+    private final double fishingRodDamage = Config.get().getDouble("advanced.settings.knockback.fishing_rod.damage");
     private final boolean cancelDragging = Config.get().getBoolean("knockback.fishing_rod.cancel_dragging");
     private final boolean useEntityDamageEvent = Config.get().getBoolean("advanced.settings.knockback.fishing_rod.entity_damage_event");
 
@@ -63,6 +63,7 @@ public class FishingRodKnockback implements Listener {
 
         EntityDamageEvent event = makeEvent(rodder, hitEntity, fishingRodDamage);
         Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) return;
 
         livingEntity.setVelocity(calculateKnockbackVelocity(livingEntity.getVelocity(), livingEntity.getLocation(), hook.getLocation()));
         livingEntity.damage(fishingRodDamage);
@@ -73,7 +74,6 @@ public class FishingRodKnockback implements Listener {
     public void onHook(PlayerFishEvent e) {
         if (!cancelDragging) return;
         if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) return;
-
         e.getHook().remove();
         e.setCancelled(true);
         Messenger.debug(e.getPlayer(), "&3Fishing Rod Knockback &f&l>> &6Cancelled Dragging: &atrue");

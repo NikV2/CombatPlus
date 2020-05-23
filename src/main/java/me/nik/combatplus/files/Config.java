@@ -105,7 +105,7 @@ public class Config {
         Config.get().addDefault("advanced.settings.old_regen.amount", 1);
         Config.get().addDefault("advanced.settings.old_regen.exhaustion", 3);
         Config.get().addDefault("advanced.settings.base_player_health", 20);
-        Config.get().addDefault("advanced_settings.knockback.fishing_rod.damage", 0.01);
+        Config.get().addDefault("advanced.settings.knockback.fishing_rod.damage", 0.01);
         Config.get().addDefault("advanced.settings.knockback.fishing_rod.entity_damage_event", false);
         Config.get().addDefault("advanced.settings.kill_aura.entity", "BAT");
         Config.get().addDefault("advanced.settings.kill_aura.teleport_ticks", 1);
