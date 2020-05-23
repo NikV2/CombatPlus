@@ -29,39 +29,39 @@ public class FishingRodKnockback implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRodLand(ProjectileHitEvent e) {
 
-        Entity hookEntity = e.getEntity();
-        World world = hookEntity.getWorld();
+        Entity rodHook = e.getEntity();
+        World world = rodHook.getWorld();
         if (e.getEntityType() != EntityType.FISHING_HOOK) return;
 
-        Entity hitEntity;
+        Entity target;
 
         try {
-            hitEntity = e.getHitEntity();
+            target = e.getHitEntity();
         } catch (NoSuchMethodError error) {
-            hitEntity = world.getNearbyEntities(hookEntity.getLocation(), 0.25, 0.25, 0.25).stream().filter(entity -> entity instanceof Player).findFirst().orElse(null);
+            target = world.getNearbyEntities(rodHook.getLocation(), 0.25, 0.25, 0.25).stream().filter(entity -> entity instanceof Player).findFirst().orElse(null);
         }
 
-        if (hitEntity == null) return;
-        if (!(hitEntity instanceof LivingEntity)) return;
+        if (target == null) return;
+        if (!(target instanceof LivingEntity)) return;
 
-        if (hitEntity.hasMetadata("NPC")) return;
+        if (target.hasMetadata("NPC")) return;
 
-        FishHook hook = (FishHook) hookEntity;
+        FishHook hook = (FishHook) rodHook;
         Player rodder = (Player) hook.getShooter();
 
-        if (hitEntity instanceof Player) {
-            Player player = (Player) hitEntity;
+        if (target instanceof Player) {
+            Player player = (Player) target;
 
             if (player.equals(rodder)) return;
 
             if (player.getGameMode() == GameMode.CREATIVE) return;
         }
 
-        LivingEntity livingEntity = (LivingEntity) hitEntity;
+        LivingEntity livingEntity = (LivingEntity) target;
 
         if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2f) return;
 
-        EntityDamageEvent event = makeEvent(rodder, hitEntity, fishingRodDamage);
+        EntityDamageEvent event = makeEvent(rodder, target, fishingRodDamage);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
 
