@@ -42,17 +42,8 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
-    private SetAttackSpeed setAttackSpeed;
-    private SetCustomHealth setCustomHealth;
-    private ResetStats resetStats;
-
     @Override
     public void onEnable() {
-        //Initialize
-        ACManager acManager = new ACManager();
-        this.setAttackSpeed = new SetAttackSpeed();
-        this.setCustomHealth = new SetCustomHealth();
-        this.resetStats = new ResetStats();
 
         //Load Files
         loadFiles();
@@ -88,7 +79,7 @@ public final class CombatPlus extends JavaPlugin {
         }
 
         //Hook AntiCheat
-        acManager.hookAntiCheat();
+        new ACManager().hookAntiCheat();
     }
     @Override
     public void onDisable() {
@@ -139,24 +130,20 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     private void loadStats() {
+        SetAttackSpeed setAttackSpeed = new SetAttackSpeed();
+        ResetStats resetStats = new ResetStats();
+        SetCustomHealth setCustomHealth = new SetCustomHealth();
+
         if (isEnabled("combat.settings.old_pvp")) {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                setAttackSpeed.setAttackSpd(player);
-            });
+            Bukkit.getOnlinePlayers().forEach(setAttackSpeed::setAttackSpd);
         } else {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                resetStats.resetAttackSpeed(player);
-            });
+            Bukkit.getOnlinePlayers().forEach(resetStats::resetAttackSpeed);
         }
 
         if (isEnabled("custom.player_health.enabled")) {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                setCustomHealth.setHealth(player);
-            });
+            Bukkit.getOnlinePlayers().forEach(setCustomHealth::setHealth);
         } else {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                resetStats.resetMaxHealth(player);
-            });
+            Bukkit.getOnlinePlayers().forEach(resetStats::resetMaxHealth);
         }
     }
 
