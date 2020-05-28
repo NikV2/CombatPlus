@@ -49,7 +49,6 @@ public final class CombatPlus extends JavaPlugin {
     @Override
     public void onEnable() {
         //Initialize
-        PapiHook papiHook = new PapiHook(this);
         ACManager acManager = new ACManager();
         this.setAttackSpeed = new SetAttackSpeed();
         this.setCustomHealth = new SetCustomHealth();
@@ -85,7 +84,7 @@ public final class CombatPlus extends JavaPlugin {
 
         //Hook PlaceholderAPI
         if (MiscUtils.isPlaceholderApiEnabled()) {
-            papiHook.register();
+            new PapiHook(this).register();
         }
 
         //Hook AntiCheat
