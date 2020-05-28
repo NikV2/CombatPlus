@@ -5,7 +5,6 @@ import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.projectiles.ProjectileSource;
@@ -19,7 +18,7 @@ public class BowBoost implements Listener {
      This Listener prevents players hitting themselves with a bow
      */
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler
     public void onArrowDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;

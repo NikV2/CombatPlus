@@ -42,16 +42,27 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
+    private SetAttackSpeed setAttackSpeed;
+    private SetCustomHealth setCustomHealth;
+    private ResetStats resetStats;
+
     @Override
     public void onEnable() {
+        //Initialize
+        PapiHook papiHook = new PapiHook(this);
+        ACManager acManager = new ACManager();
+        this.setAttackSpeed = new SetAttackSpeed();
+        this.setCustomHealth = new SetCustomHealth();
+        this.resetStats = new ResetStats();
+
         //Load Files
         loadFiles();
 
         //Startup Message
         consoleMessage("");
-        consoleMessage("          " + ChatColor.RED + "CombatPlus " + ChatColor.UNDERLINE + "v" + this.getDescription().getVersion());
+        consoleMessage("          " + ChatColor.RED + "Combat Plus v" + this.getDescription().getVersion());
         consoleMessage("");
-        consoleMessage("             " + ChatColor.BOLD + "Author: " + ChatColor.UNDERLINE + "Nik");
+        consoleMessage("             " + ChatColor.WHITE + "Author: Nik");
         consoleMessage("");
 
         //Unsupported Version Checker
@@ -70,16 +81,15 @@ public final class CombatPlus extends JavaPlugin {
         checkForUpdates();
 
         //Load bStats
-        int pluginID = 6982;
-        MetricsLite metricsLite = new MetricsLite(this, pluginID);
+        MetricsLite metricsLite = new MetricsLite(this, 6982);
 
         //Hook PlaceholderAPI
         if (MiscUtils.isPlaceholderApiEnabled()) {
-            new PapiHook(this).register();
+            papiHook.register();
         }
 
         //Hook AntiCheat
-        new ACManager().hookAntiCheat();
+        acManager.hookAntiCheat();
     }
     @Override
     public void onDisable() {
@@ -132,21 +142,21 @@ public final class CombatPlus extends JavaPlugin {
     private void loadStats() {
         if (isEnabled("combat.settings.old_pvp")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetAttackSpeed().setAttackSpd(player);
+                setAttackSpeed.setAttackSpd(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats().resetAttackSpeed(player);
+                resetStats.resetAttackSpeed(player);
             });
         }
 
         if (isEnabled("custom.player_health.enabled")) {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new SetCustomHealth().setHealth(player);
+                setCustomHealth.setHealth(player);
             });
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                new ResetStats().resetMaxHealth(player);
+                resetStats.resetMaxHealth(player);
             });
         }
     }

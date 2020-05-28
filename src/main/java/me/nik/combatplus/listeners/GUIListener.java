@@ -1,9 +1,9 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.api.GUIManager;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.handlers.CombatPlusHolder;
+import me.nik.combatplus.utils.GUIManager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

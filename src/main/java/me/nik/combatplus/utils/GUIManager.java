@@ -1,10 +1,9 @@
-package me.nik.combatplus.api;
+package me.nik.combatplus.utils;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.handlers.CombatPlusHolder;
-import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

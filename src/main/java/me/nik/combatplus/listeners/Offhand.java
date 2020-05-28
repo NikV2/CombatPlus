@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -25,7 +24,7 @@ public class Offhand implements Listener {
      This Listener completely disables the use of the Offhand
      */
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
         if (worldUtils.offhandDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.offhand")) return;
@@ -33,7 +32,7 @@ public class Offhand implements Listener {
         Messenger.debug(e.getPlayer(), "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onClickOffHand(InventoryClickEvent e) {
         if (worldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
@@ -45,7 +44,7 @@ public class Offhand implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onDrag(InventoryDragEvent e) {
         if (worldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;

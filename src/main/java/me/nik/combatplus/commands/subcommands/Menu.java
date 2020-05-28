@@ -1,8 +1,8 @@
 package me.nik.combatplus.commands.subcommands;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.api.GUIManager;
 import me.nik.combatplus.commands.SubCommand;
+import me.nik.combatplus.utils.GUIManager;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
 
