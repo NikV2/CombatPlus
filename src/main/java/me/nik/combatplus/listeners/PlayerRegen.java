@@ -52,7 +52,7 @@ public class PlayerRegen implements Listener {
         if (currentTime - lastHealTime < oldRegenFrequency) return;
         final double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         if (playerHealth < maxHealth) {
-            p.setHealth(clamp(playerHealth + oldRegenAmount, 0.0, maxHealth));
+            p.setHealth(clamp(playerHealth + oldRegenAmount, maxHealth));
             healTimes.put(playerID, currentTime);
         }
         final float previousExhaustion = p.getExhaustion();
@@ -67,9 +67,9 @@ public class PlayerRegen implements Listener {
         }.runTaskLater(plugin, 1);
     }
 
-    private double clamp(double value, double min, double max) {
-        double realMin = Math.min(min, max);
-        double realMax = Math.max(min, max);
+    private double clamp(double value, double max) {
+        double realMin = Math.min(0.0, max);
+        double realMax = Math.max(0.0, max);
         if (value < realMin) {
             value = realMin;
         }
@@ -80,7 +80,7 @@ public class PlayerRegen implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e) {
+    public void cleanHashMap(PlayerQuitEvent e) {
         UUID pUuid = e.getPlayer().getUniqueId();
         if (!healTimes.containsKey(pUuid)) return;
         healTimes.remove(pUuid);

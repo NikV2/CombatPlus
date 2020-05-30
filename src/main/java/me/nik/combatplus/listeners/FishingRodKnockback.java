@@ -24,7 +24,6 @@ public class FishingRodKnockback implements Listener {
 
     private final double fishingRodDamage = Config.get().getDouble("advanced.settings.knockback.fishing_rod.damage");
     private final boolean cancelDragging = Config.get().getBoolean("knockback.fishing_rod.cancel_dragging");
-    private final boolean useEntityDamageEvent = Config.get().getBoolean("advanced.settings.knockback.fishing_rod.entity_damage_event");
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRodLand(ProjectileHitEvent e) {
@@ -56,12 +55,10 @@ public class FishingRodKnockback implements Listener {
 
             if (player.getGameMode() == GameMode.CREATIVE) return;
         }
-
         LivingEntity livingEntity = (LivingEntity) target;
 
         if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2f) return;
-
-        EntityDamageEvent event = makeEvent(rodder, target, fishingRodDamage);
+        EntityDamageEvent event = customEvent(rodder, target, fishingRodDamage);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
 
@@ -80,25 +77,25 @@ public class FishingRodKnockback implements Listener {
     }
 
     private Vector calculateKnockbackVelocity(Vector currentVelocity, Location player, Location hook) {
-        double xDistance = hook.getX() - player.getX();
-        double zDistance = hook.getZ() - player.getZ();
+        double xDist = hook.getX() - player.getX();
+        double zDist = hook.getZ() - player.getZ();
 
-        while (xDistance * xDistance + zDistance * zDistance < 0.0001) {
-            xDistance = (Math.random() - Math.random()) * 0.01D;
-            zDistance = (Math.random() - Math.random()) * 0.01D;
+        while (xDist * xDist + zDist * zDist < 0.0001) {
+            xDist = (Math.random() - Math.random()) * 0.01D;
+            zDist = (Math.random() - Math.random()) * 0.01D;
         }
 
-        double distance = Math.sqrt(xDistance * xDistance + zDistance * zDistance);
+        double distance = Math.sqrt(xDist * xDist + zDist * zDist);
 
         double y = currentVelocity.getY() / 2;
         double x = currentVelocity.getX() / 2;
         double z = currentVelocity.getZ() / 2;
 
-        x -= xDistance / distance * 0.4;
+        x -= xDist / distance * 0.4;
 
         y += 0.4;
 
-        z -= zDistance / distance * 0.4;
+        z -= zDist / distance * 0.4;
 
         if (y >= 0.4) {
             y = 0.4;
@@ -107,16 +104,7 @@ public class FishingRodKnockback implements Listener {
         return new Vector(x, y, z);
     }
 
-    private EntityDamageEvent makeEvent(Player rodder, Entity entity, double damage) {
-        if (useEntityDamageEvent) {
-            return new EntityDamageEvent(entity,
-                    EntityDamageEvent.DamageCause.PROJECTILE,
-                    damage);
-        } else {
-            return new EntityDamageByEntityEvent(rodder,
-                    entity,
-                    EntityDamageEvent.DamageCause.PROJECTILE,
-                    damage);
-        }
+    private EntityDamageEvent customEvent(Player rodder, Entity entity, double damage) {
+        return new EntityDamageByEntityEvent(rodder, entity, EntityDamageEvent.DamageCause.PROJECTILE, damage);
     }
 }
