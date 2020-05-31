@@ -8,12 +8,14 @@ import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -26,6 +28,7 @@ public class Enderpearl implements Listener {
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("enderpearl_cooldown.cooldown");
+    private final boolean actionbar = Config.get().getBoolean("enderpearl_cooldown.actionbar");
     public static String PAPICOOLDOWN = "Ready";
 
     public Enderpearl(CombatPlus plugin) {
@@ -44,42 +47,40 @@ public class Enderpearl implements Listener {
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
 
-    private boolean holdsEnderPearl(Player p) {
-        return p.getInventory().getItemInMainHand().getType() == Material.ENDER_PEARL || p.getInventory().getItemInOffHand().getType() == Material.ENDER_PEARL;
-    }
-
     // This Listener Adds a cooldown between using Ender Pearls
 
     @EventHandler(ignoreCancelled = true)
-    public void onInteract(PlayerInteractEvent e) {
-        if (worldUtils.enderpearlDisabledWorlds(e.getPlayer())) return;
-        if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            Player player = e.getPlayer();
-            if (holdsEnderPearl(player)) {
-                if (player.hasPermission("cp.bypass.epearl")) return;
-                final UUID p = player.getUniqueId();
-                if (cooldown.containsKey(p)) {
-                    e.setCancelled(true);
-                    player.updateInventory();
-                    long secondsLeft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                    player.sendMessage(Messenger.message("enderpearl_cooldown").replaceAll("%seconds%", String.valueOf(secondsLeft)));
-                } else {
+    public void onLaunch(ProjectileLaunchEvent e) {
+        if (worldUtils.enderpearlDisabledWorlds((Player) e.getEntity().getShooter())) return;
+        if (e.getEntity().getType() == EntityType.ENDER_PEARL && e.getEntity().getShooter() instanceof Player) {
+            Player player = (Player) e.getEntity().getShooter();
+            if (player.hasPermission("cp.bypass.epearl")) return;
+            final UUID p = player.getUniqueId();
+            if (cooldown.containsKey(p)) {
+                e.setCancelled(true);
+                if (!(player.getGameMode() == GameMode.CREATIVE) && plugin.serverVersion("1.8") || plugin.serverVersion("1.9") || plugin.serverVersion("1.10")) {
+                    ItemStack enderpearl = new ItemStack(Material.ENDER_PEARL, 1);
+                    player.getInventory().addItem(enderpearl);
+                }
+                long secondsLeft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                player.sendMessage(Messenger.message("enderpearl_cooldown").replaceAll("%seconds%", String.valueOf(secondsLeft)));
+            } else {
                     taskRun(p);
                     if (MiscUtils.isPlaceholderApiEnabled()) {
                         setupPlaceholder(p);
                     }
                     Messenger.debug(player, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
-                    if (Config.get().getBoolean("enderpearl_cooldown.actionbar")) {
-                        new BukkitRunnable() {
+                if (actionbar) {
+                    new BukkitRunnable() {
 
-                            @Override
-                            public void run() {
-                                if (cooldown.containsKey(p)) {
-                                    long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                                    String message = Lang.get().getString("enderpearl_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft));
-                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(message)));
-                                } else {
-                                    cancel();
+                        @Override
+                        public void run() {
+                            if (cooldown.containsKey(p)) {
+                                long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                                String message = Lang.get().getString("enderpearl_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft));
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(message)));
+                            } else {
+                                cancel();
                                 }
                             }
                         }.runTaskTimerAsynchronously(plugin, 0, 20);
@@ -87,7 +88,6 @@ public class Enderpearl implements Listener {
                 }
             }
         }
-    }
 
     private void setupPlaceholder(UUID p) {
 

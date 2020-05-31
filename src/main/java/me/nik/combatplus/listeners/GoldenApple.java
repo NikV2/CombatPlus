@@ -13,9 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class GoldenApple implements Listener {
@@ -25,6 +27,7 @@ public class GoldenApple implements Listener {
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("golden_apple_cooldown.golden_apple.cooldown");
+    private final boolean actionbar = Config.get().getBoolean("golden_apple_cooldown.golden_apple.actionbar");
     public static String PAPICOOLDOWN = "Ready";
 
     public GoldenApple(CombatPlus plugin) {
@@ -49,8 +52,7 @@ public class GoldenApple implements Listener {
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
         if (worldUtils.gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;
-        final Material handItem = e.getItem().getType();
-        if (handItem == Material.GOLDEN_APPLE) {
+        if (isGoldenApple(e)) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
@@ -63,7 +65,7 @@ public class GoldenApple implements Listener {
                     setupPlaceholder(p);
                 }
                 Messenger.debug(player, "&3Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
-                if (Config.get().getBoolean("golden_apple_cooldown.golden_apple.actionbar")) {
+                if (actionbar) {
                     new BukkitRunnable() {
 
                         @Override
@@ -96,5 +98,20 @@ public class GoldenApple implements Listener {
                 }
             }
         }.runTaskTimerAsynchronously(plugin, 0, 20);
+    }
+
+    private boolean isGoldenApple(PlayerItemConsumeEvent e) {
+        ItemStack goldenApple = new ItemStack(Material.GOLDEN_APPLE);
+        ItemStack consumedItem = e.getItem();
+        if (plugin.serverVersion("1.8")
+                || plugin.serverVersion("1.9")
+                || plugin.serverVersion("1.10")
+                || plugin.serverVersion("1.11")
+                || plugin.serverVersion("1.12")) {
+            return consumedItem.getType().name().contains("GOLDEN_APPLE") &&
+                    Objects.equals(goldenApple.getData(), consumedItem.getData());
+        } else {
+            return consumedItem.getType() == Material.GOLDEN_APPLE;
+        }
     }
 }

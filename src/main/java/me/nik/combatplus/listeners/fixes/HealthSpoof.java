@@ -39,6 +39,10 @@ public class HealthSpoof implements Listener {
     }
 
     private boolean holdsTotem(Player p) {
-        return p.getInventory().getItemInMainHand().getType().name().contains("TOTEM") || p.getInventory().getItemInOffHand().getType().name().contains("TOTEM");
+        try {
+            return p.getInventory().getItemInMainHand().getType().name().contains("TOTEM") || p.getInventory().getItemInOffHand().getType().name().contains("TOTEM");
+        } catch (NoSuchMethodError e) {
+            return false;
+        }
     }
 }

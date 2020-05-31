@@ -116,20 +116,20 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     private void setDefaultStats() {
+        if (serverVersion("1.8")) return;
         Bukkit.getOnlinePlayers().forEach(player -> {
             final double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
             final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             playerMaxHealth.setBaseValue(defaultHealth);
-            if (!serverVersion("1.8")) {
-                final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
-                final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-                playerAttSpeed.setBaseValue(defaultAttSpd);
-            }
+            final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
+            final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+            playerAttSpeed.setBaseValue(defaultAttSpd);
             player.saveData();
         });
     }
 
     private void loadStats() {
+        if (serverVersion("1.8")) return;
         SetAttackSpeed setAttackSpeed = new SetAttackSpeed();
         ResetStats resetStats = new ResetStats();
         SetCustomHealth setCustomHealth = new SetCustomHealth();
@@ -222,24 +222,20 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("combat.settings.old_sharpness", false);
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
             Config.get().set("combat.settings.old_player_regen", false);
-            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
-            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
+            Config.get().set("custom.player_health.enabled", false);
             Config.get().set("fixes.kill_aura", false);
-            Config.get().set("enderpearl_cooldown.enabled", false);
             Config.get().set("disable_offhand.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
-            Config.get().set("fixes.health_spoof", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
+            Config.get().set("golden_apple_cooldown.golden_apple.actionbar", false);
+            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.actionbar", false);
+            Config.get().set("enderpearl_cooldown.actionbar", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
         } else if (serverVersion("1.9")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
-            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
-            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
-            Config.get().set("fixes.kill_aura", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
-            Config.get().set("fixes.health_spoof", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
@@ -247,27 +243,19 @@ public final class CombatPlus extends JavaPlugin {
             consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
         } else if (serverVersion("1.10")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
-            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
-            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
-            Config.get().set("fixes.health_spoof", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
             consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
         } else if (serverVersion("1.11")) {
-            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
-            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
-            Config.get().set("fixes.health_spoof", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
             Config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
         } else if (serverVersion("1.12")) {
-            Config.get().set("golden_apple_cooldown.enchanted_golden_apple.enabled", false);
-            Config.get().set("golden_apple_cooldown.golden_apple.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
             Config.save();
@@ -276,7 +264,7 @@ public final class CombatPlus extends JavaPlugin {
         }
     }
 
-    private boolean serverVersion(String version) {
+    public boolean serverVersion(String version) {
         return Bukkit.getVersion().contains(version);
     }
 

@@ -48,7 +48,10 @@ public class KillAura implements Listener {
         World world = p.getWorld();
         Entity npc = world.spawnEntity(loc, EntityType.valueOf(entity));
         npc.setInvulnerable(true);
-        npc.setGravity(false);
+        try {
+            npc.setGravity(false);
+        } catch (NoSuchMethodError ignored) {
+        }
         npc.setSilent(true);
 
         new BukkitRunnable() {

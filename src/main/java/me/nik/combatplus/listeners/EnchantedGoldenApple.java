@@ -13,9 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class EnchantedGoldenApple implements Listener {
@@ -25,6 +27,7 @@ public class EnchantedGoldenApple implements Listener {
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
+    private final boolean actionbar = Config.get().getBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar");
     public static String PAPICOOLDOWN = "Ready";
 
     public EnchantedGoldenApple(CombatPlus plugin) {
@@ -49,8 +52,7 @@ public class EnchantedGoldenApple implements Listener {
     public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
         if (worldUtils.gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;
-        final Material handItem = e.getItem().getType();
-        if (handItem == Material.ENCHANTED_GOLDEN_APPLE) {
+        if (isEnchantedGoldenApple(e)) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
@@ -63,7 +65,7 @@ public class EnchantedGoldenApple implements Listener {
                     setupPlaceholder(p);
                 }
                 Messenger.debug(player, "&3Enchanted Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
-                if (Config.get().getBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar")) {
+                if (actionbar) {
                     new BukkitRunnable() {
 
                         @Override
@@ -96,5 +98,16 @@ public class EnchantedGoldenApple implements Listener {
                 }
             }
         }.runTaskTimerAsynchronously(plugin, 0, 20);
+    }
+
+    private boolean isEnchantedGoldenApple(PlayerItemConsumeEvent e) {
+        try {
+            return e.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE;
+        } catch (NoSuchFieldError ignored) {
+            ItemStack goldenApple = new ItemStack(Material.GOLDEN_APPLE);
+            ItemStack consumedItem = e.getItem();
+            return consumedItem.getType().name().contains("GOLDEN_APPLE") &&
+                    !Objects.equals(goldenApple.getData(), consumedItem.getData());
+        }
     }
 }
