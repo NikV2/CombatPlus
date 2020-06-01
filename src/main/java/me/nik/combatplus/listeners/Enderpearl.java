@@ -51,43 +51,42 @@ public class Enderpearl implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onLaunch(ProjectileLaunchEvent e) {
-        if (worldUtils.enderpearlDisabledWorlds((Player) e.getEntity().getShooter())) return;
-        if (e.getEntity().getType() == EntityType.ENDER_PEARL && e.getEntity().getShooter() instanceof Player) {
-            Player player = (Player) e.getEntity().getShooter();
-            if (player.hasPermission("cp.bypass.epearl")) return;
-            final UUID p = player.getUniqueId();
-            if (cooldown.containsKey(p)) {
-                e.setCancelled(true);
-                if (!(player.getGameMode() == GameMode.CREATIVE) && plugin.serverVersion("1.8") || plugin.serverVersion("1.9") || plugin.serverVersion("1.10")) {
-                    ItemStack enderpearl = new ItemStack(Material.ENDER_PEARL, 1);
-                    player.getInventory().addItem(enderpearl);
-                }
-                long secondsLeft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                player.sendMessage(Messenger.message("enderpearl_cooldown").replaceAll("%seconds%", String.valueOf(secondsLeft)));
-            } else {
-                    taskRun(p);
-                    if (MiscUtils.isPlaceholderApiEnabled()) {
-                        setupPlaceholder(p);
+        if (!(e.getEntity().getShooter() instanceof Player)) return;
+        if (!(e.getEntity().getType() == EntityType.ENDER_PEARL)) return;
+        Player player = (Player) e.getEntity().getShooter();
+        if (worldUtils.enderpearlDisabledWorlds(player)) return;
+        if (player.hasPermission("cp.bypass.epearl")) return;
+        final UUID p = player.getUniqueId();
+        if (cooldown.containsKey(p)) {
+            e.setCancelled(true);
+            if (!(player.getGameMode() == GameMode.CREATIVE) && plugin.serverVersion("1.8") || plugin.serverVersion("1.9") || plugin.serverVersion("1.10")) {
+                ItemStack enderpearl = new ItemStack(Material.ENDER_PEARL, 1);
+                player.getInventory().addItem(enderpearl);
+            }
+            long secondsLeft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+            player.sendMessage(Messenger.message("enderpearl_cooldown").replaceAll("%seconds%", String.valueOf(secondsLeft)));
+        } else {
+            taskRun(p);
+            if (MiscUtils.isPlaceholderApiEnabled()) {
+                setupPlaceholder(p);
+            }
+            Messenger.debug(player, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
+            if (actionbar) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (cooldown.containsKey(p)) {
+                            long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                            String message = Lang.get().getString("enderpearl_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft));
+                            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(message)));
+                        } else {
+                            cancel();
+                        }
                     }
-                    Messenger.debug(player, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
-                if (actionbar) {
-                    new BukkitRunnable() {
-
-                        @Override
-                        public void run() {
-                            if (cooldown.containsKey(p)) {
-                                long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                                String message = Lang.get().getString("enderpearl_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft));
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(message)));
-                            } else {
-                                cancel();
-                                }
-                            }
-                        }.runTaskTimerAsynchronously(plugin, 0, 20);
-                    }
-                }
+                }.runTaskTimerAsynchronously(plugin, 0, 20);
             }
         }
+    }
 
     private void setupPlaceholder(UUID p) {
 
