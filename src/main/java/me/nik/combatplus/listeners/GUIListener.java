@@ -186,8 +186,8 @@ public class GUIListener implements Listener {
     }
 
     private void saveAndReload() {
-        Config.save();
-        Config.reload();
-        Config.save();
+        plugin.config.save();
+        plugin.config.reload();
+        plugin.config.save();
     }
 }

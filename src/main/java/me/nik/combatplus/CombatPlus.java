@@ -42,8 +42,13 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
+    public Config config;
+    public Lang lang;
+
     @Override
     public void onEnable() {
+        this.lang = new Lang();
+        this.config = new Config();
 
         //Load Files
         loadFiles();
@@ -87,24 +92,24 @@ public final class CombatPlus extends JavaPlugin {
         setDefaultStats();
 
         //Reload Files
-        Config.reload();
-        Config.save();
-        Lang.reload();
-        Lang.save();
+        config.reload();
+        config.save();
+        lang.reload();
+        lang.save();
 
         //Done
         consoleMessage(Messenger.message("console.disabled"));
     }
 
     private void loadFiles() {
-        Config.setup();
-        Config.addDefaults();
+        config.setup();
+        config.addDefaults();
         Config.get().options().copyDefaults(true);
-        Config.save();
-        Lang.setup();
-        Lang.addDefaults();
+        config.save();
+        lang.setup();
+        lang.addDefaults();
         Lang.get().options().copyDefaults(true);
-        Lang.save();
+        lang.save();
     }
 
     private void checkForUpdates() {
@@ -230,36 +235,36 @@ public final class CombatPlus extends JavaPlugin {
             Config.get().set("golden_apple_cooldown.golden_apple.actionbar", false);
             Config.get().set("golden_apple_cooldown.enchanted_golden_apple.actionbar", false);
             Config.get().set("enderpearl_cooldown.actionbar", false);
-            Config.save();
-            Config.reload();
+            config.save();
+            config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
         } else if (serverVersion("1.9")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
-            Config.save();
-            Config.reload();
+            config.save();
+            config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
             consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
         } else if (serverVersion("1.10")) {
             Config.get().set("combat.settings.disable_sweep_attacks.enabled", false);
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
-            Config.save();
-            Config.reload();
+            config.save();
+            config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
             consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
         } else if (serverVersion("1.11")) {
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
-            Config.save();
-            Config.reload();
+            config.save();
+            config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
         } else if (serverVersion("1.12")) {
             Config.get().set("recipes.enchanted_golden_apple", false);
             Config.get().set("knockback.fishing_rod.enabled", false);
-            Config.save();
-            Config.reload();
+            config.save();
+            config.reload();
             consoleMessage(Messenger.message("console.unsupported_version"));
         }
     }
