@@ -3,6 +3,7 @@ package me.nik.combatplus.listeners;
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
@@ -38,9 +39,8 @@ public class PlayerRegen implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRegen(EntityRegainHealthEvent e) {
-        if (e.getEntityType() != EntityType.PLAYER || e.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) {
+        if (e.getEntityType() != EntityType.PLAYER || e.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED)
             return;
-        }
         final Player p = (Player) e.getEntity();
         if (worldUtils.combatDisabledWorlds(p)) return;
         final UUID playerID = p.getUniqueId();
@@ -52,7 +52,7 @@ public class PlayerRegen implements Listener {
         if (currentTime - lastHealTime < oldRegenFrequency) return;
         final double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         if (playerHealth < maxHealth) {
-            p.setHealth(clamp(playerHealth + oldRegenAmount, maxHealth));
+            p.setHealth(MiscUtils.clamp(playerHealth + oldRegenAmount, maxHealth));
             healTimes.put(playerID, currentTime);
         }
         final float previousExhaustion = p.getExhaustion();
@@ -65,18 +65,6 @@ public class PlayerRegen implements Listener {
                 Messenger.debug(p, "&3Regeneration &f&l>> &6Old exhaustion: &a" + previousExhaustion + " &6New exhaustion: &a" + exhaustionToApply + " &6Saturation: &a" + playerSaturation);
             }
         }.runTaskLater(plugin, 1);
-    }
-
-    private double clamp(double value, double max) {
-        double realMin = Math.min(0.0, max);
-        double realMax = Math.max(0.0, max);
-        if (value < realMin) {
-            value = realMin;
-        }
-        if (value > realMax) {
-            value = realMax;
-        }
-        return value;
     }
 
     @EventHandler

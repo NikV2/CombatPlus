@@ -2,7 +2,6 @@ package me.nik.combatplus.listeners.fixes;
 
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -11,7 +10,7 @@ public class Speed implements Listener {
     private double lastDist;
     private boolean lastOnGround;
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler
     public void onMove(PlayerMoveEvent e) {
         if (e.getPlayer().getAllowFlight()) return;
         double distX = e.getTo().getX() - e.getFrom().getX();

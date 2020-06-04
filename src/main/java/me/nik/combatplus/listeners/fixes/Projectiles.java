@@ -16,7 +16,7 @@ public class Projectiles implements Listener {
     Removes Randomness
      */
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onProjectileShoot(ProjectileLaunchEvent e) {
         final Projectile projectile = e.getEntity();
         final ProjectileSource holder = projectile.getShooter();

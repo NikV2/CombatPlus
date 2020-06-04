@@ -22,7 +22,7 @@ public class UpdateReminder implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                e.getPlayer().sendMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", UpdateChecker.VERSION));
+                e.getPlayer().sendMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", UpdateChecker.newVersion));
             }
         }.runTaskLaterAsynchronously(plugin, 40);
     }

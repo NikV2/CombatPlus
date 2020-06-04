@@ -19,7 +19,7 @@ public class UpdateChecker extends BukkitRunnable {
         this.plugin = plugin;
     }
 
-    public static String VERSION = null;
+    public static String newVersion = null;
 
     @Override
     public void run() {
@@ -28,8 +28,8 @@ public class UpdateChecker extends BukkitRunnable {
             String version = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
 
             if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-                VERSION = version;
-                plugin.consoleMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", VERSION));
+                newVersion = version;
+                plugin.consoleMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
                 plugin.registerEvent(new UpdateReminder(plugin));
             } else {
                 plugin.consoleMessage(Messenger.message("console.update_not_found"));

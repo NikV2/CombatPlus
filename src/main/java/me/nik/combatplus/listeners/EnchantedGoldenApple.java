@@ -46,7 +46,9 @@ public class EnchantedGoldenApple implements Listener {
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
 
-    // This Listener adds a cooldown between eating Enchanted Golden Apples
+    /*
+     This Listener adds a cooldown between eating Enchanted Golden Apples
+     */
 
     @EventHandler(ignoreCancelled = true)
     public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {

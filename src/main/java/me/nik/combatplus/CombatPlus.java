@@ -84,7 +84,7 @@ public final class CombatPlus extends JavaPlugin {
         }
 
         //Hook AntiCheat
-        new ACManager().hookAntiCheat();
+        new ACManager().hookMatrixAC();
     }
     @Override
     public void onDisable() {

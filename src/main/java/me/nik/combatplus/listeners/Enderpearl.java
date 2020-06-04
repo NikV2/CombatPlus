@@ -47,7 +47,9 @@ public class Enderpearl implements Listener {
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
 
-    // This Listener Adds a cooldown between using Ender Pearls
+    /*
+     This Listener Adds a cooldown between using Ender Pearls
+     */
 
     @EventHandler(ignoreCancelled = true)
     public void onLaunch(ProjectileLaunchEvent e) {

@@ -46,7 +46,9 @@ public class GoldenApple implements Listener {
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
 
-    // This Listener adds a cooldown between eating Golden Apples
+    /*
+     This Listener adds a cooldown between eating Golden Apples
+     */
 
     @EventHandler(ignoreCancelled = true)
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
