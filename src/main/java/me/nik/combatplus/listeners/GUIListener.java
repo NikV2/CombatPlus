@@ -99,6 +99,10 @@ public class GUIListener implements Listener {
                 booleanSet("combat.settings.old_player_regen", !configBoolean("combat.settings.old_player_regen"));
                 saveAndReload();
                 break;
+            case "§6Sword Blocking":
+                booleanSet("combat.settings.sword_blocking.enabled", !configBoolean("combat.settings.sword_blocking.enabled"));
+                saveAndReload();
+                break;
             // General GUI Settings
             case "§6Golden Apple Cooldown":
                 booleanSet("golden_apple_cooldown.golden_apple.enabled", !configBoolean("golden_apple_cooldown.golden_apple.enabled"));

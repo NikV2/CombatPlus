@@ -65,6 +65,14 @@ public class Config {
         Config.get().addDefault("combat.settings.disable_sweep_attacks.ignore_sweeping_edge", false);
         Config.get().addDefault("combat.settings.disable_arrow_boost", true);
         Config.get().addDefault("combat.settings.old_player_regen", true);
+        Config.get().addDefault("combat.settings.sword_blocking.enabled", true);
+        Config.get().addDefault("combat.settings.sword_blocking.ignore_shields", true);
+        Config.get().addDefault("combat.settings.sword_blocking.cancel_sprinting", false);
+        Config.get().addDefault("combat.settings.sword_blocking.effect", "DAMAGE_RESISTANCE");
+        Config.get().addDefault("combat.settings.sword_blocking.duration_ticks", 8);
+        Config.get().addDefault("combat.settings.sword_blocking.amplifier", 0);
+        Config.get().addDefault("combat.settings.sword_blocking.slow_duration_ticks", 8);
+        Config.get().addDefault("combat.settings.sword_blocking.slow_amplifier", 2);
         Config.get().addDefault("combat.settings.disabled_worlds", combatList);
         Config.get().addDefault("golden_apple_cooldown.golden_apple.enabled", true);
         Config.get().addDefault("golden_apple_cooldown.golden_apple.cooldown", 10);

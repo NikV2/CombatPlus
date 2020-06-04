@@ -109,7 +109,7 @@ public class GUIManager {
     }
 
     public void openCombatGUI(Player p) {
-        Inventory combatGUI = Bukkit.createInventory(new CombatPlusHolder(), 45, Messenger.format(Lang.get().getString("gui.combat")));
+        Inventory combatGUI = Bukkit.createInventory(new CombatPlusHolder(), 54, Messenger.format(Lang.get().getString("gui.combat")));
         p.openInventory(combatGUI);
         final Player pNon = p;
         new BukkitRunnable() {
@@ -206,19 +206,35 @@ public class GUIManager {
                 oldRegenMeta.setLore(oldRegenLore);
                 oldRegen.setItemMeta(oldRegenMeta);
 
+                //sword blocking
+                ItemStack block = new ItemStack(Material.PAPER, 1);
+                ItemMeta blockMeta = block.getItemMeta();
+                blockMeta.setDisplayName("§6Sword Blocking");
+                ArrayList<String> blockLore = new ArrayList<>();
+                blockLore.add("");
+                blockLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.sword_blocking.enabled"));
+                blockLore.add("");
+                blockLore.add(ChatColor.WHITE + "Gives Resistance While");
+                blockLore.add(ChatColor.WHITE + "Right Clicking With a Sword");
+                blockLore.add("");
+                blockLore.add(ChatColor.GRAY + "More options in the Config.yml");
+                blockMeta.setLore(blockLore);
+                block.setItemMeta(blockMeta);
+
                 ItemStack back = new ItemStack(Material.BARRIER, 1);
                 ItemMeta backMeta = back.getItemMeta();
                 backMeta.setDisplayName("§cBack");
                 back.setItemMeta(backMeta);
 
-                combatGUI.setItem(10, oldPvp);
-                combatGUI.setItem(12, oldWepDmg);
-                combatGUI.setItem(14, oldToolDmg);
-                combatGUI.setItem(16, oldSharp);
-                combatGUI.setItem(20, disableSweep);
-                combatGUI.setItem(22, disableBoost);
-                combatGUI.setItem(24, oldRegen);
-                combatGUI.setItem(40, back);
+                combatGUI.setItem(10, block);
+                combatGUI.setItem(12, oldPvp);
+                combatGUI.setItem(14, oldWepDmg);
+                combatGUI.setItem(16, oldToolDmg);
+                combatGUI.setItem(28, oldSharp);
+                combatGUI.setItem(30, disableSweep);
+                combatGUI.setItem(32, disableBoost);
+                combatGUI.setItem(34, oldRegen);
+                combatGUI.setItem(49, back);
             }
         }.runTaskTimer(plugin, 1, 5);
     }
