@@ -16,10 +16,6 @@ public abstract class Menu implements InventoryHolder {
 
     protected final CombatPlus plugin;
 
-    /*
-     Thanks to CodySimpson and his Community
-     */
-
     protected Inventory inventory;
 
     protected PlayerMenuUtility playerMenuUtility;
@@ -74,6 +70,11 @@ public abstract class Menu implements InventoryHolder {
         plugin.config.setup();
     }
 
+    /**
+     * This class is now the Inventory Holder, Woo!
+     *
+     * @return The inventory holder
+     */
     @Override
     public Inventory getInventory() {
         return inventory;

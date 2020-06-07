@@ -96,6 +96,9 @@ public final class CombatPlus extends JavaPlugin {
         consoleMessage(Messenger.message("console.disabled"));
     }
 
+    /**
+     * Load all the built-in files
+     */
     private void loadFiles() {
         config.setup();
         config.addDefaults();
@@ -115,6 +118,9 @@ public final class CombatPlus extends JavaPlugin {
         }
     }
 
+    /**
+     * Default Stats to avoid Server Damage
+     */
     private void setDefaultStats() {
         if (serverVersion("1.8")) return;
         Bukkit.getOnlinePlayers().forEach(player -> {
@@ -128,6 +134,10 @@ public final class CombatPlus extends JavaPlugin {
         });
     }
 
+    /**
+     * Load 1.8 Attack Speed and Custom Stats on startup
+     * Potentially adding Reloading Compatibility
+     */
     private void loadStats() {
         if (serverVersion("1.8")) return;
         SetAttackSpeed setAttackSpeed = new SetAttackSpeed();
@@ -147,6 +157,9 @@ public final class CombatPlus extends JavaPlugin {
         }
     }
 
+    /**
+     * Initialize enabled Listeners
+     */
     private void initialize() {
         consoleMessage(Messenger.message("console.initialize"));
 
@@ -199,6 +212,9 @@ public final class CombatPlus extends JavaPlugin {
         registerEvent(new GuiListener());
     }
 
+    /**
+     * Disable unsupported features
+     */
     private void checkSupported() {
         if (serverVersion("1.8")) {
             setBoolean("combat.settings.old_pvp", false);
@@ -249,22 +265,42 @@ public final class CombatPlus extends JavaPlugin {
         }
     }
 
+    /**
+     * @param version The version to look for
+     * @return Whether or not the Server's running on the specified version
+     */
     public boolean serverVersion(String version) {
         return Bukkit.getVersion().contains(version);
     }
 
+    /**
+     * Registers the specified Listener
+     *
+     * @param listener The listener to register
+     */
     public void registerEvent(Listener listener) {
         Bukkit.getServer().getPluginManager().registerEvents(listener, this);
     }
 
+    /**
+     * @param path The path to the boolean
+     * @return Whether or not the config boolean is true
+     */
     private boolean isEnabled(String path) {
         return Config.get().getBoolean(path);
     }
 
+    /**
+     * @param path  Path to the boolean
+     * @param value true/false
+     */
     private void setBoolean(String path, boolean value) {
         Config.get().set(path, value);
     }
 
+    /**
+     * @param message The console message to send to the Server (ChatColor Friendly)
+     */
     public void consoleMessage(String message) {
         this.getServer().getConsoleSender().sendMessage(message);
     }
