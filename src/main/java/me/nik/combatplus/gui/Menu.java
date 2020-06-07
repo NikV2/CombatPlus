@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public abstract class Menu implements InventoryHolder {
 
-    private final CombatPlus plugin;
+    protected final CombatPlus plugin;
 
     /*
      Thanks to CodySimpson and his Community
