@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager implements TabExecutor {
+
     private final CombatPlus plugin;
 
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();

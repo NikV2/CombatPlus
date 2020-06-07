@@ -2,7 +2,8 @@ package me.nik.combatplus.commands.subcommands;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.commands.SubCommand;
-import me.nik.combatplus.utils.GUIManager;
+import me.nik.combatplus.gui.PlayerMenuUtility;
+import me.nik.combatplus.gui.menus.MainGui;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
 
@@ -37,7 +38,7 @@ public class Menu extends SubCommand {
             if (!player.hasPermission("cp.admin")) {
                 player.sendMessage(Messenger.message("no_perm"));
             } else {
-                new GUIManager(plugin).openMainGUI(player);
+                new MainGui(new PlayerMenuUtility(player), plugin).open();
             }
         }
     }

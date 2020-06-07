@@ -94,13 +94,7 @@ public class Config {
         Config.get().addDefault("disable_offhand.enabled", true);
         Config.get().addDefault("disable_offhand.disabled_worlds", offhandWorlds);
         Config.get().addDefault("recipes.enchanted_golden_apple", false);
-        Config.get().addDefault("fixes.kill_aura", false);
         Config.get().addDefault("fixes.projectile_fixer", true);
-        Config.get().addDefault("fixes.invalid_criticals", true);
-        Config.get().addDefault("fixes.health_spoof", false);
-        Config.get().addDefault("fixes.no_fall", false);
-        Config.get().addDefault("fixes.speed", false);
-        Config.get().addDefault("fixes.bad_packets", true);
         Config.get().addDefault("custom.player_health.enabled", false);
         Config.get().addDefault("custom.player_health.max_health", 20);
         Config.get().addDefault("advanced.settings.old_pvp.attack_speed", 24);
@@ -114,10 +108,5 @@ public class Config {
         Config.get().addDefault("advanced.settings.old_regen.exhaustion", 3);
         Config.get().addDefault("advanced.settings.base_player_health", 20);
         Config.get().addDefault("advanced.settings.knockback.fishing_rod.damage", 0.01);
-        Config.get().addDefault("advanced.settings.kill_aura.entity", "BAT");
-        Config.get().addDefault("advanced.settings.kill_aura.teleport_ticks", 1);
-        Config.get().addDefault("advanced.settings.kill_aura.ticks_duration", 300);
-        Config.get().addDefault("advanced.settings.kill_aura.ignore_creative", true);
-        Config.get().addDefault("advanced.settings.kill_aura.range", -2.5);
     }
 }

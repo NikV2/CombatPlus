@@ -22,16 +22,16 @@ public class BowBoost implements Listener {
     public void onArrowDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;
-        Player player = (Player) e.getEntity();
-        if (worldUtils.combatDisabledWorlds(player)) return;
-        if (player.hasPermission("cp.bypass.bowboost")) return;
+        Player p = (Player) e.getEntity();
+        if (worldUtils.combatDisabledWorlds(p)) return;
+        if (p.hasPermission("cp.bypass.bowboost")) return;
         Arrow arrow = (Arrow) e.getDamager();
         ProjectileSource holder = arrow.getShooter();
         if (holder instanceof Player) {
             Player holderPlayer = (Player) holder;
-            if (player.getUniqueId().equals(holderPlayer.getUniqueId())) {
+            if (p.getUniqueId().equals(holderPlayer.getUniqueId())) {
                 e.setCancelled(true);
-                Messenger.debug(player, "&3Bow Boost &f&l>> &6Canceled: &a" + e.isCancelled());
+                Messenger.debug(p, "&3Bow Boost &f&l>> &6Canceled: &a" + e.isCancelled());
             }
         }
     }

@@ -72,6 +72,12 @@ public class FishingRodKnockback implements Listener {
         Messenger.debug(e.getPlayer(), "&3Fishing Rod Knockback &f&l>> &6Cancelled Dragging: &atrue");
     }
 
+    /*
+     Thanks to OldCombatMechanics for this one
+     https://github.com/kernitus/BukkitOldCombatMechanics
+
+     Return a new EntityDamageByEntityEvent, Return if it's cancelled by a Protection Plugin
+     */
     private EntityDamageEvent customEvent(Player rodder, Entity entity, double damage) {
         return new EntityDamageByEntityEvent(rodder, entity, EntityDamageEvent.DamageCause.PROJECTILE, damage);
     }

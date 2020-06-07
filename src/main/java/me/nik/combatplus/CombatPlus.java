@@ -13,18 +13,12 @@ import me.nik.combatplus.listeners.DisabledItems;
 import me.nik.combatplus.listeners.EnchantedGoldenApple;
 import me.nik.combatplus.listeners.Enderpearl;
 import me.nik.combatplus.listeners.FishingRodKnockback;
-import me.nik.combatplus.listeners.GUIListener;
 import me.nik.combatplus.listeners.GoldenApple;
+import me.nik.combatplus.listeners.GuiListener;
 import me.nik.combatplus.listeners.ItemFrameRotate;
 import me.nik.combatplus.listeners.Offhand;
 import me.nik.combatplus.listeners.PlayerRegen;
-import me.nik.combatplus.listeners.fixes.BadPackets;
-import me.nik.combatplus.listeners.fixes.Criticals;
-import me.nik.combatplus.listeners.fixes.HealthSpoof;
-import me.nik.combatplus.listeners.fixes.KillAura;
-import me.nik.combatplus.listeners.fixes.NoFall;
 import me.nik.combatplus.listeners.fixes.Projectiles;
-import me.nik.combatplus.listeners.fixes.Speed;
 import me.nik.combatplus.utils.ACManager;
 import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.Messenger;
@@ -77,14 +71,14 @@ public final class CombatPlus extends JavaPlugin {
         checkForUpdates();
 
         //Load bStats
-        MetricsLite metricsLite = new MetricsLite(this, 6982);
+        new MetricsLite(this, 6982);
 
         //Hook PlaceholderAPI
         if (MiscUtils.isPlaceholderApiEnabled()) {
             new PapiHook(this).register();
         }
 
-        //Hook AntiCheat
+        //Hook AntiCheats
         new ACManager().hookMatrixAC();
     }
     @Override
@@ -180,15 +174,6 @@ public final class CombatPlus extends JavaPlugin {
         if (isEnabled("fixes.projectile_fixer")) {
             registerEvent(new Projectiles());
         }
-        if (isEnabled("fixes.invalid_criticals")) {
-            registerEvent(new Criticals());
-        }
-        if (isEnabled("fixes.health_spoof")) {
-            registerEvent(new HealthSpoof(this));
-        }
-        if (isEnabled("fixes.kill_aura")) {
-            registerEvent(new KillAura(this));
-        }
         if (isEnabled("golden_apple_cooldown.golden_apple.enabled")) {
             registerEvent(new GoldenApple(this));
         }
@@ -204,15 +189,6 @@ public final class CombatPlus extends JavaPlugin {
             } catch (Exception ignored) {
             }
         }
-        if (isEnabled("fixes.no_fall")) {
-            registerEvent(new NoFall());
-        }
-        if (isEnabled("fixes.speed")) {
-            registerEvent(new Speed());
-        }
-        if (isEnabled("fixes.bad_packets")) {
-            registerEvent(new BadPackets());
-        }
         if (isEnabled("knockback.fishing_rod.enabled")) {
             registerEvent(new FishingRodKnockback());
         }
@@ -220,7 +196,7 @@ public final class CombatPlus extends JavaPlugin {
             registerEvent(new Blocking());
         }
         //GUI Listener (Do not remove this, idiot nik)
-        registerEvent(new GUIListener(this));
+        registerEvent(new GuiListener());
     }
 
     private void checkSupported() {
@@ -232,7 +208,6 @@ public final class CombatPlus extends JavaPlugin {
             setBoolean("combat.settings.disable_sweep_attacks.enabled", false);
             setBoolean("combat.settings.old_player_regen", false);
             setBoolean("custom.player_health.enabled", false);
-            setBoolean("fixes.kill_aura", false);
             setBoolean("disable_offhand.enabled", false);
             setBoolean("recipes.enchanted_golden_apple", false);
             setBoolean("knockback.fishing_rod.enabled", false);

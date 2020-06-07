@@ -27,9 +27,10 @@ public class Offhand implements Listener {
     @EventHandler
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
         if (worldUtils.offhandDisabledWorlds(e.getPlayer())) return;
-        if (e.getPlayer().hasPermission("cp.bypass.offhand")) return;
+        Player p = e.getPlayer();
+        if (p.hasPermission("cp.bypass.offhand")) return;
         e.setCancelled(true);
-        Messenger.debug(e.getPlayer(), "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
+        Messenger.debug(p, "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
     }
 
     @EventHandler
