@@ -9,6 +9,11 @@ public class SetAttackSpeed {
     private final WorldUtils worldUtils = new WorldUtils();
     private final ResetStats resetStats = new ResetStats();
 
+    /**
+     * Set the Player's Attack Speed
+     *
+     * @param player The player
+     */
     public void setAttackSpd(Player player) {
         if (worldUtils.combatDisabledWorlds(player)) {
             resetStats.resetAttackSpeed(player);

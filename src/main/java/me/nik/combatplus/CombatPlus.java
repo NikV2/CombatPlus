@@ -100,11 +100,11 @@ public final class CombatPlus extends JavaPlugin {
      * Load all the built-in files
      */
     private void loadFiles() {
-        config.setup();
+        config.setup(this);
         config.addDefaults();
         Config.get().options().copyDefaults(true);
         config.save();
-        lang.setup();
+        lang.setup(this);
         lang.addDefaults();
         Lang.get().options().copyDefaults(true);
         lang.save();

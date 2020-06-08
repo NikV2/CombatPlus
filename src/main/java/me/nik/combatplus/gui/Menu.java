@@ -67,7 +67,7 @@ public abstract class Menu implements InventoryHolder {
     protected void saveAndReload() {
         plugin.config.save();
         plugin.config.reload();
-        plugin.config.setup();
+        plugin.config.setup(plugin);
     }
 
     /**
