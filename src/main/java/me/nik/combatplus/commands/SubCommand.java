@@ -6,17 +6,17 @@ import java.util.List;
 
 public abstract class SubCommand {
 
-    public abstract String getName();
+    protected abstract String getName();
 
-    public abstract String getDescription();
+    protected abstract String getDescription();
 
-    public abstract String getSyntax();
+    protected abstract String getSyntax();
 
-    public abstract String getPermission();
+    protected abstract String getPermission();
 
-    public abstract boolean canConsoleExecute();
+    protected abstract boolean canConsoleExecute();
 
-    public abstract void perform(CommandSender sender, String[] args);
+    protected abstract void perform(CommandSender sender, String[] args);
 
-    public abstract List<String> getSubcommandArguments(CommandSender sender, String[] args);
+    protected abstract List<String> getSubcommandArguments(CommandSender sender, String[] args);
 }
