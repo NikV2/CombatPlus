@@ -7,8 +7,8 @@ import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,42 +27,32 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            if (args.length == 0) {
-                helpMessage(sender);
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("reload")) {
-                sender.sendMessage(Messenger.message("reloading"));
-                sender.getServer().getPluginManager().disablePlugin(plugin);
-                sender.getServer().getPluginManager().enablePlugin(plugin);
-                sender.sendMessage(Messenger.message("reloaded"));
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("help")) {
-                helpMessage(sender);
-                return true;
-            }
-            sender.sendMessage(Messenger.message("console.commands"));
-            return true;
-        } else {
-            Player p = (Player) sender;
-            if (args.length > 0) {
-                for (int i = 0; i < getSubcommands().size(); i++) {
-                    if (args[0].equalsIgnoreCase(getSubcommands().get(i).getName())) {
-                        getSubcommands().get(i).perform(p, args);
+        if (args.length > 0) {
+            for (int i = 0; i < getSubcommands().size(); i++) {
+                final SubCommand subCommand = getSubcommands().get(i);
+
+                if (args[0].equalsIgnoreCase(subCommand.getName())) {
+                    if (!subCommand.canConsoleExecute() && sender instanceof ConsoleCommandSender) {
+                        sender.sendMessage(Messenger.message("console.commands"));
                         return true;
                     }
-                    if (args[0].equalsIgnoreCase("help")) {
-                        helpMessage(p);
+                    if (!sender.hasPermission(subCommand.getPermission())) {
+                        sender.sendMessage(Messenger.message("no_perm"));
                         return true;
                     }
+                    subCommand.perform(sender, args);
+                    return true;
                 }
-            } else {
-                pluginInfo(p);
-                return true;
+                if (args[0].equalsIgnoreCase("help")) {
+                    helpMessage(sender);
+                    return true;
+                }
             }
+        } else {
+            pluginInfo(sender);
+            return true;
         }
+        helpMessage(sender);
         return true;
     }
 

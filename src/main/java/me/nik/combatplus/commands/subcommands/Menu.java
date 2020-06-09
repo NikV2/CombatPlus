@@ -4,7 +4,7 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.commands.SubCommand;
 import me.nik.combatplus.gui.PlayerMenuUtility;
 import me.nik.combatplus.gui.menus.MainGui;
-import me.nik.combatplus.utils.Messenger;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -33,18 +33,25 @@ public class Menu extends SubCommand {
     }
 
     @Override
-    public void perform(Player player, String[] args) {
+    public String getPermission() {
+        return "cp.admin";
+    }
+
+    @Override
+    public boolean canConsoleExecute() {
+        return false;
+    }
+
+    @Override
+    public void perform(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            if (!player.hasPermission("cp.admin")) {
-                player.sendMessage(Messenger.message("no_perm"));
-            } else {
-                new MainGui(new PlayerMenuUtility(player), plugin).open();
-            }
+            Player player = (Player) sender;
+            new MainGui(new PlayerMenuUtility(player), plugin).open();
         }
     }
 
     @Override
-    public List<String> getSubcommandArguments(Player player, String[] args) {
+    public List<String> getSubcommandArguments(CommandSender sender, String[] args) {
         return null;
     }
 }

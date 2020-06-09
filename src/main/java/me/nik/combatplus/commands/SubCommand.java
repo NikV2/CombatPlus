@@ -1,6 +1,6 @@
 package me.nik.combatplus.commands;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
@@ -12,7 +12,11 @@ public abstract class SubCommand {
 
     public abstract String getSyntax();
 
-    public abstract void perform(Player player, String[] args);
+    public abstract String getPermission();
 
-    public abstract List<String> getSubcommandArguments(Player player, String[] args);
+    public abstract boolean canConsoleExecute();
+
+    public abstract void perform(CommandSender sender, String[] args);
+
+    public abstract List<String> getSubcommandArguments(CommandSender sender, String[] args);
 }
