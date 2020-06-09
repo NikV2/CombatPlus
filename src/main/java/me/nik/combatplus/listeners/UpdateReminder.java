@@ -6,24 +6,21 @@ import me.nik.combatplus.utils.Messenger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class UpdateReminder implements Listener {
 
     private final CombatPlus plugin;
+    private final UpdateChecker updateChecker;
 
-    public UpdateReminder(CombatPlus plugin) {
+    public UpdateReminder(CombatPlus plugin, UpdateChecker updateChecker) {
         this.plugin = plugin;
+        this.updateChecker = updateChecker;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().hasPermission("cp.admin")) return;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                e.getPlayer().sendMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", UpdateChecker.newVersion));
-            }
-        }.runTaskLaterAsynchronously(plugin, 40);
+        String newVersion = updateChecker.getNewVersion();
+        e.getPlayer().sendMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
     }
 }

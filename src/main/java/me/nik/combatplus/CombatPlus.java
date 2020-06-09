@@ -206,7 +206,7 @@ public final class CombatPlus extends JavaPlugin {
             registerEvent(new FishingRodKnockback());
         }
         if (isEnabled("combat.settings.sword_blocking.enabled")) {
-            registerEvent(new Blocking());
+            registerEvent(new Blocking(this));
         }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GuiListener());
