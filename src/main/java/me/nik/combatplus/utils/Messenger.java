@@ -2,6 +2,7 @@ package me.nik.combatplus.utils;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
+import me.nik.combatplus.managers.MsgType;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -16,19 +17,62 @@ public class Messenger {
     }
 
     /**
-     * @param msg Path to the message from Lang.yml
-     * @return The Prefix and a Message formatted
+     * Returns a message from the given type
+     *
+     * @param type The message type
+     * @return The type's Message
      */
-    public static String prefix(String msg) {
-        return format(Lang.get().getString("prefix")) + format(msg);
-    }
-
-    /**
-     * @param msg Path to the message from Lang.yml
-     * @return The Prefix and Message from Lang.yml formatted
-     */
-    public static String message(String msg) {
-        return format(Lang.get().getString("prefix") + format(Lang.get().getString(msg)));
+    public static String message(MsgType type) {
+        switch (type) {
+            case PREFIX:
+                return format(Lang.get().getString("prefix"));
+            case NO_PERMISSION:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("no_perm")));
+            case RELOADING:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("reloading")));
+            case RELOADED:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("reloaded")));
+            case UPDATE_REMINDER:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("update_reminder")));
+            case GOLDEN_APPLE_COOLDOWN:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("golden_apple_cooldown")));
+            case GOLDEN_APPLE_COOLDOWN_ACTIONBAR:
+                return format(Lang.get().getString("golden_apple_cooldown_actionbar"));
+            case ENCHANTED_GOLDEN_APPLE_COOLDOWN:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("enchanted_golden_apple_cooldown")));
+            case ENCHANTED_GOLDEN_APPLE_COOLDOWN_ACTIONBAR:
+                return format(Lang.get().getString("enchanted_golden_apple_cooldown_actionbar"));
+            case ENDERPEARL_COOLDOWN:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("enderpearl_cooldown")));
+            case ENDERPEARL_COOLDOWN_ACTIONBAR:
+                return format(Lang.get().getString("enderpearl_cooldown_actionbar"));
+            case CANNOT_CRAFT_THIS:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("cannot_craft_this")));
+            case GUI_MAIN:
+                return format(Lang.get().getString("gui_main"));
+            case GUI_PLUGIN:
+                return format(Lang.get().getString("gui_plugin"));
+            case GUI_COMBAT:
+                return format(Lang.get().getString("gui_combat"));
+            case GUI_GENERAL:
+                return format(Lang.get().getString("gui_general"));
+            case CONSOLE_UPDATE_NOT_FOUND:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("console_update_not_found")));
+            case CONSOLE_UPDATE_DISABLED:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("console_update_disabled")));
+            case CONSOLE_COMMANDS:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("console_commands")));
+            case CONSOLE_INITIALIZE:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("console_initialize")));
+            case CONSOLE_UNSUPPORTED_VERSION:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("console_unsupported_version")));
+            case CONSOLE_UNSUPPORTED_SWEEP_ATTACK:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("console_unsupported_sweep_attack")));
+            case CONSOLE_DISABLED:
+                return format(Lang.get().getString("prefix") + format(Lang.get().getString("console_disabled")));
+            default:
+                return null;
+        }
     }
 
     /**
@@ -39,7 +83,7 @@ public class Messenger {
      */
     public static void debug(Player player, String message) {
         if (Config.get().getBoolean("settings.developer_mode") && player.hasPermission("cp.debug")) {
-            player.sendMessage(Messenger.prefix(message));
+            player.sendMessage(Messenger.message(MsgType.PREFIX) + format(message));
         }
     }
 }

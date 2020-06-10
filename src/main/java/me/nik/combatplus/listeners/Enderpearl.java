@@ -2,7 +2,7 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.files.Lang;
+import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
@@ -29,7 +29,7 @@ public class Enderpearl implements Listener {
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("enderpearl_cooldown.cooldown");
     private final boolean actionbar = Config.get().getBoolean("enderpearl_cooldown.actionbar");
-    public static String PAPICOOLDOWN = "Ready";
+    public static String papiCooldown = "Ready";
 
     public Enderpearl(CombatPlus plugin) {
         this.plugin = plugin;
@@ -42,7 +42,7 @@ public class Enderpearl implements Listener {
             @Override
             public void run() {
                 cooldown.remove(uuid);
-                PAPICOOLDOWN = "Ready";
+                papiCooldown = "Ready";
             }
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
@@ -66,7 +66,7 @@ public class Enderpearl implements Listener {
                 player.getInventory().addItem(enderpearl);
             }
             long secondsLeft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-            player.sendMessage(Messenger.message("enderpearl_cooldown").replaceAll("%seconds%", String.valueOf(secondsLeft)));
+            player.sendMessage(Messenger.message(MsgType.ENDERPEARL_COOLDOWN).replaceAll("%seconds%", String.valueOf(secondsLeft)));
         } else {
             taskRun(p);
             if (MiscUtils.isPlaceholderApiEnabled()) {
@@ -79,8 +79,8 @@ public class Enderpearl implements Listener {
                     public void run() {
                         if (cooldown.containsKey(p)) {
                             long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                            String message = Lang.get().getString("enderpearl_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft));
-                            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(message)));
+                            String message = Messenger.message(MsgType.ENDERPEARL_COOLDOWN_ACTIONBAR).replaceAll("%seconds%", String.valueOf(secondsleft));
+                            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
                         } else {
                             cancel();
                         }
@@ -98,7 +98,7 @@ public class Enderpearl implements Listener {
             public void run() {
                 if (cooldown.containsKey(p)) {
                     long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                    PAPICOOLDOWN = String.valueOf(secondsleft);
+                    papiCooldown = secondsleft + "s";
                 } else {
                     cancel();
                 }

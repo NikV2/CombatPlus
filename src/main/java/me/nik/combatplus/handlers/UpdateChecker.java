@@ -2,6 +2,7 @@ package me.nik.combatplus.handlers;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.listeners.UpdateReminder;
+import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -29,10 +30,10 @@ public class UpdateChecker extends BukkitRunnable {
 
             if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
                 newVersion = version;
-                plugin.consoleMessage(Messenger.message("update_reminder").replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
+                plugin.consoleMessage(Messenger.message(MsgType.UPDATE_REMINDER).replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
                 plugin.registerEvent(new UpdateReminder(plugin, this));
             } else {
-                plugin.consoleMessage(Messenger.message("console.update_not_found"));
+                plugin.consoleMessage(Messenger.message(MsgType.CONSOLE_UPDATE_NOT_FOUND));
             }
         } catch (IOException ignored) {
         }

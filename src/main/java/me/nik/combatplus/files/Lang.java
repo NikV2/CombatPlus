@@ -52,16 +52,16 @@ public class Lang {
         Lang.get().addDefault("enderpearl_cooldown", "&fYou cannot use an Ender Pearl yet, You must wait %seconds% seconds.");
         Lang.get().addDefault("enderpearl_cooldown_actionbar", "&6You can use an Ender Pearl again in &a%seconds% &6seconds.");
         Lang.get().addDefault("cannot_craft_this", "&cYou cannot craft this item!");
-        Lang.get().addDefault("gui.main", "&c&lCombatPlus Menu");
-        Lang.get().addDefault("gui.plugin", "&c&lPlugin Settings");
-        Lang.get().addDefault("gui.combat", "&c&lCombat Settings");
-        Lang.get().addDefault("gui.general", "&c&lGeneral Settings");
-        Lang.get().addDefault("console.update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
-        Lang.get().addDefault("console.update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
-        Lang.get().addDefault("console.commands", "&c&lYou cannot run this command through the console :(");
-        Lang.get().addDefault("console.initialize", "&f&lInitializing Listeners...");
-        Lang.get().addDefault("console.unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
-        Lang.get().addDefault("console.unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
-        Lang.get().addDefault("console.disabled", "&f&lAll Player Stats Have Been Set Back To Their Default Values! Goodbye.");
+        Lang.get().addDefault("gui_main", "&c&lCombatPlus Menu");
+        Lang.get().addDefault("gui_plugin", "&c&lPlugin Settings");
+        Lang.get().addDefault("gui_combat", "&c&lCombat Settings");
+        Lang.get().addDefault("gui_general", "&c&lGeneral Settings");
+        Lang.get().addDefault("console_update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
+        Lang.get().addDefault("console_update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
+        Lang.get().addDefault("console_commands", "&c&lYou cannot run this command through the console :(");
+        Lang.get().addDefault("console_initialize", "&f&lInitializing Listeners...");
+        Lang.get().addDefault("console_unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
+        Lang.get().addDefault("console_unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
+        Lang.get().addDefault("console_disabled", "&f&lAll Player Stats Have Been Set Back To Their Default Values! Goodbye.");
     }
 }

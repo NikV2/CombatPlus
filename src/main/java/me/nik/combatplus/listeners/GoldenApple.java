@@ -2,7 +2,7 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.files.Lang;
+import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
@@ -28,7 +28,8 @@ public class GoldenApple implements Listener {
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final int cdtime = Config.get().getInt("golden_apple_cooldown.golden_apple.cooldown");
     private final boolean actionbar = Config.get().getBoolean("golden_apple_cooldown.golden_apple.actionbar");
-    public static String PAPICOOLDOWN = "Ready";
+
+    public static String papiCooldown = "Ready";
 
     public GoldenApple(CombatPlus plugin) {
         this.plugin = plugin;
@@ -41,7 +42,7 @@ public class GoldenApple implements Listener {
             @Override
             public void run() {
                 cooldown.remove(uuid);
-                PAPICOOLDOWN = "Ready";
+                papiCooldown = "Ready";
             }
         }.runTaskLaterAsynchronously(plugin, cdtime * 20);
     }
@@ -60,7 +61,7 @@ public class GoldenApple implements Listener {
             if (cooldown.containsKey(p)) {
                 e.setCancelled(true);
                 long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                player.sendMessage(Messenger.message("golden_apple_cooldown").replaceAll("%seconds%", String.valueOf(secondsleft)));
+                player.sendMessage(Messenger.message(MsgType.GOLDEN_APPLE_COOLDOWN).replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 taskRun(p);
                 if (MiscUtils.isPlaceholderApiEnabled()) {
@@ -74,8 +75,8 @@ public class GoldenApple implements Listener {
                         public void run() {
                             if (cooldown.containsKey(p)) {
                                 long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                                String message = Lang.get().getString("golden_apple_cooldown_actionbar").replaceAll("%seconds%", String.valueOf(secondsleft));
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(message)));
+                                String message = Messenger.message(MsgType.GOLDEN_APPLE_COOLDOWN_ACTIONBAR).replaceAll("%seconds%", String.valueOf(secondsleft));
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
                             } else {
                                 cancel();
                             }
@@ -94,7 +95,7 @@ public class GoldenApple implements Listener {
             public void run() {
                 if (cooldown.containsKey(p)) {
                     long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                    PAPICOOLDOWN = String.valueOf(secondsleft);
+                    papiCooldown = secondsleft + "s";
                 } else {
                     cancel();
                 }

@@ -19,6 +19,7 @@ import me.nik.combatplus.listeners.ItemFrameRotate;
 import me.nik.combatplus.listeners.Offhand;
 import me.nik.combatplus.listeners.PlayerRegen;
 import me.nik.combatplus.listeners.fixes.Projectiles;
+import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.ACManager;
 import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.Messenger;
@@ -93,7 +94,7 @@ public final class CombatPlus extends JavaPlugin {
         lang.save();
 
         //Done
-        consoleMessage(Messenger.message("console.disabled"));
+        consoleMessage(Messenger.message(MsgType.CONSOLE_DISABLED));
     }
 
     /**
@@ -114,7 +115,7 @@ public final class CombatPlus extends JavaPlugin {
         if (isEnabled("settings.check_for_updates")) {
             BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
         } else {
-            consoleMessage(Messenger.message("console.update_disabled"));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UPDATE_DISABLED));
         }
     }
 
@@ -161,7 +162,7 @@ public final class CombatPlus extends JavaPlugin {
      * Initialize enabled Listeners
      */
     private void initialize() {
-        consoleMessage(Messenger.message("console.initialize"));
+        consoleMessage(Messenger.message(MsgType.CONSOLE_INITIALIZE));
 
         if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
             registerEvent(new AttributesSet());
@@ -233,35 +234,35 @@ public final class CombatPlus extends JavaPlugin {
             setBoolean("combat.settings.sword_blocking.enabled", false);
             config.save();
             config.reload();
-            consoleMessage(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
         } else if (serverVersion("1.9")) {
             setBoolean("combat.settings.disable_sweep_attacks.enabled", false);
             setBoolean("recipes.enchanted_golden_apple", false);
             setBoolean("knockback.fishing_rod.enabled", false);
             config.save();
             config.reload();
-            consoleMessage(Messenger.message("console.unsupported_version"));
-            consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK));
         } else if (serverVersion("1.10")) {
             setBoolean("combat.settings.disable_sweep_attacks.enabled", false);
             setBoolean("recipes.enchanted_golden_apple", false);
             setBoolean("knockback.fishing_rod.enabled", false);
             config.save();
             config.reload();
-            consoleMessage(Messenger.message("console.unsupported_version"));
-            consoleMessage(Messenger.message("console.unsupported_sweep_attack"));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK));
         } else if (serverVersion("1.11")) {
             setBoolean("recipes.enchanted_golden_apple", false);
             setBoolean("knockback.fishing_rod.enabled", false);
             config.save();
             config.reload();
-            consoleMessage(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
         } else if (serverVersion("1.12")) {
             setBoolean("recipes.enchanted_golden_apple", false);
             setBoolean("knockback.fishing_rod.enabled", false);
             config.save();
             config.reload();
-            consoleMessage(Messenger.message("console.unsupported_version"));
+            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
         }
     }
 

@@ -1,9 +1,9 @@
 package me.nik.combatplus.gui.menus;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.gui.Menu;
 import me.nik.combatplus.gui.PlayerMenuUtility;
+import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ public class GeneralGui extends Menu {
 
     @Override
     protected String getMenuName() {
-        return Messenger.format(Lang.get().getString("gui.general"));
+        return Messenger.message(MsgType.GUI_GENERAL);
     }
 
     @Override

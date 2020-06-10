@@ -1,9 +1,9 @@
 package me.nik.combatplus.gui.menus;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.gui.Menu;
 import me.nik.combatplus.gui.PlayerMenuUtility;
+import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,7 +19,7 @@ public class MainGui extends Menu {
 
     @Override
     public String getMenuName() {
-        return Messenger.format(Lang.get().getString("gui.main"));
+        return Messenger.message(MsgType.GUI_MAIN);
     }
 
     @Override
@@ -49,10 +49,10 @@ public class MainGui extends Menu {
                 break;
             case "§cReload and Exit":
                 p.closeInventory();
-                p.sendMessage(Messenger.message("reloading"));
+                p.sendMessage(Messenger.message(MsgType.RELOADING));
                 plugin.getServer().getPluginManager().disablePlugin(plugin);
                 plugin.getServer().getPluginManager().enablePlugin(plugin);
-                p.sendMessage(Messenger.message("reloaded"));
+                p.sendMessage(Messenger.message(MsgType.RELOADED));
                 break;
         }
     }

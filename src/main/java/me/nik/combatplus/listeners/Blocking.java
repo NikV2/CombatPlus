@@ -58,7 +58,7 @@ public class Blocking implements Listener {
                 || b.contains("BARREL");
     }
 
-    private static boolean holdsShield(Player p) {
+    private boolean holdsShield(Player p) {
         return p.getInventory().getItemInOffHand().getType().name().contains("SHIELD");
     }
 
