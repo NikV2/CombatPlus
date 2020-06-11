@@ -1,7 +1,6 @@
 package me.nik.combatplus.gui;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.files.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -53,21 +52,21 @@ public abstract class Menu implements InventoryHolder {
     }
 
     protected boolean isEnabled(String path) {
-        return Config.get().getBoolean(path);
+        return plugin.getConfig().getBoolean(path);
     }
 
     protected boolean configBoolean(String booleans) {
-        return Config.get().getBoolean(booleans);
+        return plugin.getConfig().getBoolean(booleans);
     }
 
     protected void booleanSet(String path, boolean value) {
-        Config.get().set(path, value);
+        plugin.getConfig().set(path, value);
     }
 
     protected void saveAndReload() {
-        plugin.config.save();
-        plugin.config.reload();
-        plugin.config.setup(plugin);
+        plugin.saveConfig();
+        plugin.reloadConfig();
+        plugin.setupConfig();
     }
 
     /**

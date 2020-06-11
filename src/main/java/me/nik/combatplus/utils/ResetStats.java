@@ -1,14 +1,19 @@
 package me.nik.combatplus.utils;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.CombatPlus;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 
 public class ResetStats {
 
-    private final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
-    private final double defaultMaxHealth = Config.get().getDouble("advanced.settings.base_player_health");
+    private final double defaultAttSpd;
+    private final double defaultMaxHealth;
+
+    public ResetStats(CombatPlus plugin) {
+        this.defaultAttSpd = plugin.getConfig().getDouble("advanced.settings.new_pvp.attack_speed");
+        this.defaultMaxHealth = plugin.getConfig().getDouble("advanced.settings.base_player_health");
+    }
 
     /**
      * Reset a player's Attack Speed

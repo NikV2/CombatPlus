@@ -1,13 +1,19 @@
 package me.nik.combatplus.utils;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.CombatPlus;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 public class SetAttackSpeed {
-    private final double attackSpeed = Config.get().getDouble("advanced.settings.old_pvp.attack_speed");
-    private final WorldUtils worldUtils = new WorldUtils();
-    private final ResetStats resetStats = new ResetStats();
+    private final double attackSpeed;
+    private final WorldUtils worldUtils;
+    private final ResetStats resetStats;
+
+    public SetAttackSpeed(CombatPlus plugin) {
+        this.attackSpeed = plugin.getConfig().getDouble("advanced.settings.old_pvp.attack_speed");
+        this.worldUtils = new WorldUtils(plugin);
+        this.resetStats = new ResetStats(plugin);
+    }
 
     /**
      * Set the Player's Attack Speed

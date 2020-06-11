@@ -1,6 +1,6 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
@@ -19,8 +19,13 @@ import org.bukkit.event.player.PlayerFishEvent;
 
 public class FishingRodKnockback implements Listener {
 
-    private final double fishingRodDamage = Config.get().getDouble("advanced.settings.knockback.fishing_rod.damage");
-    private final boolean cancelDragging = Config.get().getBoolean("knockback.fishing_rod.cancel_dragging");
+    private final double fishingRodDamage;
+    private final boolean cancelDragging;
+
+    public FishingRodKnockback(CombatPlus plugin) {
+        this.fishingRodDamage = plugin.getConfig().getDouble("advanced.settings.knockback.fishing_rod.damage");
+        this.cancelDragging = plugin.getConfig().getBoolean("knockback.fishing_rod.cancel_dragging");
+    }
 
     /*
     Bring back old fishing rod behavior

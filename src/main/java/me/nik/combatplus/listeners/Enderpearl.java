@@ -1,7 +1,6 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
@@ -24,15 +23,18 @@ import java.util.UUID;
 public class Enderpearl implements Listener {
 
     private final CombatPlus plugin;
-    private final WorldUtils worldUtils = new WorldUtils();
+    private final WorldUtils worldUtils;
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
-    private final int cdtime = Config.get().getInt("enderpearl_cooldown.cooldown");
-    private final boolean actionbar = Config.get().getBoolean("enderpearl_cooldown.actionbar");
+    private final int cdtime;
+    private final boolean actionbar;
     public static String papiCooldown = "Ready";
 
     public Enderpearl(CombatPlus plugin) {
         this.plugin = plugin;
+        this.worldUtils = new WorldUtils(plugin);
+        this.cdtime = plugin.getConfig().getInt("enderpearl_cooldown.cooldown");
+        this.actionbar = plugin.getConfig().getBoolean("enderpearl_cooldown.actionbar");
     }
 
     private void taskRun(UUID uuid) {

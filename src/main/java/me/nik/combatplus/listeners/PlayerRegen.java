@@ -1,7 +1,6 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
@@ -22,15 +21,19 @@ import java.util.UUID;
 public class PlayerRegen implements Listener {
 
     private final CombatPlus plugin;
-    private final WorldUtils worldUtils = new WorldUtils();
+    private final WorldUtils worldUtils;
 
     private final Map<UUID, Long> healTimes = new HashMap<>();
-    private final int oldRegenFrequency = Config.get().getInt("advanced.settings.old_regen.frequency");
-    private final int oldRegenAmount = Config.get().getInt("advanced.settings.old_regen.amount");
-    private final float oldRegenExhaustion = (float) Config.get().getInt("advanced.settings.old_regen.exhaustion");
+    private final int oldRegenFrequency;
+    private final int oldRegenAmount;
+    private final float oldRegenExhaustion;
 
     public PlayerRegen(CombatPlus plugin) {
         this.plugin = plugin;
+        this.worldUtils = new WorldUtils(plugin);
+        this.oldRegenFrequency = plugin.getConfig().getInt("advanced.settings.old_regen.frequency");
+        this.oldRegenAmount = plugin.getConfig().getInt("advanced.settings.old_regen.amount");
+        this.oldRegenExhaustion = (float) plugin.getConfig().getInt("advanced.settings.old_regen.exhaustion");
     }
 
     /*

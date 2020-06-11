@@ -1,12 +1,16 @@
 package me.nik.combatplus.utils;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.CombatPlus;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 public class SetCustomHealth {
 
-    private final double maxHealth = Config.get().getDouble("custom.player_health.max_health");
+    private final double maxHealth;
+
+    public SetCustomHealth(CombatPlus plugin) {
+        this.maxHealth = plugin.getConfig().getDouble("custom.player_health.max_health");
+    }
 
     /**
      * Set the Player's Max Health

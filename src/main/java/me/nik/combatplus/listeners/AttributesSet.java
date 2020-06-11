@@ -1,6 +1,6 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
 import me.nik.combatplus.utils.SetCustomHealth;
@@ -12,12 +12,20 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class AttributesSet implements Listener {
 
-    private final SetAttackSpeed setAttackSpeed = new SetAttackSpeed();
-    private final ResetStats resetStats = new ResetStats();
-    private final SetCustomHealth setCustomHealth = new SetCustomHealth();
+    private final SetAttackSpeed setAttackSpeed;
+    private final ResetStats resetStats;
+    private final SetCustomHealth setCustomHealth;
 
-    private final boolean isOldPvpEnabled = Config.get().getBoolean("combat.settings.old_pvp");
-    private final boolean isCustomHealthEnabled = Config.get().getBoolean("custom.player_health.enabled");
+    private final boolean isOldPvpEnabled;
+    private final boolean isCustomHealthEnabled;
+
+    public AttributesSet(CombatPlus plugin) {
+        this.setAttackSpeed = new SetAttackSpeed(plugin);
+        this.resetStats = new ResetStats(plugin);
+        this.setCustomHealth = new SetCustomHealth(plugin);
+        this.isOldPvpEnabled = plugin.getConfig().getBoolean("combat.settings.old_pvp");
+        this.isCustomHealthEnabled = plugin.getConfig().getBoolean("custom.player_health.enabled");
+    }
 
     /*
      Changes the attribute of the player to the Old Attack Speed (On Join)

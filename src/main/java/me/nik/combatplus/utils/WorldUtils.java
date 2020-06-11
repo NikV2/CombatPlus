@@ -1,17 +1,25 @@
 package me.nik.combatplus.utils;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.CombatPlus;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public class WorldUtils {
 
-    private final List<String> combatWorlds = Config.get().getStringList("combat.settings.disabled_worlds");
-    private final List<String> itemFrameWorlds = Config.get().getStringList("disable_item_frame_rotation.disabled_worlds");
-    private final List<String> gappleWorlds = Config.get().getStringList("golden_apple_cooldown.disabled_worlds");
-    private final List<String> epearlWorlds = Config.get().getStringList("enderpearl_cooldown.disabled_worlds");
-    private final List<String> offhandWorlds = Config.get().getStringList("disable_offhand.disabled_worlds");
+    private final List<String> combatWorlds;
+    private final List<String> itemFrameWorlds;
+    private final List<String> gappleWorlds;
+    private final List<String> epearlWorlds;
+    private final List<String> offhandWorlds;
+
+    public WorldUtils(CombatPlus plugin) {
+        this.combatWorlds = plugin.getConfig().getStringList("combat.settings.disabled_worlds");
+        this.itemFrameWorlds = plugin.getConfig().getStringList("disable_item_frame_rotation.disabled_worlds");
+        this.gappleWorlds = plugin.getConfig().getStringList("golden_apple_cooldown.disabled_worlds");
+        this.epearlWorlds = plugin.getConfig().getStringList("enderpearl_cooldown.disabled_worlds");
+        this.offhandWorlds = plugin.getConfig().getStringList("disable_offhand.disabled_worlds");
+    }
 
     /**
      * @param player The player

@@ -1,7 +1,6 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
@@ -23,16 +22,19 @@ import java.util.UUID;
 public class EnchantedGoldenApple implements Listener {
 
     private final CombatPlus plugin;
-    private final WorldUtils worldUtils = new WorldUtils();
+    private final WorldUtils worldUtils;
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
-    private final int cdtime = Config.get().getInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
-    private final boolean actionbar = Config.get().getBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar");
+    private final int cdtime;
+    private final boolean actionbar;
 
     public static String papiCooldown = "Ready";
 
     public EnchantedGoldenApple(CombatPlus plugin) {
         this.plugin = plugin;
+        this.worldUtils = new WorldUtils(plugin);
+        this.cdtime = plugin.getConfig().getInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
+        this.actionbar = plugin.getConfig().getBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar");
     }
 
     private void taskRun(UUID uuid) {

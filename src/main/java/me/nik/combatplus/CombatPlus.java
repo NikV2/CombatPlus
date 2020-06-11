@@ -32,14 +32,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
-    public Config config;
-    public Lang lang;
+    private Config config;
+    private Lang lang;
 
     @Override
     public void onEnable() {
@@ -61,6 +62,8 @@ public final class CombatPlus extends JavaPlugin {
 
         //Load Commands
         getCommand("combatplus").setExecutor(new CommandManager(this));
+
+        Messenger.initialize(lang, config);
 
         //Load Listeners
         initialize();
@@ -97,17 +100,36 @@ public final class CombatPlus extends JavaPlugin {
         consoleMessage(Messenger.message(MsgType.CONSOLE_DISABLED));
     }
 
+    @Override
+    public FileConfiguration getConfig() {
+        return config.get();
+    }
+
+    @Override
+    public void saveConfig() {
+        config.save();
+    }
+
+    @Override
+    public void reloadConfig() {
+        config.reload();
+    }
+
+    public void setupConfig() {
+        config.setup(this);
+    }
+
     /**
      * Load all the built-in files
      */
     private void loadFiles() {
         config.setup(this);
         config.addDefaults();
-        Config.get().options().copyDefaults(true);
+        config.get().options().copyDefaults(true);
         config.save();
         lang.setup(this);
         lang.addDefaults();
-        Lang.get().options().copyDefaults(true);
+        lang.get().options().copyDefaults(true);
         lang.save();
     }
 
@@ -125,10 +147,10 @@ public final class CombatPlus extends JavaPlugin {
     private void setDefaultStats() {
         if (serverVersion("1.8")) return;
         Bukkit.getOnlinePlayers().forEach(player -> {
-            final double defaultHealth = Config.get().getDouble("advanced.settings.base_player_health");
+            final double defaultHealth = config.get().getDouble("advanced.settings.base_player_health");
             final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             playerMaxHealth.setBaseValue(defaultHealth);
-            final double defaultAttSpd = Config.get().getDouble("advanced.settings.new_pvp.attack_speed");
+            final double defaultAttSpd = config.get().getDouble("advanced.settings.new_pvp.attack_speed");
             final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
             playerAttSpeed.setBaseValue(defaultAttSpd);
             player.saveData();
@@ -141,20 +163,20 @@ public final class CombatPlus extends JavaPlugin {
      */
     private void loadStats() {
         if (serverVersion("1.8")) return;
-        SetAttackSpeed setAttackSpeed = new SetAttackSpeed();
-        ResetStats resetStats = new ResetStats();
-        SetCustomHealth setCustomHealth = new SetCustomHealth();
+        SetAttackSpeed setAttackSpeed = new SetAttackSpeed(this);
+        ResetStats resetStats = new ResetStats(this);
+        SetCustomHealth setCustomHealth = new SetCustomHealth(this);
 
         if (isEnabled("combat.settings.old_pvp")) {
-            Bukkit.getOnlinePlayers().forEach(setAttackSpeed::setAttackSpd);
+            this.getServer().getOnlinePlayers().forEach(setAttackSpeed::setAttackSpd);
         } else {
-            Bukkit.getOnlinePlayers().forEach(resetStats::resetAttackSpeed);
+            this.getServer().getOnlinePlayers().forEach(resetStats::resetAttackSpeed);
         }
 
         if (isEnabled("custom.player_health.enabled")) {
-            Bukkit.getOnlinePlayers().forEach(setCustomHealth::setHealth);
+            this.getServer().getOnlinePlayers().forEach(setCustomHealth::setHealth);
         } else {
-            Bukkit.getOnlinePlayers().forEach(resetStats::resetMaxHealth);
+            this.getServer().getOnlinePlayers().forEach(resetStats::resetMaxHealth);
         }
     }
 
@@ -165,25 +187,25 @@ public final class CombatPlus extends JavaPlugin {
         consoleMessage(Messenger.message(MsgType.CONSOLE_INITIALIZE));
 
         if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
-            registerEvent(new AttributesSet());
+            registerEvent(new AttributesSet(this));
         }
         if (isEnabled("combat.settings.old_weapon_damage") || isEnabled("combat.settings.old_tool_damage") || isEnabled("combat.settings.disable_sweep_attacks.enabled")) {
-            registerEvent(new DamageModifiers());
+            registerEvent(new DamageModifiers(this));
         }
         if (isEnabled("combat.settings.disable_arrow_boost")) {
-            registerEvent(new BowBoost());
+            registerEvent(new BowBoost(this));
         }
         if (isEnabled("combat.settings.old_player_regen")) {
             registerEvent(new PlayerRegen(this));
         }
         if (isEnabled("disabled_items.enabled")) {
-            registerEvent(new DisabledItems());
+            registerEvent(new DisabledItems(this));
         }
         if (isEnabled("disable_item_frame_rotation.enabled")) {
-            registerEvent(new ItemFrameRotate());
+            registerEvent(new ItemFrameRotate(this));
         }
         if (isEnabled("disable_offhand.enabled")) {
-            registerEvent(new Offhand());
+            registerEvent(new Offhand(this));
         }
         if (isEnabled("fixes.projectile_fixer")) {
             registerEvent(new Projectiles());
@@ -204,7 +226,7 @@ public final class CombatPlus extends JavaPlugin {
             }
         }
         if (isEnabled("knockback.fishing_rod.enabled")) {
-            registerEvent(new FishingRodKnockback());
+            registerEvent(new FishingRodKnockback(this));
         }
         if (isEnabled("combat.settings.sword_blocking.enabled")) {
             registerEvent(new Blocking(this));
@@ -288,7 +310,7 @@ public final class CombatPlus extends JavaPlugin {
      * @return Whether or not the config boolean is true
      */
     private boolean isEnabled(String path) {
-        return Config.get().getBoolean(path);
+        return config.get().getBoolean(path);
     }
 
     /**
@@ -296,7 +318,7 @@ public final class CombatPlus extends JavaPlugin {
      * @param value true/false
      */
     private void setBoolean(String path, boolean value) {
-        Config.get().set(path, value);
+        config.get().set(path, value);
     }
 
     /**

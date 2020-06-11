@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.Material;
@@ -10,7 +11,11 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class ItemFrameRotate implements Listener {
 
-    private final WorldUtils worldUtils = new WorldUtils();
+    private final WorldUtils worldUtils;
+
+    public ItemFrameRotate(CombatPlus plugin) {
+        this.worldUtils = new WorldUtils(plugin);
+    }
 
     /*
      This Listener removes the ability to rotate item frames
