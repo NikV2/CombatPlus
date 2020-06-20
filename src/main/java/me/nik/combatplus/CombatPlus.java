@@ -50,6 +50,8 @@ public final class CombatPlus extends JavaPlugin {
         //Load Files
         loadFiles();
 
+        Messenger.initialize(lang, config);
+
         //Startup Message
         consoleMessage("");
         consoleMessage("          " + ChatColor.RED + "Combat Plus v" + this.getDescription().getVersion());
@@ -62,8 +64,6 @@ public final class CombatPlus extends JavaPlugin {
 
         //Load Commands
         getCommand("combatplus").setExecutor(new CommandManager(this));
-
-        Messenger.initialize(lang, config);
 
         //Load Listeners
         initialize();
