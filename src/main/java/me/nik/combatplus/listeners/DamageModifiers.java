@@ -19,10 +19,10 @@ public class DamageModifiers implements Listener {
     private final WorldUtils worldUtils;
     private final CombatPlus plugin;
 
-    private final double oldPickaxeDamage;
-    private final double oldAxeDamage;
-    private final double oldShovelDamage;
-    private final double oldSwordDamage;
+    private final String oldPickaxeDamage;
+    private final String oldAxeDamage;
+    private final String oldShovelDamage;
+    private final String oldSwordDamage;
 
     private final boolean oldWeaponDamage;
     private final boolean oldToolDamage;
@@ -32,10 +32,10 @@ public class DamageModifiers implements Listener {
     public DamageModifiers(CombatPlus plugin) {
         this.plugin = plugin;
         this.worldUtils = new WorldUtils(plugin);
-        this.oldPickaxeDamage = plugin.getConfig().getDouble("advanced.settings.modifiers.old_pickaxes_damage");
-        this.oldAxeDamage = plugin.getConfig().getDouble("advanced.settings.modifiers.old_axes_damage");
-        this.oldShovelDamage = plugin.getConfig().getDouble("advanced.settings.modifiers.old_shovels_damage");
-        this.oldSwordDamage = plugin.getConfig().getDouble("advanced.settings.modifiers.old_swords_damage");
+        this.oldPickaxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.old_pickaxes_damage");
+        this.oldAxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.old_axes_damage");
+        this.oldShovelDamage = plugin.getConfig().getString("advanced.settings.modifiers.old_shovels_damage");
+        this.oldSwordDamage = plugin.getConfig().getString("advanced.settings.modifiers.old_swords_damage");
         this.oldWeaponDamage = plugin.getConfig().getBoolean("combat.settings.old_weapon_damage");
         this.oldToolDamage = plugin.getConfig().getBoolean("combat.settings.old_tool_damage");
         this.sweepAttacks = plugin.getConfig().getBoolean("combat.settings.disable_sweep_attacks.enabled");
@@ -106,7 +106,7 @@ public class DamageModifiers implements Listener {
         }
     }
 
-    private void disableSweep(EntityDamageEvent e, Entity player, ItemStack handItem) {
+    private void disableSweep(EntityDamageEvent e, Player player, ItemStack handItem) {
         if (handItem.containsEnchantment(Enchantment.SWEEPING_EDGE) && plugin.getConfig().getBoolean("combat.settings.disable_sweep_attacks.ignore_sweeping_edge"))
             return;
         Entity ent = e.getEntity();
@@ -115,78 +115,87 @@ public class DamageModifiers implements Listener {
         double z = ent.getVelocity().getZ();
         e.setCancelled(true);
         ent.setVelocity(new Vector().zero());
-        Messenger.debug((Player) player, "&3Damage Modifier &f&l>> &6Canceled Sweep Attack: &a" + e.isCancelled() + " &6Velocity: X = &a" + x + " &6Y = &a" + y + " &6Z = &a" + z);
+        Messenger.debug(player, "&3Damage Modifier &f&l>> &6Canceled Sweep Attack: &a" + e.isCancelled() + " &6Velocity: X = &a" + x + " &6Y = &a" + y + " &6Z = &a" + z);
     }
 
-    private void oldPickaxeDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
+    private void oldPickaxeDmg(EntityDamageByEntityEvent e, Player player, ItemStack handItem) {
         double damageDealt = e.getDamage();
         double newDmg;
+        if (divide(oldPickaxeDamage)) {
+            newDmg = damageDealt / convertToDivide(oldPickaxeDamage);
+        } else {
+            newDmg = damageDealt + Double.parseDouble(oldPickaxeDamage);
+        }
         if (handItem.containsEnchantment(Enchantment.DAMAGE_ALL) && oldSharp) {
             double sharpLvl = handItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
             double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
             double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8
-            newDmg = damageDealt + oldPickaxeDamage + newSharpDmg - oldSharpDmg;
-        } else {
-            newDmg = damageDealt + oldPickaxeDamage;
+            newDmg = newDmg + newSharpDmg - oldSharpDmg;
         }
         e.setDamage(newDmg);
-        Messenger.debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aPickaxe &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
+        Messenger.debug(player, "&3Damage Modifier &f&l>> &6Item: &aPickaxe &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
-    private void oldAxeDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
+    private void oldAxeDmg(EntityDamageByEntityEvent e, Player player, ItemStack handItem) {
         double damageDealt = e.getDamage();
         double newDmg;
+        if (divide(oldAxeDamage)) {
+            newDmg = damageDealt / convertToDivide(oldAxeDamage);
+        } else {
+            newDmg = damageDealt + Double.parseDouble(oldAxeDamage);
+        }
         if (handItem.containsEnchantment(Enchantment.DAMAGE_ALL) && oldSharp) {
             double sharpLvl = handItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
             double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
             double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8
-            newDmg = damageDealt + oldAxeDamage + newSharpDmg - oldSharpDmg;
-        } else {
-            newDmg = damageDealt + oldAxeDamage;
+            newDmg = newDmg + newSharpDmg - oldSharpDmg;
         }
         e.setDamage(newDmg);
-        Messenger.debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aAxe &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
+        Messenger.debug(player, "&3Damage Modifier &f&l>> &6Item: &aAxe &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
-    private void oldShovelDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
+    private void oldShovelDmg(EntityDamageByEntityEvent e, Player player, ItemStack handItem) {
         double damageDealt = e.getDamage();
         double newDmg;
+        if (divide(oldShovelDamage)) {
+            newDmg = damageDealt / convertToDivide(oldShovelDamage);
+        } else {
+            newDmg = damageDealt + Double.parseDouble(oldShovelDamage);
+        }
         if (handItem.containsEnchantment(Enchantment.DAMAGE_ALL) && oldSharp) {
             double sharpLvl = handItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
             double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
             double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8
-            newDmg = damageDealt + oldShovelDamage + newSharpDmg - oldSharpDmg;
-        } else {
-            newDmg = damageDealt + oldShovelDamage;
+            newDmg = newDmg + newSharpDmg - oldSharpDmg;
         }
         e.setDamage(newDmg);
-        Messenger.debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aShovel &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
+        Messenger.debug(player, "&3Damage Modifier &f&l>> &6Item: &aShovel &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
-    private void oldSwordDmg(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
+    private void oldSwordDmg(EntityDamageByEntityEvent e, Player player, ItemStack handItem) {
         double damageDealt = e.getDamage();
         double newDmg;
+        if (divide(oldSwordDamage)) {
+            newDmg = damageDealt / convertToDivide(oldSwordDamage);
+        } else {
+            newDmg = damageDealt + Double.parseDouble(oldSwordDamage);
+        }
         if (handItem.containsEnchantment(Enchantment.DAMAGE_ALL) && oldSharp) {
             double sharpLvl = handItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
             double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
             double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8
-            newDmg = damageDealt + oldSwordDamage + newSharpDmg - oldSharpDmg;
-        } else {
-            newDmg = damageDealt + oldSwordDamage;
+            newDmg = newDmg + newSharpDmg - oldSharpDmg;
         }
         e.setDamage(newDmg);
-        Messenger.debug((Player) player, "&3Damage Modifier &f&l>> &6Item: &aSword &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
+        Messenger.debug(player, "&3Damage Modifier &f&l>> &6Item: &aSword &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
-    private void oldSharpDamage(EntityDamageByEntityEvent e, Entity player, ItemStack handItem) {
-        if (handItem.containsEnchantment(Enchantment.DAMAGE_ALL)) {
-            double damageDealt = e.getDamage();
-            double sharpLvl = handItem.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
-            double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
-            double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8
-            double total = damageDealt + newSharpDmg - oldSharpDmg;
-            e.setDamage(total);
-            Messenger.debug((Player) player, "&3Damage Modifier &f&l>> &6Old Sharpness Damage: &a" + oldSharpDmg + " &6New Sharpness Damage: &a" + newSharpDmg);
-        }
+    private boolean divide(String value) {
+        return value.contains("/");
+    }
+
+    private double convertToDivide(String value) {
+        String s = value.replaceAll("/", "");
+        return Double.parseDouble(s);
     }
 }
