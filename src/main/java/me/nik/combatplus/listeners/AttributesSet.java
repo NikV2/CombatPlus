@@ -51,7 +51,7 @@ public class AttributesSet implements Listener {
      Resets the attribute of the player to the New Attack Speed (On Leave)
      */
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         if (isOldPvpEnabled) {
             resetStats.resetAttackSpeed(e.getPlayer());
