@@ -1,20 +1,16 @@
 package me.nik.combatplus.utils;
 
-import me.nik.combatplus.files.Config;
+import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.managers.MsgType;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class Messenger {
 
-    private static Lang lang;
-    private static Config config;
-
-    public static void initialize(Lang lang, Config config) {
-        Messenger.lang = lang;
-        Messenger.config = config;
-    }
+    private static final Lang lang = CombatPlus.getInstance().getLang();
+    private static final FileConfiguration config = CombatPlus.getInstance().getConfig();
 
     /**
      * @param msg The message to format
@@ -90,7 +86,7 @@ public class Messenger {
      * @param message The debug message
      */
     public static void debug(Player player, String message) {
-        if (config.get().getBoolean("settings.developer_mode") && player.hasPermission("cp.debug")) {
+        if (config.getBoolean("settings.developer_mode") && player.hasPermission("cp.debug")) {
             player.sendMessage(Messenger.message(MsgType.PREFIX) + format(message));
         }
     }

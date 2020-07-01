@@ -39,18 +39,38 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
+    private static CombatPlus instance;
+
     private Config config;
     private Lang lang;
 
+    public static CombatPlus getInstance() {
+        return instance;
+    }
+
+    @Override
+    public void onDisable() {
+        //Load Default Stats to avoid server damage
+        setDefaultStats();
+
+        //Reload Files
+        config.reload();
+        config.save();
+        lang.reload();
+        lang.save();
+
+        //Done
+        consoleMessage(Messenger.message(MsgType.CONSOLE_DISABLED));
+    }
+
     @Override
     public void onEnable() {
+        instance = this;
         this.lang = new Lang();
         this.config = new Config();
 
         //Load Files
         loadFiles();
-
-        Messenger.initialize(lang, config);
 
         //Startup Message
         consoleMessage("");
@@ -85,24 +105,14 @@ public final class CombatPlus extends JavaPlugin {
         //Hook AntiCheats
         new ACManager().hookMatrixAC();
     }
-    @Override
-    public void onDisable() {
-        //Load Default Stats to avoid server damage
-        setDefaultStats();
-
-        //Reload Files
-        config.reload();
-        config.save();
-        lang.reload();
-        lang.save();
-
-        //Done
-        consoleMessage(Messenger.message(MsgType.CONSOLE_DISABLED));
-    }
 
     @Override
     public FileConfiguration getConfig() {
         return config.get();
+    }
+
+    public Lang getLang() {
+        return lang;
     }
 
     @Override
