@@ -58,51 +58,28 @@ public class DamageModifiers implements Listener {
                 disableSweep(e, player, handItem);
             }
         }
-        switch (weapon) {
-            case "WOODEN_SWORD":
-            case "STONE_SWORD":
-            case "IRON_SWORD":
-            case "GOLDEN_SWORD":
-            case "GOLD_SWORD":
-            case "DIAMOND_SWORD":
-                if (oldWeaponDamage) {
-                    oldSwordDmg(e, player, handItem);
-                    break;
-                }
-            case "WOODEN_PICKAXE":
-            case "STONE_PICKAXE":
-            case "IRON_PICKAXE":
-            case "GOLDEN_PICKAXE":
-            case "GOLD_PICKAXE":
-            case "DIAMOND_PICKAXE":
-                if (oldToolDamage) {
-                    oldPickaxeDmg(e, player, handItem);
-                    break;
-                }
-            case "WOODEN_AXE":
-            case "STONE_AXE":
-            case "IRON_AXE":
-            case "GOLDEN_AXE":
-            case "GOLD_AXE":
-            case "DIAMOND_AXE":
-                if (oldToolDamage) {
-                    oldAxeDmg(e, player, handItem);
-                    break;
-                }
-            case "WOODEN_SPADE":
-            case "WOODEN_SHOVEL":
-            case "STONE_SPADE":
-            case "STONE_SHOVEL":
-            case "IRON_SPADE":
-            case "IRON_SHOVEL":
-            case "GOLD_SPADE":
-            case "GOLDEN_SHOVEL":
-            case "DIAMOND_SPADE":
-            case "DIAMOND_SHOVEL":
-                if (oldToolDamage) {
-                    oldShovelDmg(e, player, handItem);
-                    break;
-                }
+        if (weapon.endsWith("_SWORD")) {
+            if (oldWeaponDamage) {
+                oldSwordDmg(e, player, handItem);
+            }
+        }
+
+        if (weapon.endsWith("_PICKAXE")) {
+            if (oldToolDamage) {
+                oldPickaxeDmg(e, player, handItem);
+            }
+        }
+
+        if (weapon.endsWith("_AXE")) {
+            if (oldToolDamage) {
+                oldAxeDmg(e, player, handItem);
+            }
+        }
+
+        if (weapon.endsWith("_SPADE") || weapon.endsWith("_SHOVEL")) {
+            if (oldToolDamage) {
+                oldShovelDmg(e, player, handItem);
+            }
         }
     }
 
