@@ -65,6 +65,7 @@ public class DamageModifiers implements Listener {
             case "GOLDEN_SWORD":
             case "GOLD_SWORD":
             case "DIAMOND_SWORD":
+            case "NETHERITE_SWORD":
                 if (oldWeaponDamage) {
                     oldSwordDmg(e, player, handItem);
                     break;
@@ -75,6 +76,7 @@ public class DamageModifiers implements Listener {
             case "GOLDEN_PICKAXE":
             case "GOLD_PICKAXE":
             case "DIAMOND_PICKAXE":
+            case "NETHERITE_PICKAXE":
                 if (oldToolDamage) {
                     oldPickaxeDmg(e, player, handItem);
                     break;
@@ -85,6 +87,7 @@ public class DamageModifiers implements Listener {
             case "GOLDEN_AXE":
             case "GOLD_AXE":
             case "DIAMOND_AXE":
+            case "NETHERITE_AXE":
                 if (oldToolDamage) {
                     oldAxeDmg(e, player, handItem);
                     break;
@@ -99,6 +102,7 @@ public class DamageModifiers implements Listener {
             case "GOLDEN_SHOVEL":
             case "DIAMOND_SPADE":
             case "DIAMOND_SHOVEL":
+            case "NETHERITE_SHOVEL":
                 if (oldToolDamage) {
                     oldShovelDmg(e, player, handItem);
                     break;
