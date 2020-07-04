@@ -63,7 +63,7 @@ public class EnchantedGoldenApple implements Listener {
             if (cooldown.containsKey(p)) {
                 e.setCancelled(true);
                 long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                player.sendMessage(Messenger.message(MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN).replaceAll("%seconds%", String.valueOf(secondsleft)));
+                player.sendMessage(MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 taskRun(p);
                 if (MiscUtils.isPlaceholderApiEnabled()) {
@@ -77,7 +77,7 @@ public class EnchantedGoldenApple implements Listener {
                         public void run() {
                             if (cooldown.containsKey(p)) {
                                 long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                                String message = Messenger.message(MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN_ACTIONBAR).replaceAll("%seconds%", String.valueOf(secondsleft));
+                                String message = MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN_ACTIONBAR.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft));
                                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
                             } else {
                                 cancel();

@@ -4,8 +4,6 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.gui.Menu;
 import me.nik.combatplus.gui.PlayerMenuUtility;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -21,7 +19,7 @@ public class CombatGui extends Menu {
 
     @Override
     protected String getMenuName() {
-        return Messenger.message(MsgType.GUI_COMBAT);
+        return MsgType.GUI_COMBAT.getMessage();
     }
 
     @Override
@@ -32,40 +30,40 @@ public class CombatGui extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
-            case "§6Old PvP":
+        switch (e.getSlot()) {
+            case 12:
                 booleanSet("combat.settings.old_pvp", !configBoolean("combat.settings.old_pvp"));
                 saveAndReload();
                 break;
-            case "§6Old Weapon Damage":
+            case 14:
                 booleanSet("combat.settings.old_weapon_damage", !configBoolean("combat.settings.old_weapon_damage"));
                 saveAndReload();
                 break;
-            case "§6Old Tool Damage":
+            case 16:
                 booleanSet("combat.settings.old_tool_damage", !configBoolean("combat.settings.old_tool_damage"));
                 saveAndReload();
                 break;
-            case "§6Old Sharpness":
+            case 28:
                 booleanSet("combat.settings.old_sharpness", !configBoolean("combat.settings.old_sharpness"));
                 saveAndReload();
                 break;
-            case "§6Disable Sweep Attacks":
+            case 30:
                 booleanSet("combat.settings.disable_sweep_attacks.enabled", !configBoolean("combat.settings.disable_sweep_attacks.enabled"));
                 saveAndReload();
                 break;
-            case "§6Disable Arrow Boost":
+            case 32:
                 booleanSet("combat.settings.disable_arrow_boost", !configBoolean("combat.settings.disable_arrow_boost"));
                 saveAndReload();
                 break;
-            case "§6Old Player Regen":
+            case 34:
                 booleanSet("combat.settings.old_player_regen", !configBoolean("combat.settings.old_player_regen"));
                 saveAndReload();
                 break;
-            case "§6Sword Blocking":
+            case 10:
                 booleanSet("combat.settings.sword_blocking.enabled", !configBoolean("combat.settings.sword_blocking.enabled"));
                 saveAndReload();
                 break;
-            case "§cBack":
+            case 49:
                 p.closeInventory();
                 new MainGui(playerMenuUtility, plugin).open();
                 break;
@@ -74,7 +72,7 @@ public class CombatGui extends Menu {
 
     @Override
     protected void setMenuItems() {
-        ItemStack back = makeItem(Material.BARRIER, 1, "§cBack", null);
+        ItemStack back = makeItem(Material.BARRIER, 1, "&cBack", null);
 
         inventory.setItem(49, back);
 
@@ -86,69 +84,69 @@ public class CombatGui extends Menu {
                 }
                 ArrayList<String> oldPvpLore = new ArrayList<>();
                 oldPvpLore.add("");
-                oldPvpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_pvp"));
+                oldPvpLore.add("&7Currently set to: &a" + isEnabled("combat.settings.old_pvp"));
                 oldPvpLore.add("");
-                oldPvpLore.add(ChatColor.WHITE + "Would you like your server to use");
-                oldPvpLore.add(ChatColor.WHITE + "1.8 PvP Combat?");
-                ItemStack oldPvp = makeItem(Material.PAPER, 1, "§6Old PvP", oldPvpLore);
+                oldPvpLore.add("&fWould you like your server to use");
+                oldPvpLore.add("&f1.8 PvP Combat?");
+                ItemStack oldPvp = makeItem(Material.PAPER, 1, "&6Old PvP", oldPvpLore);
 
                 ArrayList<String> oldWepDmgLore = new ArrayList<>();
                 oldWepDmgLore.add("");
-                oldWepDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_weapon_damage"));
+                oldWepDmgLore.add("&7Currently set to: &a" + isEnabled("combat.settings.old_weapon_damage"));
                 oldWepDmgLore.add("");
-                oldWepDmgLore.add(ChatColor.WHITE + "Would you like Swords to Deal");
-                oldWepDmgLore.add(ChatColor.WHITE + "Damage just like in 1.8?");
-                ItemStack oldWepDmg = makeItem(Material.PAPER, 1, "§6Old Weapon Damage", oldWepDmgLore);
+                oldWepDmgLore.add("&fWould you like Swords to Deal");
+                oldWepDmgLore.add("&fDamage just like in 1.8?");
+                ItemStack oldWepDmg = makeItem(Material.PAPER, 1, "&6Old Weapon Damage", oldWepDmgLore);
 
                 ArrayList<String> oldToolDmgLore = new ArrayList<>();
                 oldToolDmgLore.add("");
-                oldToolDmgLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_tool_damage"));
+                oldToolDmgLore.add("&7Currently set to: &a" + isEnabled("combat.settings.old_tool_damage"));
                 oldToolDmgLore.add("");
-                oldToolDmgLore.add(ChatColor.WHITE + "Would you like Tools to Deal");
-                oldToolDmgLore.add(ChatColor.WHITE + "Damage just like in 1.8?");
-                ItemStack oldToolDmg = makeItem(Material.PAPER, 1, "§6Old Tool Damage", oldToolDmgLore);
+                oldToolDmgLore.add("&fWould you like Tools to Deal");
+                oldToolDmgLore.add("&fDamage just like in 1.8?");
+                ItemStack oldToolDmg = makeItem(Material.PAPER, 1, "&6Old Tool Damage", oldToolDmgLore);
 
                 ArrayList<String> oldSharpLore = new ArrayList<>();
                 oldSharpLore.add("");
-                oldSharpLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_sharpness"));
+                oldSharpLore.add("&7Currently set to: &a" + isEnabled("combat.settings.old_sharpness"));
                 oldSharpLore.add("");
-                oldSharpLore.add(ChatColor.WHITE + "Would you like Sharpness");
-                oldSharpLore.add(ChatColor.WHITE + "To work just like in 1.8?");
-                ItemStack oldSharp = makeItem(Material.PAPER, 1, "§6Old Sharpness", oldSharpLore);
+                oldSharpLore.add("&fWould you like Sharpness");
+                oldSharpLore.add("&fTo work just like in 1.8?");
+                ItemStack oldSharp = makeItem(Material.PAPER, 1, "&6Old Sharpness", oldSharpLore);
 
                 ArrayList<String> disableSweepLore = new ArrayList<>();
                 disableSweepLore.add("");
-                disableSweepLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.disable_sweep_attacks.enabled"));
+                disableSweepLore.add("&7Currently set to: &a" + isEnabled("combat.settings.disable_sweep_attacks.enabled"));
                 disableSweepLore.add("");
-                disableSweepLore.add(ChatColor.WHITE + "Would you like to Disable");
-                disableSweepLore.add(ChatColor.WHITE + "Sweep Attacks?");
-                ItemStack disableSweep = makeItem(Material.PAPER, 1, "§6Disable Sweep Attacks", disableSweepLore);
+                disableSweepLore.add("&fWould you like to Disable");
+                disableSweepLore.add("&fSweep Attacks?");
+                ItemStack disableSweep = makeItem(Material.PAPER, 1, "&6Disable Sweep Attacks", disableSweepLore);
 
                 ArrayList<String> disableBoostLore = new ArrayList<>();
                 disableBoostLore.add("");
-                disableBoostLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.disable_arrow_boost"));
+                disableBoostLore.add("&7Currently set to: &a" + isEnabled("combat.settings.disable_arrow_boost"));
                 disableBoostLore.add("");
-                disableBoostLore.add(ChatColor.WHITE + "Would you like to Prevent");
-                disableBoostLore.add(ChatColor.WHITE + "Players from Boosting themselves?");
-                ItemStack disableBoost = makeItem(Material.PAPER, 1, "§6Disable Arrow Boost", disableBoostLore);
+                disableBoostLore.add("&fWould you like to Prevent");
+                disableBoostLore.add("&fPlayers from Boosting themselves?");
+                ItemStack disableBoost = makeItem(Material.PAPER, 1, "&6Disable Arrow Boost", disableBoostLore);
 
                 ArrayList<String> oldRegenLore = new ArrayList<>();
                 oldRegenLore.add("");
-                oldRegenLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.old_player_regen"));
+                oldRegenLore.add("&7Currently set to: &a" + isEnabled("combat.settings.old_player_regen"));
                 oldRegenLore.add("");
-                oldRegenLore.add(ChatColor.WHITE + "Would you like Regeneration");
-                oldRegenLore.add(ChatColor.WHITE + "To work just like in 1.8?");
-                ItemStack oldRegen = makeItem(Material.PAPER, 1, "§6Old Player Regen", oldRegenLore);
+                oldRegenLore.add("&fWould you like Regeneration");
+                oldRegenLore.add("&fTo work just like in 1.8?");
+                ItemStack oldRegen = makeItem(Material.PAPER, 1, "&6Old Player Regen", oldRegenLore);
 
                 ArrayList<String> blockLore = new ArrayList<>();
                 blockLore.add("");
-                blockLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("combat.settings.sword_blocking.enabled"));
+                blockLore.add("&7Currently set to: &a" + isEnabled("combat.settings.sword_blocking.enabled"));
                 blockLore.add("");
-                blockLore.add(ChatColor.WHITE + "Gives Resistance While");
-                blockLore.add(ChatColor.WHITE + "Right Clicking With a Sword");
+                blockLore.add("&fGives Resistance While");
+                blockLore.add("&fRight Clicking With a Sword");
                 blockLore.add("");
-                blockLore.add(ChatColor.GRAY + "More options in the Config.yml");
-                ItemStack block = makeItem(Material.PAPER, 1, "§6Sword Blocking", blockLore);
+                blockLore.add("&7More options in the Config.yml");
+                ItemStack block = makeItem(Material.PAPER, 1, "&6Sword Blocking", blockLore);
 
                 inventory.setItem(10, block);
                 inventory.setItem(12, oldPvp);

@@ -33,7 +33,7 @@ public class DisabledItems implements Listener {
         ItemStack result = inv.getResult();
         if (result != null && disabledItems.contains(result.getType().name().toLowerCase())) {
             inv.setResult(null);
-            p.sendMessage(Messenger.message(MsgType.CANNOT_CRAFT_THIS));
+            p.sendMessage(MsgType.CANNOT_CRAFT_THIS.getMessage());
             Messenger.debug(p, "&3Disabled Items &f&l>> &6Canceled: &atrue");
         }
     }

@@ -1,6 +1,7 @@
 package me.nik.combatplus.gui;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Menu implements InventoryHolder {
 
@@ -40,12 +42,18 @@ public abstract class Menu implements InventoryHolder {
         playerMenuUtility.getOwner().openInventory(inventory);
     }
 
-    protected ItemStack makeItem(Material material, int amount, String displayName, ArrayList<String> lore) {
+    protected ItemStack makeItem(Material material, int amount, String displayName, List<String> lore) {
 
         ItemStack item = new ItemStack(material, amount);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName(displayName);
-        itemMeta.setLore(lore);
+        itemMeta.setDisplayName(Messenger.format(displayName));
+        if (lore != null) {
+            List<String> loreList = new ArrayList<>();
+            for (String l : lore) {
+                loreList.add(Messenger.format(l));
+            }
+            itemMeta.setLore(loreList);
+        }
         item.setItemMeta(itemMeta);
 
         return item;
@@ -66,7 +74,6 @@ public abstract class Menu implements InventoryHolder {
     protected void saveAndReload() {
         plugin.saveConfig();
         plugin.reloadConfig();
-        plugin.setupConfig();
     }
 
     /**

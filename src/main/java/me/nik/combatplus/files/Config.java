@@ -39,8 +39,6 @@ public class Config {
     }
 
     public void addDefaults() {
-        //config.yml
-        //string lists
         List<String> combatList = get().getStringList("combat.settings.disabled_worlds");
         combatList.add("example_world");
         List<String> gappleList = get().getStringList("general.settings.golden_apple_cooldown.disabled_worlds");

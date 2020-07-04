@@ -4,8 +4,6 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.gui.Menu;
 import me.nik.combatplus.gui.PlayerMenuUtility;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.utils.Messenger;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -21,7 +19,7 @@ public class GeneralTwoGui extends Menu {
 
     @Override
     protected String getMenuName() {
-        return Messenger.message(MsgType.GUI_GENERAL);
+        return MsgType.GUI_GENERAL.getMessage();
     }
 
     @Override
@@ -32,16 +30,16 @@ public class GeneralTwoGui extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
-            case "§6Enchanted Golden Apple Crafting":
+        switch (e.getSlot()) {
+            case 10:
                 booleanSet("recipes.enchanted_golden_apple", !configBoolean("recipes.enchanted_golden_apple"));
                 saveAndReload();
                 break;
-            case "§6Fishing Rod Knockback":
+            case 12:
                 booleanSet("knockback.fishing_rod.enabled", !configBoolean("knockback.fishing_rod.enabled"));
                 saveAndReload();
                 break;
-            case "§ePrevious Page 2/2":
+            case 45:
                 p.closeInventory();
                 new GeneralGui(playerMenuUtility, plugin).open();
                 break;
@@ -50,11 +48,9 @@ public class GeneralTwoGui extends Menu {
 
     @Override
     protected void setMenuItems() {
-        ItemStack back = makeItem(Material.BARRIER, 1, "§cBack", null);
-        ItemStack pp = makeItem(Material.BOOK, 1, "§ePrevious Page 2/2", null);
+        ItemStack pp = makeItem(Material.BOOK, 1, "&ePrevious Page 2/2", null);
 
         inventory.setItem(45, pp);
-        inventory.setItem(49, back);
 
         new BukkitRunnable() {
             public void run() {
@@ -64,21 +60,21 @@ public class GeneralTwoGui extends Menu {
                 }
                 ArrayList<String> egaLore = new ArrayList<>();
                 egaLore.add("");
-                egaLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("recipes.enchanted_golden_apple"));
+                egaLore.add("&7Currently set to: &a" + isEnabled("recipes.enchanted_golden_apple"));
                 egaLore.add("");
-                egaLore.add(ChatColor.WHITE + "Makes Enchanted Golden Apples");
-                egaLore.add(ChatColor.WHITE + "Able to be Crafted");
-                ItemStack ega = makeItem(Material.PAPER, 1, "§6Enchanted Golden Apple Crafting", egaLore);
+                egaLore.add("&fMakes Enchanted Golden Apples");
+                egaLore.add("&fAble to be Crafted");
+                ItemStack ega = makeItem(Material.PAPER, 1, "&6Enchanted Golden Apple Crafting", egaLore);
 
                 ArrayList<String> frkLore = new ArrayList<>();
                 frkLore.add("");
-                frkLore.add(ChatColor.GRAY + "Currently set to: " + ChatColor.GREEN + isEnabled("knockback.fishing_rod.enabled"));
+                frkLore.add("&7Currently set to: &a" + isEnabled("knockback.fishing_rod.enabled"));
                 frkLore.add("");
-                frkLore.add(ChatColor.WHITE + "Makes Fishing Rods Knockback");
-                frkLore.add(ChatColor.WHITE + "Players just like in 1.8");
+                frkLore.add("&fMakes Fishing Rods Knockback");
+                frkLore.add("&fPlayers just like in 1.8");
                 frkLore.add("");
-                frkLore.add(ChatColor.GRAY + "More options in the Config.yml");
-                ItemStack frk = makeItem(Material.PAPER, 1, "§6Fishing Rod Knockback", frkLore);
+                frkLore.add("&7More options in the Config.yml");
+                ItemStack frk = makeItem(Material.PAPER, 1, "&6Fishing Rod Knockback", frkLore);
 
                 inventory.setItem(10, ega);
                 inventory.setItem(12, frk);

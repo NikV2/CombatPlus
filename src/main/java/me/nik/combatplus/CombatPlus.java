@@ -22,7 +22,6 @@ import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.ACManager;
 import me.nik.combatplus.utils.CustomRecipes;
-import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
@@ -60,7 +59,7 @@ public final class CombatPlus extends JavaPlugin {
         lang.save();
 
         //Done
-        consoleMessage(Messenger.message(MsgType.CONSOLE_DISABLED));
+        consoleMessage(MsgType.CONSOLE_DISABLED.getMessage());
     }
 
     @Override
@@ -125,10 +124,6 @@ public final class CombatPlus extends JavaPlugin {
         config.reload();
     }
 
-    public void setupConfig() {
-        config.setup(this);
-    }
-
     /**
      * Load all the built-in files
      */
@@ -147,7 +142,7 @@ public final class CombatPlus extends JavaPlugin {
         if (isEnabled("settings.check_for_updates")) {
             BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
         } else {
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UPDATE_DISABLED));
+            consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
         }
     }
 
@@ -194,7 +189,7 @@ public final class CombatPlus extends JavaPlugin {
      * Initialize enabled Listeners
      */
     private void initialize() {
-        consoleMessage(Messenger.message(MsgType.CONSOLE_INITIALIZE));
+        consoleMessage(MsgType.CONSOLE_INITIALIZE.getMessage());
 
         if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
             registerEvent(new AttributesSet(this));
@@ -250,51 +245,51 @@ public final class CombatPlus extends JavaPlugin {
      */
     private void checkSupported() {
         if (serverVersion("1.8")) {
-            setBoolean("combat.settings.old_pvp", false);
-            setBoolean("combat.settings.old_weapon_damage", false);
-            setBoolean("combat.settings.old_tool_damage", false);
-            setBoolean("combat.settings.old_sharpness", false);
-            setBoolean("combat.settings.disable_sweep_attacks.enabled", false);
-            setBoolean("combat.settings.old_player_regen", false);
-            setBoolean("custom.player_health.enabled", false);
-            setBoolean("disable_offhand.enabled", false);
-            setBoolean("recipes.enchanted_golden_apple", false);
-            setBoolean("knockback.fishing_rod.enabled", false);
-            setBoolean("golden_apple_cooldown.golden_apple.actionbar", false);
-            setBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar", false);
-            setBoolean("enderpearl_cooldown.actionbar", false);
-            setBoolean("combat.settings.sword_blocking.enabled", false);
+            setFalse("combat.settings.old_pvp");
+            setFalse("combat.settings.old_weapon_damage");
+            setFalse("combat.settings.old_tool_damage");
+            setFalse("combat.settings.old_sharpness");
+            setFalse("combat.settings.disable_sweep_attacks.enabled");
+            setFalse("combat.settings.old_player_regen");
+            setFalse("custom.player_health.enabled");
+            setFalse("disable_offhand.enabled");
+            setFalse("recipes.enchanted_golden_apple");
+            setFalse("knockback.fishing_rod.enabled");
+            setFalse("golden_apple_cooldown.golden_apple.actionbar");
+            setFalse("golden_apple_cooldown.enchanted_golden_apple.actionbar");
+            setFalse("enderpearl_cooldown.actionbar");
+            setFalse("combat.settings.sword_blocking.enabled");
             config.save();
             config.reload();
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
+            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
         } else if (serverVersion("1.9")) {
-            setBoolean("combat.settings.disable_sweep_attacks.enabled", false);
-            setBoolean("recipes.enchanted_golden_apple", false);
-            setBoolean("knockback.fishing_rod.enabled", false);
+            setFalse("combat.settings.disable_sweep_attacks.enabled");
+            setFalse("recipes.enchanted_golden_apple");
+            setFalse("knockback.fishing_rod.enabled");
             config.save();
             config.reload();
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK));
+            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
+            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK.getMessage());
         } else if (serverVersion("1.10")) {
-            setBoolean("combat.settings.disable_sweep_attacks.enabled", false);
-            setBoolean("recipes.enchanted_golden_apple", false);
-            setBoolean("knockback.fishing_rod.enabled", false);
+            setFalse("combat.settings.disable_sweep_attacks.enabled");
+            setFalse("recipes.enchanted_golden_apple");
+            setFalse("knockback.fishing_rod.enabled");
             config.save();
             config.reload();
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK));
+            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
+            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK.getMessage());
         } else if (serverVersion("1.11")) {
-            setBoolean("recipes.enchanted_golden_apple", false);
-            setBoolean("knockback.fishing_rod.enabled", false);
+            setFalse("recipes.enchanted_golden_apple");
+            setFalse("knockback.fishing_rod.enabled");
             config.save();
             config.reload();
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
+            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
         } else if (serverVersion("1.12")) {
-            setBoolean("recipes.enchanted_golden_apple", false);
-            setBoolean("knockback.fishing_rod.enabled", false);
+            setFalse("recipes.enchanted_golden_apple");
+            setFalse("knockback.fishing_rod.enabled");
             config.save();
             config.reload();
-            consoleMessage(Messenger.message(MsgType.CONSOLE_UNSUPPORTED_VERSION));
+            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
         }
     }
 
@@ -324,11 +319,10 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     /**
-     * @param path  Path to the boolean
-     * @param value true/false
+     * @param path Path to the boolean
      */
-    private void setBoolean(String path, boolean value) {
-        config.get().set(path, value);
+    private void setFalse(String path) {
+        config.get().set(path, false);
     }
 
     /**

@@ -4,7 +4,6 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.gui.Menu;
 import me.nik.combatplus.gui.PlayerMenuUtility;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,7 +18,7 @@ public class MainGui extends Menu {
 
     @Override
     public String getMenuName() {
-        return Messenger.message(MsgType.GUI_MAIN);
+        return MsgType.GUI_MAIN.getMessage();
     }
 
     @Override
@@ -30,40 +29,40 @@ public class MainGui extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
-            case "§ePlugin Settings":
+        switch (e.getSlot()) {
+            case 10:
                 p.closeInventory();
                 new PluginGui(playerMenuUtility, plugin).open();
                 break;
-            case "§eCombat Settings":
+            case 12:
                 p.closeInventory();
                 new CombatGui(playerMenuUtility, plugin).open();
                 break;
-            case "§aGeneral Settings":
+            case 14:
                 p.closeInventory();
                 new GeneralGui(playerMenuUtility, plugin).open();
                 break;
-            case "§bLooking for Support?":
+            case 16:
                 p.closeInventory();
                 p.sendMessage(ChatColor.BLUE + ">> " + ChatColor.WHITE + "https://discordapp.com/invite/m7j2Y9H" + ChatColor.BLUE + " <<");
                 break;
-            case "§cReload and Exit":
+            case 31:
                 p.closeInventory();
-                p.sendMessage(Messenger.message(MsgType.RELOADING));
+                p.sendMessage(MsgType.RELOADING.getMessage());
                 plugin.getServer().getPluginManager().disablePlugin(plugin);
                 plugin.getServer().getPluginManager().enablePlugin(plugin);
-                p.sendMessage(Messenger.message(MsgType.RELOADED));
+                p.sendMessage(MsgType.RELOADED.getMessage());
                 break;
         }
     }
 
     @Override
     public void setMenuItems() {
-        ItemStack pluginSettings = makeItem(Material.BOOK, 1, "§ePlugin Settings", null);
-        ItemStack combatSettings = makeItem(Material.DIAMOND_CHESTPLATE, 1, "§eCombat Settings", null);
-        ItemStack generalSettings = makeItem(Material.NAME_TAG, 1, "§aGeneral Settings", null);
-        ItemStack support = makeItem(Material.DIAMOND, 1, "§bLooking for Support?", null);
-        ItemStack close = makeItem(Material.BARRIER, 1, "§cReload and Exit", null);
+        ItemStack pluginSettings = makeItem(Material.BOOK, 1, "&ePlugin Settings", null);
+        ItemStack combatSettings = makeItem(Material.DIAMOND_CHESTPLATE, 1, "&eCombat Settings", null);
+        ItemStack generalSettings = makeItem(Material.NAME_TAG, 1, "&aGeneral Settings", null);
+        ItemStack support = makeItem(Material.DIAMOND, 1, "&bLooking for Support?", null);
+        ItemStack close = makeItem(Material.BARRIER, 1, "&cReload and Exit", null);
 
         inventory.setItem(31, close);
         inventory.setItem(16, support);

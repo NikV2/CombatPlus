@@ -4,7 +4,6 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.commands.subcommands.Menu;
 import me.nik.combatplus.commands.subcommands.Reload;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.utils.Messenger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -34,11 +33,11 @@ public class CommandManager implements TabExecutor {
 
                 if (args[0].equalsIgnoreCase(subCommand.getName())) {
                     if (!subCommand.canConsoleExecute() && sender instanceof ConsoleCommandSender) {
-                        sender.sendMessage(Messenger.message(MsgType.CONSOLE_COMMANDS));
+                        sender.sendMessage(MsgType.CONSOLE_COMMANDS.getMessage());
                         return true;
                     }
                     if (!sender.hasPermission(subCommand.getPermission())) {
-                        sender.sendMessage(Messenger.message(MsgType.NO_PERMISSION));
+                        sender.sendMessage(MsgType.NO_PERMISSION.getMessage());
                         return true;
                     }
                     subCommand.perform(sender, args);
@@ -75,7 +74,7 @@ public class CommandManager implements TabExecutor {
 
     private void helpMessage(CommandSender sender) {
         sender.sendMessage("");
-        sender.sendMessage(Messenger.message(MsgType.PREFIX) + ChatColor.GRAY + "Available Commands");
+        sender.sendMessage(MsgType.PREFIX.getMessage() + ChatColor.GRAY + "Available Commands");
         sender.sendMessage("");
         for (int i = 0; i < getSubcommands().size(); i++) {
             sender.sendMessage(ChatColor.RED + getSubcommands().get(i).getSyntax() + ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + getSubcommands().get(i).getDescription());
@@ -84,6 +83,6 @@ public class CommandManager implements TabExecutor {
     }
 
     private void pluginInfo(CommandSender sender) {
-        sender.sendMessage(Messenger.message(MsgType.PREFIX) + ChatColor.GRAY + "You're running " + ChatColor.WHITE + plugin.getDescription().getName() + ChatColor.GRAY + " version " + ChatColor.RED + "v" + plugin.getDescription().getVersion() + ChatColor.GRAY + " by" + ChatColor.WHITE + " Nik");
+        sender.sendMessage(MsgType.PREFIX.getMessage() + ChatColor.GRAY + "You're running " + ChatColor.WHITE + plugin.getDescription().getName() + ChatColor.GRAY + " version " + ChatColor.RED + "v" + plugin.getDescription().getVersion() + ChatColor.GRAY + " by" + ChatColor.WHITE + " Nik");
     }
 }

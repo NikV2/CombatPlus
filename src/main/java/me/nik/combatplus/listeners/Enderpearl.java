@@ -68,7 +68,7 @@ public class Enderpearl implements Listener {
                 player.getInventory().addItem(enderpearl);
             }
             long secondsLeft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-            player.sendMessage(Messenger.message(MsgType.ENDERPEARL_COOLDOWN).replaceAll("%seconds%", String.valueOf(secondsLeft)));
+            player.sendMessage(MsgType.ENDERPEARL_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsLeft)));
         } else {
             taskRun(p);
             if (MiscUtils.isPlaceholderApiEnabled()) {
@@ -81,7 +81,7 @@ public class Enderpearl implements Listener {
                     public void run() {
                         if (cooldown.containsKey(p)) {
                             long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
-                            String message = Messenger.message(MsgType.ENDERPEARL_COOLDOWN_ACTIONBAR).replaceAll("%seconds%", String.valueOf(secondsleft));
+                            String message = MsgType.ENDERPEARL_COOLDOWN_ACTIONBAR.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft));
                             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
                         } else {
                             cancel();
