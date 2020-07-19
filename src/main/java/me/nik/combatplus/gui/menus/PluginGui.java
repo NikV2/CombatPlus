@@ -1,6 +1,7 @@
 package me.nik.combatplus.gui.menus;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.gui.Menu;
 import me.nik.combatplus.gui.PlayerMenuUtility;
 import me.nik.combatplus.managers.MsgType;
@@ -8,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
@@ -37,12 +37,14 @@ public class PluginGui extends Menu {
                 new MainGui(playerMenuUtility, plugin).open();
                 break;
             case 14:
-                booleanSet("settings.developer_mode", !configBoolean("settings.developer_mode"));
-                saveAndReload();
+                changeConfigBoolean(Config.Setting.DEVELOPER_MODE.getKey());
+                getInventory().clear();
+                setMenuItems();
                 break;
             case 12:
-                booleanSet("settings.check_for_updates", !configBoolean("settings.check_for_updates"));
-                saveAndReload();
+                changeConfigBoolean(Config.Setting.CHECK_FOR_UPDATES.getKey());
+                getInventory().clear();
+                setMenuItems();
                 break;
         }
     }
@@ -52,31 +54,22 @@ public class PluginGui extends Menu {
         ItemStack back = makeItem(Material.BARRIER, 1, "&cBack", null);
 
         inventory.setItem(31, back);
+        ArrayList<String> updatesLore = new ArrayList<>();
+        updatesLore.add("");
+        updatesLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.CHECK_FOR_UPDATES.getKey()));
+        updatesLore.add("");
+        updatesLore.add("&fWould you like the plugin");
+        updatesLore.add("&fTo Check for Updates?");
+        ArrayList<String> devLore = new ArrayList<>();
+        devLore.add("");
+        devLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DEVELOPER_MODE.getKey()));
+        devLore.add("");
+        devLore.add("&fWould you like to receive");
+        devLore.add("&fDebugging Information?");
+        ItemStack dev = makeItem(Material.PAPER, 1, "&6Developer Mode", devLore);
+        ItemStack checkUpdates = makeItem(Material.PAPER, 1, "&6Check for Updates", updatesLore);
 
-        new BukkitRunnable() {
-            public void run() {
-                if (!(inventory.getHolder() instanceof Menu)) {
-                    cancel();
-                    return;
-                }
-                ArrayList<String> updatesLore = new ArrayList<>();
-                updatesLore.add("");
-                updatesLore.add("&7Currently set to: &a" + isEnabled("settings.check_for_updates"));
-                updatesLore.add("");
-                updatesLore.add("&fWould you like the plugin");
-                updatesLore.add("&fTo Check for Updates?");
-                ArrayList<String> devLore = new ArrayList<>();
-                devLore.add("");
-                devLore.add("&7Currently set to: &a" + isEnabled("settings.developer_mode"));
-                devLore.add("");
-                devLore.add("&fWould you like to receive");
-                devLore.add("&fDebugging Information?");
-                ItemStack dev = makeItem(Material.PAPER, 1, "&6Developer Mode", devLore);
-                ItemStack checkUpdates = makeItem(Material.PAPER, 1, "&6Check for Updates", updatesLore);
-
-                inventory.setItem(12, checkUpdates);
-                inventory.setItem(14, dev);
-            }
-        }.runTaskTimer(plugin, 1, 5);
+        inventory.setItem(12, checkUpdates);
+        inventory.setItem(14, dev);
     }
 }

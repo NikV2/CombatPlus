@@ -59,21 +59,14 @@ public abstract class Menu implements InventoryHolder {
         return item;
     }
 
-    protected boolean isEnabled(String path) {
-        return plugin.getConfig().getBoolean(path);
+    protected void changeConfigBoolean(String path) {
+        plugin.getConfiguration().set(path, !plugin.getConfiguration().getBoolean(path));
+        plugin.getConfiguration().save();
+        plugin.getConfiguration().reloadConfig();
     }
 
-    protected boolean configBoolean(String booleans) {
-        return plugin.getConfig().getBoolean(booleans);
-    }
-
-    protected void booleanSet(String path, boolean value) {
-        plugin.getConfig().set(path, value);
-    }
-
-    protected void saveAndReload() {
-        plugin.saveConfig();
-        plugin.reloadConfig();
+    protected boolean getConfigValue(String path) {
+        return plugin.getConfiguration().getBoolean(path);
     }
 
     /**

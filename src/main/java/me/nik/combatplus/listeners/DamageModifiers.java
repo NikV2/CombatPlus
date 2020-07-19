@@ -1,6 +1,6 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.enchantments.Enchantment;
@@ -16,92 +16,7 @@ import org.bukkit.util.Vector;
 
 public class DamageModifiers implements Listener {
 
-    private final WorldUtils worldUtils;
-    private final CombatPlus plugin;
-
-    private final String netheritePickaxeDamage;
-    private final String diamondPickaxeDamage;
-    private final String goldenPickaxeDamage;
-    private final String ironPickaxeDamage;
-    private final String stonePickaxeDamage;
-    private final String woodenPickaxeDamage;
-
-    private final String netheriteAxeDamage;
-    private final String diamondAxeDamage;
-    private final String goldenAxeDamage;
-    private final String ironAxeDamage;
-    private final String stoneAxeDamage;
-    private final String woodenAxeDamage;
-
-    private final String netheriteShovelDamage;
-    private final String diamondShovelDamage;
-    private final String goldenShovelDamage;
-    private final String ironShovelDamage;
-    private final String stoneShovelDamage;
-    private final String woodenShovelDamage;
-
-    private final String netheriteHoeDamage;
-    private final String diamondHoeDamage;
-    private final String goldenHoeDamage;
-    private final String ironHoeDamage;
-    private final String stoneHoeDamage;
-    private final String woodenHoeDamage;
-
-    private final String netheriteSwordDamage;
-    private final String diamondSwordDamage;
-    private final String goldenSwordDamage;
-    private final String ironSwordDamage;
-    private final String stoneSwordDamage;
-    private final String woodenSwordDamage;
-
-    private final boolean oldWeaponDamage;
-    private final boolean oldToolDamage;
-    private final boolean sweepAttacks;
-    private final boolean oldSharp;
-
-    public DamageModifiers(CombatPlus plugin) {
-        this.plugin = plugin;
-        this.worldUtils = new WorldUtils(plugin);
-        this.oldWeaponDamage = plugin.getConfig().getBoolean("combat.settings.old_weapon_damage");
-        this.oldToolDamage = plugin.getConfig().getBoolean("combat.settings.old_tool_damage");
-        this.sweepAttacks = plugin.getConfig().getBoolean("combat.settings.disable_sweep_attacks.enabled");
-        this.oldSharp = plugin.getConfig().getBoolean("combat.settings.old_sharpness");
-        //Pickaxes
-        this.netheritePickaxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.netherite_pickaxe");
-        this.diamondPickaxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.diamond_pickaxe");
-        this.goldenPickaxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.golden_pickaxe");
-        this.ironPickaxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.iron_pickaxe");
-        this.stonePickaxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.stone_pickaxe");
-        this.woodenPickaxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.wooden_pickaxe");
-        //Axes
-        this.netheriteAxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.netherite_axe");
-        this.diamondAxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.diamond_axe");
-        this.goldenAxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.golden_axe");
-        this.ironAxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.iron_axe");
-        this.stoneAxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.stone_axe");
-        this.woodenAxeDamage = plugin.getConfig().getString("advanced.settings.modifiers.wooden_axe");
-        //Shovel
-        this.netheriteShovelDamage = plugin.getConfig().getString("advanced.settings.modifiers.netherite_shovel");
-        this.diamondShovelDamage = plugin.getConfig().getString("advanced.settings.modifiers.diamond_shovel");
-        this.goldenShovelDamage = plugin.getConfig().getString("advanced.settings.modifiers.golden_shovel");
-        this.ironShovelDamage = plugin.getConfig().getString("advanced.settings.modifiers.iron_shovel");
-        this.stoneShovelDamage = plugin.getConfig().getString("advanced.settings.modifiers.stone_shovel");
-        this.woodenShovelDamage = plugin.getConfig().getString("advanced.settings.modifiers.wooden_shovel");
-        //Hoes (The tool)
-        this.netheriteHoeDamage = plugin.getConfig().getString("advanced.settings.modifiers.netherite_hoe");
-        this.diamondHoeDamage = plugin.getConfig().getString("advanced.settings.modifiers.diamond_hoe");
-        this.goldenHoeDamage = plugin.getConfig().getString("advanced.settings.modifiers.golden_hoe");
-        this.ironHoeDamage = plugin.getConfig().getString("advanced.settings.modifiers.iron_hoe");
-        this.stoneHoeDamage = plugin.getConfig().getString("advanced.settings.modifiers.stone_hoe");
-        this.woodenHoeDamage = plugin.getConfig().getString("advanced.settings.modifiers.wooden_hoe");
-        //Swords
-        this.netheriteSwordDamage = plugin.getConfig().getString("advanced.settings.modifiers.netherite_sword");
-        this.diamondSwordDamage = plugin.getConfig().getString("advanced.settings.modifiers.diamond_sword");
-        this.goldenSwordDamage = plugin.getConfig().getString("advanced.settings.modifiers.golden_sword");
-        this.ironSwordDamage = plugin.getConfig().getString("advanced.settings.modifiers.iron_sword");
-        this.stoneSwordDamage = plugin.getConfig().getString("advanced.settings.modifiers.stone_sword");
-        this.woodenSwordDamage = plugin.getConfig().getString("advanced.settings.modifiers.wooden_sword");
-    }
+    private final WorldUtils worldUtils = new WorldUtils();
 
     /*
      This Listener Changes the Damage Dealt to All Entities to the Old Values
@@ -114,121 +29,121 @@ public class DamageModifiers implements Listener {
         if (worldUtils.combatDisabledWorlds(player)) return;
         ItemStack handItem = player.getInventory().getItemInMainHand();
         String weapon = handItem.getType().name();
-        if (sweepAttacks && e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
+        if (Config.Setting.DISABLE_SWEEP_ENABLED.getBoolean() && e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
             disableSweep(e, player, handItem);
         }
         switch (weapon) {
             //Swords
             case "NETHERITE_SWORD":
-                damageConverter(e, player, handItem, netheriteSwordDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_NETHERITE_SWORD.getString());
                 break;
             case "DIAMOND_SWORD":
-                damageConverter(e, player, handItem, diamondSwordDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_DIAMOND_SWORD.getString());
                 break;
             case "GOLDEN_SWORD":
             case "GOLD_SWORD":
-                damageConverter(e, player, handItem, goldenSwordDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_GOLDEN_SWORD.getString());
                 break;
             case "IRON_SWORD":
-                damageConverter(e, player, handItem, ironSwordDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_IRON_SWORD.getString());
                 break;
             case "STONE_SWORD":
-                damageConverter(e, player, handItem, stoneSwordDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_STONE_SWORD.getString());
                 break;
             case "WOODEN_SWORD":
-                damageConverter(e, player, handItem, woodenSwordDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_WOODEN_SWORD.getString());
                 break;
             //Pickaxes
             case "NETHERITE_PICKAXE":
-                damageConverter(e, player, handItem, netheritePickaxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_NETHERITE_PICKAXE.getString());
                 break;
             case "DIAMOND_PICKAXE":
-                damageConverter(e, player, handItem, diamondPickaxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_DIAMOND_PICKAXE.getString());
                 break;
             case "GOLDEN_PICKAXE":
             case "GOLD_PICKAXE":
-                damageConverter(e, player, handItem, goldenPickaxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_GOLDEN_PICKAXE.getString());
                 break;
             case "IRON_PICKAXE":
-                damageConverter(e, player, handItem, ironPickaxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_IRON_PICKAXE.getString());
                 break;
             case "STONE_PICKAXE":
-                damageConverter(e, player, handItem, stonePickaxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_STONE_PICKAXE.getString());
                 break;
             case "WOODEN_PICKAXE":
-                damageConverter(e, player, handItem, woodenPickaxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_WOODEN_PICKAXE.getString());
                 break;
             //Axes
             case "NETHERITE_AXE":
-                damageConverter(e, player, handItem, netheriteAxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_NETHERITE_AXE.getString());
                 break;
             case "DIAMOND_AXE":
-                damageConverter(e, player, handItem, diamondAxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_DIAMOND_AXE.getString());
                 break;
             case "GOLDEN_AXE":
             case "GOLD_AXE":
-                damageConverter(e, player, handItem, goldenAxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_GOLDEN_AXE.getString());
                 break;
             case "IRON_AXE":
-                damageConverter(e, player, handItem, ironAxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_IRON_AXE.getString());
                 break;
             case "STONE_AXE":
-                damageConverter(e, player, handItem, stoneAxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_STONE_AXE.getString());
                 break;
             case "WOODEN_AXE":
-                damageConverter(e, player, handItem, woodenAxeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_WOODEN_AXE.getString());
                 break;
             //Hoes (Again, the tool!)
             case "NETHERITE_HOE":
-                damageConverter(e, player, handItem, netheriteHoeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_NETHERITE_HOE.getString());
                 break;
             case "DIAMOND_HOE":
-                damageConverter(e, player, handItem, diamondHoeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_DIAMOND_HOE.getString());
                 break;
             case "GOLDEN_HOE":
             case "GOLD_HOE":
-                damageConverter(e, player, handItem, goldenHoeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_GOLDEN_HOE.getString());
                 break;
             case "IRON_HOE":
-                damageConverter(e, player, handItem, ironHoeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_IRON_HOE.getString());
                 break;
             case "STONE_HOE":
-                damageConverter(e, player, handItem, stoneHoeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_STONE_HOE.getString());
                 break;
             case "WOODEN_HOE":
-                damageConverter(e, player, handItem, woodenHoeDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_WOODEN_HOE.getString());
                 break;
             //Shovels
             case "NETHERITE_SHOVEL":
-                damageConverter(e, player, handItem, netheriteShovelDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_NETHERITE_SHOVEL.getString());
                 break;
             case "DIAMOND_SHOVEL":
             case "DIAMOND_SPADE":
-                damageConverter(e, player, handItem, diamondShovelDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_DIAMOND_SHOVEL.getString());
                 break;
             case "GOLDEN_SHOVEL":
             case "GOLDEN_SPADE":
             case "GOLD_SHOVEL":
             case "GOLD_SPADE":
-                damageConverter(e, player, handItem, goldenShovelDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_GOLDEN_SHOVEL.getString());
                 break;
             case "IRON_SHOVEL":
             case "IRON_SPADE":
-                damageConverter(e, player, handItem, ironShovelDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_IRON_SHOVEL.getString());
                 break;
             case "STONE_SHOVEL":
             case "STONE_SPADE":
-                damageConverter(e, player, handItem, stoneShovelDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_STONE_SHOVEL.getString());
                 break;
             case "WOODEN_SHOVEL":
             case "WOODEN_SPADE":
-                damageConverter(e, player, handItem, woodenShovelDamage);
+                damageConverter(e, player, handItem, Config.Setting.ADV_WOODEN_SHOVEL.getString());
                 break;
         }
     }
 
     private void disableSweep(EntityDamageEvent e, Player player, ItemStack handItem) {
-        if (handItem.containsEnchantment(Enchantment.SWEEPING_EDGE) && plugin.getConfig().getBoolean("combat.settings.disable_sweep_attacks.ignore_sweeping_edge"))
+        if (handItem.containsEnchantment(Enchantment.SWEEPING_EDGE) && Config.Setting.DISABLE_SWEEP_IGNORE_SWEEPING_EDGE.getBoolean())
             return;
         Entity ent = e.getEntity();
         double x = ent.getVelocity().getX();
@@ -241,8 +156,8 @@ public class DamageModifiers implements Listener {
 
     private void damageConverter(EntityDamageByEntityEvent e, Player player, ItemStack item, String modifier) {
         final String type = item.getType().name();
-        if (!oldWeaponDamage && type.endsWith("_SWORD")) return;
-        if (!oldToolDamage && !type.endsWith("_SWORD")) return;
+        if (!Config.Setting.OLD_WEAPON_DAMAGE.getBoolean() && type.endsWith("_SWORD")) return;
+        if (!Config.Setting.OLD_TOOL_DAMAGE.getBoolean() && !type.endsWith("_SWORD")) return;
         double damageDealt = e.getDamage();
         double newDmg;
         if (divide(modifier)) {
@@ -250,7 +165,7 @@ public class DamageModifiers implements Listener {
         } else {
             newDmg = damageDealt + Double.parseDouble(modifier);
         }
-        if (item.containsEnchantment(Enchantment.DAMAGE_ALL) && oldSharp) {
+        if (item.containsEnchantment(Enchantment.DAMAGE_ALL) && Config.Setting.OLD_SHARPNESS.getBoolean()) {
             double sharpLvl = item.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
             double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
             double newSharpDmg = sharpLvl >= 1 ? sharpLvl * 1.25 : 0; //1.8

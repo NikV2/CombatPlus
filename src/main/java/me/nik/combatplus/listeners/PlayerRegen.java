@@ -1,6 +1,7 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
@@ -21,19 +22,12 @@ import java.util.UUID;
 public class PlayerRegen implements Listener {
 
     private final CombatPlus plugin;
-    private final WorldUtils worldUtils;
+    private final WorldUtils worldUtils = new WorldUtils();
 
     private final Map<UUID, Long> healTimes = new HashMap<>();
-    private final int oldRegenFrequency;
-    private final int oldRegenAmount;
-    private final float oldRegenExhaustion;
 
     public PlayerRegen(CombatPlus plugin) {
         this.plugin = plugin;
-        this.worldUtils = new WorldUtils(plugin);
-        this.oldRegenFrequency = plugin.getConfig().getInt("advanced.settings.old_regen.frequency");
-        this.oldRegenAmount = plugin.getConfig().getInt("advanced.settings.old_regen.amount");
-        this.oldRegenExhaustion = (float) plugin.getConfig().getInt("advanced.settings.old_regen.exhaustion");
     }
 
     /*
@@ -52,14 +46,14 @@ public class PlayerRegen implements Listener {
         e.setCancelled(true);
         long currentTime = System.currentTimeMillis() / 1000;
         long lastHealTime = healTimes.computeIfAbsent(playerID, id -> System.currentTimeMillis() / 1000);
-        if (currentTime - lastHealTime < oldRegenFrequency) return;
+        if (currentTime - lastHealTime < Config.Setting.ADV_REGEN_FREQUENCY.getInt()) return;
         final double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         if (playerHealth < maxHealth) {
-            p.setHealth(MiscUtils.clamp(playerHealth + oldRegenAmount, maxHealth));
+            p.setHealth(MiscUtils.clamp(playerHealth + Config.Setting.ADV_REGEN_AMOUNT.getInt(), maxHealth));
             healTimes.put(playerID, currentTime);
         }
         final float previousExhaustion = p.getExhaustion();
-        final float exhaustionToApply = oldRegenExhaustion;
+        final float exhaustionToApply = Config.Setting.ADV_REGEN_EXHAUSTION.getFloat();
         new BukkitRunnable() {
 
             @Override

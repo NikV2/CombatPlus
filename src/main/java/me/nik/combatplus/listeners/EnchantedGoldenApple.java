@@ -1,6 +1,7 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
@@ -22,19 +23,14 @@ import java.util.UUID;
 public class EnchantedGoldenApple implements Listener {
 
     private final CombatPlus plugin;
-    private final WorldUtils worldUtils;
+    private final WorldUtils worldUtils = new WorldUtils();
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
-    private final int cdtime;
-    private final boolean actionbar;
 
     public static String papiCooldown = "Ready";
 
     public EnchantedGoldenApple(CombatPlus plugin) {
         this.plugin = plugin;
-        this.worldUtils = new WorldUtils(plugin);
-        this.cdtime = plugin.getConfig().getInt("golden_apple_cooldown.enchanted_golden_apple.cooldown");
-        this.actionbar = plugin.getConfig().getBoolean("golden_apple_cooldown.enchanted_golden_apple.actionbar");
     }
 
     private void taskRun(UUID uuid) {
@@ -46,7 +42,7 @@ public class EnchantedGoldenApple implements Listener {
                 cooldown.remove(uuid);
                 papiCooldown = "Ready";
             }
-        }.runTaskLaterAsynchronously(plugin, cdtime * 20);
+        }.runTaskLaterAsynchronously(plugin, Config.Setting.COOLDOWN_ENCHANTED_APPLE_COOLDOWN.getInt() * 20);
     }
 
     /*
@@ -62,7 +58,7 @@ public class EnchantedGoldenApple implements Listener {
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
                 e.setCancelled(true);
-                long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.COOLDOWN_ENCHANTED_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
                 player.sendMessage(MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 taskRun(p);
@@ -70,13 +66,13 @@ public class EnchantedGoldenApple implements Listener {
                     setupPlaceholder(p);
                 }
                 Messenger.debug(player, "&3Enchanted Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
-                if (actionbar) {
+                if (Config.Setting.COOLDOWN_ENCHANTED_APPLE_ACTIONBAR.getBoolean()) {
                     new BukkitRunnable() {
 
                         @Override
                         public void run() {
                             if (cooldown.containsKey(p)) {
-                                long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                                long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.COOLDOWN_ENCHANTED_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
                                 String message = MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN_ACTIONBAR.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft));
                                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
                             } else {
@@ -96,7 +92,7 @@ public class EnchantedGoldenApple implements Listener {
             @Override
             public void run() {
                 if (cooldown.containsKey(p)) {
-                    long secondsleft = ((cooldown.get(p) / 1000) + cdtime) - (System.currentTimeMillis() / 1000);
+                    long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.COOLDOWN_ENCHANTED_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
                     papiCooldown = secondsleft + "s";
                 } else {
                     cancel();

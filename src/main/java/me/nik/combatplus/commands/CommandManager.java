@@ -77,6 +77,7 @@ public class CommandManager implements TabExecutor {
         sender.sendMessage(MsgType.PREFIX.getMessage() + ChatColor.GRAY + "Available Commands");
         sender.sendMessage("");
         for (int i = 0; i < getSubcommands().size(); i++) {
+            if (!sender.hasPermission(getSubcommands().get(i).getPermission())) continue;
             sender.sendMessage(ChatColor.RED + getSubcommands().get(i).getSyntax() + ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + getSubcommands().get(i).getDescription());
         }
         sender.sendMessage("");

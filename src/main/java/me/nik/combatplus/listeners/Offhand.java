@@ -1,6 +1,5 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.Material;
@@ -17,13 +16,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class Offhand implements Listener {
 
-    private final WorldUtils worldUtils;
+    private final WorldUtils worldUtils = new WorldUtils();
 
     private final static int OFFHANDSLOT = 40;
-
-    public Offhand(CombatPlus plugin) {
-        this.worldUtils = new WorldUtils(plugin);
-    }
 
     /*
      This Listener completely disables the use of the Offhand

@@ -1,6 +1,6 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.block.Block;
@@ -19,26 +19,9 @@ import java.util.UUID;
 
 public class Blocking implements Listener {
 
-    private final WorldUtils worldUtils;
-
-    private final int blockDuration;
-    private final PotionEffect effect;
-    private final boolean ignoreShields;
-    private final PotionEffect slowness;
-    private final boolean cancelSprinting;
+    private final WorldUtils worldUtils = new WorldUtils();
 
     private final HashMap<UUID, Long> blocking = new HashMap<>();
-
-    public Blocking(CombatPlus plugin) {
-        this.worldUtils = new WorldUtils(plugin);
-        this.blockDuration = plugin.getConfig().getInt("combat.settings.sword_blocking.duration_ticks");
-        this.effect = new PotionEffect(PotionEffectType.getByName(plugin.getConfig().getString("combat.settings.sword_blocking.effect")), blockDuration, plugin.getConfig().getInt("combat.settings.sword_blocking.amplifier"));
-        int slowAmplifier = plugin.getConfig().getInt("combat.settings.sword_blocking.slow_amplifier");
-        int slowDuration = plugin.getConfig().getInt("combat.settings.sword_blocking.slow_duration_ticks");
-        this.ignoreShields = plugin.getConfig().getBoolean("combat.settings.sword_blocking.ignore_shields");
-        this.slowness = new PotionEffect(PotionEffectType.SLOW, slowDuration, slowAmplifier);
-        this.cancelSprinting = plugin.getConfig().getBoolean("combat.settings.sword_blocking.cancel_sprinting");
-    }
 
     private boolean interactiveBlock(Block block) {
         String b = block.getType().name();
@@ -75,13 +58,13 @@ public class Blocking implements Listener {
 
         Player p = e.getPlayer();
         if (worldUtils.combatDisabledWorlds(p)) return;
-        if (ignoreShields && holdsShield(e.getPlayer())) return;
+        if (Config.Setting.SWORD_BLOCKING_IGNORE_SHIELDS.getBoolean() && holdsShield(e.getPlayer())) return;
 
-        if (cancelSprinting && p.isSprinting()) {
+        if (Config.Setting.SWORD_BLOCKING_CANCEL_SPRINTING.getBoolean() && p.isSprinting()) {
             p.setSprinting(false);
         }
-        p.addPotionEffect(effect);
-        p.addPotionEffect(slowness);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.getByName(Config.Setting.SWORD_BLOCKING_EFFECT.getString()), Config.Setting.SWORD_BLOCKING_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_AMPLIFIER.getInt()));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Config.Setting.SWORD_BLOCKING_SLOW_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_SLOW_AMPLIFIER.getInt()));
 
         final UUID uuid = p.getUniqueId();
         if (!blocking.containsKey(uuid)) {
@@ -95,7 +78,7 @@ public class Blocking implements Listener {
         if (!(e.getDamager() instanceof Player)) return;
         UUID uuid = e.getDamager().getUniqueId();
         if (blocking.containsKey(uuid)) {
-            long secondsLeft = ((blocking.get(uuid) / 100) + blockDuration) - (System.currentTimeMillis() / 100);
+            long secondsLeft = ((blocking.get(uuid) / 100) + Config.Setting.SWORD_BLOCKING_DURATION_TICKS.getInt()) - (System.currentTimeMillis() / 100);
             if (secondsLeft > 0) {
                 e.setCancelled(true);
                 Messenger.debug((Player) e.getDamager(), "&3Sword Blocking &f&l>> &6Cancelled: &a" + e.isCancelled() + " &6Blocking: &a" + blocking.containsKey(uuid));

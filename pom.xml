@@ -119,6 +119,5 @@
             <version>317d4635fd</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 </project>

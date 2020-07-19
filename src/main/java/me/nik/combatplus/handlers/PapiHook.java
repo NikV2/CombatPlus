@@ -47,19 +47,13 @@ public class PapiHook extends PlaceholderExpansion {
             return "";
         }
 
-        //Golden Apple Cooldown
-        if (identifier.equalsIgnoreCase("goldenapple")) {
-            return GoldenApple.papiCooldown;
-        }
-
-        //Enchanted Golden Apple Cooldown
-        if (identifier.equalsIgnoreCase("enchantedgoldenapple")) {
-            return EnchantedGoldenApple.papiCooldown;
-        }
-
-        //Enderpearl Cooldown
-        if (identifier.equalsIgnoreCase("enderpearl")) {
-            return Enderpearl.papiCooldown;
+        switch (identifier) {
+            case "goldenapple":
+                return GoldenApple.papiCooldown;
+            case "enchantedgoldenapple":
+                return EnchantedGoldenApple.papiCooldown;
+            case "enderpearl":
+                return Enderpearl.papiCooldown;
         }
         return null;
     }

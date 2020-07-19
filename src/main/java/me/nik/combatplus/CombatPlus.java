@@ -15,11 +15,12 @@ import me.nik.combatplus.listeners.Enderpearl;
 import me.nik.combatplus.listeners.FishingRodKnockback;
 import me.nik.combatplus.listeners.GoldenApple;
 import me.nik.combatplus.listeners.GuiListener;
-import me.nik.combatplus.listeners.ItemFrameRotate;
+import me.nik.combatplus.listeners.HealthBar;
 import me.nik.combatplus.listeners.Offhand;
 import me.nik.combatplus.listeners.PlayerRegen;
 import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.commentedfiles.CommentedFileConfiguration;
 import me.nik.combatplus.utils.ACManager;
 import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.MiscUtils;
@@ -31,7 +32,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -41,6 +41,7 @@ public final class CombatPlus extends JavaPlugin {
     private static CombatPlus instance;
 
     private Config config;
+
     private Lang lang;
 
     public static CombatPlus getInstance() {
@@ -53,8 +54,7 @@ public final class CombatPlus extends JavaPlugin {
         setDefaultStats();
 
         //Reload Files
-        config.reload();
-        config.save();
+        config.reset();
         lang.reload();
         lang.save();
 
@@ -66,7 +66,8 @@ public final class CombatPlus extends JavaPlugin {
     public void onEnable() {
         instance = this;
         this.lang = new Lang();
-        this.config = new Config();
+
+        this.config = new Config(this);
 
         //Load Files
         loadFiles();
@@ -105,33 +106,19 @@ public final class CombatPlus extends JavaPlugin {
         new ACManager().hookMatrixAC();
     }
 
-    @Override
-    public FileConfiguration getConfig() {
-        return config.get();
+    public CommentedFileConfiguration getConfiguration() {
+        return config.getConfig();
     }
 
     public Lang getLang() {
         return lang;
     }
 
-    @Override
-    public void saveConfig() {
-        config.save();
-    }
-
-    @Override
-    public void reloadConfig() {
-        config.reload();
-    }
-
     /**
      * Load all the built-in files
      */
     private void loadFiles() {
-        config.setup(this);
-        config.addDefaults();
-        config.get().options().copyDefaults(true);
-        config.save();
+        config.setup();
         lang.setup(this);
         lang.addDefaults();
         lang.get().options().copyDefaults(true);
@@ -139,7 +126,7 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     private void checkForUpdates() {
-        if (isEnabled("settings.check_for_updates")) {
+        if (Config.Setting.CHECK_FOR_UPDATES.getBoolean()) {
             BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
         } else {
             consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
@@ -151,11 +138,11 @@ public final class CombatPlus extends JavaPlugin {
      */
     private void setDefaultStats() {
         if (serverVersion("1.8")) return;
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            final double defaultHealth = config.get().getDouble("advanced.settings.base_player_health");
+        this.getServer().getOnlinePlayers().forEach(player -> {
+            final double defaultHealth = Config.Setting.ADV_BASE_HEALTH.getDouble();
             final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             playerMaxHealth.setBaseValue(defaultHealth);
-            final double defaultAttSpd = config.get().getDouble("advanced.settings.new_pvp.attack_speed");
+            final double defaultAttSpd = Config.Setting.ADV_NEW_ATTACK_SPEED.getDouble();
             final AttributeInstance playerAttSpeed = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
             playerAttSpeed.setBaseValue(defaultAttSpd);
             player.saveData();
@@ -168,17 +155,17 @@ public final class CombatPlus extends JavaPlugin {
      */
     private void loadStats() {
         if (serverVersion("1.8")) return;
-        SetAttackSpeed setAttackSpeed = new SetAttackSpeed(this);
-        ResetStats resetStats = new ResetStats(this);
-        SetCustomHealth setCustomHealth = new SetCustomHealth(this);
+        SetAttackSpeed setAttackSpeed = new SetAttackSpeed();
+        ResetStats resetStats = new ResetStats();
+        SetCustomHealth setCustomHealth = new SetCustomHealth();
 
-        if (isEnabled("combat.settings.old_pvp")) {
+        if (Config.Setting.OLD_PVP.getBoolean()) {
             this.getServer().getOnlinePlayers().forEach(setAttackSpeed::setAttackSpd);
         } else {
             this.getServer().getOnlinePlayers().forEach(resetStats::resetAttackSpeed);
         }
 
-        if (isEnabled("custom.player_health.enabled")) {
+        if (Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean()) {
             this.getServer().getOnlinePlayers().forEach(setCustomHealth::setHealth);
         } else {
             this.getServer().getOnlinePlayers().forEach(resetStats::resetMaxHealth);
@@ -191,50 +178,50 @@ public final class CombatPlus extends JavaPlugin {
     private void initialize() {
         consoleMessage(MsgType.CONSOLE_INITIALIZE.getMessage());
 
-        if (isEnabled("combat.settings.old_pvp") || isEnabled("custom.player_health.enabled")) {
-            registerEvent(new AttributesSet(this));
+        if (Config.Setting.OLD_PVP.getBoolean() || Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean()) {
+            registerEvent(new AttributesSet());
         }
-        if (isEnabled("combat.settings.old_weapon_damage") || isEnabled("combat.settings.old_tool_damage") || isEnabled("combat.settings.disable_sweep_attacks.enabled")) {
-            registerEvent(new DamageModifiers(this));
+        if (Config.Setting.OLD_WEAPON_DAMAGE.getBoolean() || Config.Setting.OLD_TOOL_DAMAGE.getBoolean() || Config.Setting.DISABLE_SWEEP_ENABLED.getBoolean()) {
+            registerEvent(new DamageModifiers());
         }
-        if (isEnabled("combat.settings.disable_arrow_boost")) {
-            registerEvent(new BowBoost(this));
+        if (Config.Setting.DISABLE_ARROW_BOOST.getBoolean()) {
+            registerEvent(new BowBoost());
         }
-        if (isEnabled("combat.settings.old_player_regen")) {
+        if (Config.Setting.OLD_REGEN.getBoolean()) {
             registerEvent(new PlayerRegen(this));
         }
-        if (isEnabled("disabled_items.enabled")) {
-            registerEvent(new DisabledItems(this));
+        if (Config.Setting.DISABLED_ITEMS_ENABLED.getBoolean()) {
+            registerEvent(new DisabledItems());
         }
-        if (isEnabled("disable_item_frame_rotation.enabled")) {
-            registerEvent(new ItemFrameRotate(this));
+        if (Config.Setting.DISABLE_OFFHAND_ENABLED.getBoolean()) {
+            registerEvent(new Offhand());
         }
-        if (isEnabled("disable_offhand.enabled")) {
-            registerEvent(new Offhand(this));
-        }
-        if (isEnabled("fixes.projectile_fixer")) {
+        if (Config.Setting.FIX_PROJECTILES.getBoolean()) {
             registerEvent(new Projectiles());
         }
-        if (isEnabled("golden_apple_cooldown.golden_apple.enabled")) {
+        if (Config.Setting.COOLDOWN_GOLDEN_APPLE_ENABLED.getBoolean()) {
             registerEvent(new GoldenApple(this));
         }
-        if (isEnabled("golden_apple_cooldown.enchanted_golden_apple.enabled")) {
+        if (Config.Setting.COOLDOWN_ENCHANTED_APPLE_ENABLED.getBoolean()) {
             registerEvent(new EnchantedGoldenApple(this));
         }
-        if (isEnabled("enderpearl_cooldown.enabled")) {
+        if (Config.Setting.ENDERPEARL_ENABLED.getBoolean()) {
             registerEvent(new Enderpearl(this));
         }
-        if (isEnabled("recipes.enchanted_golden_apple")) {
+        if (Config.Setting.ENCHANTED_APPLE_CRAFTING.getBoolean()) {
             try {
                 this.getServer().addRecipe(new CustomRecipes(this).enchantedGoldenAppleRecipe());
             } catch (Exception ignored) {
             }
         }
-        if (isEnabled("knockback.fishing_rod.enabled")) {
-            registerEvent(new FishingRodKnockback(this));
+        if (Config.Setting.FISHING_ROD_ENABLED.getBoolean()) {
+            registerEvent(new FishingRodKnockback());
         }
-        if (isEnabled("combat.settings.sword_blocking.enabled")) {
-            registerEvent(new Blocking(this));
+        if (Config.Setting.SWORD_BLOCKING_ENABLED.getBoolean()) {
+            registerEvent(new Blocking());
+        }
+        if (Config.Setting.HEALTHBAR_ENABLED.getBoolean()) {
+            registerEvent(new HealthBar());
         }
         //GUI Listener (Do not remove this, idiot nik)
         registerEvent(new GuiListener());
@@ -245,50 +232,37 @@ public final class CombatPlus extends JavaPlugin {
      */
     private void checkSupported() {
         if (serverVersion("1.8")) {
-            setFalse("combat.settings.old_pvp");
-            setFalse("combat.settings.old_weapon_damage");
-            setFalse("combat.settings.old_tool_damage");
-            setFalse("combat.settings.old_sharpness");
-            setFalse("combat.settings.disable_sweep_attacks.enabled");
-            setFalse("combat.settings.old_player_regen");
-            setFalse("custom.player_health.enabled");
-            setFalse("disable_offhand.enabled");
-            setFalse("recipes.enchanted_golden_apple");
-            setFalse("knockback.fishing_rod.enabled");
-            setFalse("golden_apple_cooldown.golden_apple.actionbar");
-            setFalse("golden_apple_cooldown.enchanted_golden_apple.actionbar");
-            setFalse("enderpearl_cooldown.actionbar");
-            setFalse("combat.settings.sword_blocking.enabled");
-            config.save();
-            config.reload();
+            setFalse(Config.Setting.OLD_PVP.getKey());
+            setFalse(Config.Setting.OLD_WEAPON_DAMAGE.getKey());
+            setFalse(Config.Setting.OLD_TOOL_DAMAGE.getKey());
+            setFalse(Config.Setting.OLD_SHARPNESS.getKey());
+            setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
+            setFalse(Config.Setting.OLD_REGEN.getKey());
+            setFalse(Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getKey());
+            setFalse(Config.Setting.DISABLE_OFFHAND_ENABLED.getKey());
+            setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
+            setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
+            setFalse(Config.Setting.COOLDOWN_GOLDEN_APPLE_ACTIONBAR.getKey());
+            setFalse(Config.Setting.COOLDOWN_ENCHANTED_APPLE_ACTIONBAR.getKey());
+            setFalse(Config.Setting.ENDERPEARL_ACTIONBAR.getKey());
+            setFalse(Config.Setting.SWORD_BLOCKING_ENABLED.getKey());
+            setFalse(Config.Setting.HEALTHBAR_ENABLED.getKey());
+            getConfiguration().save();
+            getConfiguration().reloadConfig();
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
-        } else if (serverVersion("1.9")) {
-            setFalse("combat.settings.disable_sweep_attacks.enabled");
-            setFalse("recipes.enchanted_golden_apple");
-            setFalse("knockback.fishing_rod.enabled");
-            config.save();
-            config.reload();
-            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
-            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK.getMessage());
-        } else if (serverVersion("1.10")) {
-            setFalse("combat.settings.disable_sweep_attacks.enabled");
-            setFalse("recipes.enchanted_golden_apple");
-            setFalse("knockback.fishing_rod.enabled");
-            config.save();
-            config.reload();
+        } else if (serverVersion("1.9") || serverVersion("1.10")) {
+            setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
+            setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
+            setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
+            getConfiguration().save();
+            getConfiguration().reloadConfig();
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK.getMessage());
-        } else if (serverVersion("1.11")) {
-            setFalse("recipes.enchanted_golden_apple");
-            setFalse("knockback.fishing_rod.enabled");
-            config.save();
-            config.reload();
-            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
-        } else if (serverVersion("1.12")) {
-            setFalse("recipes.enchanted_golden_apple");
-            setFalse("knockback.fishing_rod.enabled");
-            config.save();
-            config.reload();
+        } else if (serverVersion("1.11") || serverVersion("1.12")) {
+            setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
+            setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
+            getConfiguration().save();
+            getConfiguration().reloadConfig();
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
         }
     }
@@ -311,24 +285,13 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     /**
-     * @param path The path to the boolean
-     * @return Whether or not the config boolean is true
-     */
-    private boolean isEnabled(String path) {
-        return config.get().getBoolean(path);
-    }
-
-    /**
-     * @param path Path to the boolean
-     */
-    private void setFalse(String path) {
-        config.get().set(path, false);
-    }
-
-    /**
      * @param message The console message to send to the Server (ChatColor Friendly)
      */
     public void consoleMessage(String message) {
         this.getServer().getConsoleSender().sendMessage(message);
+    }
+
+    private void setFalse(String path) {
+        getConfiguration().set(path, false);
     }
 }

@@ -1,19 +1,11 @@
 package me.nik.combatplus.utils;
 
-import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 
 public class ResetStats {
-
-    private final double defaultAttSpd;
-    private final double defaultMaxHealth;
-
-    public ResetStats(CombatPlus plugin) {
-        this.defaultAttSpd = plugin.getConfig().getDouble("advanced.settings.new_pvp.attack_speed");
-        this.defaultMaxHealth = plugin.getConfig().getDouble("advanced.settings.base_player_health");
-    }
 
     /**
      * Reset a player's Attack Speed
@@ -22,9 +14,9 @@ public class ResetStats {
      */
     public void resetAttackSpeed(Player player) {
         AttributeInstance baseAttSpd = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-        baseAttSpd.setBaseValue(defaultAttSpd);
+        baseAttSpd.setBaseValue(Config.Setting.ADV_NEW_ATTACK_SPEED.getDouble());
         player.saveData();
-        Messenger.debug(player, "&6Set Attack Speed to: &a" + defaultAttSpd);
+        Messenger.debug(player, "&6Set Attack Speed to: &a" + Config.Setting.ADV_NEW_ATTACK_SPEED.getDouble());
     }
 
     /**
@@ -34,8 +26,8 @@ public class ResetStats {
      */
     public void resetMaxHealth(Player player) {
         AttributeInstance baseMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        baseMaxHealth.setBaseValue(defaultMaxHealth);
+        baseMaxHealth.setBaseValue(Config.Setting.ADV_BASE_HEALTH.getDouble());
         player.saveData();
-        Messenger.debug(player, "&6Set Maximum Health to: &a" + defaultMaxHealth);
+        Messenger.debug(player, "&6Set Maximum Health to: &a" + Config.Setting.ADV_BASE_HEALTH.getDouble());
     }
 }

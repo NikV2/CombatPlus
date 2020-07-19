@@ -1,6 +1,6 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
@@ -18,14 +18,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 
 public class FishingRodKnockback implements Listener {
-
-    private final double fishingRodDamage;
-    private final boolean cancelDragging;
-
-    public FishingRodKnockback(CombatPlus plugin) {
-        this.fishingRodDamage = plugin.getConfig().getDouble("advanced.settings.knockback.fishing_rod.damage");
-        this.cancelDragging = plugin.getConfig().getBoolean("knockback.fishing_rod.cancel_dragging");
-    }
 
     /*
     Bring back old fishing rod behavior
@@ -59,18 +51,18 @@ public class FishingRodKnockback implements Listener {
         LivingEntity livingEntity = (LivingEntity) target;
 
         if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2f) return;
-        EntityDamageEvent event = customEvent(holder, target, fishingRodDamage);
+        EntityDamageEvent event = customEvent(holder, target, Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
 
         livingEntity.setVelocity(MiscUtils.calculateVelocity(livingEntity.getVelocity(), livingEntity.getLocation(), hook.getLocation()));
-        livingEntity.damage(fishingRodDamage);
+        livingEntity.damage(Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
         Messenger.debug(holder, "&3Fishing Rod Knockback &f&l>> &6Velocity: &a" + livingEntity.getVelocity().toString());
     }
 
     @EventHandler
     public void onHook(PlayerFishEvent e) {
-        if (!cancelDragging) return;
+        if (!Config.Setting.FISHING_ROD_CANCEL_DRAG.getBoolean()) return;
         if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) return;
         e.getHook().remove();
         e.setCancelled(true);
