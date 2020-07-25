@@ -21,7 +21,6 @@ import me.nik.combatplus.listeners.PlayerRegen;
 import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.managers.commentedfiles.CommentedFileConfiguration;
-import me.nik.combatplus.utils.ACManager;
 import me.nik.combatplus.utils.CustomRecipes;
 import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.ResetStats;
@@ -101,9 +100,6 @@ public final class CombatPlus extends JavaPlugin {
         if (MiscUtils.isPlaceholderApiEnabled()) {
             new PapiHook(this).register();
         }
-
-        //Hook AntiCheats
-        new ACManager().hookMatrixAC();
     }
 
     public CommentedFileConfiguration getConfiguration() {

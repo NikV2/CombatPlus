@@ -19,28 +19,11 @@ import java.util.UUID;
 
 public class Blocking implements Listener {
 
+    private static final String[] interactiveBlocks = {"DOOR", "TABLE", "STAND", "CHEST", "GATE", "DISPENSER", "DROPPER", "NOTE", "REDSTONE", "DIODE", "FRAME", "LEVER", "SHULKER", "FURNACE", "BARREL"};
+
     private final WorldUtils worldUtils = new WorldUtils();
 
     private final HashMap<UUID, Long> blocking = new HashMap<>();
-
-    private boolean interactiveBlock(Block block) {
-        String b = block.getType().name();
-        return b.contains("DOOR")
-                || b.contains("TABLE")
-                || b.contains("STAND")
-                || b.contains("CHEST")
-                || b.contains("GATE")
-                || b.contains("DISPENSER")
-                || b.contains("DROPPER")
-                || b.contains("NOTE")
-                || b.contains("REDSTONE")
-                || b.contains("DIODE")
-                || b.contains("FRAME")
-                || b.contains("LEVER")
-                || b.contains("SHULKER")
-                || b.contains("FURNACE")
-                || b.contains("BARREL");
-    }
 
     private boolean holdsShield(Player p) {
         return p.getInventory().getItemInOffHand().getType().name().contains("SHIELD");
@@ -53,8 +36,14 @@ public class Blocking implements Listener {
         if (!action.name().contains("RIGHT_CLICK")) return;
 
         final Block block = e.getClickedBlock();
-        if (action == Action.RIGHT_CLICK_BLOCK && block != null && interactiveBlock(block)) return;
+        if (action == Action.RIGHT_CLICK_BLOCK && block != null) return;
         if (!e.getItem().getType().name().contains("SWORD")) return;
+
+        for (String s : interactiveBlocks) {
+            if (block.getType().name().contains(s)) {
+                return;
+            }
+        }
 
         Player p = e.getPlayer();
         if (worldUtils.combatDisabledWorlds(p)) return;

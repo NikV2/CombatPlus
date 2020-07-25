@@ -1,10 +1,10 @@
 name: CombatPlus
-version: 1.4.8
+version: ${project.version}
 main: me.nik.combatplus.CombatPlus
 api-version: 1.13
 authors: [Nik]
 prefix: CombatPlus
-description: The all in one Combat System!
+description: ${project.description}
 website: https://discord.gg/m7j2Y9H
 softdepend: [PlaceholderAPI, Matrix]
 commands:

@@ -6,7 +6,7 @@
 
     <groupId>me.nik</groupId>
     <artifactId>CombatPlus</artifactId>
-    <version>1.0.0</version>
+    <version>1.4.9</version>
     <packaging>jar</packaging>
 
     <name>CombatPlus</name>
@@ -83,11 +83,6 @@
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
 
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-
     </repositories>
 
     <dependencies>
@@ -113,11 +108,5 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.jiangdashao</groupId>
-            <artifactId>matrix-api-repo</artifactId>
-            <version>317d4635fd</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 </project>
