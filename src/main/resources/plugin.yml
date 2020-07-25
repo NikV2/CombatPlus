@@ -6,7 +6,7 @@ authors: [Nik]
 prefix: CombatPlus
 description: ${project.description}
 website: https://discord.gg/m7j2Y9H
-softdepend: [PlaceholderAPI, Matrix]
+softdepend: [PlaceholderAPI]
 commands:
   combatplus:
     description: The all in one Combat System!
