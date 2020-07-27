@@ -53,8 +53,4 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
         if (!e.getPlayer().hasPermission("cp.admin")) return;
         e.getPlayer().sendMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
     }
-
-    public String getNewVersion() {
-        return newVersion;
-    }
 }
