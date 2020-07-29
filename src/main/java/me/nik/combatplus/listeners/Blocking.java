@@ -40,9 +40,7 @@ public class Blocking implements Listener {
         if (!e.getItem().getType().name().contains("SWORD")) return;
 
         for (String s : interactiveBlocks) {
-            if (block.getType().name().contains(s)) {
-                return;
-            }
+            if (block != null && block.getType().name().contains(s)) return;
         }
 
         Player p = e.getPlayer();
