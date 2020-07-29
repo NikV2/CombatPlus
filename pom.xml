@@ -42,12 +42,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org.bstats</pattern>
-                                    <shadedPattern>me.nik.combatplus</shadedPattern>
-                                </relocation>
-                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -74,11 +68,6 @@
         </repository>
 
         <repository>
-            <id>CodeMC</id>
-            <url>https://repo.codemc.org/repository/maven-public</url>
-        </repository>
-
-        <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
@@ -92,13 +81,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit-lite</artifactId>
-            <version>1.7</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
