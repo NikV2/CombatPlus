@@ -52,4 +52,12 @@ public class WorldUtils {
         }
         return false;
     }
+
+    public boolean healthBarDisabledWorlds(Player player) {
+        for (String world : Config.Setting.HEALTHBAR_WORLDS.getStringList()) {
+            if (player.getWorld().getName().equalsIgnoreCase(world))
+                return true;
+        }
+        return false;
+    }
 }

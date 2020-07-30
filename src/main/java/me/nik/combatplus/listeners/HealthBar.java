@@ -1,21 +1,29 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class HealthBar implements Listener {
 
-    @EventHandler
+    private final WorldUtils worldUtils = new WorldUtils();
+
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onCombat(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
+
+        if (worldUtils.healthBarDisabledWorlds((Player) e.getDamager())) return;
+
         if (!(e.getEntity() instanceof LivingEntity)) return;
+
         Player p = (Player) e.getDamager();
         LivingEntity entity = (LivingEntity) e.getEntity();
 

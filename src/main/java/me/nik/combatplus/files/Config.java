@@ -126,7 +126,9 @@ public class Config {
 
         ENCHANTED_APPLE_CRAFTING("enchanted_golden_apple_crafting", false, "Should we make Enchanted Golden Apples craftable again?"),
 
-        HEALTHBAR_ENABLED("healthbar", true, "Would you like Combat Plus to send an Actionbar message to the Attacker indicating the Target's Health and Damage Dealt?"),
+        HEALTHBAR("healthbar", "", "Healthbar Properties"),
+        HEALTHBAR_ENABLED("healthbar.enabled", true, "Would you like Combat Plus to send an Actionbar message to the Attacker indicating the Target's Health and Damage Dealt?"),
+        HEALTHBAR_WORLDS("healthbar.disabled_worlds", Collections.singletonList("example_world"), "Worlds listed below will be ignored from applying the above features"),
 
         FIXES("fixes", "", "Fixes properties"),
         FIX_PROJECTILES("fixes.projectile_fixer", true, "Improves Projectile Velocity"),

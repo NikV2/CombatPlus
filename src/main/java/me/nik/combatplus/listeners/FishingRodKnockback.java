@@ -11,6 +11,7 @@ import org.bukkit.entity.FishHook;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -23,7 +24,7 @@ public class FishingRodKnockback implements Listener {
     Bring back old fishing rod behavior
      */
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onRodLand(ProjectileHitEvent e) {
         Entity rodHook = e.getEntity();
         if (e.getEntityType() != EntityType.FISHING_HOOK) return;
@@ -60,7 +61,7 @@ public class FishingRodKnockback implements Listener {
         Messenger.debug(holder, "&3Fishing Rod Knockback &f&l>> &6Velocity: &a" + livingEntity.getVelocity().toString());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onHook(PlayerFishEvent e) {
         if (!Config.Setting.FISHING_ROD_CANCEL_DRAG.getBoolean()) return;
         if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) return;
