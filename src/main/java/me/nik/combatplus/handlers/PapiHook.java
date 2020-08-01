@@ -5,7 +5,7 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.listeners.EnchantedGoldenApple;
 import me.nik.combatplus.listeners.Enderpearl;
 import me.nik.combatplus.listeners.GoldenApple;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 public class PapiHook extends PlaceholderExpansion {
 
@@ -41,11 +41,7 @@ public class PapiHook extends PlaceholderExpansion {
     }
 
     @Override
-    public String onPlaceholderRequest(Player player, String identifier) {
-
-        if (player == null) {
-            return "";
-        }
+    public String onRequest(OfflinePlayer player, String identifier) {
 
         switch (identifier) {
             case "goldenapple":
