@@ -4,7 +4,6 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.utils.Messenger;
-import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -26,28 +25,27 @@ public class Enderpearl implements Listener {
     private final CombatPlus plugin;
     private final WorldUtils worldUtils = new WorldUtils();
 
-    private final HashMap<UUID, Long> cooldown = new HashMap<>();
-    public static String papiCooldown = "Ready";
+    private static final HashMap<UUID, Long> cooldown = new HashMap<>();
 
     public Enderpearl(CombatPlus plugin) {
         this.plugin = plugin;
     }
 
-    private void taskRun(UUID uuid) {
-        cooldown.put(uuid, System.currentTimeMillis());
-        new BukkitRunnable() {
-
-            @Override
-            public void run() {
-                cooldown.remove(uuid);
-                papiCooldown = "Ready";
-            }
-        }.runTaskLaterAsynchronously(plugin, Config.Setting.ENDERPEARL_COOLDOWN.getInt() * 20);
-    }
-
     /*
      This Listener Adds a cooldown between using Ender Pearls
      */
+
+    public static String getCooldown(UUID uuid) {
+        if (cooldown.containsKey(uuid)) {
+            long secondsleft = ((cooldown.get(uuid) / 1000) + Config.Setting.ENDERPEARL_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
+            if (secondsleft < 1) {
+                cooldown.remove(uuid);
+                return "Ready";
+            }
+            return secondsleft + "s";
+        }
+        return "Ready";
+    }
 
     @EventHandler(ignoreCancelled = true)
     public void onLaunch(ProjectileLaunchEvent e) {
@@ -64,12 +62,13 @@ public class Enderpearl implements Listener {
                 player.getInventory().addItem(enderpearl);
             }
             long secondsLeft = ((cooldown.get(p) / 1000) + Config.Setting.ENDERPEARL_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
+            if (secondsLeft < 1) {
+                cooldown.remove(p);
+                return;
+            }
             player.sendMessage(MsgType.ENDERPEARL_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsLeft)));
         } else {
-            taskRun(p);
-            if (MiscUtils.isPlaceholderApiEnabled()) {
-                setupPlaceholder(p);
-            }
+            cooldown.put(p, System.currentTimeMillis());
             Messenger.debug(player, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
             if (Config.Setting.ENDERPEARL_ACTIONBAR.getBoolean()) {
                 new BukkitRunnable() {
@@ -77,6 +76,10 @@ public class Enderpearl implements Listener {
                     public void run() {
                         if (cooldown.containsKey(p)) {
                             long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.ENDERPEARL_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
+                            if (secondsleft < 1) {
+                                cooldown.remove(p);
+                                cancel();
+                            }
                             String message = MsgType.ENDERPEARL_COOLDOWN_ACTIONBAR.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft));
                             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
                         } else {
@@ -86,21 +89,5 @@ public class Enderpearl implements Listener {
                 }.runTaskTimerAsynchronously(plugin, 0, 20);
             }
         }
-    }
-
-    private void setupPlaceholder(UUID p) {
-
-        new BukkitRunnable() {
-
-            @Override
-            public void run() {
-                if (cooldown.containsKey(p)) {
-                    long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.ENDERPEARL_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
-                    papiCooldown = secondsleft + "s";
-                } else {
-                    cancel();
-                }
-            }
-        }.runTaskTimerAsynchronously(plugin, 0, 20);
     }
 }

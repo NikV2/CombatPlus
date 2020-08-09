@@ -45,11 +45,11 @@ public class PapiHook extends PlaceholderExpansion {
 
         switch (identifier) {
             case "goldenapple":
-                return GoldenApple.papiCooldown;
+                return GoldenApple.getCooldown(player.getUniqueId());
             case "enchantedgoldenapple":
-                return EnchantedGoldenApple.papiCooldown;
+                return EnchantedGoldenApple.getCooldown(player.getUniqueId());
             case "enderpearl":
-                return Enderpearl.papiCooldown;
+                return Enderpearl.getCooldown(player.getUniqueId());
         }
         return null;
     }

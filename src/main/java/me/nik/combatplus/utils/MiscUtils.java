@@ -1,14 +1,9 @@
 package me.nik.combatplus.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class MiscUtils {
-
-    public static boolean isPlaceholderApiEnabled() {
-        return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
-    }
 
     public static Vector calculateVelocity(Vector vel, Location player, Location loc) {
         double xDist = loc.getX() - player.getX();

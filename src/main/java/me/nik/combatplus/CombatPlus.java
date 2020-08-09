@@ -23,7 +23,6 @@ import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.managers.commentedfiles.CommentedFileConfiguration;
 import me.nik.combatplus.metrics.MetricsLite;
 import me.nik.combatplus.utils.CustomRecipes;
-import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.ResetStats;
 import me.nik.combatplus.utils.SetAttackSpeed;
 import me.nik.combatplus.utils.SetCustomHealth;
@@ -97,7 +96,8 @@ public final class CombatPlus extends JavaPlugin {
         new MetricsLite(this, 6982);
 
         //Hook PlaceholderAPI
-        if (MiscUtils.isPlaceholderApiEnabled()) {
+
+        if (this.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PapiHook(this).register();
         }
     }
