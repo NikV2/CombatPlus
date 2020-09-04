@@ -2,6 +2,7 @@ package me.nik.combatplus.utils;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -22,7 +23,7 @@ public class Messenger {
      * @param message The debug message
      */
     public static void debug(Player player, String message) {
-        if (Config.Setting.DEVELOPER_MODE.getBoolean() && player.hasPermission("cp.debug")) {
+        if (Config.Setting.DEVELOPER_MODE.getBoolean() && player.hasPermission(Permissions.DEBUG)) {
             player.sendMessage(MsgType.PREFIX.getMessage() + format(message));
         }
     }

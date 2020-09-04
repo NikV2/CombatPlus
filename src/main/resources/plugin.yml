@@ -33,9 +33,6 @@ permissions:
   cp.bypass.items:
     description: Gives access to bypass the disabled items crafting
     default: false
-  cp.bypass.rotate:
-    description: Gives access to bypass the item frame rotation disable option
-    default: false
   cp.bypass.offhand:
     description: Gives access to bypass the disabled offhand option
     default: false

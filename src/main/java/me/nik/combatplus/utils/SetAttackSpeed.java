@@ -5,13 +5,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 public class SetAttackSpeed {
-    private final WorldUtils worldUtils;
-    private final ResetStats resetStats;
-
-    public SetAttackSpeed() {
-        this.worldUtils = new WorldUtils();
-        this.resetStats = new ResetStats();
-    }
+    private final WorldUtils worldUtils = new WorldUtils();
+    private final ResetStats resetStats = new ResetStats();
 
     /**
      * Set the Player's Attack Speed

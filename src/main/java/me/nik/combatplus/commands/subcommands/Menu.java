@@ -4,6 +4,7 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.commands.SubCommand;
 import me.nik.combatplus.gui.PlayerMenuUtility;
 import me.nik.combatplus.gui.menus.MainGui;
+import me.nik.combatplus.managers.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -34,7 +35,7 @@ public class Menu extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "cp.admin";
+        return Permissions.ADMIN;
     }
 
     @Override

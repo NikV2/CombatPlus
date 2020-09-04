@@ -3,6 +3,7 @@ package me.nik.combatplus.listeners;
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -53,7 +54,7 @@ public class Enderpearl implements Listener {
         if (!(e.getEntity().getType() == EntityType.ENDER_PEARL)) return;
         Player player = (Player) e.getEntity().getShooter();
         if (worldUtils.enderpearlDisabledWorlds(player)) return;
-        if (player.hasPermission("cp.bypass.epearl")) return;
+        if (player.hasPermission(Permissions.BYPASS_EPEARL)) return;
         final UUID p = player.getUniqueId();
         if (cooldown.containsKey(p)) {
             e.setCancelled(true);

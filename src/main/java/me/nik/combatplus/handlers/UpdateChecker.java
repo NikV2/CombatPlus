@@ -2,6 +2,7 @@ package me.nik.combatplus.handlers;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -51,7 +52,7 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (!e.getPlayer().hasPermission("cp.admin")) return;
+        if (!e.getPlayer().hasPermission(Permissions.ADMIN)) return;
         e.getPlayer().sendMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
     }
 }

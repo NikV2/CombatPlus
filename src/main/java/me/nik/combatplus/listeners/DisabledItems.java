@@ -2,6 +2,7 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +21,7 @@ public class DisabledItems implements Listener {
     public void onCraft(PrepareItemCraftEvent e) {
         if (e.getViewers().size() < 1) return;
         Player p = (Player) e.getViewers().get(0);
-        if (p.hasPermission("cp.bypass.items")) return;
+        if (p.hasPermission(Permissions.BYPASS_ITEMS)) return;
         CraftingInventory inv = e.getInventory();
         ItemStack result = inv.getResult();
         if (result != null && Config.Setting.DISABLED_ITEMS_LIST.getStringList().contains(result.getType().name().toLowerCase())) {

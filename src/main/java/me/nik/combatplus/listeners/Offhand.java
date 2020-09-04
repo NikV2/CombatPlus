@@ -1,5 +1,6 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.Material;
@@ -28,7 +29,7 @@ public class Offhand implements Listener {
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
         if (worldUtils.offhandDisabledWorlds(e.getPlayer())) return;
         Player p = e.getPlayer();
-        if (p.hasPermission("cp.bypass.offhand")) return;
+        if (p.hasPermission(Permissions.BYPASS_OFFHAND)) return;
         e.setCancelled(true);
         Messenger.debug(p, "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
     }
@@ -36,7 +37,7 @@ public class Offhand implements Listener {
     @EventHandler
     public void onClickOffHand(InventoryClickEvent e) {
         if (worldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
-        if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
+        if (e.getWhoClicked().hasPermission(Permissions.BYPASS_OFFHAND)) return;
         if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != OFFHANDSLOT) return;
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
             e.setResult(Event.Result.DENY);
@@ -48,7 +49,7 @@ public class Offhand implements Listener {
     @EventHandler
     public void onDrag(InventoryDragEvent e) {
         if (worldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
-        if (e.getWhoClicked().hasPermission("cp.bypass.offhand")) return;
+        if (e.getWhoClicked().hasPermission(Permissions.BYPASS_OFFHAND)) return;
         if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(OFFHANDSLOT))
             return;
         if (itemCheck(e.getOldCursor())) {

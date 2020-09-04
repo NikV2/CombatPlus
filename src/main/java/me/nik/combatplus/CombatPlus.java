@@ -32,7 +32,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 public final class CombatPlus extends JavaPlugin {
 
@@ -123,7 +122,7 @@ public final class CombatPlus extends JavaPlugin {
 
     private void checkForUpdates() {
         if (Config.Setting.CHECK_FOR_UPDATES.getBoolean()) {
-            BukkitTask updateChecker = new UpdateChecker(this).runTaskAsynchronously(this);
+            new UpdateChecker(this).runTaskAsynchronously(this);
         } else {
             consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
         }

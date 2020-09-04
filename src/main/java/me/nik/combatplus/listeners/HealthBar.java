@@ -16,7 +16,7 @@ public class HealthBar implements Listener {
 
     private final WorldUtils worldUtils = new WorldUtils();
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
 

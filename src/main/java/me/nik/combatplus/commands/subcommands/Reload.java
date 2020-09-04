@@ -3,6 +3,7 @@ package me.nik.combatplus.commands.subcommands;
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.commands.SubCommand;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class Reload extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "cp.admin";
+        return Permissions.ADMIN;
     }
 
     @Override

@@ -3,6 +3,7 @@ package me.nik.combatplus.listeners;
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -49,7 +50,7 @@ public class GoldenApple implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
         if (worldUtils.gappleDisabledWorlds(e.getPlayer())) return;
-        if (e.getPlayer().hasPermission("cp.bypass.gapple")) return;
+        if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE)) return;
         if (isGoldenApple(e)) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
