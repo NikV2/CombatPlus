@@ -6,7 +6,6 @@ import me.nik.combatplus.utils.Messenger;
 public enum MsgType {
     PREFIX(Messenger.format(CombatPlus.getInstance().getLang().get().getString("prefix"))),
     NO_PERMISSION(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("no_perm"))),
-    RELOADING(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("reloading"))),
     RELOADED(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("reloaded"))),
     UPDATE_REMINDER(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("update_reminder"))),
     GOLDEN_APPLE_COOLDOWN(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("golden_apple_cooldown"))),

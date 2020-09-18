@@ -83,79 +83,79 @@ public class CombatGui extends Menu {
         ItemStack back = makeItem(Material.BARRIER, 1, "&cBack", null);
 
         inventory.setItem(49, back);
-                ArrayList<String> oldPvpLore = new ArrayList<>();
+        ArrayList<String> oldPvpLore = new ArrayList<>();
         oldPvpLore.add("");
         oldPvpLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.OLD_PVP.getKey()));
         oldPvpLore.add("");
-                oldPvpLore.add("&fWould you like your server to use");
-                oldPvpLore.add("&f1.8 PvP Combat?");
-                ItemStack oldPvp = makeItem(Material.PAPER, 1, "&6Old PvP", oldPvpLore);
+        oldPvpLore.add("&fWould you like your server to use");
+        oldPvpLore.add("&f1.8 PvP Combat?");
+        ItemStack oldPvp = makeItem(Material.PAPER, 1, "&6Old PvP", oldPvpLore);
 
-                ArrayList<String> oldWepDmgLore = new ArrayList<>();
+        ArrayList<String> oldWepDmgLore = new ArrayList<>();
         oldWepDmgLore.add("");
         oldWepDmgLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.OLD_WEAPON_DAMAGE.getKey()));
         oldWepDmgLore.add("");
-                oldWepDmgLore.add("&fWould you like Swords to Deal");
-                oldWepDmgLore.add("&fDamage just like in 1.8?");
-                ItemStack oldWepDmg = makeItem(Material.PAPER, 1, "&6Old Weapon Damage", oldWepDmgLore);
+        oldWepDmgLore.add("&fWould you like Swords to Deal");
+        oldWepDmgLore.add("&fDamage just like in 1.8?");
+        ItemStack oldWepDmg = makeItem(Material.PAPER, 1, "&6Old Weapon Damage", oldWepDmgLore);
 
-                ArrayList<String> oldToolDmgLore = new ArrayList<>();
+        ArrayList<String> oldToolDmgLore = new ArrayList<>();
         oldToolDmgLore.add("");
         oldToolDmgLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.OLD_TOOL_DAMAGE.getKey()));
         oldToolDmgLore.add("");
-                oldToolDmgLore.add("&fWould you like Tools to Deal");
-                oldToolDmgLore.add("&fDamage just like in 1.8?");
-                ItemStack oldToolDmg = makeItem(Material.PAPER, 1, "&6Old Tool Damage", oldToolDmgLore);
+        oldToolDmgLore.add("&fWould you like Tools to Deal");
+        oldToolDmgLore.add("&fDamage just like in 1.8?");
+        ItemStack oldToolDmg = makeItem(Material.PAPER, 1, "&6Old Tool Damage", oldToolDmgLore);
 
-                ArrayList<String> oldSharpLore = new ArrayList<>();
+        ArrayList<String> oldSharpLore = new ArrayList<>();
         oldSharpLore.add("");
         oldSharpLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.OLD_SHARPNESS.getKey()));
         oldSharpLore.add("");
-                oldSharpLore.add("&fWould you like Sharpness");
-                oldSharpLore.add("&fTo work just like in 1.8?");
-                ItemStack oldSharp = makeItem(Material.PAPER, 1, "&6Old Sharpness", oldSharpLore);
+        oldSharpLore.add("&fWould you like Sharpness");
+        oldSharpLore.add("&fTo work just like in 1.8?");
+        ItemStack oldSharp = makeItem(Material.PAPER, 1, "&6Old Sharpness", oldSharpLore);
 
-                ArrayList<String> disableSweepLore = new ArrayList<>();
+        ArrayList<String> disableSweepLore = new ArrayList<>();
         disableSweepLore.add("");
         disableSweepLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DISABLE_SWEEP_ENABLED.getKey()));
         disableSweepLore.add("");
-                disableSweepLore.add("&fWould you like to Disable");
-                disableSweepLore.add("&fSweep Attacks?");
-                ItemStack disableSweep = makeItem(Material.PAPER, 1, "&6Disable Sweep Attacks", disableSweepLore);
+        disableSweepLore.add("&fWould you like to Disable");
+        disableSweepLore.add("&fSweep Attacks?");
+        ItemStack disableSweep = makeItem(Material.PAPER, 1, "&6Disable Sweep Attacks", disableSweepLore);
 
-                ArrayList<String> disableBoostLore = new ArrayList<>();
+        ArrayList<String> disableBoostLore = new ArrayList<>();
         disableBoostLore.add("");
         disableBoostLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DISABLE_ARROW_BOOST.getKey()));
         disableBoostLore.add("");
-                disableBoostLore.add("&fWould you like to Prevent");
-                disableBoostLore.add("&fPlayers from Boosting themselves?");
-                ItemStack disableBoost = makeItem(Material.PAPER, 1, "&6Disable Arrow Boost", disableBoostLore);
+        disableBoostLore.add("&fWould you like to Prevent");
+        disableBoostLore.add("&fPlayers from Boosting themselves?");
+        ItemStack disableBoost = makeItem(Material.PAPER, 1, "&6Disable Arrow Boost", disableBoostLore);
 
-                ArrayList<String> oldRegenLore = new ArrayList<>();
+        ArrayList<String> oldRegenLore = new ArrayList<>();
         oldRegenLore.add("");
         oldRegenLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.OLD_REGEN.getKey()));
         oldRegenLore.add("");
-                oldRegenLore.add("&fWould you like Regeneration");
-                oldRegenLore.add("&fTo work just like in 1.8?");
-                ItemStack oldRegen = makeItem(Material.PAPER, 1, "&6Old Player Regen", oldRegenLore);
+        oldRegenLore.add("&fWould you like Regeneration");
+        oldRegenLore.add("&fTo work just like in 1.8?");
+        ItemStack oldRegen = makeItem(Material.PAPER, 1, "&6Old Player Regen", oldRegenLore);
 
-                ArrayList<String> blockLore = new ArrayList<>();
+        ArrayList<String> blockLore = new ArrayList<>();
         blockLore.add("");
         blockLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.SWORD_BLOCKING_ENABLED.getKey()));
         blockLore.add("");
-                blockLore.add("&fGives Resistance While");
-                blockLore.add("&fRight Clicking With a Sword");
-                blockLore.add("");
-                blockLore.add("&7More options in the Config.yml");
-                ItemStack block = makeItem(Material.PAPER, 1, "&6Sword Blocking", blockLore);
+        blockLore.add("&fGives Resistance While");
+        blockLore.add("&fRight Clicking With a Sword");
+        blockLore.add("");
+        blockLore.add("&7More options in the Config.yml");
+        ItemStack block = makeItem(Material.PAPER, 1, "&6Sword Blocking", blockLore);
 
-                inventory.setItem(10, block);
-                inventory.setItem(12, oldPvp);
-                inventory.setItem(14, oldWepDmg);
-                inventory.setItem(16, oldToolDmg);
-                inventory.setItem(28, oldSharp);
-                inventory.setItem(30, disableSweep);
-                inventory.setItem(32, disableBoost);
-                inventory.setItem(34, oldRegen);
+        inventory.setItem(10, block);
+        inventory.setItem(12, oldPvp);
+        inventory.setItem(14, oldWepDmg);
+        inventory.setItem(16, oldToolDmg);
+        inventory.setItem(28, oldSharp);
+        inventory.setItem(30, disableSweep);
+        inventory.setItem(32, disableBoost);
+        inventory.setItem(34, oldRegen);
     }
 }

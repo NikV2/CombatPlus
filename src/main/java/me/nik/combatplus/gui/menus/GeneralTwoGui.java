@@ -53,25 +53,25 @@ public class GeneralTwoGui extends Menu {
         ItemStack pp = makeItem(Material.BOOK, 1, "&ePrevious Page 2/2", null);
 
         inventory.setItem(45, pp);
-                ArrayList<String> egaLore = new ArrayList<>();
+        ArrayList<String> egaLore = new ArrayList<>();
         egaLore.add("");
         egaLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey()));
         egaLore.add("");
-                egaLore.add("&fMakes Enchanted Golden Apples");
-                egaLore.add("&fAble to be Crafted");
-                ItemStack ega = makeItem(Material.PAPER, 1, "&6Enchanted Golden Apple Crafting", egaLore);
+        egaLore.add("&fMakes Enchanted Golden Apples");
+        egaLore.add("&fAble to be Crafted");
+        ItemStack ega = makeItem(Material.PAPER, 1, "&6Enchanted Golden Apple Crafting", egaLore);
 
-                ArrayList<String> frkLore = new ArrayList<>();
+        ArrayList<String> frkLore = new ArrayList<>();
         frkLore.add("");
         frkLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.FISHING_ROD_ENABLED.getKey()));
         frkLore.add("");
-                frkLore.add("&fMakes Fishing Rods Knockback");
-                frkLore.add("&fPlayers just like in 1.8");
-                frkLore.add("");
-                frkLore.add("&7More options in the Config.yml");
-                ItemStack frk = makeItem(Material.PAPER, 1, "&6Fishing Rod Knockback", frkLore);
+        frkLore.add("&fMakes Fishing Rods Knockback");
+        frkLore.add("&fPlayers just like in 1.8");
+        frkLore.add("");
+        frkLore.add("&7More options in the Config.yml");
+        ItemStack frk = makeItem(Material.PAPER, 1, "&6Fishing Rod Knockback", frkLore);
 
-                inventory.setItem(10, ega);
-                inventory.setItem(12, frk);
+        inventory.setItem(10, ega);
+        inventory.setItem(12, frk);
     }
 }

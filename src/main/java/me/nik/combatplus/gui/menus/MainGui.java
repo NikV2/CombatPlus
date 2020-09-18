@@ -48,10 +48,6 @@ public class MainGui extends Menu {
                 break;
             case 31:
                 p.closeInventory();
-                p.sendMessage(MsgType.RELOADING.getMessage());
-                plugin.getServer().getPluginManager().disablePlugin(plugin);
-                plugin.getServer().getPluginManager().enablePlugin(plugin);
-                p.sendMessage(MsgType.RELOADED.getMessage());
                 break;
         }
     }
@@ -62,7 +58,7 @@ public class MainGui extends Menu {
         ItemStack combatSettings = makeItem(Material.DIAMOND_CHESTPLATE, 1, "&eCombat Settings", null);
         ItemStack generalSettings = makeItem(Material.NAME_TAG, 1, "&aGeneral Settings", null);
         ItemStack support = makeItem(Material.DIAMOND, 1, "&bLooking for Support?", null);
-        ItemStack close = makeItem(Material.BARRIER, 1, "&cReload and Exit", null);
+        ItemStack close = makeItem(Material.BARRIER, 1, "&cExit", null);
 
         inventory.setItem(31, close);
         inventory.setItem(16, support);

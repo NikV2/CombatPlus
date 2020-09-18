@@ -90,51 +90,51 @@ public class GeneralGui extends Menu {
 
         inventory.setItem(49, back);
         inventory.setItem(53, next);
-                ArrayList<String> gappleLore = new ArrayList<>();
+        ArrayList<String> gappleLore = new ArrayList<>();
         gappleLore.add("");
         gappleLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.COOLDOWN_GOLDEN_APPLE_ENABLED.getKey()));
         gappleLore.add("");
-                gappleLore.add("&fWould you like a Cooldown");
-                gappleLore.add("&fBetween eating Golden Apples?");
-                gappleLore.add("");
-                gappleLore.add("&7More options in the Config.yml");
-                ItemStack gapple = makeItem(Material.PAPER, 1, "&6Golden Apple Cooldown", gappleLore);
+        gappleLore.add("&fWould you like a Cooldown");
+        gappleLore.add("&fBetween eating Golden Apples?");
+        gappleLore.add("");
+        gappleLore.add("&7More options in the Config.yml");
+        ItemStack gapple = makeItem(Material.PAPER, 1, "&6Golden Apple Cooldown", gappleLore);
 
-                ArrayList<String> gappleELore = new ArrayList<>();
+        ArrayList<String> gappleELore = new ArrayList<>();
         gappleELore.add("");
         gappleELore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.COOLDOWN_ENCHANTED_APPLE_ENABLED.getKey()));
         gappleELore.add("");
-                gappleELore.add("&fWould you like a Cooldown");
-                gappleELore.add("&fBetween eating Enchanted Golden Apples?");
-                gappleELore.add("");
-                gappleELore.add("&7More options in the Config.yml");
-                ItemStack gappleE = makeItem(Material.PAPER, 1, "&6Enchanted Golden Apple Cooldown", gappleELore);
+        gappleELore.add("&fWould you like a Cooldown");
+        gappleELore.add("&fBetween eating Enchanted Golden Apples?");
+        gappleELore.add("");
+        gappleELore.add("&7More options in the Config.yml");
+        ItemStack gappleE = makeItem(Material.PAPER, 1, "&6Enchanted Golden Apple Cooldown", gappleELore);
 
-                ArrayList<String> disItemsLore = new ArrayList<>();
+        ArrayList<String> disItemsLore = new ArrayList<>();
         disItemsLore.add("");
         disItemsLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DISABLED_ITEMS_ENABLED.getKey()));
         disItemsLore.add("");
-                disItemsLore.add("&fWould you like to Disable specific");
-                disItemsLore.add("&fItems from being Crafted?");
-                disItemsLore.add("");
-                disItemsLore.add("&7More options in the Config.yml");
-                ItemStack disItems = makeItem(Material.PAPER, 1, "&6Disabled Items", disItemsLore);
+        disItemsLore.add("&fWould you like to Disable specific");
+        disItemsLore.add("&fItems from being Crafted?");
+        disItemsLore.add("");
+        disItemsLore.add("&7More options in the Config.yml");
+        ItemStack disItems = makeItem(Material.PAPER, 1, "&6Disabled Items", disItemsLore);
 
-                ArrayList<String> offhLore = new ArrayList<>();
+        ArrayList<String> offhLore = new ArrayList<>();
         offhLore.add("");
         offhLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DISABLE_OFFHAND_ENABLED.getKey()));
         offhLore.add("");
-                offhLore.add("&fWould you like to Prevent");
-                offhLore.add("&fPlayers from using the Offhand?");
-                ItemStack offh = makeItem(Material.PAPER, 1, "&6Disable Offhand", offhLore);
+        offhLore.add("&fWould you like to Prevent");
+        offhLore.add("&fPlayers from using the Offhand?");
+        ItemStack offh = makeItem(Material.PAPER, 1, "&6Disable Offhand", offhLore);
 
-                ArrayList<String> projLore = new ArrayList<>();
+        ArrayList<String> projLore = new ArrayList<>();
         projLore.add("");
         projLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.FIX_PROJECTILES.getKey()));
         projLore.add("");
-                projLore.add("&fFixes a Bug with Projectiles");
-                projLore.add("&fNot always going straight");
-                ItemStack proj = makeItem(Material.PAPER, 1, "&6Projectile Fixer", projLore);
+        projLore.add("&fFixes a Bug with Projectiles");
+        projLore.add("&fNot always going straight");
+        ItemStack proj = makeItem(Material.PAPER, 1, "&6Projectile Fixer", projLore);
 
         ArrayList<String> healthLore = new ArrayList<>();
         healthLore.add("");
