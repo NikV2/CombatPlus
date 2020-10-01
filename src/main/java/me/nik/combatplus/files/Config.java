@@ -130,6 +130,21 @@ public class Config {
         HEALTHBAR_ENABLED("healthbar.enabled", true, "Would you like Combat Plus to send an Actionbar message to the Attacker indicating the Target's Health and Damage Dealt?"),
         HEALTHBAR_WORLDS("healthbar.disabled_worlds", Collections.singletonList("example_world"), "Worlds listed below will be ignored from applying the above features"),
 
+        COMBATLOG("combatlog", "", "CombatLog Properties"),
+        COMBATLOG_ENABLED("combatlog.enabled", true, "Would you like to enable the Combat Log?"),
+        COMBATLOG_COOLDOWN("combatlog.cooldown", 15, "How long should players be tagged? (In seconds)"),
+        COMBATLOG_MOBS("combatlog.mobs", false, "Should players get tagged when fighting Mobs?"),
+        COMBATLOG_PROJECTILES("combatlog.projectiles", true, "Should players get tagged if they shoot players with projectiles?"),
+        COMBATLOG_ACTIONBAR("combatlog.actionbar", true, "Should Combat Plus send an Actionbar message to the player?"),
+        COMBATLOG_BROADCAST("combatlog.broadcast", true, "Should Combat Plus broadcast when a player dies due to logging out when tagged?"),
+        COMBATLOG_DISABLE_FLY("combatlog.disable_fly", true, "Should we disable the tagged player's flight?"),
+        COMBATLOG_PREVENT_TELEPORTATIONS("combatlog.prevent_teleportations", true, "Should we prevent tagged players from Teleporting?"),
+        COMBATLOG_PREVENT_DROPPING_ITEMS("combatlog.prevent_dropping_items", true, "Should we prevent tagged players from Dropping Items?"),
+        COMBATLOG_PREVENT_PICKING_ITEMS("combatlog.prevent_picking_items", true, "Should we prevent tagged players from Picking Up Items?"),
+        COMBATLOG_COMMANDS("combatlog.commands", "CombatLog Command Properties"),
+        COMBATLOG_COMMANDS_ENABLED("combatlog.commands.enabled", true, "Should we prevent tagged players from Using Commands?"),
+        COMBATLOG_COMMANDS_EXCLUDED("combatlog.commands.excluded", Arrays.asList("/heal", "/feed"), "Commands listed below will not be blocked from tagged players"),
+
         FIXES("fixes", "", "Fixes properties"),
         FIX_PROJECTILES("fixes.projectile_fixer", true, "Improves Projectile Velocity"),
 

@@ -41,6 +41,11 @@ public class GeneralTwoGui extends Menu {
                 getInventory().clear();
                 setMenuItems();
                 break;
+            case 14:
+                changeConfigBoolean(Config.Setting.COMBATLOG_ENABLED.getKey());
+                getInventory().clear();
+                setMenuItems();
+                break;
             case 45:
                 p.closeInventory();
                 new GeneralGui(playerMenuUtility, plugin).open();
@@ -71,7 +76,19 @@ public class GeneralTwoGui extends Menu {
         frkLore.add("&7More options in the Config.yml");
         ItemStack frk = makeItem(Material.PAPER, 1, "&6Fishing Rod Knockback", frkLore);
 
+        ArrayList<String> combatlogLore = new ArrayList<>();
+        combatlogLore.add("");
+        combatlogLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.COMBATLOG_ENABLED.getKey()));
+        combatlogLore.add("");
+        combatlogLore.add("&fPrevents players from logging out");
+        combatlogLore.add("&fWhile in Combat");
+        combatlogLore.add("");
+        combatlogLore.add("&7More options in the Config.yml");
+
+        ItemStack cl = makeItem(Material.PAPER, 1, "&6CombatLog", combatlogLore);
+
         inventory.setItem(10, ega);
         inventory.setItem(12, frk);
+        inventory.setItem(14, cl);
     }
 }

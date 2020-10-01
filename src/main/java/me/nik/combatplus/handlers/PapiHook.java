@@ -5,6 +5,7 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.listeners.EnchantedGoldenApple;
 import me.nik.combatplus.listeners.Enderpearl;
 import me.nik.combatplus.listeners.GoldenApple;
+import me.nik.combatplus.managers.CombatLog;
 import org.bukkit.OfflinePlayer;
 
 public class PapiHook extends PlaceholderExpansion {
@@ -50,6 +51,8 @@ public class PapiHook extends PlaceholderExpansion {
                 return EnchantedGoldenApple.getCooldown(player.getUniqueId());
             case "enderpearl":
                 return Enderpearl.getCooldown(player.getUniqueId());
+            case "combatlog":
+                return CombatLog.getCooldown(player.getUniqueId());
         }
         return null;
     }

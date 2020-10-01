@@ -19,14 +19,18 @@ permissions:
       cp.debug: true
   cp.bypass.*:
     description: Gives access to bypass all the bypass-able settings in the plugin
-    default: false
+    default: op
     children:
+      cp.bypass.combatlog: true
       cp.bypass.epearl: true
       cp.bypass.gapple: true
       cp.bypass.items: true
       cp.bypass.rotate: true
       cp.bypass.offhand: true
       cp.bypass.bowboost: true
+  cp.bypass.combatlog:
+    description: Gives access to bypass the combatlog
+    default: false
   cp.bypass.gapple:
     description: Gives access to bypass the golden apple cooldown
     default: false

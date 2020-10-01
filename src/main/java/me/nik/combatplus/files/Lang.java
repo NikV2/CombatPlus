@@ -51,6 +51,13 @@ public class Lang {
         get().addDefault("enderpearl_cooldown", "&fYou cannot use an Ender Pearl yet, You must wait %seconds% seconds.");
         get().addDefault("enderpearl_cooldown_actionbar", "&6You can use an Ender Pearl again in &a%seconds% &6seconds.");
         get().addDefault("cannot_craft_this", "&cYou cannot craft this item!");
+        get().addDefault("combatlog_tagged", "&fYou are now in combat, Do not log out!");
+        get().addDefault("combatlog_untagged", "&fYou can now log out!");
+        get().addDefault("combatlog_actionbar", "&f&l[&cCombat+&f&l]&f: You are tagged for %seconds% seconds");
+        get().addDefault("combatlog_broadcast", "&f%player% Died due to logging out while in combat");
+        get().addDefault("combatlog_item_drop", "&cYou can not drop items while in combat!");
+        get().addDefault("combatlog_teleport", "&cYou can not teleport while in combat!");
+        get().addDefault("combatlog_command", "&cYou can not use this command while in combat!");
         get().addDefault("gui_main", "&c&lCombatPlus Menu");
         get().addDefault("gui_plugin", "&c&lPlugin Settings");
         get().addDefault("gui_combat", "&c&lCombat Settings");

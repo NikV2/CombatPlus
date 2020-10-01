@@ -4,6 +4,8 @@ public class Permissions {
 
     public static final String ADMIN = "cp.admin";
 
+    public static final String BYPASS_COMBATLOG = "cp.bypass.combatlog";
+
     public static final String BYPASS_GAPPLE = "cp.bypass.gapple";
 
     public static final String BYPASS_EPEARL = "cp.bypass.epearl";

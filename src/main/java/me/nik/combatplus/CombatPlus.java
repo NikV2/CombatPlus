@@ -18,7 +18,14 @@ import me.nik.combatplus.listeners.GuiListener;
 import me.nik.combatplus.listeners.HealthBar;
 import me.nik.combatplus.listeners.Offhand;
 import me.nik.combatplus.listeners.PlayerRegen;
+import me.nik.combatplus.listeners.combatlog.CombatListener;
+import me.nik.combatplus.listeners.combatlog.CommandListener;
+import me.nik.combatplus.listeners.combatlog.DisconnectListener;
+import me.nik.combatplus.listeners.combatlog.ItemDropListener;
+import me.nik.combatplus.listeners.combatlog.ItemPickListener;
+import me.nik.combatplus.listeners.combatlog.TeleportListener;
 import me.nik.combatplus.listeners.fixes.Projectiles;
+import me.nik.combatplus.managers.CombatLog;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.managers.commentedfiles.CommentedFileConfiguration;
 import me.nik.combatplus.metrics.MetricsLite;
@@ -30,7 +37,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CombatPlus extends JavaPlugin {
@@ -173,35 +180,37 @@ public final class CombatPlus extends JavaPlugin {
     private void initialize() {
         consoleMessage(MsgType.CONSOLE_INITIALIZE.getMessage());
 
+        final PluginManager pm = this.getServer().getPluginManager();
+
         if (Config.Setting.OLD_PVP.getBoolean() || Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean()) {
-            registerEvent(new AttributesSet());
+            pm.registerEvents(new AttributesSet(), this);
         }
         if (Config.Setting.OLD_WEAPON_DAMAGE.getBoolean() || Config.Setting.OLD_TOOL_DAMAGE.getBoolean() || Config.Setting.DISABLE_SWEEP_ENABLED.getBoolean()) {
-            registerEvent(new DamageModifiers());
+            pm.registerEvents(new DamageModifiers(), this);
         }
         if (Config.Setting.DISABLE_ARROW_BOOST.getBoolean()) {
-            registerEvent(new BowBoost());
+            pm.registerEvents(new BowBoost(), this);
         }
         if (Config.Setting.OLD_REGEN.getBoolean()) {
-            registerEvent(new PlayerRegen(this));
+            pm.registerEvents(new PlayerRegen(this), this);
         }
         if (Config.Setting.DISABLED_ITEMS_ENABLED.getBoolean()) {
-            registerEvent(new DisabledItems());
+            pm.registerEvents(new DisabledItems(), this);
         }
         if (Config.Setting.DISABLE_OFFHAND_ENABLED.getBoolean()) {
-            registerEvent(new Offhand());
+            pm.registerEvents(new Offhand(), this);
         }
         if (Config.Setting.FIX_PROJECTILES.getBoolean()) {
-            registerEvent(new Projectiles());
+            pm.registerEvents(new Projectiles(), this);
         }
         if (Config.Setting.COOLDOWN_GOLDEN_APPLE_ENABLED.getBoolean()) {
-            registerEvent(new GoldenApple(this));
+            pm.registerEvents(new GoldenApple(this), this);
         }
         if (Config.Setting.COOLDOWN_ENCHANTED_APPLE_ENABLED.getBoolean()) {
-            registerEvent(new EnchantedGoldenApple(this));
+            pm.registerEvents(new EnchantedGoldenApple(this), this);
         }
         if (Config.Setting.ENDERPEARL_ENABLED.getBoolean()) {
-            registerEvent(new Enderpearl(this));
+            pm.registerEvents(new Enderpearl(this), this);
         }
         if (Config.Setting.ENCHANTED_APPLE_CRAFTING.getBoolean()) {
             try {
@@ -210,16 +219,37 @@ public final class CombatPlus extends JavaPlugin {
             }
         }
         if (Config.Setting.FISHING_ROD_ENABLED.getBoolean()) {
-            registerEvent(new FishingRodKnockback());
+            pm.registerEvents(new FishingRodKnockback(), this);
         }
         if (Config.Setting.SWORD_BLOCKING_ENABLED.getBoolean()) {
-            registerEvent(new Blocking());
+            pm.registerEvents(new Blocking(), this);
         }
         if (Config.Setting.HEALTHBAR_ENABLED.getBoolean()) {
-            registerEvent(new HealthBar());
+            pm.registerEvents(new HealthBar(), this);
+        }
+
+        if (Config.Setting.COMBATLOG_ENABLED.getBoolean()) {
+
+            new CombatLog().runTaskTimerAsynchronously(this, 20, 20);
+
+            pm.registerEvents(new CombatListener(), this);
+            pm.registerEvents(new DisconnectListener(), this);
+
+            if (Config.Setting.COMBATLOG_COMMANDS_ENABLED.getBoolean()) {
+                pm.registerEvents(new CommandListener(), this);
+            }
+            if (Config.Setting.COMBATLOG_PREVENT_DROPPING_ITEMS.getBoolean()) {
+                pm.registerEvents(new ItemDropListener(), this);
+            }
+            if (Config.Setting.COMBATLOG_PREVENT_PICKING_ITEMS.getBoolean()) {
+                pm.registerEvents(new ItemPickListener(), this);
+            }
+            if (Config.Setting.COMBATLOG_PREVENT_TELEPORTATIONS.getBoolean()) {
+                pm.registerEvents(new TeleportListener(), this);
+            }
         }
         //GUI Listener (Do not remove this, idiot nik)
-        registerEvent(new GuiListener());
+        pm.registerEvents(new GuiListener(), this);
     }
 
     /**
@@ -242,6 +272,7 @@ public final class CombatPlus extends JavaPlugin {
             setFalse(Config.Setting.ENDERPEARL_ACTIONBAR.getKey());
             setFalse(Config.Setting.SWORD_BLOCKING_ENABLED.getKey());
             setFalse(Config.Setting.HEALTHBAR_ENABLED.getKey());
+            setFalse(Config.Setting.COMBATLOG_ENABLED.getKey());
             getConfiguration().save();
             getConfiguration().reloadConfig();
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
@@ -249,6 +280,7 @@ public final class CombatPlus extends JavaPlugin {
             setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
             setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
             setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
+            setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
             getConfiguration().save();
             getConfiguration().reloadConfig();
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
@@ -268,15 +300,6 @@ public final class CombatPlus extends JavaPlugin {
      */
     public boolean serverVersion(String version) {
         return Bukkit.getVersion().contains(version);
-    }
-
-    /**
-     * Registers the specified Listener
-     *
-     * @param listener The listener to register
-     */
-    public void registerEvent(Listener listener) {
-        Bukkit.getServer().getPluginManager().registerEvents(listener, this);
     }
 
     /**
