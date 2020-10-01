@@ -141,7 +141,7 @@ public class Config {
         COMBATLOG_PREVENT_TELEPORTATIONS("combatlog.prevent_teleportations", true, "Should we prevent tagged players from Teleporting?"),
         COMBATLOG_PREVENT_DROPPING_ITEMS("combatlog.prevent_dropping_items", true, "Should we prevent tagged players from Dropping Items?"),
         COMBATLOG_PREVENT_PICKING_ITEMS("combatlog.prevent_picking_items", true, "Should we prevent tagged players from Picking Up Items?"),
-        COMBATLOG_COMMANDS("combatlog.commands", "CombatLog Command Properties"),
+        COMBATLOG_COMMANDS("combatlog.commands", "", "CombatLog Command Properties"),
         COMBATLOG_COMMANDS_ENABLED("combatlog.commands.enabled", true, "Should we prevent tagged players from Using Commands?"),
         COMBATLOG_COMMANDS_EXCLUDED("combatlog.commands.excluded", Arrays.asList("/heal", "/feed"), "Commands listed below will not be blocked from tagged players"),
 
