@@ -3,6 +3,7 @@ package me.nik.combatplus.listeners.combatlog;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.CombatLog;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -20,6 +21,8 @@ public class CombatListener extends CombatLog {
     public void onCombat(EntityDamageByEntityEvent e) {
 
         final Entity target = e.getEntity();
+
+        if (!(e.getEntity() instanceof LivingEntity)) return;
 
         if (e.getDamager() instanceof Projectile) {
 

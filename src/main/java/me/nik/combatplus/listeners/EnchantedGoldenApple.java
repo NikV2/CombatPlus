@@ -55,12 +55,12 @@ public class EnchantedGoldenApple implements Listener {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
-                e.setCancelled(true);
                 long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.COOLDOWN_ENCHANTED_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
                 if (secondsleft < 1) {
                     cooldown.remove(p);
                     return;
                 }
+                e.setCancelled(true);
                 player.sendMessage(MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 cooldown.put(p, System.currentTimeMillis());
