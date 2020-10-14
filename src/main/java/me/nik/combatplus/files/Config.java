@@ -1,7 +1,7 @@
 package me.nik.combatplus.files;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.managers.commentedfiles.CommentedFileConfiguration;
+import me.nik.combatplus.files.commentedfiles.CommentedFileConfiguration;
 
 import java.io.File;
 import java.util.Arrays;

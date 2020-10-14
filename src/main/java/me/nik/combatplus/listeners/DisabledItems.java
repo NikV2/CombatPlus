@@ -1,8 +1,8 @@
 package me.nik.combatplus.listeners;
 
+import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

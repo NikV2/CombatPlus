@@ -1,8 +1,8 @@
 package me.nik.combatplus.utils;
 
+import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.managers.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

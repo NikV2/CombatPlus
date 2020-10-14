@@ -1,4 +1,4 @@
-package me.nik.combatplus.managers.commentedfiles;
+package me.nik.combatplus.files.commentedfiles;
 
 import org.bukkit.Color;
 import org.bukkit.Location;

@@ -1,6 +1,6 @@
 package me.nik.combatplus.listeners;
 
-import me.nik.combatplus.managers.Permissions;
+import me.nik.combatplus.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.entity.Arrow;

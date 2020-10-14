@@ -1,5 +1,6 @@
 package me.nik.combatplus.managers;
 
+import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;

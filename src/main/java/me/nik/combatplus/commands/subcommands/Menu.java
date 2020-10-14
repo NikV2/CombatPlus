@@ -1,10 +1,10 @@
 package me.nik.combatplus.commands.subcommands;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.Permissions;
 import me.nik.combatplus.commands.SubCommand;
 import me.nik.combatplus.gui.PlayerMenuUtility;
 import me.nik.combatplus.gui.menus.MainGui;
-import me.nik.combatplus.managers.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

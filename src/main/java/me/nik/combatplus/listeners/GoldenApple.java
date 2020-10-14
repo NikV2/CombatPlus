@@ -1,9 +1,9 @@
 package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;

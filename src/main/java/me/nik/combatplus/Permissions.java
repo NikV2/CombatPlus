@@ -1,4 +1,4 @@
-package me.nik.combatplus.managers;
+package me.nik.combatplus;
 
 public class Permissions {
 

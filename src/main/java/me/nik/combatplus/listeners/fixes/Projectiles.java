@@ -20,12 +20,11 @@ public class Projectiles implements Listener {
     public void onProjectileShoot(ProjectileLaunchEvent e) {
         final Projectile projectile = e.getEntity();
         final ProjectileSource holder = projectile.getShooter();
-        if (holder instanceof Player) {
-            final Player p = (Player) holder;
-            final Vector pDirection = p.getLocation().getDirection().normalize();
-            final Vector eVelocity = pDirection.multiply(projectile.getVelocity().length());
-            projectile.setVelocity(eVelocity);
-            Messenger.debug(p, "&3Projectile Fixer &f&l>> &6Fixed Velocity: &atrue &6Direction: &a" + pDirection);
-        }
+        if (!(holder instanceof Player)) return;
+        final Player p = (Player) holder;
+        final Vector pDirection = p.getLocation().getDirection().normalize();
+        final Vector eVelocity = pDirection.multiply(projectile.getVelocity().length());
+        projectile.setVelocity(eVelocity);
+        Messenger.debug(p, "&3Projectile Fixer &f&l>> &6Fixed Velocity: &atrue &6Direction: &a" + pDirection);
     }
 }
