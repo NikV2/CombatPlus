@@ -25,10 +25,10 @@ public class DamageModifiers implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
-        Player player = (Player) e.getDamager();
+        final Player player = (Player) e.getDamager();
         if (worldUtils.combatDisabledWorlds(player)) return;
-        ItemStack handItem = player.getInventory().getItemInMainHand();
-        String weapon = handItem.getType().name();
+        final ItemStack handItem = player.getInventory().getItemInMainHand();
+        final String weapon = handItem.getType().name();
         if (Config.Setting.DISABLE_SWEEP_ENABLED.getBoolean() && e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {
             disableSweep(e, player, handItem);
         }

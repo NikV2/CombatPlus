@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,16 +19,19 @@ public class HealthBar implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player)) return;
-
-        if (worldUtils.healthBarDisabledWorlds((Player) e.getDamager())) return;
-
         if (!(e.getEntity() instanceof LivingEntity)) return;
+        final LivingEntity entity = (LivingEntity) e.getEntity();
 
-        Player p = (Player) e.getDamager();
-        LivingEntity entity = (LivingEntity) e.getEntity();
-
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth(entity))));
+        if (e.getDamager() instanceof Player) {
+            final Player p = (Player) e.getDamager();
+            if (worldUtils.healthBarDisabledWorlds(p)) return;
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth(entity))));
+        } else if (e.getDamager() instanceof Projectile) {
+            if (!(((Projectile) e.getDamager()).getShooter() instanceof Player)) return;
+            final Player shooter = (Player) ((Projectile) e.getDamager()).getShooter();
+            if (worldUtils.healthBarDisabledWorlds(shooter)) return;
+            shooter.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth(entity))));
+        }
     }
 
     private String getHealth(LivingEntity entity) {
