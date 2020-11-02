@@ -21,7 +21,7 @@ public class DisabledItems implements Listener {
     public void onCraft(PrepareItemCraftEvent e) {
         if (e.getViewers().size() < 1) return;
         Player p = (Player) e.getViewers().get(0);
-        if (p.hasPermission(Permissions.BYPASS_ITEMS)) return;
+        if (p.hasPermission(Permissions.BYPASS_ITEMS.getPermission())) return;
         CraftingInventory inv = e.getInventory();
         ItemStack result = inv.getResult();
         if (result != null && Config.Setting.DISABLED_ITEMS_LIST.getStringList().contains(result.getType().name().toLowerCase())) {

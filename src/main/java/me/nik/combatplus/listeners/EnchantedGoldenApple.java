@@ -50,7 +50,7 @@ public class EnchantedGoldenApple implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
         if (worldUtils.gappleDisabledWorlds(e.getPlayer())) return;
-        if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE)) return;
+        if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE.getPermission())) return;
         if (isEnchantedGoldenApple(e)) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();

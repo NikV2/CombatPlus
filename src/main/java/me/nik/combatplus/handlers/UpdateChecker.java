@@ -51,8 +51,8 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        if (!e.getPlayer().hasPermission(Permissions.ADMIN)) return;
+    public void onJoin(final PlayerJoinEvent e) {
+        if (!e.getPlayer().hasPermission(Permissions.ADMIN.getPermission())) return;
         e.getPlayer().sendMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
     }
 }

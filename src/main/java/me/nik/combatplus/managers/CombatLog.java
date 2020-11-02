@@ -39,7 +39,7 @@ public class CombatLog extends BukkitRunnable implements Listener {
 
     protected void tagPlayer(Player player) {
 
-        if (player.hasPermission(Permissions.BYPASS_COMBATLOG)) return;
+        if (player.hasPermission(Permissions.BYPASS_COMBATLOG.getPermission())) return;
 
         if (disableFly) {
             player.setFlying(false);

@@ -25,7 +25,7 @@ public class BowBoost implements Listener {
         if (!(e.getDamager() instanceof Arrow)) return;
         Player p = (Player) e.getEntity();
         if (worldUtils.combatDisabledWorlds(p)) return;
-        if (p.hasPermission(Permissions.BYPASS_BOWBOOST)) return;
+        if (p.hasPermission(Permissions.BYPASS_BOWBOOST.getPermission())) return;
         Arrow arrow = (Arrow) e.getDamager();
         ProjectileSource holder = arrow.getShooter();
         if (holder instanceof Player) {

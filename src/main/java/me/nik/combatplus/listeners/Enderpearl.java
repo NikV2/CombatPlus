@@ -54,7 +54,7 @@ public class Enderpearl implements Listener {
         if (!(e.getEntity().getType() == EntityType.ENDER_PEARL)) return;
         Player player = (Player) e.getEntity().getShooter();
         if (worldUtils.enderpearlDisabledWorlds(player)) return;
-        if (player.hasPermission(Permissions.BYPASS_EPEARL)) return;
+        if (player.hasPermission(Permissions.BYPASS_EPEARL.getPermission())) return;
         final UUID p = player.getUniqueId();
         if (cooldown.containsKey(p)) {
             e.setCancelled(true);

@@ -23,7 +23,7 @@ public class Messenger {
      * @param message The debug message
      */
     public static void debug(Player player, String message) {
-        if (Config.Setting.DEVELOPER_MODE.getBoolean() && player.hasPermission(Permissions.DEBUG)) {
+        if (Config.Setting.DEVELOPER_MODE.getBoolean() && player.hasPermission(Permissions.DEBUG.getPermission())) {
             player.sendMessage(MsgType.PREFIX.getMessage() + format(message));
         }
     }

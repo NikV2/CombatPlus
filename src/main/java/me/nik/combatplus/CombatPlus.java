@@ -281,6 +281,7 @@ public final class CombatPlus extends JavaPlugin {
             setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
             setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
             setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
+            setFalse(Config.Setting.COMBATLOG_ENABLED.getKey());
             getConfiguration().save();
             getConfiguration().reloadConfig();
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
@@ -288,6 +289,7 @@ public final class CombatPlus extends JavaPlugin {
         } else if (serverVersion("1.11") || serverVersion("1.12")) {
             setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
             setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
+            setFalse(Config.Setting.COMBATLOG_ENABLED.getKey());
             getConfiguration().save();
             getConfiguration().reloadConfig();
             consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());

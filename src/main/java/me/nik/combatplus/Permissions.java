@@ -1,20 +1,22 @@
 package me.nik.combatplus;
 
-public class Permissions {
+public enum Permissions {
+    ADMIN("cp.admin"),
+    BYPASS_COMBATLOG("cp.bypass.combatlog"),
+    BYPASS_GAPPLE("cp.bypass.gapple"),
+    BYPASS_EPEARL("cp.bypass.epearl"),
+    BYPASS_ITEMS("cp.bypass.items"),
+    BYPASS_OFFHAND("cp.bypass.offhand"),
+    BYPASS_BOWBOOST("cp.bypass.bowboost"),
+    DEBUG("cp.debug");
 
-    public static final String ADMIN = "cp.admin";
+    private final String permission;
 
-    public static final String BYPASS_COMBATLOG = "cp.bypass.combatlog";
+    Permissions(String permission) {
+        this.permission = permission;
+    }
 
-    public static final String BYPASS_GAPPLE = "cp.bypass.gapple";
-
-    public static final String BYPASS_EPEARL = "cp.bypass.epearl";
-
-    public static final String BYPASS_ITEMS = "cp.bypass.items";
-
-    public static final String BYPASS_OFFHAND = "cp.bypass.offhand";
-
-    public static final String BYPASS_BOWBOOST = "cp.bypass.bowboost";
-
-    public static final String DEBUG = "cp.debug";
+    public String getPermission() {
+        return this.permission;
+    }
 }
