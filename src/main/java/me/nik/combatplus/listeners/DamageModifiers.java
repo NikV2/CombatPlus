@@ -16,17 +16,11 @@ import org.bukkit.util.Vector;
 
 public class DamageModifiers implements Listener {
 
-    private final WorldUtils worldUtils = new WorldUtils();
-
-    /*
-     This Listener Changes the Damage Dealt to All Entities to the Old Values
-     */
-
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
         final Player player = (Player) e.getDamager();
-        if (worldUtils.combatDisabledWorlds(player)) return;
+        if (WorldUtils.combatDisabledWorlds(player)) return;
         final ItemStack handItem = player.getInventory().getItemInMainHand();
         final String weapon = handItem.getType().name();
         if (Config.Setting.DISABLE_SWEEP_ENABLED.getBoolean() && e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)) {

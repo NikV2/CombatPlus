@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -19,9 +20,7 @@ import java.util.UUID;
 
 public class Blocking implements Listener {
 
-    private static final String[] interactiveBlocks = {"DOOR", "TABLE", "STAND", "CHEST", "GATE", "DISPENSER", "DROPPER", "NOTE", "REDSTONE", "DIODE", "FRAME", "LEVER", "SHULKER", "FURNACE", "BARREL"};
-
-    private final WorldUtils worldUtils = new WorldUtils();
+    private final String[] interactiveBlocks = {"DOOR", "TABLE", "STAND", "CHEST", "GATE", "DISPENSER", "DROPPER", "NOTE", "REDSTONE", "DIODE", "FRAME", "LEVER", "SHULKER", "FURNACE", "BARREL"};
 
     private final HashMap<UUID, Long> blocking = new HashMap<>();
 
@@ -44,7 +43,7 @@ public class Blocking implements Listener {
         }
 
         Player p = e.getPlayer();
-        if (worldUtils.combatDisabledWorlds(p)) return;
+        if (WorldUtils.combatDisabledWorlds(p)) return;
         if (Config.Setting.SWORD_BLOCKING_IGNORE_SHIELDS.getBoolean() && holdsShield(e.getPlayer())) return;
 
         if (Config.Setting.SWORD_BLOCKING_CANCEL_SPRINTING.getBoolean() && p.isSprinting()) {
@@ -73,5 +72,12 @@ public class Blocking implements Listener {
             }
             blocking.remove(uuid);
         }
+    }
+
+    @EventHandler
+    public void cleanCache(final PlayerQuitEvent e) {
+        UUID uuid = e.getPlayer().getUniqueId();
+        if (!this.blocking.containsKey(uuid)) return;
+        this.blocking.remove(uuid);
     }
 }

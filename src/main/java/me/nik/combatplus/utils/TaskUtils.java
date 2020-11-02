@@ -6,6 +6,9 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class TaskUtils {
 
+    private TaskUtils() {
+    }
+
     private static final CombatPlus plugin = CombatPlus.getInstance();
 
     public static BukkitTask taskTimer(Runnable runnable, long delay, long interval) {

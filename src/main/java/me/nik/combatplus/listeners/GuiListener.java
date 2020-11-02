@@ -10,7 +10,7 @@ import org.bukkit.inventory.InventoryHolder;
 public class GuiListener implements Listener {
 
     @EventHandler
-    public void onClick(InventoryClickEvent e) {
+    public void onClick(final InventoryClickEvent e) {
 
         InventoryHolder holder = e.getInventory().getHolder();
 

@@ -2,9 +2,9 @@ package me.nik.combatplus.listeners;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
-import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FishHook;
@@ -17,12 +17,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.util.Vector;
 
 public class FishingRodKnockback implements Listener {
 
-    /*
-    Bring back old fishing rod behavior
-     */
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRodLand(ProjectileHitEvent e) {
@@ -56,7 +54,7 @@ public class FishingRodKnockback implements Listener {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
 
-        livingEntity.setVelocity(MiscUtils.calculateVelocity(livingEntity.getVelocity(), livingEntity.getLocation(), hook.getLocation()));
+        livingEntity.setVelocity(calculateVelocity(livingEntity.getVelocity(), livingEntity.getLocation(), hook.getLocation()));
         livingEntity.damage(Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
         Messenger.debug(holder, "&3Fishing Rod Knockback &f&l>> &6Velocity: &a" + livingEntity.getVelocity().toString());
     }
@@ -78,5 +76,33 @@ public class FishingRodKnockback implements Listener {
      */
     private EntityDamageEvent customEvent(Player rodder, Entity entity, double damage) {
         return new EntityDamageByEntityEvent(rodder, entity, EntityDamageEvent.DamageCause.PROJECTILE, damage);
+    }
+
+    private Vector calculateVelocity(Vector vel, Location player, Location loc) {
+        double xDist = loc.getX() - player.getX();
+        double zDist = loc.getZ() - player.getZ();
+
+        while (xDist * xDist + zDist * zDist < 0.0001) {
+            xDist = (Math.random() - Math.random()) * 0.01D;
+            zDist = (Math.random() - Math.random()) * 0.01D;
+        }
+
+        double distance = Math.sqrt(xDist * xDist + zDist * zDist);
+
+        double y = vel.getY() / 2;
+        double x = vel.getX() / 2;
+        double z = vel.getZ() / 2;
+
+        x -= xDist / distance * 0.4;
+
+        y += 0.4;
+
+        z -= zDist / distance * 0.4;
+
+        if (y >= 0.4) {
+            y = 0.4;
+        }
+
+        return new Vector(x, y, z);
     }
 }

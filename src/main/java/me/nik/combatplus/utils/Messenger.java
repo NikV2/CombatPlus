@@ -6,7 +6,10 @@ import me.nik.combatplus.managers.MsgType;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Messenger {
+public final class Messenger {
+
+    private Messenger() {
+    }
 
     /**
      * @param msg The message to format

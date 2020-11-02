@@ -1,4 +1,4 @@
-package me.nik.combatplus.utils;
+package me.nik.combatplus.managers;
 
 import me.nik.combatplus.CombatPlus;
 import org.bukkit.Material;

@@ -17,17 +17,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class Offhand implements Listener {
 
-    private final WorldUtils worldUtils = new WorldUtils();
-
     private final static int OFFHANDSLOT = 40;
-
-    /*
-     This Listener completely disables the use of the Offhand
-     */
 
     @EventHandler
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
-        if (worldUtils.offhandDisabledWorlds(e.getPlayer())) return;
+        if (WorldUtils.offhandDisabledWorlds(e.getPlayer())) return;
         Player p = e.getPlayer();
         if (p.hasPermission(Permissions.BYPASS_OFFHAND.getPermission())) return;
         e.setCancelled(true);
@@ -36,7 +30,7 @@ public class Offhand implements Listener {
 
     @EventHandler
     public void onClickOffHand(InventoryClickEvent e) {
-        if (worldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
+        if (WorldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getWhoClicked().hasPermission(Permissions.BYPASS_OFFHAND.getPermission())) return;
         if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != OFFHANDSLOT) return;
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
@@ -48,7 +42,7 @@ public class Offhand implements Listener {
 
     @EventHandler
     public void onDrag(InventoryDragEvent e) {
-        if (worldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
+        if (WorldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
         if (e.getWhoClicked().hasPermission(Permissions.BYPASS_OFFHAND.getPermission())) return;
         if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(OFFHANDSLOT))
             return;

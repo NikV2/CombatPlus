@@ -11,11 +11,6 @@ import org.bukkit.util.Vector;
 
 public class Projectiles implements Listener {
 
-    /*
-    This Module Makes Projectiles Go Straight (To where they're supposed to land)
-    Removes Randomness
-     */
-
     @EventHandler
     public void onProjectileShoot(ProjectileLaunchEvent e) {
         final Projectile projectile = e.getEntity();

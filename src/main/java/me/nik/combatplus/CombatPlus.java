@@ -27,18 +27,19 @@ import me.nik.combatplus.listeners.combatlog.ItemPickListener;
 import me.nik.combatplus.listeners.combatlog.TeleportListener;
 import me.nik.combatplus.listeners.fixes.Projectiles;
 import me.nik.combatplus.managers.CombatLog;
+import me.nik.combatplus.managers.CustomRecipes;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.metrics.MetricsLite;
-import me.nik.combatplus.utils.CustomRecipes;
-import me.nik.combatplus.utils.ResetStats;
-import me.nik.combatplus.utils.SetAttackSpeed;
-import me.nik.combatplus.utils.SetCustomHealth;
+import me.nik.combatplus.utils.StatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Collection;
 
 public final class CombatPlus extends JavaPlugin {
 
@@ -51,6 +52,14 @@ public final class CombatPlus extends JavaPlugin {
     public static CombatPlus getInstance() {
         return instance;
     }
+
+    private final String[] STARTUP_MESSAGE = {
+            " ",
+            ChatColor.RED + "Combat Plus v" + this.getDescription().getVersion(),
+            " ",
+            ChatColor.WHITE + "  Author: Nik",
+            " "
+    };
 
     @Override
     public void onDisable() {
@@ -66,6 +75,10 @@ public final class CombatPlus extends JavaPlugin {
         consoleMessage(MsgType.CONSOLE_DISABLED.getMessage());
     }
 
+    /**
+     * This needs a re-code, i might do it once im not so lazy
+     */
+
     @Override
     public void onEnable() {
         instance = this;
@@ -76,12 +89,7 @@ public final class CombatPlus extends JavaPlugin {
         //Load Files
         loadFiles();
 
-        //Startup Message
-        consoleMessage("");
-        consoleMessage("          " + ChatColor.RED + "Combat Plus v" + this.getDescription().getVersion());
-        consoleMessage("");
-        consoleMessage("             " + ChatColor.WHITE + "Author: Nik");
-        consoleMessage("");
+        this.getServer().getConsoleSender().sendMessage(this.STARTUP_MESSAGE);
 
         //Unsupported Version Checker
         checkSupported();
@@ -140,7 +148,7 @@ public final class CombatPlus extends JavaPlugin {
      */
     private void setDefaultStats() {
         if (serverVersion("1.8")) return;
-        this.getServer().getOnlinePlayers().forEach(player -> {
+        Bukkit.getOnlinePlayers().forEach(player -> {
             final double defaultHealth = Config.Setting.ADV_BASE_HEALTH.getDouble();
             final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             playerMaxHealth.setBaseValue(defaultHealth);
@@ -157,20 +165,20 @@ public final class CombatPlus extends JavaPlugin {
      */
     private void loadStats() {
         if (serverVersion("1.8")) return;
-        SetAttackSpeed setAttackSpeed = new SetAttackSpeed();
-        ResetStats resetStats = new ResetStats();
-        SetCustomHealth setCustomHealth = new SetCustomHealth();
 
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+
+        //Yes i'm using forEach instead of for loop, For this case it doesn't really matter if its faster or heavier so shhh
         if (Config.Setting.OLD_PVP.getBoolean()) {
-            this.getServer().getOnlinePlayers().forEach(setAttackSpeed::setAttackSpd);
+            players.forEach(StatUtils::setAttackSpeed);
         } else {
-            this.getServer().getOnlinePlayers().forEach(resetStats::resetAttackSpeed);
+            players.forEach(StatUtils::resetAttackSpeed);
         }
 
         if (Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean()) {
-            this.getServer().getOnlinePlayers().forEach(setCustomHealth::setHealth);
+            players.forEach(StatUtils::setMaxHealth);
         } else {
-            this.getServer().getOnlinePlayers().forEach(resetStats::resetMaxHealth);
+            players.forEach(StatUtils::resetMaxHealth);
         }
     }
 
@@ -192,7 +200,7 @@ public final class CombatPlus extends JavaPlugin {
             pm.registerEvents(new BowBoost(), this);
         }
         if (Config.Setting.OLD_REGEN.getBoolean()) {
-            pm.registerEvents(new PlayerRegen(this), this);
+            pm.registerEvents(new PlayerRegen(), this);
         }
         if (Config.Setting.DISABLED_ITEMS_ENABLED.getBoolean()) {
             pm.registerEvents(new DisabledItems(), this);

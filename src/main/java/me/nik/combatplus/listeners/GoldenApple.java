@@ -23,17 +23,12 @@ import java.util.UUID;
 public class GoldenApple implements Listener {
 
     private final CombatPlus plugin;
-    private final WorldUtils worldUtils = new WorldUtils();
 
     private static final HashMap<UUID, Long> cooldown = new HashMap<>();
 
     public GoldenApple(CombatPlus plugin) {
         this.plugin = plugin;
     }
-
-    /*
-     This Listener adds a cooldown between eating Golden Apples
-     */
 
     public static String getCooldown(UUID uuid) {
         if (cooldown.containsKey(uuid)) {
@@ -49,7 +44,7 @@ public class GoldenApple implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
-        if (worldUtils.gappleDisabledWorlds(e.getPlayer())) return;
+        if (WorldUtils.gappleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE.getPermission())) return;
         if (isGoldenApple(e)) {
             final UUID p = e.getPlayer().getUniqueId();

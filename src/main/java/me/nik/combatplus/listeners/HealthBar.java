@@ -15,8 +15,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class HealthBar implements Listener {
 
-    private final WorldUtils worldUtils = new WorldUtils();
-
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof LivingEntity)) return;
@@ -24,12 +22,12 @@ public class HealthBar implements Listener {
 
         if (e.getDamager() instanceof Player) {
             final Player p = (Player) e.getDamager();
-            if (worldUtils.healthBarDisabledWorlds(p)) return;
+            if (WorldUtils.healthBarDisabledWorlds(p)) return;
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth(entity))));
         } else if (e.getDamager() instanceof Projectile) {
             if (!(((Projectile) e.getDamager()).getShooter() instanceof Player)) return;
             final Player shooter = (Player) ((Projectile) e.getDamager()).getShooter();
-            if (worldUtils.healthBarDisabledWorlds(shooter)) return;
+            if (WorldUtils.healthBarDisabledWorlds(shooter)) return;
             shooter.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth(entity))));
         }
     }

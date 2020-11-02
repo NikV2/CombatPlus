@@ -24,17 +24,12 @@ import java.util.UUID;
 public class Enderpearl implements Listener {
 
     private final CombatPlus plugin;
-    private final WorldUtils worldUtils = new WorldUtils();
 
     private static final HashMap<UUID, Long> cooldown = new HashMap<>();
 
     public Enderpearl(CombatPlus plugin) {
         this.plugin = plugin;
     }
-
-    /*
-     This Listener Adds a cooldown between using Ender Pearls
-     */
 
     public static String getCooldown(UUID uuid) {
         if (cooldown.containsKey(uuid)) {
@@ -53,7 +48,7 @@ public class Enderpearl implements Listener {
         if (!(e.getEntity().getShooter() instanceof Player)) return;
         if (!(e.getEntity().getType() == EntityType.ENDER_PEARL)) return;
         Player player = (Player) e.getEntity().getShooter();
-        if (worldUtils.enderpearlDisabledWorlds(player)) return;
+        if (WorldUtils.enderpearlDisabledWorlds(player)) return;
         if (player.hasPermission(Permissions.BYPASS_EPEARL.getPermission())) return;
         final UUID p = player.getUniqueId();
         if (cooldown.containsKey(p)) {

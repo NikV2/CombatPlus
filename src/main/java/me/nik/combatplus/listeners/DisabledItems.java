@@ -13,10 +13,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class DisabledItems implements Listener {
 
-    /*
-     This Listener Disables the crafting of the items defined in the Config
-     */
-
     @EventHandler
     public void onCraft(PrepareItemCraftEvent e) {
         if (e.getViewers().size() < 1) return;
