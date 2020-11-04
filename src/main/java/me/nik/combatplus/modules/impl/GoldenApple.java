@@ -1,38 +1,39 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.utils.ServerUtils;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class GoldenApple implements Listener {
+public class GoldenApple extends Module {
 
-    private final CombatPlus plugin;
+    private final Map<UUID, Long> cooldown;
 
-    private static final HashMap<UUID, Long> cooldown = new HashMap<>();
+    public GoldenApple() {
+        super("Golden Apple Cooldown", Config.Setting.GOLDEN_APPLE_ENABLED.getBoolean());
 
-    public GoldenApple(CombatPlus plugin) {
-        this.plugin = plugin;
+        this.cooldown = new HashMap<>();
     }
 
-    public static String getCooldown(UUID uuid) {
+    public String getCooldown(UUID uuid) {
         if (cooldown.containsKey(uuid)) {
-            long secondsleft = ((cooldown.get(uuid) / 1000) + Config.Setting.COOLDOWN_GOLDEN_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
+            long secondsleft = ((cooldown.get(uuid) / 1000) + Config.Setting.GOLDEN_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
             if (secondsleft < 1) {
                 cooldown.remove(uuid);
                 return "Ready";
@@ -44,13 +45,13 @@ public class GoldenApple implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
-        if (WorldUtils.gappleDisabledWorlds(e.getPlayer())) return;
+        if (WorldUtils.goldenAppleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE.getPermission())) return;
         if (isGoldenApple(e)) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
-                long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.COOLDOWN_GOLDEN_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
+                long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.GOLDEN_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
                 if (secondsleft < 1) {
                     cooldown.remove(p);
                     return;
@@ -59,14 +60,14 @@ public class GoldenApple implements Listener {
                 player.sendMessage(MsgType.GOLDEN_APPLE_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 cooldown.put(p, System.currentTimeMillis());
-                Messenger.debug(player, "&3Golden Apple Cooldown &f&l>> &6Added to cooldown: &atrue");
-                if (Config.Setting.COOLDOWN_GOLDEN_APPLE_ACTIONBAR.getBoolean()) {
+                debug(player, "&6Added to cooldown");
+                if (Config.Setting.GOLDEN_APPLE_ACTIONBAR.getBoolean()) {
                     new BukkitRunnable() {
 
                         @Override
                         public void run() {
                             if (cooldown.containsKey(p)) {
-                                long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.COOLDOWN_GOLDEN_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
+                                long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.GOLDEN_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
                                 if (secondsleft < 1) {
                                     cooldown.remove(p);
                                     cancel();
@@ -77,7 +78,7 @@ public class GoldenApple implements Listener {
                                 cancel();
                             }
                         }
-                    }.runTaskTimerAsynchronously(plugin, 0, 20);
+                    }.runTaskTimerAsynchronously(CombatPlus.getInstance(), 0, 20);
                 }
             }
         }
@@ -86,11 +87,7 @@ public class GoldenApple implements Listener {
     private boolean isGoldenApple(PlayerItemConsumeEvent e) {
         ItemStack goldenApple = new ItemStack(Material.GOLDEN_APPLE);
         ItemStack consumedItem = e.getItem();
-        if (plugin.serverVersion("1.8")
-                || plugin.serverVersion("1.9")
-                || plugin.serverVersion("1.10")
-                || plugin.serverVersion("1.11")
-                || plugin.serverVersion("1.12")) {
+        if (ServerUtils.isLegacy()) {
             return consumedItem.getType().name().equals("GOLDEN_APPLE") &&
                     Objects.equals(goldenApple.getData(), consumedItem.getData());
         } else {

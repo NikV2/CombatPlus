@@ -65,9 +65,7 @@ public class Lang {
         get().addDefault("console_update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
         get().addDefault("console_update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
         get().addDefault("console_commands", "&c&lYou cannot run this command through the console :(");
-        get().addDefault("console_initialize", "&f&lInitializing Listeners...");
         get().addDefault("console_unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
         get().addDefault("console_unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
-        get().addDefault("console_disabled", "&f&lAll Player Stats Have Been Set Back To Their Default Values! Goodbye.");
     }
 }

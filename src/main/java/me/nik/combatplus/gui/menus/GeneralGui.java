@@ -37,12 +37,12 @@ public class GeneralGui extends Menu {
                 new MainGui(playerMenuUtility, plugin).open();
                 break;
             case 10:
-                changeConfigBoolean(Config.Setting.COOLDOWN_GOLDEN_APPLE_ENABLED.getKey());
+                changeConfigBoolean(Config.Setting.GOLDEN_APPLE_ENABLED.getKey());
                 getInventory().clear();
                 setMenuItems();
                 break;
             case 12:
-                changeConfigBoolean(Config.Setting.COOLDOWN_ENCHANTED_APPLE_ENABLED.getKey());
+                changeConfigBoolean(Config.Setting.ENCHANTED_APPLE_ENABLED.getKey());
                 getInventory().clear();
                 setMenuItems();
                 break;
@@ -62,7 +62,7 @@ public class GeneralGui extends Menu {
                 setMenuItems();
                 break;
             case 32:
-                changeConfigBoolean(Config.Setting.FIX_PROJECTILES.getKey());
+                changeConfigBoolean(Config.Setting.COMBATLOG_ENABLED.getKey());
                 getInventory().clear();
                 setMenuItems();
                 break;
@@ -92,7 +92,7 @@ public class GeneralGui extends Menu {
         inventory.setItem(53, next);
         ArrayList<String> gappleLore = new ArrayList<>();
         gappleLore.add("");
-        gappleLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.COOLDOWN_GOLDEN_APPLE_ENABLED.getKey()));
+        gappleLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.GOLDEN_APPLE_ENABLED.getKey()));
         gappleLore.add("");
         gappleLore.add("&fWould you like a Cooldown");
         gappleLore.add("&fBetween eating Golden Apples?");
@@ -102,7 +102,7 @@ public class GeneralGui extends Menu {
 
         ArrayList<String> gappleELore = new ArrayList<>();
         gappleELore.add("");
-        gappleELore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.COOLDOWN_ENCHANTED_APPLE_ENABLED.getKey()));
+        gappleELore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.ENCHANTED_APPLE_ENABLED.getKey()));
         gappleELore.add("");
         gappleELore.add("&fWould you like a Cooldown");
         gappleELore.add("&fBetween eating Enchanted Golden Apples?");
@@ -128,13 +128,16 @@ public class GeneralGui extends Menu {
         offhLore.add("&fPlayers from using the Offhand?");
         ItemStack offh = makeItem(Material.PAPER, 1, "&6Disable Offhand", offhLore);
 
-        ArrayList<String> projLore = new ArrayList<>();
-        projLore.add("");
-        projLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.FIX_PROJECTILES.getKey()));
-        projLore.add("");
-        projLore.add("&fFixes a Bug with Projectiles");
-        projLore.add("&fNot always going straight");
-        ItemStack proj = makeItem(Material.PAPER, 1, "&6Projectile Fixer", projLore);
+        ArrayList<String> combatlogLore = new ArrayList<>();
+        combatlogLore.add("");
+        combatlogLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.COMBATLOG_ENABLED.getKey()));
+        combatlogLore.add("");
+        combatlogLore.add("&fPrevents players from logging out");
+        combatlogLore.add("&fWhile in Combat");
+        combatlogLore.add("");
+        combatlogLore.add("&7More options in the Config.yml");
+
+        ItemStack cl = makeItem(Material.PAPER, 1, "&6CombatLog", combatlogLore);
 
         ArrayList<String> healthLore = new ArrayList<>();
         healthLore.add("");
@@ -171,7 +174,7 @@ public class GeneralGui extends Menu {
         inventory.setItem(16, health);
         inventory.setItem(28, bar);
         inventory.setItem(30, offh);
-        inventory.setItem(32, proj);
+        inventory.setItem(32, cl);
         inventory.setItem(34, epearl);
     }
 }

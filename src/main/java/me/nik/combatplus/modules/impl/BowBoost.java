@@ -1,16 +1,20 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.Permissions;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.files.Config;
+import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
-public class BowBoost implements Listener {
+public class BowBoost extends Module {
+
+    public BowBoost() {
+        super("Bow Boost", Config.Setting.DISABLE_ARROW_BOOST.getBoolean());
+    }
 
     @EventHandler
     public void onArrowDamage(EntityDamageByEntityEvent e) {
@@ -25,7 +29,7 @@ public class BowBoost implements Listener {
             Player holderPlayer = (Player) holder;
             if (p.getUniqueId().equals(holderPlayer.getUniqueId())) {
                 e.setCancelled(true);
-                Messenger.debug(p, "&3Bow Boost &f&l>> &6Canceled: &a" + e.isCancelled());
+                debug(p, "&6Cancelled: &a" + e.isCancelled());
             }
         }
     }

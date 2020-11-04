@@ -29,10 +29,8 @@ public enum MsgType {
     CONSOLE_UPDATE_NOT_FOUND(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_update_not_found"))),
     CONSOLE_UPDATE_DISABLED(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_update_disabled"))),
     CONSOLE_COMMANDS(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_commands"))),
-    CONSOLE_INITIALIZE(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_initialize"))),
     CONSOLE_UNSUPPORTED_VERSION(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_unsupported_version"))),
-    CONSOLE_UNSUPPORTED_SWEEP_ATTACK(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_unsupported_sweep_attack"))),
-    CONSOLE_DISABLED(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_disabled")));
+    CONSOLE_UNSUPPORTED_SWEEP_ATTACK(PREFIX.getMessage() + Messenger.format(CombatPlus.getInstance().getLang().get().getString("console_unsupported_sweep_attack")));
 
     private final String message;
 

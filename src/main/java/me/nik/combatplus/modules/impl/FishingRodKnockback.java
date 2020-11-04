@@ -1,7 +1,7 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.modules.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -12,15 +12,18 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.Vector;
 
-public class FishingRodKnockback implements Listener {
+public class FishingRodKnockback extends Module {
 
+
+    public FishingRodKnockback() {
+        super("Fishing Rod Knockback", Config.Setting.FISHING_ROD_ENABLED.getBoolean());
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRodLand(ProjectileHitEvent e) {
@@ -56,7 +59,7 @@ public class FishingRodKnockback implements Listener {
 
         livingEntity.setVelocity(calculateVelocity(livingEntity.getVelocity(), livingEntity.getLocation(), hook.getLocation()));
         livingEntity.damage(Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
-        Messenger.debug(holder, "&3Fishing Rod Knockback &f&l>> &6Velocity: &a" + livingEntity.getVelocity().toString());
+        debug(holder, "&6Velocity: &a" + livingEntity.getVelocity());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -65,7 +68,7 @@ public class FishingRodKnockback implements Listener {
         if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) return;
         e.getHook().remove();
         e.setCancelled(true);
-        Messenger.debug(e.getPlayer(), "&3Fishing Rod Knockback &f&l>> &6Cancelled Dragging: &atrue");
+        debug(e.getPlayer(), "&6Cancelled Dragging: &a" + e.isCancelled());
     }
 
     /*

@@ -1,37 +1,33 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-public class Enderpearl implements Listener {
+public class Enderpearl extends Module {
 
-    private final CombatPlus plugin;
+    private final Map<UUID, Long> cooldown;
 
-    private static final HashMap<UUID, Long> cooldown = new HashMap<>();
-
-    public Enderpearl(CombatPlus plugin) {
-        this.plugin = plugin;
+    public Enderpearl() {
+        super("Ender Pearl Cooldown", Config.Setting.ENDERPEARL_ENABLED.getBoolean());
+        this.cooldown = new HashMap<>();
     }
 
-    public static String getCooldown(UUID uuid) {
+    public String getCooldown(UUID uuid) {
         if (cooldown.containsKey(uuid)) {
             long secondsleft = ((cooldown.get(uuid) / 1000) + Config.Setting.ENDERPEARL_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
             if (secondsleft < 1) {
@@ -53,10 +49,6 @@ public class Enderpearl implements Listener {
         final UUID p = player.getUniqueId();
         if (cooldown.containsKey(p)) {
             e.setCancelled(true);
-            if (!(player.getGameMode() == GameMode.CREATIVE) && plugin.serverVersion("1.8") || plugin.serverVersion("1.9") || plugin.serverVersion("1.10")) {
-                ItemStack enderpearl = new ItemStack(Material.ENDER_PEARL, 1);
-                player.getInventory().addItem(enderpearl);
-            }
             long secondsLeft = ((cooldown.get(p) / 1000) + Config.Setting.ENDERPEARL_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
             if (secondsLeft < 1) {
                 cooldown.remove(p);
@@ -65,7 +57,7 @@ public class Enderpearl implements Listener {
             player.sendMessage(MsgType.ENDERPEARL_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsLeft)));
         } else {
             cooldown.put(p, System.currentTimeMillis());
-            Messenger.debug(player, "&3Ender Pearl Cooldown &f&l>> &6Added to cooldown: &atrue");
+            debug(player, "&6Added to cooldown");
             if (Config.Setting.ENDERPEARL_ACTIONBAR.getBoolean()) {
                 new BukkitRunnable() {
                     @Override
@@ -82,7 +74,7 @@ public class Enderpearl implements Listener {
                             cancel();
                         }
                     }
-                }.runTaskTimerAsynchronously(plugin, 0, 20);
+                }.runTaskTimerAsynchronously(CombatPlus.getInstance(), 0, 20);
             }
         }
     }

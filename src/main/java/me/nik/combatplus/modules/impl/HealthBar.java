@@ -1,5 +1,7 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
+import me.nik.combatplus.files.Config;
+import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.Messenger;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -10,10 +12,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class HealthBar implements Listener {
+public class HealthBar extends Module {
+
+    public HealthBar() {
+        super("HealthBar", Config.Setting.HEALTHBAR_ENABLED.getBoolean());
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {

@@ -8,10 +8,6 @@ public final class WorldUtils {
     private WorldUtils() {
     }
 
-    /**
-     * @param player The player
-     * @return true if the player is inside a Disabled World
-     */
     public static boolean combatDisabledWorlds(Player player) {
         for (String world : Config.Setting.COMBAT_DISABLED_WORLDS.getStringList()) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
@@ -20,34 +16,30 @@ public final class WorldUtils {
         return false;
     }
 
-    /**
-     * @param player The player
-     * @return true if the player is inside a Disabled World
-     */
-    public static boolean gappleDisabledWorlds(Player player) {
-        for (String world : Config.Setting.COOLDOWN_APPLE_WORLDS.getStringList()) {
+    public static boolean goldenAppleDisabledWorlds(Player player) {
+        for (String world : Config.Setting.GOLDEN_APPLE_DISABLED_WORLDS.getStringList()) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }
         return false;
     }
 
-    /**
-     * @param player The player
-     * @return true if the player is inside a Disabled World
-     */
+    public static boolean enchantedAppleDisabledWorlds(Player player) {
+        for (String world : Config.Setting.ENCHANTED_APPLE_DISABLED_WORLDS.getStringList()) {
+            if (player.getWorld().getName().equalsIgnoreCase(world)) return true;
+        }
+
+        return false;
+    }
+
     public static boolean enderpearlDisabledWorlds(Player player) {
-        for (String world : Config.Setting.ENDERPEARL_WORLDS.getStringList()) {
+        for (String world : Config.Setting.ENDERPEARL_DISABLED_WORLDS.getStringList()) {
             if (player.getWorld().getName().equalsIgnoreCase(world))
                 return true;
         }
         return false;
     }
 
-    /**
-     * @param player The player
-     * @return true if the player is inside a Disabled World
-     */
     public static boolean offhandDisabledWorlds(Player player) {
         for (String world : Config.Setting.DISABLE_OFFHAND_WORLDS.getStringList()) {
             if (player.getWorld().getName().equalsIgnoreCase(world))

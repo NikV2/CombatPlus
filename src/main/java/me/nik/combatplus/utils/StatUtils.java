@@ -19,7 +19,6 @@ public final class StatUtils {
         AttributeInstance baseAttSpd = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         baseAttSpd.setBaseValue(Config.Setting.ADV_NEW_ATTACK_SPEED.getDouble());
         player.saveData();
-        Messenger.debug(player, "&6Set Attack Speed to: &a" + Config.Setting.ADV_NEW_ATTACK_SPEED.getDouble());
     }
 
     /**
@@ -31,7 +30,6 @@ public final class StatUtils {
         AttributeInstance baseMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         baseMaxHealth.setBaseValue(Config.Setting.ADV_BASE_HEALTH.getDouble());
         player.saveData();
-        Messenger.debug(player, "&6Set Maximum Health to: &a" + Config.Setting.ADV_BASE_HEALTH.getDouble());
     }
 
     /**
@@ -42,7 +40,6 @@ public final class StatUtils {
     public static void setMaxHealth(Player player) {
         player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(Config.Setting.CUSTOM_PLAYER_HEALTH_HEALTH.getDouble());
         player.saveData();
-        Messenger.debug(player, "&6Set Maximum Health to: &a" + Config.Setting.CUSTOM_PLAYER_HEALTH_HEALTH.getDouble());
     }
 
     /**
@@ -57,6 +54,5 @@ public final class StatUtils {
         }
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(Config.Setting.ADV_OLD_ATTACK_SPEED.getDouble());
         player.saveData();
-        Messenger.debug(player, "&6Set Attack Speed to: &a" + Config.Setting.ADV_OLD_ATTACK_SPEED.getDouble());
     }
 }

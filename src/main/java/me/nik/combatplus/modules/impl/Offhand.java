@@ -1,13 +1,13 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.Permissions;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.files.Config;
+import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -15,9 +15,13 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Offhand implements Listener {
+public class Offhand extends Module {
 
-    private final static int OFFHANDSLOT = 40;
+    private final int OFFHANDSLOT = 40;
+
+    public Offhand() {
+        super("Offhand", Config.Setting.DISABLE_OFFHAND_ENABLED.getBoolean());
+    }
 
     @EventHandler
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
@@ -25,7 +29,7 @@ public class Offhand implements Listener {
         Player p = e.getPlayer();
         if (p.hasPermission(Permissions.BYPASS_OFFHAND.getPermission())) return;
         e.setCancelled(true);
-        Messenger.debug(p, "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
+        debug(p, "&6Cancelled: &a" + e.isCancelled());
     }
 
     @EventHandler
@@ -36,7 +40,7 @@ public class Offhand implements Listener {
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
-            Messenger.debug((Player) e.getWhoClicked(), "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
+            debug((Player) e.getWhoClicked(), "&6Cancelled: &a" + e.isCancelled());
         }
     }
 
@@ -49,7 +53,7 @@ public class Offhand implements Listener {
         if (itemCheck(e.getOldCursor())) {
             e.setResult(Event.Result.DENY);
             e.setCancelled(true);
-            Messenger.debug((Player) e.getWhoClicked(), "&3Offhand &f&l>> &6Canceled: &a" + e.isCancelled());
+            debug((Player) e.getWhoClicked(), "&6Cancelled: &a" + e.isCancelled());
         }
     }
 

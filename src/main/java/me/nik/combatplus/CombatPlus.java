@@ -1,45 +1,40 @@
 package me.nik.combatplus;
 
+import me.nik.combatplus.api.events.CombatPlusLoadEvent;
 import me.nik.combatplus.commands.CommandManager;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.files.commentedfiles.CommentedFileConfiguration;
 import me.nik.combatplus.handlers.PapiHook;
 import me.nik.combatplus.handlers.UpdateChecker;
-import me.nik.combatplus.listeners.AttributesSet;
-import me.nik.combatplus.listeners.Blocking;
-import me.nik.combatplus.listeners.BowBoost;
-import me.nik.combatplus.listeners.DamageModifiers;
-import me.nik.combatplus.listeners.DisabledItems;
-import me.nik.combatplus.listeners.EnchantedGoldenApple;
-import me.nik.combatplus.listeners.Enderpearl;
-import me.nik.combatplus.listeners.FishingRodKnockback;
-import me.nik.combatplus.listeners.GoldenApple;
 import me.nik.combatplus.listeners.GuiListener;
-import me.nik.combatplus.listeners.HealthBar;
-import me.nik.combatplus.listeners.Offhand;
-import me.nik.combatplus.listeners.PlayerRegen;
-import me.nik.combatplus.listeners.combatlog.CombatListener;
-import me.nik.combatplus.listeners.combatlog.CommandListener;
-import me.nik.combatplus.listeners.combatlog.DisconnectListener;
-import me.nik.combatplus.listeners.combatlog.ItemDropListener;
-import me.nik.combatplus.listeners.combatlog.ItemPickListener;
-import me.nik.combatplus.listeners.combatlog.TeleportListener;
-import me.nik.combatplus.listeners.fixes.Projectiles;
-import me.nik.combatplus.managers.CombatLog;
 import me.nik.combatplus.managers.CustomRecipes;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.metrics.MetricsLite;
-import me.nik.combatplus.utils.StatUtils;
+import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.modules.impl.Blocking;
+import me.nik.combatplus.modules.impl.BowBoost;
+import me.nik.combatplus.modules.impl.CombatLog;
+import me.nik.combatplus.modules.impl.CustomHealth;
+import me.nik.combatplus.modules.impl.DamageModifiers;
+import me.nik.combatplus.modules.impl.DisabledItems;
+import me.nik.combatplus.modules.impl.EnchantedGoldenApple;
+import me.nik.combatplus.modules.impl.Enderpearl;
+import me.nik.combatplus.modules.impl.FishingRodKnockback;
+import me.nik.combatplus.modules.impl.GoldenApple;
+import me.nik.combatplus.modules.impl.HealthBar;
+import me.nik.combatplus.modules.impl.Offhand;
+import me.nik.combatplus.modules.impl.OldPvP;
+import me.nik.combatplus.modules.impl.PlayerRegen;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class CombatPlus extends JavaPlugin {
 
@@ -48,6 +43,8 @@ public final class CombatPlus extends JavaPlugin {
     private Config config;
 
     private Lang lang;
+
+    private final List<Module> modules = new ArrayList<>();
 
     public static CombatPlus getInstance() {
         return instance;
@@ -66,13 +63,13 @@ public final class CombatPlus extends JavaPlugin {
         //Load Default Stats to avoid server damage
         setDefaultStats();
 
-        //Reload Files
+        this.modules.forEach(Module::disInit);
+
         config.reset();
         lang.reload();
         lang.save();
 
-        //Done
-        consoleMessage(MsgType.CONSOLE_DISABLED.getMessage());
+        instance = null;
     }
 
     /**
@@ -91,17 +88,17 @@ public final class CombatPlus extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(this.STARTUP_MESSAGE);
 
-        //Unsupported Version Checker
+        //Unsupported Version Check
         checkSupported();
 
         //Load Commands
         getCommand("combatplus").setExecutor(new CommandManager(this));
 
-        //Load Listeners
-        initialize();
+        //Load Modules
+        initModules();
 
-        //Load Player Stats to allow reloading availability
-        loadStats();
+        //Load Listeners
+        initListeners();
 
         //Check for Updates
         checkForUpdates();
@@ -114,6 +111,18 @@ public final class CombatPlus extends JavaPlugin {
         if (this.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PapiHook(this).register();
         }
+
+        Bukkit.getPluginManager().callEvent(new CombatPlusLoadEvent());
+    }
+
+    public Module getModule(String name) {
+        for (Module module : this.modules) {
+            if (module.getName().equals(name)) {
+                return module;
+            }
+        }
+
+        return null;
     }
 
     public CommentedFileConfiguration getConfiguration() {
@@ -159,103 +168,42 @@ public final class CombatPlus extends JavaPlugin {
         });
     }
 
-    /**
-     * Load 1.8 Attack Speed and Custom Stats on startup
-     * Potentially adding Reloading Compatibility
-     */
-    private void loadStats() {
-        if (serverVersion("1.8")) return;
+    private void initModules() {
+        this.modules.clear();
 
-        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+        //add modules
+        this.modules.add(new PlayerRegen());
+        this.modules.add(new OldPvP());
+        this.modules.add(new Offhand());
+        this.modules.add(new HealthBar());
+        this.modules.add(new GoldenApple());
+        this.modules.add(new FishingRodKnockback());
+        this.modules.add(new Enderpearl());
+        this.modules.add(new EnchantedGoldenApple());
+        this.modules.add(new DisabledItems());
+        this.modules.add(new DamageModifiers());
+        this.modules.add(new CustomHealth());
+        this.modules.add(new CombatLog());
+        this.modules.add(new BowBoost());
+        this.modules.add(new Blocking());
 
-        //Yes i'm using forEach instead of for loop, For this case it doesn't really matter if its faster or heavier so shhh
-        if (Config.Setting.OLD_PVP.getBoolean()) {
-            players.forEach(StatUtils::setAttackSpeed);
-        } else {
-            players.forEach(StatUtils::resetAttackSpeed);
-        }
+        this.modules.forEach(Module::init);
 
-        if (Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean()) {
-            players.forEach(StatUtils::setMaxHealth);
-        } else {
-            players.forEach(StatUtils::resetMaxHealth);
-        }
-    }
-
-    /**
-     * Initialize enabled Listeners
-     */
-    private void initialize() {
-        consoleMessage(MsgType.CONSOLE_INITIALIZE.getMessage());
-
-        final PluginManager pm = this.getServer().getPluginManager();
-
-        if (Config.Setting.OLD_PVP.getBoolean() || Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean()) {
-            pm.registerEvents(new AttributesSet(), this);
-        }
-        if (Config.Setting.OLD_WEAPON_DAMAGE.getBoolean() || Config.Setting.OLD_TOOL_DAMAGE.getBoolean() || Config.Setting.DISABLE_SWEEP_ENABLED.getBoolean()) {
-            pm.registerEvents(new DamageModifiers(), this);
-        }
-        if (Config.Setting.DISABLE_ARROW_BOOST.getBoolean()) {
-            pm.registerEvents(new BowBoost(), this);
-        }
-        if (Config.Setting.OLD_REGEN.getBoolean()) {
-            pm.registerEvents(new PlayerRegen(), this);
-        }
-        if (Config.Setting.DISABLED_ITEMS_ENABLED.getBoolean()) {
-            pm.registerEvents(new DisabledItems(), this);
-        }
-        if (Config.Setting.DISABLE_OFFHAND_ENABLED.getBoolean()) {
-            pm.registerEvents(new Offhand(), this);
-        }
-        if (Config.Setting.FIX_PROJECTILES.getBoolean()) {
-            pm.registerEvents(new Projectiles(), this);
-        }
-        if (Config.Setting.COOLDOWN_GOLDEN_APPLE_ENABLED.getBoolean()) {
-            pm.registerEvents(new GoldenApple(this), this);
-        }
-        if (Config.Setting.COOLDOWN_ENCHANTED_APPLE_ENABLED.getBoolean()) {
-            pm.registerEvents(new EnchantedGoldenApple(this), this);
-        }
-        if (Config.Setting.ENDERPEARL_ENABLED.getBoolean()) {
-            pm.registerEvents(new Enderpearl(this), this);
-        }
         if (Config.Setting.ENCHANTED_APPLE_CRAFTING.getBoolean()) {
             try {
                 this.getServer().addRecipe(new CustomRecipes(this).enchantedGoldenAppleRecipe());
             } catch (Exception ignored) {
             }
         }
-        if (Config.Setting.FISHING_ROD_ENABLED.getBoolean()) {
-            pm.registerEvents(new FishingRodKnockback(), this);
-        }
-        if (Config.Setting.SWORD_BLOCKING_ENABLED.getBoolean()) {
-            pm.registerEvents(new Blocking(), this);
-        }
-        if (Config.Setting.HEALTHBAR_ENABLED.getBoolean()) {
-            pm.registerEvents(new HealthBar(), this);
-        }
+    }
 
-        if (Config.Setting.COMBATLOG_ENABLED.getBoolean()) {
+    /**
+     * Initialize enabled Listeners
+     */
+    private void initListeners() {
 
-            new CombatLog().runTaskTimerAsynchronously(this, 20, 20);
+        final PluginManager pm = this.getServer().getPluginManager();
 
-            pm.registerEvents(new CombatListener(), this);
-            pm.registerEvents(new DisconnectListener(), this);
-
-            if (Config.Setting.COMBATLOG_COMMANDS_ENABLED.getBoolean()) {
-                pm.registerEvents(new CommandListener(), this);
-            }
-            if (Config.Setting.COMBATLOG_PREVENT_DROPPING_ITEMS.getBoolean()) {
-                pm.registerEvents(new ItemDropListener(), this);
-            }
-            if (Config.Setting.COMBATLOG_PREVENT_PICKING_ITEMS.getBoolean()) {
-                pm.registerEvents(new ItemPickListener(), this);
-            }
-            if (Config.Setting.COMBATLOG_PREVENT_TELEPORTATIONS.getBoolean()) {
-                pm.registerEvents(new TeleportListener(), this);
-            }
-        }
         //GUI Listener (Do not remove this, idiot nik)
         pm.registerEvents(new GuiListener(), this);
     }
@@ -275,8 +223,8 @@ public final class CombatPlus extends JavaPlugin {
             setFalse(Config.Setting.DISABLE_OFFHAND_ENABLED.getKey());
             setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
             setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
-            setFalse(Config.Setting.COOLDOWN_GOLDEN_APPLE_ACTIONBAR.getKey());
-            setFalse(Config.Setting.COOLDOWN_ENCHANTED_APPLE_ACTIONBAR.getKey());
+            setFalse(Config.Setting.GOLDEN_APPLE_ACTIONBAR.getKey());
+            setFalse(Config.Setting.ENCHANTED_APPLE_ACTIONBAR.getKey());
             setFalse(Config.Setting.ENDERPEARL_ACTIONBAR.getKey());
             setFalse(Config.Setting.SWORD_BLOCKING_ENABLED.getKey());
             setFalse(Config.Setting.HEALTHBAR_ENABLED.getKey());

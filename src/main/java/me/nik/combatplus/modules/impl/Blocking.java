@@ -1,13 +1,12 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -16,13 +15,17 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-public class Blocking implements Listener {
+public class Blocking extends Module {
 
-    private final String[] interactiveBlocks = {"DOOR", "TABLE", "STAND", "CHEST", "GATE", "DISPENSER", "DROPPER", "NOTE", "REDSTONE", "DIODE", "FRAME", "LEVER", "SHULKER", "FURNACE", "BARREL"};
+    private final Map<UUID, Long> blocking;
 
-    private final HashMap<UUID, Long> blocking = new HashMap<>();
+    public Blocking() {
+        super("Sword Blocking", Config.Setting.SWORD_BLOCKING_ENABLED.getBoolean());
+        this.blocking = new HashMap<>();
+    }
 
     private boolean holdsShield(Player p) {
         return p.getInventory().getItemInOffHand().getType().name().contains("SHIELD");
@@ -38,13 +41,12 @@ public class Blocking implements Listener {
         if (action == Action.RIGHT_CLICK_BLOCK && block != null) return;
         if (!e.getItem().getType().name().contains("SWORD")) return;
 
-        for (String s : interactiveBlocks) {
-            if (block != null && block.getType().name().contains(s)) return;
-        }
+        if (block != null && block.getType().isInteractable()) return;
 
         Player p = e.getPlayer();
         if (WorldUtils.combatDisabledWorlds(p)) return;
-        if (Config.Setting.SWORD_BLOCKING_IGNORE_SHIELDS.getBoolean() && holdsShield(e.getPlayer())) return;
+        boolean hasShield = holdsShield(p);
+        if (Config.Setting.SWORD_BLOCKING_IGNORE_SHIELDS.getBoolean() && hasShield) return;
 
         if (Config.Setting.SWORD_BLOCKING_CANCEL_SPRINTING.getBoolean() && p.isSprinting()) {
             p.setSprinting(false);
@@ -56,7 +58,7 @@ public class Blocking implements Listener {
         if (!blocking.containsKey(uuid)) {
             blocking.put(uuid, System.currentTimeMillis());
         }
-        Messenger.debug(p, "&3Sword Blocking &f&l>> &6Action: &a" + action.toString() + " &6Holds Shield: &a" + holdsShield(p));
+        debug(p, "&6Action: &a" + action.toString() + " &6Holds Shield: &a" + holdsShield(p));
     }
 
     @EventHandler
@@ -67,7 +69,7 @@ public class Blocking implements Listener {
             long secondsLeft = ((blocking.get(uuid) / 100) + Config.Setting.SWORD_BLOCKING_DURATION_TICKS.getInt()) - (System.currentTimeMillis() / 100);
             if (secondsLeft > 0) {
                 e.setCancelled(true);
-                Messenger.debug((Player) e.getDamager(), "&3Sword Blocking &f&l>> &6Cancelled: &a" + e.isCancelled() + " &6Blocking: &a" + blocking.containsKey(uuid));
+                debug((Player) e.getDamager(), "&6Cancelled: &a" + e.isCancelled() + " &6Blocking: &a" + blocking.containsKey(uuid));
                 return;
             }
             blocking.remove(uuid);

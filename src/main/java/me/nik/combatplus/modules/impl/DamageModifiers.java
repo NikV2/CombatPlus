@@ -1,20 +1,27 @@
-package me.nik.combatplus.listeners;
+package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.WorldUtils;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class DamageModifiers implements Listener {
+public class DamageModifiers extends Module {
+
+    //Yes im lazy to make each feature seperate.
+    public DamageModifiers() {
+        super("Damage Modifier", Config.Setting.OLD_WEAPON_DAMAGE.getBoolean()
+                || Config.Setting.OLD_TOOL_DAMAGE.getBoolean()
+                || Config.Setting.OLD_SHARPNESS.getBoolean()
+                || Config.Setting.DISABLE_SWEEP_ENABLED.getBoolean());
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
@@ -145,7 +152,7 @@ public class DamageModifiers implements Listener {
         double z = ent.getVelocity().getZ();
         e.setCancelled(true);
         ent.setVelocity(new Vector().zero());
-        Messenger.debug(player, "&3Damage Modifier &f&l>> &6Canceled Sweep Attack: &a" + e.isCancelled() + " &6Velocity: X = &a" + x + " &6Y = &a" + y + " &6Z = &a" + z);
+        debug(player, "&6Canceled Sweep Attack: &a" + e.isCancelled() + " &6Velocity: X = &a" + x + " &6Y = &a" + y + " &6Z = &a" + z);
     }
 
     private void damageConverter(EntityDamageByEntityEvent e, Player player, ItemStack item, String modifier) {
@@ -166,7 +173,7 @@ public class DamageModifiers implements Listener {
             newDmg = newDmg + newSharpDmg - oldSharpDmg;
         }
         e.setDamage(newDmg);
-        Messenger.debug(player, "&3Damage Modifier &f&l>> &6Item: &a" + item.getType().name() + " &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
+        debug(player, "&6Item: &a" + item.getType().name() + " &6Old Damage: &a" + damageDealt + " &6New Damage: &a" + newDmg);
     }
 
     private boolean divide(String value) {
