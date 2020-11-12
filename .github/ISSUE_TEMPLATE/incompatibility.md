@@ -1,7 +1,7 @@
 ---
 name: Incompatibility
 about: Report a plugin that does not run well with this one.
-title: ''
+title: "[INCOMPATIBILITY]"
 labels: Incompatibility
 assignees: NikV2
 
