@@ -88,9 +88,6 @@ public final class CombatPlus extends JavaPlugin {
 
         this.getServer().getConsoleSender().sendMessage(this.STARTUP_MESSAGE);
 
-        //Unsupported Version Check
-        checkSupported();
-
         //Load Commands
         getCommand("combatplus").setExecutor(new CommandManager(this));
 
@@ -156,7 +153,6 @@ public final class CombatPlus extends JavaPlugin {
      * Default Stats to avoid Server Damage
      */
     private void setDefaultStats() {
-        if (serverVersion("1.8")) return;
         Bukkit.getOnlinePlayers().forEach(player -> {
             final double defaultHealth = Config.Setting.ADV_BASE_HEALTH.getDouble();
             final AttributeInstance playerMaxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -209,65 +205,9 @@ public final class CombatPlus extends JavaPlugin {
     }
 
     /**
-     * Disable unsupported features
-     */
-    private void checkSupported() {
-        if (serverVersion("1.8")) {
-            setFalse(Config.Setting.OLD_PVP.getKey());
-            setFalse(Config.Setting.OLD_WEAPON_DAMAGE.getKey());
-            setFalse(Config.Setting.OLD_TOOL_DAMAGE.getKey());
-            setFalse(Config.Setting.OLD_SHARPNESS.getKey());
-            setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
-            setFalse(Config.Setting.OLD_REGEN.getKey());
-            setFalse(Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getKey());
-            setFalse(Config.Setting.DISABLE_OFFHAND_ENABLED.getKey());
-            setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
-            setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
-            setFalse(Config.Setting.GOLDEN_APPLE_ACTIONBAR.getKey());
-            setFalse(Config.Setting.ENCHANTED_APPLE_ACTIONBAR.getKey());
-            setFalse(Config.Setting.ENDERPEARL_ACTIONBAR.getKey());
-            setFalse(Config.Setting.SWORD_BLOCKING_ENABLED.getKey());
-            setFalse(Config.Setting.HEALTHBAR_ENABLED.getKey());
-            setFalse(Config.Setting.COMBATLOG_ENABLED.getKey());
-            getConfiguration().save();
-            getConfiguration().reloadConfig();
-            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
-        } else if (serverVersion("1.9") || serverVersion("1.10")) {
-            setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
-            setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
-            setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
-            setFalse(Config.Setting.DISABLE_SWEEP_ENABLED.getKey());
-            setFalse(Config.Setting.COMBATLOG_ENABLED.getKey());
-            getConfiguration().save();
-            getConfiguration().reloadConfig();
-            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
-            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_SWEEP_ATTACK.getMessage());
-        } else if (serverVersion("1.11") || serverVersion("1.12")) {
-            setFalse(Config.Setting.ENCHANTED_APPLE_CRAFTING.getKey());
-            setFalse(Config.Setting.FISHING_ROD_ENABLED.getKey());
-            setFalse(Config.Setting.COMBATLOG_ENABLED.getKey());
-            getConfiguration().save();
-            getConfiguration().reloadConfig();
-            consoleMessage(MsgType.CONSOLE_UNSUPPORTED_VERSION.getMessage());
-        }
-    }
-
-    /**
-     * @param version The version to look for
-     * @return Whether or not the Server's running on the specified version
-     */
-    public boolean serverVersion(String version) {
-        return Bukkit.getVersion().contains(version);
-    }
-
-    /**
      * @param message The console message to send to the Server (ChatColor Friendly)
      */
     public void consoleMessage(String message) {
         this.getServer().getConsoleSender().sendMessage(message);
-    }
-
-    private void setFalse(String path) {
-        getConfiguration().set(path, false);
     }
 }

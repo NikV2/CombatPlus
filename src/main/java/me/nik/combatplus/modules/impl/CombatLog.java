@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -199,6 +200,13 @@ public class CombatLog extends Module {
 
         e.setCancelled(true);
         p.sendMessage(MsgType.COMBATLOG_ITEM_DROP.getMessage());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onDeath(PlayerDeathEvent e) {
+        if (!isTagged(e.getEntity())) return;
+
+        unTagPlayer(e.getEntity());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

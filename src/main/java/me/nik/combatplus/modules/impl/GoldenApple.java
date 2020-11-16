@@ -5,7 +5,6 @@ import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.modules.Module;
-import me.nik.combatplus.utils.ServerUtils;
 import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -13,12 +12,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 public class GoldenApple extends Module {
@@ -47,7 +44,7 @@ public class GoldenApple extends Module {
     public void onEatGoldenApple(PlayerItemConsumeEvent e) {
         if (WorldUtils.goldenAppleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE.getPermission())) return;
-        if (isGoldenApple(e)) {
+        if (e.getItem().getType() == Material.GOLDEN_APPLE) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
@@ -81,17 +78,6 @@ public class GoldenApple extends Module {
                     }.runTaskTimerAsynchronously(CombatPlus.getInstance(), 0, 20);
                 }
             }
-        }
-    }
-
-    private boolean isGoldenApple(PlayerItemConsumeEvent e) {
-        ItemStack goldenApple = new ItemStack(Material.GOLDEN_APPLE);
-        ItemStack consumedItem = e.getItem();
-        if (ServerUtils.isLegacy()) {
-            return consumedItem.getType().name().equals("GOLDEN_APPLE") &&
-                    Objects.equals(goldenApple.getData(), consumedItem.getData());
-        } else {
-            return consumedItem.getType() == Material.GOLDEN_APPLE;
         }
     }
 }

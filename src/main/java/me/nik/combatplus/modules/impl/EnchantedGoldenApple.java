@@ -12,12 +12,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 public class EnchantedGoldenApple extends Module {
@@ -45,7 +43,7 @@ public class EnchantedGoldenApple extends Module {
     public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
         if (WorldUtils.goldenAppleDisabledWorlds(e.getPlayer())) return;
         if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE.getPermission())) return;
-        if (isEnchantedGoldenApple(e)) {
+        if (e.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
             final UUID p = e.getPlayer().getUniqueId();
             final Player player = e.getPlayer();
             if (cooldown.containsKey(p)) {
@@ -79,17 +77,6 @@ public class EnchantedGoldenApple extends Module {
                     }.runTaskTimerAsynchronously(CombatPlus.getInstance(), 0, 20);
                 }
             }
-        }
-    }
-
-    private boolean isEnchantedGoldenApple(PlayerItemConsumeEvent e) {
-        try {
-            return e.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE;
-        } catch (NoSuchFieldError ignored) {
-            ItemStack goldenApple = new ItemStack(Material.GOLDEN_APPLE);
-            ItemStack consumedItem = e.getItem();
-            return consumedItem.getType().name().equals("GOLDEN_APPLE") &&
-                    !Objects.equals(goldenApple.getData(), consumedItem.getData());
         }
     }
 }

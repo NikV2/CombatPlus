@@ -14,10 +14,6 @@ public class CustomRecipes {
         this.plugin = plugin;
     }
 
-    /*
-    Enchanted Golden Apple Crafting
-     */
-
     public ShapedRecipe enchantedGoldenAppleRecipe() {
         ItemStack item = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE);
 
