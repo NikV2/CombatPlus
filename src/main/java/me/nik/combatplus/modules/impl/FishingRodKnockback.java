@@ -26,48 +26,64 @@ public class FishingRodKnockback extends Module {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onRodLand(ProjectileHitEvent e) {
-        Entity rodHook = e.getEntity();
+    public void onRodLand(final ProjectileHitEvent e) {
         if (e.getEntityType() != EntityType.FISHING_HOOK) return;
+
+        Entity rodHook = e.getEntity();
+
         Entity target;
+
         target = e.getHitEntity();
 
         if (target == null) return;
+
         if (!(target instanceof LivingEntity)) return;
 
-        /*
-        return on citizen NPCS
-         */
+        //Return on citizens NPCs
         if (target.hasMetadata("NPC")) return;
 
         FishHook hook = (FishHook) rodHook;
+
         Player holder = (Player) hook.getShooter();
 
         if (target instanceof Player) {
+
             Player player = (Player) target;
 
             if (player.equals(holder)) return;
 
             if (player.getGameMode() == GameMode.CREATIVE) return;
+
         }
+
         LivingEntity livingEntity = (LivingEntity) target;
 
         if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2f) return;
+
         EntityDamageEvent event = customEvent(holder, target, Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
+
         Bukkit.getPluginManager().callEvent(event);
+
         if (event.isCancelled()) return;
 
         livingEntity.setVelocity(calculateVelocity(livingEntity.getVelocity(), livingEntity.getLocation(), hook.getLocation()));
+
         livingEntity.damage(Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
+
         debug(holder, "&6Velocity: &a" + livingEntity.getVelocity());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onHook(PlayerFishEvent e) {
+    public void onHook(final PlayerFishEvent e) {
+
         if (!Config.Setting.FISHING_ROD_CANCEL_DRAG.getBoolean()) return;
+
         if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) return;
+
         e.getHook().remove();
+
         e.setCancelled(true);
+
         debug(e.getPlayer(), "&6Cancelled Dragging: &a" + e.isCancelled());
     }
 

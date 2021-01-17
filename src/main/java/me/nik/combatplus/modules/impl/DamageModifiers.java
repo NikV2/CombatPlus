@@ -24,7 +24,7 @@ public class DamageModifiers extends Module {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageByEntityEvent e) {
+    public void onEntityDamage(final EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
         final Player player = (Player) e.getDamager();
         if (WorldUtils.combatDisabledWorlds(player)) return;

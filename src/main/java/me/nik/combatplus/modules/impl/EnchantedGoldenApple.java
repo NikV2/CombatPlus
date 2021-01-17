@@ -40,23 +40,33 @@ public class EnchantedGoldenApple extends Module {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onEatEnchantedGoldenApple(PlayerItemConsumeEvent e) {
+    public void onEatEnchantedGoldenApple(final PlayerItemConsumeEvent e) {
+
         if (WorldUtils.goldenAppleDisabledWorlds(e.getPlayer())) return;
+
         if (e.getPlayer().hasPermission(Permissions.BYPASS_GAPPLE.getPermission())) return;
+
         if (e.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+
             final UUID p = e.getPlayer().getUniqueId();
+
             final Player player = e.getPlayer();
+
             if (cooldown.containsKey(p)) {
                 long secondsleft = ((cooldown.get(p) / 1000) + Config.Setting.ENCHANTED_APPLE_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
                 if (secondsleft < 1) {
                     cooldown.remove(p);
                     return;
                 }
+
                 e.setCancelled(true);
+
                 player.sendMessage(MsgType.ENCHANTED_GOLDEN_APPLE_COOLDOWN.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft)));
             } else {
                 cooldown.put(p, System.currentTimeMillis());
+
                 debug(player, "&6Added to cooldown");
+
                 if (Config.Setting.ENCHANTED_APPLE_ACTIONBAR.getBoolean()) {
                     new BukkitRunnable() {
 

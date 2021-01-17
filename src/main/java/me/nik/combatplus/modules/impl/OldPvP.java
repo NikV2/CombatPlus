@@ -5,7 +5,6 @@ import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.StatUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -18,25 +17,22 @@ public class OldPvP extends Module {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onJoin(PlayerJoinEvent e) {
+    public void onJoin(final PlayerJoinEvent e) {
         StatUtils.setAttackSpeed(e.getPlayer());
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent e) {
+    public void onLeave(final PlayerQuitEvent e) {
         StatUtils.resetAttackSpeed(e.getPlayer());
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onWorldChange(PlayerChangedWorldEvent e) {
+    public void onWorldChange(final PlayerChangedWorldEvent e) {
         StatUtils.setAttackSpeed(e.getPlayer());
     }
 
     @EventHandler
-    public void onStartup(CombatPlusLoadEvent e) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p == null) continue; //Just in case
-            StatUtils.setAttackSpeed(p);
-        }
+    public void onStartup(final CombatPlusLoadEvent e) {
+        Bukkit.getOnlinePlayers().forEach(StatUtils::setAttackSpeed);
     }
 }

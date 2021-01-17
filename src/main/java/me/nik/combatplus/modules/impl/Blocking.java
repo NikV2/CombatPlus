@@ -32,37 +32,44 @@ public class Blocking extends Module {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlock(PlayerInteractEvent e) {
-        if (e.getItem() == null) return;
+    public void onBlock(final PlayerInteractEvent e) {
+        if (e.getItem() == null || !e.getAction().name().contains("RIGHT_CLICK")) return;
+
         Action action = e.getAction();
-        if (!action.name().contains("RIGHT_CLICK")) return;
 
         final Block block = e.getClickedBlock();
+
         if (action == Action.RIGHT_CLICK_BLOCK && block != null) return;
+
         if (!e.getItem().getType().name().contains("SWORD")) return;
 
         if (block != null && block.getType().isInteractable()) return;
 
         Player p = e.getPlayer();
+
         if (WorldUtils.combatDisabledWorlds(p)) return;
+
         boolean hasShield = holdsShield(p);
+
         if (Config.Setting.SWORD_BLOCKING_IGNORE_SHIELDS.getBoolean() && hasShield) return;
 
         if (Config.Setting.SWORD_BLOCKING_CANCEL_SPRINTING.getBoolean() && p.isSprinting()) {
             p.setSprinting(false);
         }
+
         p.addPotionEffect(new PotionEffect(PotionEffectType.getByName(Config.Setting.SWORD_BLOCKING_EFFECT.getString()), Config.Setting.SWORD_BLOCKING_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_AMPLIFIER.getInt()));
+
         p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Config.Setting.SWORD_BLOCKING_SLOW_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_SLOW_AMPLIFIER.getInt()));
 
         final UUID uuid = p.getUniqueId();
-        if (!blocking.containsKey(uuid)) {
-            blocking.put(uuid, System.currentTimeMillis());
-        }
+
+        if (!blocking.containsKey(uuid)) blocking.put(uuid, System.currentTimeMillis());
+
         debug(p, "&6Action: &a" + action.toString() + " &6Holds Shield: &a" + holdsShield(p));
     }
 
     @EventHandler
-    public void onInteractWhileBlocking(EntityDamageByEntityEvent e) {
+    public void onInteractWhileBlocking(final EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) return;
         UUID uuid = e.getDamager().getUniqueId();
         if (blocking.containsKey(uuid)) {

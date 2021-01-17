@@ -36,19 +36,32 @@ public class PlayerRegen extends Module {
         if (WorldUtils.combatDisabledWorlds(p)) return;
 
         e.setCancelled(true);
+
         final UUID playerID = p.getUniqueId();
-        double playerHealth = p.getHealth();
-        double playerSaturation = p.getSaturation();
-        long currentTime = System.currentTimeMillis() / 1000;
-        long lastHealTime = healTimes.computeIfAbsent(playerID, id -> System.currentTimeMillis() / 1000);
+
+        final double playerHealth = p.getHealth();
+
+        final double playerSaturation = p.getSaturation();
+
+        final long currentTime = System.currentTimeMillis() / 1000;
+
+        final long lastHealTime = healTimes.computeIfAbsent(playerID, id -> System.currentTimeMillis() / 1000);
+
         if (currentTime - lastHealTime < Config.Setting.ADV_REGEN_FREQUENCY.getInt()) return;
-        double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+
+        final double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+
         if (playerHealth < maxHealth) {
+
             p.setHealth(MathUtils.clamp(playerHealth + Config.Setting.ADV_REGEN_AMOUNT.getInt(), maxHealth));
+
             healTimes.put(playerID, currentTime);
         }
+
         final float previousExhaustion = p.getExhaustion();
+
         final float exhaustionToApply = Config.Setting.ADV_REGEN_EXHAUSTION.getFloat();
+
         TaskUtils.taskLater(() -> {
             p.setExhaustion(previousExhaustion + exhaustionToApply);
             debug(p, "&6Old exhaustion: &a" + previousExhaustion + " &6New exhaustion: &a" + exhaustionToApply + " &6Saturation: &a" + playerSaturation);

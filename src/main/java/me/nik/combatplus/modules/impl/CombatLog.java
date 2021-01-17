@@ -116,7 +116,7 @@ public class CombatLog extends Module {
     //Stuff
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onCombat(EntityDamageByEntityEvent e) {
+    public void onCombat(final EntityDamageByEntityEvent e) {
 
         final Entity target = e.getEntity();
 
@@ -158,7 +158,7 @@ public class CombatLog extends Module {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onCommand(PlayerCommandPreprocessEvent e) {
+    public void onCommand(final PlayerCommandPreprocessEvent e) {
         if (!Config.Setting.COMBATLOG_COMMANDS_ENABLED.getBoolean()) return;
 
         final Player p = e.getPlayer();
@@ -176,7 +176,7 @@ public class CombatLog extends Module {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onQuit(PlayerQuitEvent e) {
+    public void onQuit(final PlayerQuitEvent e) {
 
         final Player p = e.getPlayer();
 
@@ -191,7 +191,7 @@ public class CombatLog extends Module {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onItemDrop(PlayerDropItemEvent e) {
+    public void onItemDrop(final PlayerDropItemEvent e) {
         if (!Config.Setting.COMBATLOG_PREVENT_DROPPING_ITEMS.getBoolean()) return;
 
         final Player p = e.getPlayer();
@@ -203,14 +203,14 @@ public class CombatLog extends Module {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onDeath(PlayerDeathEvent e) {
+    public void onDeath(final PlayerDeathEvent e) {
         if (!isTagged(e.getEntity())) return;
 
         unTagPlayer(e.getEntity());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onItemPick(EntityPickupItemEvent e) {
+    public void onItemPick(final EntityPickupItemEvent e) {
         if (!Config.Setting.COMBATLOG_PREVENT_PICKING_ITEMS.getBoolean()) return;
         if (!(e.getEntity() instanceof Player)) return;
         final Player p = (Player) e.getEntity();
@@ -221,7 +221,7 @@ public class CombatLog extends Module {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onTeleport(PlayerTeleportEvent e) {
+    public void onTeleport(final PlayerTeleportEvent e) {
         if (!Config.Setting.COMBATLOG_PREVENT_TELEPORTATIONS.getBoolean()) return;
         final Player p = e.getPlayer();
 

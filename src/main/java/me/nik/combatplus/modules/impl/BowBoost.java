@@ -17,16 +17,24 @@ public class BowBoost extends Module {
     }
 
     @EventHandler
-    public void onArrowDamage(EntityDamageByEntityEvent e) {
+    public void onArrowDamage(final EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Arrow)) return;
+
         Player p = (Player) e.getEntity();
+
         if (WorldUtils.combatDisabledWorlds(p)) return;
+
         if (p.hasPermission(Permissions.BYPASS_BOWBOOST.getPermission())) return;
+
         Arrow arrow = (Arrow) e.getDamager();
+
         ProjectileSource holder = arrow.getShooter();
+
         if (holder instanceof Player) {
+
             Player holderPlayer = (Player) holder;
+
             if (p.getUniqueId().equals(holderPlayer.getUniqueId())) {
                 e.setCancelled(true);
                 debug(p, "&6Cancelled: &a" + e.isCancelled());

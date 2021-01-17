@@ -74,6 +74,7 @@ public final class CombatPlus extends JavaPlugin {
 
     /**
      * This needs a re-code, i might do it once im not so lazy
+     * Right now it's the definition of spaghetti code.
      */
 
     @Override

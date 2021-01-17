@@ -17,42 +17,58 @@ import org.bukkit.inventory.ItemStack;
 
 public class Offhand extends Module {
 
-    private final int OFFHANDSLOT = 40;
+    private static final int OFFHANDSLOT = 40;
 
     public Offhand() {
         super("Offhand", Config.Setting.DISABLE_OFFHAND_ENABLED.getBoolean());
     }
 
     @EventHandler
-    public void onSwapHands(PlayerSwapHandItemsEvent e) {
+    public void onSwapHands(final PlayerSwapHandItemsEvent e) {
         if (WorldUtils.offhandDisabledWorlds(e.getPlayer())) return;
+
         Player p = e.getPlayer();
+
         if (p.hasPermission(Permissions.BYPASS_OFFHAND.getPermission())) return;
+
         e.setCancelled(true);
+
         debug(p, "&6Cancelled: &a" + e.isCancelled());
     }
 
     @EventHandler
-    public void onClickOffHand(InventoryClickEvent e) {
+    public void onClickOffHand(final InventoryClickEvent e) {
         if (WorldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
+
         if (e.getWhoClicked().hasPermission(Permissions.BYPASS_OFFHAND.getPermission())) return;
+
         if (e.getInventory().getType() != InventoryType.CRAFTING || e.getSlot() != OFFHANDSLOT) return;
+
         if (e.getClick().equals(ClickType.NUMBER_KEY) || itemCheck(e.getCursor())) {
+
             e.setResult(Event.Result.DENY);
+
             e.setCancelled(true);
+
             debug((Player) e.getWhoClicked(), "&6Cancelled: &a" + e.isCancelled());
         }
     }
 
     @EventHandler
-    public void onDrag(InventoryDragEvent e) {
+    public void onDrag(final InventoryDragEvent e) {
         if (WorldUtils.offhandDisabledWorlds((Player) e.getWhoClicked())) return;
+
         if (e.getWhoClicked().hasPermission(Permissions.BYPASS_OFFHAND.getPermission())) return;
+
         if (e.getInventory().getType() != InventoryType.CRAFTING || !e.getInventorySlots().contains(OFFHANDSLOT))
             return;
+
         if (itemCheck(e.getOldCursor())) {
+
             e.setResult(Event.Result.DENY);
+
             e.setCancelled(true);
+
             debug((Player) e.getWhoClicked(), "&6Cancelled: &a" + e.isCancelled());
         }
     }
