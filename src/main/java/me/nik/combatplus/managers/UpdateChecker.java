@@ -1,8 +1,7 @@
-package me.nik.combatplus.handlers;
+package me.nik.combatplus.managers;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.Permissions;
-import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.utils.Messenger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -34,10 +33,10 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
         }
 
         if (!plugin.getDescription().getVersion().equals(newVersion)) {
-            plugin.consoleMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
+            Messenger.consoleMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
         } else {
-            plugin.consoleMessage(MsgType.CONSOLE_UPDATE_NOT_FOUND.getMessage());
+            Messenger.consoleMessage(MsgType.CONSOLE_UPDATE_NOT_FOUND.getMessage());
         }
     }
 
@@ -47,12 +46,18 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-        return reader.readLine();
+        final String line = reader.readLine();
+
+        reader.close();
+
+        return line;
     }
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent e) {
         if (!e.getPlayer().hasPermission(Permissions.ADMIN.getPermission())) return;
-        e.getPlayer().sendMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
+        e.getPlayer().sendMessage(MsgType.UPDATE_REMINDER.getMessage()
+                .replace("%current%", plugin.getDescription().getVersion())
+                .replace("%new%", newVersion));
     }
 }

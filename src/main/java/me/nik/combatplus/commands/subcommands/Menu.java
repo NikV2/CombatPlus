@@ -1,10 +1,10 @@
 package me.nik.combatplus.commands.subcommands;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.Permissions;
 import me.nik.combatplus.commands.SubCommand;
-import me.nik.combatplus.gui.PlayerMenuUtility;
+import me.nik.combatplus.gui.PlayerMenu;
 import me.nik.combatplus.gui.menus.MainGui;
+import me.nik.combatplus.managers.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -39,16 +39,18 @@ public class Menu extends SubCommand {
     }
 
     @Override
+    protected int maxArguments() {
+        return 1;
+    }
+
+    @Override
     public boolean canConsoleExecute() {
         return false;
     }
 
     @Override
     public void perform(CommandSender sender, String[] args) {
-        if (args.length == 1) {
-            Player player = (Player) sender;
-            new MainGui(new PlayerMenuUtility(player), plugin).open();
-        }
+        new MainGui(new PlayerMenu((Player) sender), plugin).open();
     }
 
     @Override

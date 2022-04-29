@@ -2,11 +2,11 @@ package me.nik.combatplus.gui;
 
 import org.bukkit.entity.Player;
 
-public class PlayerMenuUtility {
+public class PlayerMenu {
 
     private Player owner;
 
-    public PlayerMenuUtility(Player owner) {
+    public PlayerMenu(Player owner) {
         this.owner = owner;
     }
 

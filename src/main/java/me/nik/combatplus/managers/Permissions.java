@@ -1,4 +1,4 @@
-package me.nik.combatplus;
+package me.nik.combatplus.managers;
 
 public enum Permissions {
     ADMIN("cp.admin"),

@@ -3,7 +3,7 @@ package me.nik.combatplus.gui.menus;
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.gui.Menu;
-import me.nik.combatplus.gui.PlayerMenuUtility;
+import me.nik.combatplus.gui.PlayerMenu;
 import me.nik.combatplus.managers.MsgType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,10 +12,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class GeneralGui extends Menu {
-    public GeneralGui(PlayerMenuUtility playerMenuUtility, CombatPlus plugin) {
-        super(playerMenuUtility, plugin);
+    public GeneralGui(PlayerMenu playerMenu, CombatPlus plugin) {
+        super(playerMenu, plugin);
     }
 
     @Override
@@ -30,11 +31,13 @@ public class GeneralGui extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
+
         Player p = (Player) e.getWhoClicked();
+
         switch (e.getSlot()) {
             case 49:
                 p.closeInventory();
-                new MainGui(playerMenuUtility, plugin).open();
+                new MainGui(playerMenu, plugin).open();
                 break;
             case 10:
                 changeConfigBoolean(Config.Setting.GOLDEN_APPLE_ENABLED.getKey());
@@ -47,38 +50,34 @@ public class GeneralGui extends Menu {
                 setMenuItems();
                 break;
             case 14:
-                changeConfigBoolean(Config.Setting.DISABLED_ITEMS_ENABLED.getKey());
-                getInventory().clear();
-                setMenuItems();
-                break;
-            case 28:
-                changeConfigBoolean(Config.Setting.HEALTHBAR_ENABLED.getKey());
-                getInventory().clear();
-                setMenuItems();
-                break;
-            case 30:
-                changeConfigBoolean(Config.Setting.DISABLE_OFFHAND_ENABLED.getKey());
-                getInventory().clear();
-                setMenuItems();
-                break;
-            case 32:
-                changeConfigBoolean(Config.Setting.COMBATLOG_ENABLED.getKey());
-                getInventory().clear();
-                setMenuItems();
-                break;
-            case 16:
                 changeConfigBoolean(Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getKey());
                 getInventory().clear();
                 setMenuItems();
                 break;
-            case 34:
+            case 16:
+                changeConfigBoolean(Config.Setting.HEALTHBAR_ENABLED.getKey());
+                getInventory().clear();
+                setMenuItems();
+                break;
+            case 28:
+                changeConfigBoolean(Config.Setting.DISABLE_OFFHAND.getKey());
+                getInventory().clear();
+                setMenuItems();
+                break;
+            case 30:
+                changeConfigBoolean(Config.Setting.COMBATLOG_ENABLED.getKey());
+                getInventory().clear();
+                setMenuItems();
+                break;
+            case 32:
                 changeConfigBoolean(Config.Setting.ENDERPEARL_ENABLED.getKey());
                 getInventory().clear();
                 setMenuItems();
                 break;
-            case 53:
-                p.closeInventory();
-                new GeneralTwoGui(playerMenuUtility, plugin).open();
+            case 34:
+                changeConfigBoolean(Config.Setting.FISHING_ROD_ENABLED.getKey());
+                getInventory().clear();
+                setMenuItems();
                 break;
         }
     }
@@ -86,11 +85,9 @@ public class GeneralGui extends Menu {
     @Override
     protected void setMenuItems() {
         ItemStack back = makeItem(Material.BARRIER, 1, "&cBack", null);
-        ItemStack next = makeItem(Material.BOOK, 1, "&eNext Page 1/2", null);
 
         inventory.setItem(49, back);
-        inventory.setItem(53, next);
-        ArrayList<String> gappleLore = new ArrayList<>();
+        List<String> gappleLore = new ArrayList<>();
         gappleLore.add("");
         gappleLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.GOLDEN_APPLE_ENABLED.getKey()));
         gappleLore.add("");
@@ -100,7 +97,7 @@ public class GeneralGui extends Menu {
         gappleLore.add("&7More options in the Config.yml");
         ItemStack gapple = makeItem(Material.PAPER, 1, "&6Golden Apple Cooldown", gappleLore);
 
-        ArrayList<String> gappleELore = new ArrayList<>();
+        List<String> gappleELore = new ArrayList<>();
         gappleELore.add("");
         gappleELore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.ENCHANTED_APPLE_ENABLED.getKey()));
         gappleELore.add("");
@@ -110,25 +107,15 @@ public class GeneralGui extends Menu {
         gappleELore.add("&7More options in the Config.yml");
         ItemStack gappleE = makeItem(Material.PAPER, 1, "&6Enchanted Golden Apple Cooldown", gappleELore);
 
-        ArrayList<String> disItemsLore = new ArrayList<>();
-        disItemsLore.add("");
-        disItemsLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DISABLED_ITEMS_ENABLED.getKey()));
-        disItemsLore.add("");
-        disItemsLore.add("&fWould you like to Disable specific");
-        disItemsLore.add("&fItems from being Crafted?");
-        disItemsLore.add("");
-        disItemsLore.add("&7More options in the Config.yml");
-        ItemStack disItems = makeItem(Material.PAPER, 1, "&6Disabled Items", disItemsLore);
-
-        ArrayList<String> offhLore = new ArrayList<>();
+        List<String> offhLore = new ArrayList<>();
         offhLore.add("");
-        offhLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DISABLE_OFFHAND_ENABLED.getKey()));
+        offhLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.DISABLE_OFFHAND.getKey()));
         offhLore.add("");
         offhLore.add("&fWould you like to Prevent");
         offhLore.add("&fPlayers from using the Offhand?");
         ItemStack offh = makeItem(Material.PAPER, 1, "&6Disable Offhand", offhLore);
 
-        ArrayList<String> combatlogLore = new ArrayList<>();
+        List<String> combatlogLore = new ArrayList<>();
         combatlogLore.add("");
         combatlogLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.COMBATLOG_ENABLED.getKey()));
         combatlogLore.add("");
@@ -139,7 +126,7 @@ public class GeneralGui extends Menu {
 
         ItemStack cl = makeItem(Material.PAPER, 1, "&6CombatLog", combatlogLore);
 
-        ArrayList<String> healthLore = new ArrayList<>();
+        List<String> healthLore = new ArrayList<>();
         healthLore.add("");
         healthLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getKey()));
         healthLore.add("");
@@ -158,7 +145,7 @@ public class GeneralGui extends Menu {
                 "&fIndicating the Target's Health and Damage Dealt?"
         ));
 
-        ArrayList<String> epearlLore = new ArrayList<>();
+        List<String> epearlLore = new ArrayList<>();
         epearlLore.add("");
         epearlLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.ENDERPEARL_ENABLED.getKey()));
         epearlLore.add("");
@@ -168,13 +155,24 @@ public class GeneralGui extends Menu {
         epearlLore.add("&7More options in the Config.yml");
         ItemStack epearl = makeItem(Material.PAPER, 1, "&6Ender Pearl Cooldown", epearlLore);
 
+        List<String> frkLore = new ArrayList<>();
+        frkLore.add("");
+        frkLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.FISHING_ROD_ENABLED.getKey()));
+        frkLore.add("");
+        frkLore.add("&fMakes Fishing Rods Knockback");
+        frkLore.add("&fPlayers just like in 1.8");
+        frkLore.add("");
+        frkLore.add("&7More options in the Config.yml");
+
+        ItemStack frk = makeItem(Material.PAPER, 1, "&6Fishing Rod Knockback", frkLore);
+
         inventory.setItem(10, gapple);
         inventory.setItem(12, gappleE);
-        inventory.setItem(14, disItems);
-        inventory.setItem(16, health);
-        inventory.setItem(28, bar);
-        inventory.setItem(30, offh);
-        inventory.setItem(32, cl);
-        inventory.setItem(34, epearl);
+        inventory.setItem(14, health);
+        inventory.setItem(16, bar);
+        inventory.setItem(28, offh);
+        inventory.setItem(30, cl);
+        inventory.setItem(32, epearl);
+        inventory.setItem(34, frk);
     }
 }

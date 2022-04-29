@@ -71,31 +71,80 @@ public class Config {
 
     public enum Setting {
         SETTINGS("settings", "", "General plugin settings"),
+
         CHECK_FOR_UPDATES("settings.check_for_updates", true, "Would you like to check for updates on startup?"),
+
+        DISABLE_BYPASS_PERMISSIONS("settings.disable_bypass_permissions", true, "Should we disable the bypass permissions?"),
+
         DEVELOPER_MODE("settings.developer_mode", false, "Would you like to receive additional information in-game when an Event gets triggered? (Debug)", "This is very useful if you'd like to Report a bug to me via our Discord"),
 
-        COMBAT("combat", "", "Combat related settings"),
-        OLD_PVP("combat.old_pvp", true, "Would you like your server to use the Old PvP?"),
-        OLD_WEAPON_DAMAGE("combat.old_weapon_damage", true, "Would you like to use 1.8 Sword Damages?"),
-        OLD_TOOL_DAMAGE("combat.old_tool_damage", true, "Would you like to use 1.8 Tool Damages?"),
-        OLD_SHARPNESS("combat.old_sharpness", true, "Would you like to use 1.8 Sharpness Damage?"),
-        DISABLE_SWEEP("combat.disable_sweep_attacks", "", "Sweep attack properties"),
-        DISABLE_SWEEP_ENABLED("combat.disable_sweep_attacks.enabled", true, "Should we enable this?"),
-        DISABLE_SWEEP_IGNORE_SWEEPING_EDGE("combat.disable_sweep_attacks.ignore_sweeping_edge", false, "Would you like to ignore cancelling the Sweep Attacks if The Player's Item has the Enchantment: Sweeping Edge?"),
-        DISABLE_ARROW_BOOST("combat.disable_arrow_boost", true, "Would you like to prevent players from boosting themselves by using Arrows?"),
-        OLD_REGEN("combat.old_player_regen", true, "Would you like to use 1.8 Regeneration?"),
-        SWORD_BLOCKING("combat.sword_blocking", "", "Sword blocking properties"),
-        SWORD_BLOCKING_ENABLED("combat.sword_blocking.enabled", false, "Would you like players to get a Resistance and a Slowness Effect if they hold Right Click?"),
-        SWORD_BLOCKING_IGNORE_SHIELDS("combat.sword_blocking.ignore_shields", true, "Should we ignore it if the player is holding a shield?"),
-        SWORD_BLOCKING_CANCEL_SPRINTING("combat.sword_blocking.cancel_sprinting", false, "Should we cancel the player's sprinting?"),
-        SWORD_BLOCKING_EFFECT("combat.sword_blocking.effect", "DAMAGE_RESISTANCE", "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html"),
-        SWORD_BLOCKING_DURATION_TICKS("combat.sword_blocking.duration_ticks", 8, "The duration in ticks (20 ticks = one second)"),
-        SWORD_BLOCKING_AMPLIFIER("combat.sword_blocking.amplifier", 0, "The effect amplifier"),
-        SWORD_BLOCKING_SLOW_DURATION_TICKS("combat.sword_blocking.slow_duration_ticks", 8, "The slow duration in ticks (20 ticks = one second)"),
-        SWORD_BLOCKING_SLOW_AMPLIFIER("combat.sword_blocking.slow_amplifier", 2, "The slow amplifier"),
-        COMBAT_DISABLED_WORLDS("combat.disabled_worlds", Collections.singletonList("example_world"), "Worlds listed below will be ignored from applying the above features"),
+        CUSTOM_ATTACK_SPEED("custom_attack_speed", "", "Custom attack speed properties"),
+        CUSTOM_ATTACK_SPEED_ENABLED("custom_attack_speed.enabled", true, "Should we modify the player's attack speed?"),
+        CUSTOM_ATTACK_SPEED_ATTACK_SPEED("custom_attack_speed.attack_speed", 24, "The new attack speed", "The default value removes the cooldown completely"),
+        CUSTOM_ATTACK_SPEED_DEFAULT_ATTACK_SPEED("custom_attack_speed.default_attack_speed", 4, "The base attack speed value, Do not change this", "Unless this changes in a newer version of minecraft"),
 
-        COOLDOWNS("cooldowns", "", "Cooldown Properties"),
+        DAMAGE_MODIFIERS("damage_modifiers", "", "Damage modifiers properties"),
+        DAMAGE_MODIFIERS_OLD_SHARPNESS("damage_modifiers.old_sharpness", true, "Should we bring back 1.8 sharpness damage?"),
+        DAMAGE_MODIFIERS_DISABLE_SWEEP("damage_modifiers.disable_sweep_attacks", true, "Should we disable sweep attacks?"),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES("damage_modifiers.custom_tool_damages", "", "Custom tool damages properties"),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_ENABLED("damage_modifiers.custom_tool_damages.enabled", true, "Should we modify damage dealt by tools?"),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS("damage_modifiers.custom_tool_damages.tools", "", "The tool damage modifiers", "The default values replicate 1.8 weapon and tool damages", "The value is simply going to add up to the damage dealt", "If you'd like to not add or subtract any additional damage simply set the value to zero"),
+
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_WOODEN_SWORD("damage_modifiers.custom_tool_damages.tools.WOODEN_SWORD", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_STONE_SWORD("damage_modifiers.custom_tool_damages.tools.STONE_SWORD", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_IRON_SWORD("damage_modifiers.custom_tool_damages.tools.IRON_SWORD", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_GOLDEN_SWORD("damage_modifiers.custom_tool_damages.tools.GOLDEN_SWORD", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_DIAMOND_SWORD("damage_modifiers.custom_tool_damages.tools.DIAMOND_SWORD", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_NETHERITE_SWORD("damage_modifiers.custom_tool_damages.tools.NETHERITE_SWORD", 1),
+
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_WOODEN_SHOVEL("damage_modifiers.custom_tool_damages.tools.WOODEN_SHOVEL", 0.5),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_STONE_SHOVEL("damage_modifiers.custom_tool_damages.tools.STONE_SHOVEL", 0.5),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_IRON_SHOVEL("damage_modifiers.custom_tool_damages.tools.IRON_SHOVEL", 0.5),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_GOLDEN_SHOVEL("damage_modifiers.custom_tool_damages.tools.GOLDEN_SHOVEL", 0.5),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_DIAMOND_SHOVEL("damage_modifiers.custom_tool_damages.tools.DIAMOND_SHOVEL", 0.5),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_NETHERITE_SHOVEL("damage_modifiers.custom_tool_damages.tools.NETHERITE_SHOVEL", 0.5),
+
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_WOODEN_AXE("damage_modifiers.custom_tool_damages.tools.WOODEN_AXE", -2),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_STONE_AXE("damage_modifiers.custom_tool_damages.tools.STONE_AXE", -2),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_IRON_AXE("damage_modifiers.custom_tool_damages.tools.IRON_AXE", -2),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_GOLDEN_AXE("damage_modifiers.custom_tool_damages.tools.GOLDEN_AXE", -2),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_DIAMOND_AXE("damage_modifiers.custom_tool_damages.tools.DIAMOND_AXE", -2),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_NETHERITE_AXE("damage_modifiers.custom_tool_damages.tools.NETHERITE_AXE", -2),
+
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_WOODEN_PICKAXE("damage_modifiers.custom_tool_damages.tools.WOODEN_PICKAXE", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_STONE_PICKAXE("damage_modifiers.custom_tool_damages.tools.STONE_PICKAXE", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_IRON_PICKAXE("damage_modifiers.custom_tool_damages.tools.IRON_PICKAXE", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_GOLDEN_PICKAXE("damage_modifiers.custom_tool_damages.tools.GOLDEN_PICKAXE", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_DIAMOND_PICKAXE("damage_modifiers.custom_tool_damages.tools.DIAMOND_PICKAXE", 1),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_NETHERITE_PICKAXE("damage_modifiers.custom_tool_damages.tools.NETHERITE_PICKAXE", 1),
+
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_WOODEN_HOE("damage_modifiers.custom_tool_damages.tools.WOODEN_HOE", 0),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_STONE_HOE("damage_modifiers.custom_tool_damages.tools.STONE_HOE", 0),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_IRON_HOE("damage_modifiers.custom_tool_damages.tools.IRON_HOE", 0),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_GOLDEN_HOE("damage_modifiers.custom_tool_damages.tools.GOLDEN_HOE", 0),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_DIAMOND_HOE("damage_modifiers.custom_tool_damages.tools.DIAMOND_HOE", 0),
+        DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_NETHERITE_HOE("damage_modifiers.custom_tool_damages.tools.NETHERITE_HOE", 0),
+
+        DISABLE_ARROW_BOOST("disable_arrow_boost", true, "Would you like to prevent players from boosting themselves by using Arrows?"),
+
+        CUSTOM_PLAYER_REGENERATION("custom_player_regeneration", "", "Custom player regeneration properties"),
+        CUSTOM_PLAYER_REGENERATION_ENABLED("custom_player_regeneration.enabled", true, "Should we modify the player's regeneration?"),
+        CUSTOM_PLAYER_REGENERATION_FREQUENCY("custom_player_regeneration.frequency", 3, "The regeneration rate", "The default value replicates 1.8 regeneration"),
+        CUSTOM_PLAYER_REGENERATION_AMOUNT("custom_player_regeneration.amount", 1, "The regeneration amount", "The default value replicates 1.8 regeneration"),
+        CUSTOM_PLAYER_REGENERATION_EXCHAUSTION("custom_player_regeneration.exchaustion", 3, "The exchaustion amount", "The default value replicates 1.8 regeneration"),
+
+        SWORD_BLOCKING("sword_blocking", "", "Sword blocking properties"),
+        SWORD_BLOCKING_ENABLED("sword_blocking.enabled", false, "Would you like players to get a Resistance and a Slowness Effect if they hold Right Click?"),
+        SWORD_BLOCKING_IGNORE_SHIELDS("sword_blocking.ignore_shields", true, "Should we ignore it if the player is holding a shield on his offhand?"),
+        SWORD_BLOCKING_CANCEL_SPRINTING("sword_blocking.cancel_sprinting", false, "Should we cancel the player's sprinting?"),
+        SWORD_BLOCKING_EFFECT("sword_blocking.effect", "DAMAGE_RESISTANCE", "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html"),
+        SWORD_BLOCKING_DURATION_TICKS("sword_blocking.duration_ticks", 8, "The duration in ticks (20 ticks = 1 second)"),
+        SWORD_BLOCKING_AMPLIFIER("sword_blocking.amplifier", 0, "The effect amplifier"),
+        SWORD_BLOCKING_SLOW_DURATION_TICKS("sword_blocking.slow_duration_ticks", 8, "The slow duration in ticks (20 ticks = 1 second)"),
+        SWORD_BLOCKING_SLOW_AMPLIFIER("sword_blocking.slow_amplifier", 2, "The slow amplifier"),
+
+        COOLDOWNS("cooldowns", "", "Cooldowns properties"),
+
         GOLDEN_APPLE("cooldowns.golden_apple", "", "Golden Apple Cooldown"),
         GOLDEN_APPLE_ENABLED("cooldowns.golden_apple.enabled", true, "Should we enable this?"),
         GOLDEN_APPLE_COOLDOWN("cooldowns.golden_apple.cooldown", 20, "Cooldown in seconds"),
@@ -116,21 +165,15 @@ public class Config {
 
         FISHING_ROD("fishing_rod_knockback", "", "Fishing rod knockback properties"),
         FISHING_ROD_ENABLED("fishing_rod_knockback.enabled", true, "Should we enable this?"),
+        FISHING_ROD_DAMAGE("fishing_rod_knockback.damage", 0.01, "The knockback damage to be applied"),
         FISHING_ROD_CANCEL_DRAG("fishing_rod_knockback.cancel_dragging", true, "Should we disable the Fishing Rod dragging?"),
 
-        DISABLED_ITEMS("disabled_items", "", "Disabled items properties"),
-        DISABLED_ITEMS_ENABLED("disabled_items.enabled", false, "Should we enable this?"),
-        DISABLED_ITEMS_LIST("disabled_items.items", Arrays.asList("item_frame", "armor_stand"), "Items listed below will be disabled from being crafted"),
-
-        DISABLE_OFFHAND("disable_offhand", "", "Offhand properties"),
-        DISABLE_OFFHAND_ENABLED("disable_offhand.enabled", true, "Should we enable this?"),
-        DISABLE_OFFHAND_WORLDS("disable_offhand.disabled_worlds", Collections.singletonList("example_world"), "Worlds listed below will be ignored from applying the above features"),
-
-        ENCHANTED_APPLE_CRAFTING("enchanted_golden_apple_crafting", false, "Should we make Enchanted Golden Apples craftable again?"),
+        DISABLE_OFFHAND("disable_offhand", true, "Would you like to completely disable the use of the player's offhand?"),
 
         HEALTHBAR("healthbar", "", "Healthbar Properties"),
         HEALTHBAR_ENABLED("healthbar.enabled", true, "Would you like Combat Plus to send an Actionbar message to the Attacker indicating the Target's Health and Damage Dealt?"),
-        HEALTHBAR_WORLDS("healthbar.disabled_worlds", Collections.singletonList("example_world"), "Worlds listed below will be ignored from applying the above features"),
+        HEALTHBAR_PLAYERS_ONLY("healthbar.players_only", true, "Should we only show the health bar of players?"),
+        HEALTHBAR_DISABLED_WORLDS("healthbar.disabled_worlds", Collections.singletonList("example_world"), "Worlds listed below will be ignored from applying the above features"),
 
         COMBATLOG("combatlog", "", "CombatLog Properties"),
         COMBATLOG_ENABLED("combatlog.enabled", true, "Would you like to enable the Combat Log?"),
@@ -143,61 +186,15 @@ public class Config {
         COMBATLOG_PREVENT_TELEPORTATIONS("combatlog.prevent_teleportations", true, "Should we prevent tagged players from Teleporting?"),
         COMBATLOG_PREVENT_DROPPING_ITEMS("combatlog.prevent_dropping_items", true, "Should we prevent tagged players from Dropping Items?"),
         COMBATLOG_PREVENT_PICKING_ITEMS("combatlog.prevent_picking_items", true, "Should we prevent tagged players from Picking Up Items?"),
+        COMBATLOG_DISABLED_WORLDS("combatlog.disabled_worlds", Collections.singletonList("example_world"), "Worlds listed below will be ignored from applying the above features"),
         COMBATLOG_COMMANDS("combatlog.commands", "", "CombatLog Command Properties"),
         COMBATLOG_COMMANDS_ENABLED("combatlog.commands.enabled", true, "Should we prevent tagged players from Using Commands?"),
         COMBATLOG_COMMANDS_EXCLUDED("combatlog.commands.excluded", Arrays.asList("/heal", "/feed"), "Commands listed below will not be blocked from tagged players"),
 
         CUSTOM_PLAYER_HEALTH("custom_player_health", "", "Player health properties"),
         CUSTOM_PLAYER_HEALTH_ENABLED("custom_player_health.enabled", false, "Should we enable this?"),
-        CUSTOM_PLAYER_HEALTH_HEALTH("custom_player_health.max_health", 20, "The max health that a player should have"),
-
-        ADVANCED_SETTINGS("advanced_settings", "", "Advanced Settings, Do not touch unless you know what you're doing"),
-
-        ADV_OLD_ATTACK_SPEED("advanced_settings.old_attack_speed", 24),
-        ADV_NEW_ATTACK_SPEED("advanced_settings.new_attack_speed", 4),
-
-        ADV_NETHERITE_SWORD("advanced_settings.modifiers.netherite_sword", 1),
-        ADV_DIAMOND_SWORD("advanced_settings.modifiers.diamond_sword", 1),
-        ADV_GOLDEN_SWORD("advanced_settings.modifiers.golden_sword", 1),
-        ADV_IRON_SWORD("advanced_settings.modifiers.iron_sword", 1),
-        ADV_STONE_SWORD("advanced_settings.modifiers.stone_sword", 1),
-        ADV_WOODEN_SWORD("advanced_settings.modifiers.wooden_sword", 1),
-
-        ADV_NETHERITE_SHOVEL("advanced_settings.modifiers.netherite_shovel", 0.5),
-        ADV_DIAMOND_SHOVEL("advanced_settings.modifiers.diamond_shovel", 0.5),
-        ADV_GOLDEN_SHOVEL("advanced_settings.modifiers.golden_shovel", 0.5),
-        ADV_IRON_SHOVEL("advanced_settings.modifiers.iron_shovel", 0.5),
-        ADV_STONE_SHOVEL("advanced_settings.modifiers.stone_shovel", 0.5),
-        ADV_WOODEN_SHOVEL("advanced_settings.modifiers.wooden_shovel", 0.5),
-
-        ADV_NETHERITE_AXE("advanced_settings.modifiers.netherite_axe", -2),
-        ADV_DIAMOND_AXE("advanced_settings.modifiers.diamond_axe", -2),
-        ADV_GOLDEN_AXE("advanced_settings.modifiers.golden_axe", -2),
-        ADV_IRON_AXE("advanced_settings.modifiers.iron_axe", -2),
-        ADV_STONE_AXE("advanced_settings.modifiers.stone_axe", -2),
-        ADV_WOODEN_AXE("advanced_settings.modifiers.wooden_axe", -2),
-
-        ADV_NETHERITE_PICKAXE("advanced_settings.modifiers.netherite_pickaxe", 1),
-        ADV_DIAMOND_PICKAXE("advanced_settings.modifiers.diamond_pickaxe", 1),
-        ADV_GOLDEN_PICKAXE("advanced_settings.modifiers.golden_pickaxe", 1),
-        ADV_IRON_PICKAXE("advanced_settings.modifiers.iron_pickaxe", 1),
-        ADV_STONE_PICKAXE("advanced_settings.modifiers.stone_pickaxe", 1),
-        ADV_WOODEN_PICKAXE("advanced_settings.modifiers.wooden_pickaxe", 1),
-
-        ADV_NETHERITE_HOE("advanced_settings.modifiers.netherite_hoe", 0),
-        ADV_DIAMOND_HOE("advanced_settings.modifiers.diamond_hoe", 0),
-        ADV_GOLDEN_HOE("advanced_settings.modifiers.golden_hoe", 0),
-        ADV_IRON_HOE("advanced_settings.modifiers.iron_hoe", 0),
-        ADV_STONE_HOE("advanced_settings.modifiers.stone_hoe", 0),
-        ADV_WOODEN_HOE("advanced_settings.modifiers.wooden_hoe", 0),
-
-        ADV_REGEN_FREQUENCY("advanced_settings.old_regen.frequency", 3),
-        ADV_REGEN_AMOUNT("advanced_settings.old_regen.amount", 1),
-        ADV_REGEN_EXHAUSTION("advanced_settings.old_regen.exhaustion", 3),
-
-        ADV_BASE_HEALTH("advanced_settings.base_player_health", 20),
-
-        ADV_FISHING_ROD_DAMAGE("advanced_settings.fishing_rod_knockback_damage", 0.01);
+        CUSTOM_PLAYER_HEALTH_HEALTH("custom_player_health.max_health", 40, "The max health that a player should have"),
+        CUSTOM_PLAYER_HEALTH_DEFAULT_MAX_HEALTH("custom_player_health.default_max_health", 20, "The base max health value, Do not change this", "Unless this changes in a newer version of minecraft");
 
         private final String key;
         private final Object defaultValue;

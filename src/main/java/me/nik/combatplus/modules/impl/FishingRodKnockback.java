@@ -3,7 +3,6 @@ package me.nik.combatplus.modules.impl;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -26,41 +25,25 @@ public class FishingRodKnockback extends Module {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onRodLand(final ProjectileHitEvent e) {
-        if (e.getEntityType() != EntityType.FISHING_HOOK) return;
+    public void onRodLand(ProjectileHitEvent e) {
+        if (e.getEntityType() != EntityType.FISHING_HOOK || !(e.getHitEntity() instanceof LivingEntity)) return;
 
-        Entity rodHook = e.getEntity();
-
-        Entity target;
-
-        target = e.getHitEntity();
-
-        if (target == null) return;
-
-        if (!(target instanceof LivingEntity)) return;
+        Entity target = e.getHitEntity();
 
         //Return on citizens NPCs
         if (target.hasMetadata("NPC")) return;
 
-        FishHook hook = (FishHook) rodHook;
+        FishHook hook = (FishHook) e.getEntity();
 
         Player holder = (Player) hook.getShooter();
 
-        if (target instanceof Player) {
-
-            Player player = (Player) target;
-
-            if (player.equals(holder)) return;
-
-            if (player.getGameMode() == GameMode.CREATIVE) return;
-
-        }
+        if (target instanceof Player && (target.equals(holder) || target.isInvulnerable())) return;
 
         LivingEntity livingEntity = (LivingEntity) target;
 
-        if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2f) return;
+        if (livingEntity.getNoDamageTicks() > livingEntity.getMaximumNoDamageTicks() / 2F) return;
 
-        EntityDamageEvent event = customEvent(holder, target, Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
+        EntityDamageEvent event = customEvent(holder, target, Config.Setting.FISHING_ROD_DAMAGE.getDouble());
 
         Bukkit.getPluginManager().callEvent(event);
 
@@ -68,17 +51,15 @@ public class FishingRodKnockback extends Module {
 
         livingEntity.setVelocity(calculateVelocity(livingEntity.getVelocity(), livingEntity.getLocation(), hook.getLocation()));
 
-        livingEntity.damage(Config.Setting.ADV_FISHING_ROD_DAMAGE.getDouble());
+        livingEntity.damage(Config.Setting.FISHING_ROD_DAMAGE.getDouble());
 
         debug(holder, "&6Velocity: &a" + livingEntity.getVelocity());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onHook(final PlayerFishEvent e) {
-
-        if (!Config.Setting.FISHING_ROD_CANCEL_DRAG.getBoolean()) return;
-
-        if (e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY) return;
+    public void onHook(PlayerFishEvent e) {
+        if (!Config.Setting.FISHING_ROD_CANCEL_DRAG.getBoolean() || e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY)
+            return;
 
         e.getHook().remove();
 

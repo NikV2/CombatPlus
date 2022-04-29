@@ -1,10 +1,10 @@
-package me.nik.combatplus.handlers;
+package me.nik.combatplus.managers;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.modules.impl.EnchantedGoldenApple;
-import me.nik.combatplus.modules.impl.Enderpearl;
-import me.nik.combatplus.modules.impl.GoldenApple;
+import me.nik.combatplus.modules.impl.EnchantedGoldenAppleCooldown;
+import me.nik.combatplus.modules.impl.EnderpearlCooldown;
+import me.nik.combatplus.modules.impl.GoldenAppleCooldown;
 import org.bukkit.OfflinePlayer;
 
 public class PapiHook extends PlaceholderExpansion {
@@ -45,15 +45,15 @@ public class PapiHook extends PlaceholderExpansion {
 
         switch (identifier) {
             case "goldenapple":
-                GoldenApple goldenApple = (GoldenApple) this.plugin.getModule("Golden Apple Cooldown");
+                GoldenAppleCooldown goldenApple = (GoldenAppleCooldown) this.plugin.getModule("Golden Apple Cooldown");
                 if (goldenApple == null) return "";
                 return goldenApple.getCooldown(player.getUniqueId());
             case "enchantedgoldenapple":
-                EnchantedGoldenApple enchantedGoldenApple = (EnchantedGoldenApple) this.plugin.getModule("Enchanted Golden Apple Cooldown");
+                EnchantedGoldenAppleCooldown enchantedGoldenApple = (EnchantedGoldenAppleCooldown) this.plugin.getModule("Enchanted Golden Apple Cooldown");
                 if (enchantedGoldenApple == null) return "";
                 return enchantedGoldenApple.getCooldown(player.getUniqueId());
             case "enderpearl":
-                Enderpearl enderpearl = (Enderpearl) this.plugin.getModule("Ender Pearl Cooldown");
+                EnderpearlCooldown enderpearl = (EnderpearlCooldown) this.plugin.getModule("Enderpearl Cooldown");
                 if (enderpearl == null) return "";
                 return enderpearl.getCooldown(player.getUniqueId());
             case "combatlog":

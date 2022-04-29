@@ -3,16 +3,17 @@ package me.nik.combatplus.modules.impl;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.Messenger;
-import me.nik.combatplus.utils.WorldUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class HealthBar extends Module {
 
@@ -21,28 +22,31 @@ public class HealthBar extends Module {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onCombat(final EntityDamageByEntityEvent e) {
-        if (!(e.getEntity() instanceof LivingEntity)) return;
+    public void onCombat(EntityDamageByEntityEvent e) {
+        if (!(e.getEntity() instanceof LivingEntity)
+                || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK
+                || (!(e.getEntity() instanceof Player) && Config.Setting.HEALTHBAR_PLAYERS_ONLY.getBoolean())) return;
 
-        final LivingEntity entity = (LivingEntity) e.getEntity();
+        Entity damager = e.getDamager();
 
-        if (e.getDamager() instanceof Player) {
+        Player player = null;
 
-            final Player p = (Player) e.getDamager();
+        if (damager instanceof Player) {
 
-            if (WorldUtils.healthBarDisabledWorlds(p)) return;
+            player = (Player) damager;
 
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth(entity))));
-        } else if (e.getDamager() instanceof Projectile) {
+        } else if (damager instanceof Projectile && ((Projectile) damager).getShooter() instanceof Player) {
 
-            if (!(((Projectile) e.getDamager()).getShooter() instanceof Player)) return;
-
-            final Player shooter = (Player) ((Projectile) e.getDamager()).getShooter();
-
-            if (WorldUtils.healthBarDisabledWorlds(shooter)) return;
-
-            shooter.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth(entity))));
+            player = (Player) ((Projectile) damager).getShooter();
         }
+
+        if (player == null || disabledWorld(player)) return;
+
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth((LivingEntity) e.getEntity()))));
+    }
+
+    private boolean disabledWorld(Player player) {
+        return Config.Setting.HEALTHBAR_DISABLED_WORLDS.getStringList().stream().anyMatch(world -> world.equals(player.getWorld().getName()));
     }
 
     private String getHealth(LivingEntity entity) {
@@ -50,13 +54,9 @@ public class HealthBar extends Module {
             return "&8>> &a|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| &8<<";
         }
 
-        final double damage = entity.getLastDamage();
+        final double health = entity.getHealth() - entity.getLastDamage();
 
-        final double maxHealth = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-
-        final double health = entity.getHealth() - damage;
-
-        final double onePercent = (maxHealth / 100);
+        final double onePercent = (entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 100);
 
         final int currentPercent = (int) Math.round((health / onePercent));
 

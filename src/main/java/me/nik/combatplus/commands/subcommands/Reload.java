@@ -1,9 +1,9 @@
 package me.nik.combatplus.commands.subcommands;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.Permissions;
 import me.nik.combatplus.commands.SubCommand;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -37,17 +37,20 @@ public class Reload extends SubCommand {
     }
 
     @Override
+    protected int maxArguments() {
+        return 1;
+    }
+
+    @Override
     public boolean canConsoleExecute() {
         return true;
     }
 
     @Override
     public void perform(CommandSender sender, String[] args) {
-        if (args.length == 1) {
-            plugin.onDisable();
-            plugin.onEnable();
-            sender.sendMessage(MsgType.RELOADED.getMessage());
-        }
+        plugin.onDisable();
+        plugin.onEnable();
+        sender.sendMessage(MsgType.RELOADED.getMessage());
     }
 
     @Override

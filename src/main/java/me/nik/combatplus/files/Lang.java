@@ -50,9 +50,7 @@ public class Lang {
         get().addDefault("enchanted_golden_apple_cooldown_actionbar", "&6You can eat an Enchanted Golden Apple again in &a%seconds% &6seconds.");
         get().addDefault("enderpearl_cooldown", "&fYou cannot use an Ender Pearl yet, You must wait %seconds% seconds.");
         get().addDefault("enderpearl_cooldown_actionbar", "&6You can use an Ender Pearl again in &a%seconds% &6seconds.");
-        get().addDefault("cannot_craft_this", "&cYou cannot craft this item!");
         get().addDefault("combatlog_tagged", "&fYou are now in combat, Do not log out!");
-        get().addDefault("combatlog_untagged", "&fYou can now log out!");
         get().addDefault("combatlog_actionbar", "&f&l[&cCombat+&f&l]&f: You are tagged for %seconds% seconds");
         get().addDefault("combatlog_broadcast", "&f%player% Died due to logging out while in combat");
         get().addDefault("combatlog_item_drop", "&cYou can not drop items while in combat!");
@@ -65,7 +63,5 @@ public class Lang {
         get().addDefault("console_update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
         get().addDefault("console_update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
         get().addDefault("console_commands", "&c&lYou cannot run this command through the console :(");
-        get().addDefault("console_unsupported_version", "&c&lWARNING! You Are Using an Unsupported Version, Some Modules Have Been Skipped.");
-        get().addDefault("console_unsupported_sweep_attack", "&c&lSweep Attacks Cannot be Disabled on your Minecraft Version, Skipping.");
     }
 }

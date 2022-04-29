@@ -1,9 +1,9 @@
 package me.nik.combatplus.modules;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,13 +24,13 @@ public abstract class Module implements Listener {
         return name;
     }
 
-    public void init() {
-        if (!enabled) return;
+    public void load() {
+        if (!this.enabled) return;
         Bukkit.getPluginManager().registerEvents(this, CombatPlus.getInstance());
     }
 
-    public void disInit() {
-        if (!enabled) return;
+    public void shutdown() {
+        if (!this.enabled) return;
         HandlerList.unregisterAll(this);
     }
 

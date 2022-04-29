@@ -1,6 +1,7 @@
 package me.nik.combatplus.gui;
 
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.files.Config;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Menu implements InventoryHolder {
@@ -19,10 +21,10 @@ public abstract class Menu implements InventoryHolder {
 
     protected Inventory inventory;
 
-    protected PlayerMenuUtility playerMenuUtility;
+    protected PlayerMenu playerMenu;
 
-    public Menu(PlayerMenuUtility playerMenuUtility, CombatPlus plugin) {
-        this.playerMenuUtility = playerMenuUtility;
+    public Menu(PlayerMenu playerMenu, CombatPlus plugin) {
+        this.playerMenu = playerMenu;
         this.plugin = plugin;
     }
 
@@ -39,7 +41,7 @@ public abstract class Menu implements InventoryHolder {
 
         this.setMenuItems();
 
-        playerMenuUtility.getOwner().openInventory(inventory);
+        playerMenu.getOwner().openInventory(inventory);
     }
 
     protected ItemStack makeItem(Material material, int amount, String displayName, List<String> lore) {
@@ -63,6 +65,7 @@ public abstract class Menu implements InventoryHolder {
         plugin.getConfiguration().set(path, !plugin.getConfiguration().getBoolean(path));
         plugin.getConfiguration().save();
         plugin.getConfiguration().reloadConfig();
+        Arrays.stream(Config.Setting.values()).filter(setting -> setting.getKey().equals(path)).forEach(Config.Setting::reset);
     }
 
     protected boolean getConfigValue(String path) {

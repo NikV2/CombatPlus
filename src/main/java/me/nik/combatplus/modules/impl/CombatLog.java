@@ -1,8 +1,8 @@
 package me.nik.combatplus.modules.impl;
 
-import me.nik.combatplus.Permissions;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
+import me.nik.combatplus.managers.Permissions;
 import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.TaskUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -10,7 +10,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -22,212 +21,183 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CombatLog extends Module {
 
-    private final Map<UUID, Long> taggedPlayers;
-    private final int timer;
-    private final boolean disableFly;
-    private final boolean actionbar;
-    private final boolean tagForMobs;
-    private final boolean tagForProjectiles;
-    private final List<String> excludedCommands;
-    private final boolean broadcast;
-    private boolean isRunning;
+    private final Map<UUID, Long> taggedPlayers = new ConcurrentHashMap<>();
 
     public CombatLog() {
         super("CombatLog", Config.Setting.COMBATLOG_ENABLED.getBoolean());
 
-        this.taggedPlayers = new ConcurrentHashMap<>();
+        TaskUtils.taskTimerAsync(() -> this.taggedPlayers.keySet().forEach(uuid -> {
 
-        this.timer = Config.Setting.COMBATLOG_COOLDOWN.getInt();
-        this.disableFly = Config.Setting.COMBATLOG_DISABLE_FLY.getBoolean();
-        this.actionbar = Config.Setting.COMBATLOG_ACTIONBAR.getBoolean();
-        this.tagForMobs = Config.Setting.COMBATLOG_MOBS.getBoolean();
-        this.tagForProjectiles = Config.Setting.COMBATLOG_PROJECTILES.getBoolean();
-        this.excludedCommands = Config.Setting.COMBATLOG_COMMANDS_EXCLUDED.getStringList();
-        this.broadcast = Config.Setting.COMBATLOG_BROADCAST.getBoolean();
+            Player player = Bukkit.getPlayer(uuid);
 
-        if (this.isRunning) return; //Just in case since i did this the lazy way
+            if (player == null) {
 
-        this.isRunning = true;
-        TaskUtils.taskTimerAsync(() -> {
-            if (this.taggedPlayers.isEmpty()) return;
+                this.taggedPlayers.remove(uuid);
 
-            for (UUID uuid : this.taggedPlayers.keySet()) {
-                Player p = Bukkit.getPlayer(uuid);
-                if (p == null) continue;
-
-                long secondsLeft = ((taggedPlayers.get(uuid) / 1000) + timer) - (System.currentTimeMillis() / 1000);
-                if (secondsLeft > 0) {
-                    if (actionbar) {
-                        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(MsgType.COMBATLOG_ACTIONBAR.getMessage().replace("%seconds%", String.valueOf(secondsLeft))));
-                    }
-                } else {
-                    taggedPlayers.remove(uuid);
-                    p.sendMessage(MsgType.COMBATLOG_UNTAGGED.getMessage());
-                }
+                return;
             }
-        }, 20, 20);
+
+            long secondsleft = getSecondsLeft(uuid);
+
+            if (secondsleft == 0L || !Config.Setting.COMBATLOG_ACTIONBAR.getBoolean()) return;
+
+            String message = MsgType.COMBATLOG_ACTIONBAR.getMessage().replaceAll("%seconds%", String.valueOf(secondsleft));
+
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+
+        }), 0L, 20L);
+    }
+
+    private long getSecondsLeft(UUID uuid) {
+
+        long secondsLeft = ((this.taggedPlayers.get(uuid) / 1000L) + Config.Setting.COMBATLOG_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000L);
+
+        if (secondsLeft < 1L) {
+
+            this.taggedPlayers.remove(uuid);
+
+            return 0L;
+        }
+
+        return secondsLeft;
     }
 
     public String getCooldown(UUID uuid) {
-        if (taggedPlayers.containsKey(uuid)) {
-            long secondsleft = ((taggedPlayers.get(uuid) / 1000) + Config.Setting.COMBATLOG_COOLDOWN.getInt()) - (System.currentTimeMillis() / 1000);
-            if (secondsleft < 1) {
-                taggedPlayers.remove(uuid);
-                return "Ready";
-            }
-            return secondsleft + "s";
+
+        if (this.taggedPlayers.containsKey(uuid)) {
+
+            long secondsleft = getSecondsLeft(uuid);
+
+            return secondsleft == 0L ? "Ready" : (secondsleft + "s");
         }
+
         return "Ready";
     }
 
-    private boolean isTagged(Player player) {
-        return taggedPlayers.containsKey(player.getUniqueId());
-    }
-
     private void tagPlayer(Player player) {
+        if (Config.Setting.COMBATLOG_DISABLED_WORLDS.getStringList().stream().anyMatch(world -> world.equals(player.getWorld().getName()))
+                || (!Config.Setting.DISABLE_BYPASS_PERMISSIONS.getBoolean()
+                && player.hasPermission(Permissions.BYPASS_COMBATLOG.getPermission()))) return;
 
-        if (player.hasPermission(Permissions.BYPASS_COMBATLOG.getPermission())) return;
-
-        if (disableFly) {
+        if (Config.Setting.COMBATLOG_DISABLE_FLY.getBoolean()) {
             player.setFlying(false);
             player.setAllowFlight(false);
         }
 
-        if (!taggedPlayers.containsKey(player.getUniqueId())) {
+        if (!this.taggedPlayers.containsKey(player.getUniqueId())) {
             player.sendMessage(MsgType.COMBATLOG_TAGGED.getMessage());
         }
 
-        taggedPlayers.put(player.getUniqueId(), System.currentTimeMillis());
+        this.taggedPlayers.put(player.getUniqueId(), System.currentTimeMillis());
     }
-
-    private void unTagPlayer(Player player) {
-        taggedPlayers.remove(player.getUniqueId());
-    }
-
-    //Stuff
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onCombat(final EntityDamageByEntityEvent e) {
-
-        final Entity target = e.getEntity();
-
+    public void onCombat(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof LivingEntity)) return;
 
-        if (e.getDamager() instanceof Projectile) {
+        Entity target = e.getEntity();
 
-            if (!tagForProjectiles) return;
+        if (!Config.Setting.COMBATLOG_MOBS.getBoolean() && (!(target instanceof Player))) return;
 
-            final ProjectileSource shooter = ((Projectile) e.getDamager()).getShooter();
+        Entity damager = e.getDamager();
 
-            if (!(shooter instanceof Player)) return;
+        Player player = null;
 
-            final Player p = (Player) shooter;
+        if (damager instanceof Projectile) {
 
-            if (!tagForMobs && target instanceof Mob) return;
+            if (((Projectile) damager).getShooter() instanceof Player && Config.Setting.COMBATLOG_PROJECTILES.getBoolean()) {
 
-            tagPlayer(p);
+                player = (Player) ((Projectile) damager).getShooter();
+            }
 
-            if (!(target instanceof Player)) return;
-            tagPlayer((Player) target);
-        } else if (e.getDamager() instanceof Player) {
+        } else if (damager instanceof Player) {
 
-            if (!tagForMobs && target instanceof Mob) return;
+            player = (Player) damager;
 
-            final Player p = (Player) e.getDamager();
+        } else {
 
-            tagPlayer(p);
+            if (Config.Setting.COMBATLOG_MOBS.getBoolean() && target instanceof Player) {
 
-            if (!(target instanceof Player)) return;
-            tagPlayer((Player) target);
-        } else if (e.getDamager() instanceof Mob) {
-            if (!tagForMobs) return;
-            if (!(target instanceof Player)) return;
-            final Player p = (Player) e.getEntity();
-
-            tagPlayer(p);
+                player = (Player) target;
+            }
         }
+
+        if (player == null) return;
+
+        tagPlayer(player);
+
+        if (target instanceof Player) tagPlayer((Player) target);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onCommand(final PlayerCommandPreprocessEvent e) {
-        if (!Config.Setting.COMBATLOG_COMMANDS_ENABLED.getBoolean()) return;
+    public void onCommand(PlayerCommandPreprocessEvent e) {
+        if (!Config.Setting.COMBATLOG_COMMANDS_ENABLED.getBoolean() || !this.taggedPlayers.containsKey(e.getPlayer().getUniqueId()))
+            return;
 
-        final Player p = e.getPlayer();
+        String command = e.getMessage().replace("/", "");
 
-        if (!isTagged(p)) return;
+        if (Config.Setting.COMBATLOG_COMMANDS_EXCLUDED.getStringList().stream().noneMatch(excluded -> excluded.contains(command))) {
 
-        final String command = e.getMessage().replace("/", "");
+            e.setCancelled(true);
 
-        for (String cmd : excludedCommands) {
-            if (cmd.contains(command)) return;
+            e.getPlayer().sendMessage(MsgType.COMBATLOG_COMMAND.getMessage());
         }
-
-        e.setCancelled(true);
-        p.sendMessage(MsgType.COMBATLOG_COMMAND.getMessage());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onQuit(final PlayerQuitEvent e) {
+    public void onQuit(PlayerQuitEvent e) {
 
-        final Player p = e.getPlayer();
+        Player p = e.getPlayer();
 
-        if (!isTagged(p)) return;
+        UUID uuid = p.getUniqueId();
+
+        if (!this.taggedPlayers.containsKey(uuid)) return;
 
         p.setHealth(0);
-        unTagPlayer(p);
 
-        if (broadcast) {
+        this.taggedPlayers.remove(uuid);
+
+        if (Config.Setting.COMBATLOG_BROADCAST.getBoolean()) {
             Bukkit.broadcastMessage(MsgType.COMBATLOG_BROADCAST.getMessage().replace("%player%", p.getName()));
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onItemDrop(final PlayerDropItemEvent e) {
-        if (!Config.Setting.COMBATLOG_PREVENT_DROPPING_ITEMS.getBoolean()) return;
-
-        final Player p = e.getPlayer();
-
-        if (!isTagged(p)) return;
+    public void onItemDrop(PlayerDropItemEvent e) {
+        if (!Config.Setting.COMBATLOG_PREVENT_DROPPING_ITEMS.getBoolean() || !this.taggedPlayers.containsKey(e.getPlayer().getUniqueId()))
+            return;
 
         e.setCancelled(true);
-        p.sendMessage(MsgType.COMBATLOG_ITEM_DROP.getMessage());
+        e.getPlayer().sendMessage(MsgType.COMBATLOG_ITEM_DROP.getMessage());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onDeath(final PlayerDeathEvent e) {
-        if (!isTagged(e.getEntity())) return;
-
-        unTagPlayer(e.getEntity());
+    public void onDeath(PlayerDeathEvent e) {
+        this.taggedPlayers.remove(e.getEntity().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onItemPick(final EntityPickupItemEvent e) {
-        if (!Config.Setting.COMBATLOG_PREVENT_PICKING_ITEMS.getBoolean()) return;
-        if (!(e.getEntity() instanceof Player)) return;
-        final Player p = (Player) e.getEntity();
-
-        if (!isTagged(p)) return;
+    public void onItemPick(EntityPickupItemEvent e) {
+        if (!Config.Setting.COMBATLOG_PREVENT_PICKING_ITEMS.getBoolean()
+                || !(e.getEntity() instanceof Player)
+                || !this.taggedPlayers.containsKey(e.getEntity().getUniqueId())) return;
 
         e.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void onTeleport(final PlayerTeleportEvent e) {
-        if (!Config.Setting.COMBATLOG_PREVENT_TELEPORTATIONS.getBoolean()) return;
-        final Player p = e.getPlayer();
-
-        if (!isTagged(p)) return;
+    public void onTeleport(PlayerTeleportEvent e) {
+        if (!Config.Setting.COMBATLOG_PREVENT_TELEPORTATIONS.getBoolean() || !this.taggedPlayers.containsKey(e.getPlayer().getUniqueId()))
+            return;
 
         e.setCancelled(true);
-        p.sendMessage(MsgType.COMBATLOG_TELEPORT.getMessage());
+        e.getPlayer().sendMessage(MsgType.COMBATLOG_TELEPORT.getMessage());
     }
 }
