@@ -1,5 +1,5 @@
 # ⚔️ Combat Plus ⚔️ ~ The all in one Combat System!
-⋙ 1.8 PvP | Disable Offhand | Old Weapon Damages | Golden Apple Cooldowns | And much more! ⋘
+⋙ Custom Attack Speed | CombatLog | Custom Tool Damages | Golden Apple Cooldowns | And much more! ⋘
 
 ## License
 ```
