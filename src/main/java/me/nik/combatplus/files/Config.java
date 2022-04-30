@@ -125,18 +125,28 @@ public class Config {
         DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_DIAMOND_HOE("damage_modifiers.custom_tool_damages.tools.DIAMOND_HOE", 0),
         DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_NETHERITE_HOE("damage_modifiers.custom_tool_damages.tools.NETHERITE_HOE", 0),
 
-        DISABLE_ARROW_BOOST("disable_arrow_boost", true, "Would you like to prevent players from boosting themselves by using Arrows?"),
+        HIDE_TOOL_FLAGS("hide_tool_flags", true, "Would you like to hide the item flags shown on tools indicating their damage and attack speed?"),
+
+        DISABLE_ARROW_BOOST("disable_arrow_boost", false, "Would you like to prevent players from boosting themselves by using Arrows?"),
+
+        CUSTOM_PLAYER_KNOCKBACK("custom_player_knockback", "", "Custom player knockback properties"),
+        CUSTOM_PLAYER_KNOCKBACK_ENABLED("custom_player_knockback.enabled", false, "Should we modify the player's knockback?"),
+        CUSTOM_PLAYER_KNOCKBACK_FRICTION("custom_player_knockback.friction", 2.0, "The velocity friction to apply"),
+        CUSTOM_PLAYER_KNOCKBACK_HORIZONTAL("custom_player_knockback.horizontal", 0.35, "The horizontal knockback to apply"),
+        CUSTOM_PLAYER_KNOCKBACK_EXTRA_HORIZONTAL("custom_player_knockback.extra_horizontal", 0.425, "The extra horizontal knockback to apply"),
+        CUSTOM_PLAYER_KNOCKBACK_VERTICAL("custom_player_knockback.vertical", 0.35, "The vertical knockback to apply"),
+        CUSTOM_PLAYER_KNOCKBACK_EXTRA_VERTICAL("custom_player_knockback.extra_vertical", 0.085, "The extra vertical knockback to apply"),
+        CUSTOM_PLAYER_KNOCKBACK_VERTICAL_LIMIT("custom_player_knockback.vertical_limit", 0.4, "The vertical velocity limit to apply"),
 
         CUSTOM_PLAYER_REGENERATION("custom_player_regeneration", "", "Custom player regeneration properties"),
-        CUSTOM_PLAYER_REGENERATION_ENABLED("custom_player_regeneration.enabled", true, "Should we modify the player's regeneration?"),
-        CUSTOM_PLAYER_REGENERATION_FREQUENCY("custom_player_regeneration.frequency", 3, "The regeneration rate", "The default value replicates 1.8 regeneration"),
+        CUSTOM_PLAYER_REGENERATION_ENABLED("custom_player_regeneration.enabled", false, "Should we modify the player's regeneration?"),
+        CUSTOM_PLAYER_REGENERATION_FREQUENCY("custom_player_regeneration.frequency", 3, "The regeneration rate (In seconds)", "The default value replicates 1.8 regeneration"),
         CUSTOM_PLAYER_REGENERATION_AMOUNT("custom_player_regeneration.amount", 1, "The regeneration amount", "The default value replicates 1.8 regeneration"),
         CUSTOM_PLAYER_REGENERATION_EXCHAUSTION("custom_player_regeneration.exchaustion", 3, "The exchaustion amount", "The default value replicates 1.8 regeneration"),
 
         SWORD_BLOCKING("sword_blocking", "", "Sword blocking properties"),
-        SWORD_BLOCKING_ENABLED("sword_blocking.enabled", false, "Would you like players to get a Resistance and a Slowness Effect if they hold Right Click?"),
+        SWORD_BLOCKING_ENABLED("sword_blocking.enabled", true, "Would you like players to get a Resistance and a Slowness Effect if they hold Right Click?"),
         SWORD_BLOCKING_IGNORE_SHIELDS("sword_blocking.ignore_shields", true, "Should we ignore it if the player is holding a shield on his offhand?"),
-        SWORD_BLOCKING_CANCEL_SPRINTING("sword_blocking.cancel_sprinting", false, "Should we cancel the player's sprinting?"),
         SWORD_BLOCKING_EFFECT("sword_blocking.effect", "DAMAGE_RESISTANCE", "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html"),
         SWORD_BLOCKING_DURATION_TICKS("sword_blocking.duration_ticks", 8, "The duration in ticks (20 ticks = 1 second)"),
         SWORD_BLOCKING_AMPLIFIER("sword_blocking.amplifier", 0, "The effect amplifier"),

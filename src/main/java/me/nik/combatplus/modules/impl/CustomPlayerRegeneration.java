@@ -27,36 +27,51 @@ public class CustomPlayerRegeneration extends Module {
         if (e.getEntityType() != EntityType.PLAYER || e.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED)
             return;
 
-        final Player p = (Player) e.getEntity();
+        Player player = (Player) e.getEntity();
 
         e.setCancelled(true);
 
-        final UUID uuid = p.getUniqueId();
+        UUID uuid = player.getUniqueId();
 
-        final double playerHealth = p.getHealth();
+        double playerHealth = player.getHealth();
 
-        final long currentTime = System.currentTimeMillis() / 1000L;
+        float previousExhaustion = player.getExhaustion();
 
-        final long lastHealTime = healTimes.computeIfAbsent(uuid, id -> System.currentTimeMillis() / 1000L);
+        //Milliseconds to seconds
+        long currentTime = System.currentTimeMillis() / 1000L;
 
-        if (currentTime - lastHealTime < Config.Setting.CUSTOM_PLAYER_REGENERATION_FREQUENCY.getInt()) return;
+        long lastHealTime = this.healTimes.computeIfAbsent(uuid, id -> currentTime);
 
-        final double maxHealth = p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        if ((currentTime - lastHealTime) < Config.Setting.CUSTOM_PLAYER_REGENERATION_FREQUENCY.getLong()) {
+
+            TaskUtils.taskLaterAsync(() -> {
+
+                player.setExhaustion(previousExhaustion);
+
+                debug(player, "&6Skipped");
+
+            }, 1L);
+
+            return;
+        }
+
+        double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
 
         if (playerHealth < maxHealth) {
 
-            p.setHealth(MathUtils.clampDouble(playerHealth + Config.Setting.CUSTOM_PLAYER_REGENERATION_AMOUNT.getInt(), maxHealth));
+            player.setHealth(MathUtils.clampDouble(playerHealth + Config.Setting.CUSTOM_PLAYER_REGENERATION_AMOUNT.getDouble(), maxHealth));
 
-            healTimes.put(uuid, currentTime);
+            this.healTimes.put(uuid, currentTime);
         }
 
-        final float previousExhaustion = p.getExhaustion();
+        float exhaustionToApply = Config.Setting.CUSTOM_PLAYER_REGENERATION_EXCHAUSTION.getFloat();
 
-        final float exhaustionToApply = Config.Setting.CUSTOM_PLAYER_REGENERATION_EXCHAUSTION.getFloat();
+        TaskUtils.taskLaterAsync(() -> {
 
-        TaskUtils.taskLater(() -> {
-            p.setExhaustion(previousExhaustion + exhaustionToApply);
-            debug(p, "&6Old exhaustion: &a" + previousExhaustion + " &6New exhaustion: &a" + exhaustionToApply);
-        }, 1);
+            player.setExhaustion(previousExhaustion + exhaustionToApply);
+
+            debug(player, "&6Old exhaustion: &a" + previousExhaustion + " &6New exhaustion: &a" + exhaustionToApply);
+
+        }, 1L);
     }
 }

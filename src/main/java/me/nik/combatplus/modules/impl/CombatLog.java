@@ -86,9 +86,13 @@ public class CombatLog extends Module {
                 || (!Config.Setting.DISABLE_BYPASS_PERMISSIONS.getBoolean()
                 && player.hasPermission(Permissions.BYPASS_COMBATLOG.getPermission()))) return;
 
-        if (Config.Setting.COMBATLOG_DISABLE_FLY.getBoolean()) {
+        if (Config.Setting.COMBATLOG_DISABLE_FLY.getBoolean() && (player.getAllowFlight() || player.isFlying())) {
+
             player.setFlying(false);
+
             player.setAllowFlight(false);
+
+            debug(player, "&6Disabled flight");
         }
 
         if (!this.taggedPlayers.containsKey(player.getUniqueId())) {
@@ -96,9 +100,11 @@ public class CombatLog extends Module {
         }
 
         this.taggedPlayers.put(player.getUniqueId(), System.currentTimeMillis());
+
+        debug(player, "&6Tagged");
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof LivingEntity)) return;
 
@@ -147,40 +153,54 @@ public class CombatLog extends Module {
 
             e.setCancelled(true);
 
-            e.getPlayer().sendMessage(MsgType.COMBATLOG_COMMAND.getMessage());
+            Player player = e.getPlayer();
+
+            player.sendMessage(MsgType.COMBATLOG_COMMAND.getMessage());
+
+            debug(player, "&6Cancelled: &a" + e.getEventName());
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onQuit(PlayerQuitEvent e) {
 
-        Player p = e.getPlayer();
+        Player player = e.getPlayer();
 
-        UUID uuid = p.getUniqueId();
+        UUID uuid = player.getUniqueId();
 
         if (!this.taggedPlayers.containsKey(uuid)) return;
 
-        p.setHealth(0);
+        player.setHealth(0);
 
         this.taggedPlayers.remove(uuid);
 
         if (Config.Setting.COMBATLOG_BROADCAST.getBoolean()) {
-            Bukkit.broadcastMessage(MsgType.COMBATLOG_BROADCAST.getMessage().replace("%player%", p.getName()));
+            Bukkit.broadcastMessage(MsgType.COMBATLOG_BROADCAST.getMessage().replace("%player%", player.getName()));
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onItemDrop(PlayerDropItemEvent e) {
         if (!Config.Setting.COMBATLOG_PREVENT_DROPPING_ITEMS.getBoolean() || !this.taggedPlayers.containsKey(e.getPlayer().getUniqueId()))
             return;
 
         e.setCancelled(true);
-        e.getPlayer().sendMessage(MsgType.COMBATLOG_ITEM_DROP.getMessage());
+
+        Player player = e.getPlayer();
+
+        player.sendMessage(MsgType.COMBATLOG_ITEM_DROP.getMessage());
+
+        debug(player, "&6Cancelled: &a" + e.getEventName());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDeath(PlayerDeathEvent e) {
-        this.taggedPlayers.remove(e.getEntity().getUniqueId());
+
+        Player player = e.getEntity();
+
+        this.taggedPlayers.remove(player.getUniqueId());
+
+        debug(player, "&6Removed from the cooldown");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -190,14 +210,23 @@ public class CombatLog extends Module {
                 || !this.taggedPlayers.containsKey(e.getEntity().getUniqueId())) return;
 
         e.setCancelled(true);
+
+        debug((Player) e.getEntity(), "&6Cancelled: &a" + e.getEventName());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onTeleport(PlayerTeleportEvent e) {
-        if (!Config.Setting.COMBATLOG_PREVENT_TELEPORTATIONS.getBoolean() || !this.taggedPlayers.containsKey(e.getPlayer().getUniqueId()))
-            return;
+        if (!Config.Setting.COMBATLOG_PREVENT_TELEPORTATIONS.getBoolean()
+                || !this.taggedPlayers.containsKey(e.getPlayer().getUniqueId())
+                //Laggy - Buggy occasions
+                || e.getCause() == PlayerTeleportEvent.TeleportCause.UNKNOWN) return;
 
         e.setCancelled(true);
-        e.getPlayer().sendMessage(MsgType.COMBATLOG_TELEPORT.getMessage());
+
+        Player player = e.getPlayer();
+
+        player.sendMessage(MsgType.COMBATLOG_TELEPORT.getMessage());
+
+        debug(player, "&6Cancelled: &a" + e.getEventName());
     }
 }

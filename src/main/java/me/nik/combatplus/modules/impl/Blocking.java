@@ -19,16 +19,17 @@ import java.util.UUID;
 
 public class Blocking extends Module {
 
-    private final ExpiringMap<UUID, Long> blocking = new ExpiringMap<>(10000L);
+    private final ExpiringMap<UUID, Long> blocking = new ExpiringMap<>(5000L);
 
     public Blocking() {
         super("Sword Blocking", Config.Setting.SWORD_BLOCKING_ENABLED.getBoolean());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlock(PlayerInteractEvent e) {
-        if (e.getItem() == null || !e.getItem().getType().name().endsWith("_SWORD") || !e.getAction().name().contains("RIGHT_CLICK"))
-            return;
+        if (e.getItem() == null
+                || !e.getItem().getType().name().endsWith("_SWORD")
+                || (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)) return;
 
         Action action = e.getAction();
 
@@ -43,10 +44,6 @@ public class Blocking extends Module {
         if (Config.Setting.SWORD_BLOCKING_IGNORE_SHIELDS.getBoolean() && player.getInventory().getItemInOffHand().getType().name().contains("SHIELD"))
             return;
 
-        if (Config.Setting.SWORD_BLOCKING_CANCEL_SPRINTING.getBoolean() && player.isSprinting()) {
-            player.setSprinting(false);
-        }
-
         player.addPotionEffects(Arrays.asList(
                 new PotionEffect(PotionEffectType.getByName(Config.Setting.SWORD_BLOCKING_EFFECT.getString()), Config.Setting.SWORD_BLOCKING_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_AMPLIFIER.getInt()),
                 new PotionEffect(PotionEffectType.SLOW, Config.Setting.SWORD_BLOCKING_SLOW_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_SLOW_AMPLIFIER.getInt())
@@ -56,13 +53,14 @@ public class Blocking extends Module {
 
         if (!blocking.containsKey(uuid)) blocking.put(uuid, System.currentTimeMillis());
 
-        debug(player, "&6Action: &a" + e.getAction());
+        debug(player, "&6Action: &a" + action.name());
     }
 
     @EventHandler
     public void onInteractWhileBlocking(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player) || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK || !this.blocking.containsKey(e.getDamager().getUniqueId()))
-            return;
+        if (!(e.getDamager() instanceof Player)
+                || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK
+                || !this.blocking.containsKey(e.getDamager().getUniqueId())) return;
 
         UUID uuid = e.getDamager().getUniqueId();
 

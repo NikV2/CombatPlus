@@ -21,7 +21,7 @@ public class HealthBar extends Module {
         super("HealthBar", Config.Setting.HEALTHBAR_ENABLED.getBoolean());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof LivingEntity)
                 || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK

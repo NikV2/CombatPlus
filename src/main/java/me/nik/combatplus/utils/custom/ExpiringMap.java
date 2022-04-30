@@ -2,6 +2,7 @@ package me.nik.combatplus.utils.custom;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class ExpiringMap<K, V> extends HashMap<K, V> {
 
@@ -23,6 +24,14 @@ public class ExpiringMap<K, V> extends HashMap<K, V> {
         }
 
         return null;
+    }
+
+    @Override
+    public V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
+
+        validate();
+
+        return super.computeIfAbsent(key, mappingFunction);
     }
 
     public V removeOrDefault(Object key, V defaultValue) {

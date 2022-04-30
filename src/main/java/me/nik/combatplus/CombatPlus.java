@@ -15,6 +15,7 @@ import me.nik.combatplus.modules.impl.Blocking;
 import me.nik.combatplus.modules.impl.CombatLog;
 import me.nik.combatplus.modules.impl.CustomAttackSpeed;
 import me.nik.combatplus.modules.impl.CustomHealth;
+import me.nik.combatplus.modules.impl.CustomPlayerKnockback;
 import me.nik.combatplus.modules.impl.CustomPlayerRegeneration;
 import me.nik.combatplus.modules.impl.DamageModifiers;
 import me.nik.combatplus.modules.impl.DisableBowBoost;
@@ -24,6 +25,7 @@ import me.nik.combatplus.modules.impl.EnderpearlCooldown;
 import me.nik.combatplus.modules.impl.FishingRodKnockback;
 import me.nik.combatplus.modules.impl.GoldenAppleCooldown;
 import me.nik.combatplus.modules.impl.HealthBar;
+import me.nik.combatplus.modules.impl.HideToolFlags;
 import me.nik.combatplus.utils.Messenger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -40,9 +42,9 @@ public final class CombatPlus extends JavaPlugin {
 
     private static CombatPlus instance;
 
-    private Config config;
+    private final Config config = new Config(this);
 
-    private Lang lang;
+    private final Lang lang = new Lang();
 
     private final List<Module> modules = new ArrayList<>();
 
@@ -85,12 +87,12 @@ public final class CombatPlus extends JavaPlugin {
 
         instance = this;
 
-        this.lang = new Lang();
-
-        this.config = new Config(this);
-
         //Load Files
-        loadFiles();
+        this.config.setup();
+        this.lang.setup(this);
+        this.lang.addDefaults();
+        this.lang.get().options().copyDefaults(true);
+        this.lang.save();
 
         this.getServer().getConsoleSender().sendMessage(STARTUP_MESSAGE);
 
@@ -98,13 +100,40 @@ public final class CombatPlus extends JavaPlugin {
         getCommand("combatplus").setExecutor(new CommandManager(this));
 
         //Load Modules
-        initModules();
+        this.modules.clear();
+
+        this.modules.addAll(Arrays.asList(
+                new CustomPlayerRegeneration(),
+                new CustomAttackSpeed(),
+                new DisableOffhand(),
+                new HealthBar(),
+                new GoldenAppleCooldown(),
+                new EnchantedGoldenAppleCooldown(),
+                new FishingRodKnockback(),
+                new EnderpearlCooldown(),
+                new DamageModifiers(),
+                new CustomHealth(),
+                new CombatLog(),
+                new DisableBowBoost(),
+                new Blocking(),
+                new HideToolFlags(),
+                new CustomPlayerKnockback()
+        ));
+
+        this.modules.forEach(Module::load);
 
         //Load Listeners
-        initListeners();
+        PluginManager pm = this.getServer().getPluginManager();
+
+        //GUI Listener (Do not remove this, idiot nik)
+        pm.registerEvents(new GuiListener(), this);
 
         //Check for Updates
-        checkForUpdates();
+        if (Config.Setting.CHECK_FOR_UPDATES.getBoolean()) {
+            new UpdateChecker(this).runTaskAsynchronously(this);
+        } else {
+            Messenger.consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
+        }
 
         //Load bStats
         new MetricsLite(this, 6982);
@@ -133,59 +162,5 @@ public final class CombatPlus extends JavaPlugin {
 
     public Lang getLang() {
         return lang;
-    }
-
-    /**
-     * Load all the built-in files
-     */
-    private void loadFiles() {
-        config.setup();
-        lang.setup(this);
-        lang.addDefaults();
-        lang.get().options().copyDefaults(true);
-        lang.save();
-    }
-
-    private void checkForUpdates() {
-        if (Config.Setting.CHECK_FOR_UPDATES.getBoolean()) {
-            new UpdateChecker(this).runTaskAsynchronously(this);
-        } else {
-            Messenger.consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
-        }
-    }
-
-    private void initModules() {
-
-        this.modules.clear();
-
-        //Add modules
-        this.modules.addAll(Arrays.asList(
-                new CustomPlayerRegeneration(),
-                new CustomAttackSpeed(),
-                new DisableOffhand(),
-                new HealthBar(),
-                new GoldenAppleCooldown(),
-                new EnchantedGoldenAppleCooldown(),
-                new FishingRodKnockback(),
-                new EnderpearlCooldown(),
-                new DamageModifiers(),
-                new CustomHealth(),
-                new CombatLog(),
-                new DisableBowBoost(),
-                new Blocking()
-        ));
-
-        this.modules.forEach(Module::load);
-    }
-
-    /**
-     * Initialize enabled Listeners
-     */
-    private void initListeners() {
-
-        final PluginManager pm = this.getServer().getPluginManager();
-
-        //GUI Listener (Do not remove this, idiot nik)
-        pm.registerEvents(new GuiListener(), this);
     }
 }

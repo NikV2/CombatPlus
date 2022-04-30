@@ -16,12 +16,12 @@ public class CustomHealth extends Module {
         super("Custom Health", Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent e) {
         setMaxHealth(e.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onLeave(PlayerQuitEvent e) {
 
         Player player = e.getPlayer();

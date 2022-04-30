@@ -68,6 +68,11 @@ public class CombatGui extends Menu {
                 getInventory().clear();
                 setMenuItems();
                 break;
+            case 34:
+                changeConfigBoolean(Config.Setting.CUSTOM_PLAYER_KNOCKBACK_ENABLED.getKey());
+                getInventory().clear();
+                setMenuItems();
+                break;
             case 49:
                 p.closeInventory();
                 new MainGui(playerMenu, plugin).open();
@@ -138,6 +143,14 @@ public class CombatGui extends Menu {
         blockLore.add("&fRight Clicking With a Sword");
         ItemStack block = makeItem(Material.PAPER, 1, "&6Sword Blocking", blockLore);
 
+        List<String> kbLore = new ArrayList<>();
+        kbLore.add("");
+        kbLore.add("&7Currently set to: &a" + getConfigValue(Config.Setting.CUSTOM_PLAYER_KNOCKBACK_ENABLED.getKey()));
+        kbLore.add("");
+        kbLore.add("&fWould you like to use");
+        kbLore.add("&fCustom player knockback?");
+        ItemStack kb = makeItem(Material.PAPER, 1, "&6Custom Player Knockback", kbLore);
+
         inventory.setItem(10, customAttackSpeed);
         inventory.setItem(12, oldSharpness);
         inventory.setItem(14, disableSweep);
@@ -145,5 +158,6 @@ public class CombatGui extends Menu {
         inventory.setItem(28, disableBoost);
         inventory.setItem(30, customRegen);
         inventory.setItem(32, block);
+        inventory.setItem(34, kb);
     }
 }

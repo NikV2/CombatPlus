@@ -24,7 +24,7 @@ public class FishingRodKnockback extends Module {
         super("Fishing Rod Knockback", Config.Setting.FISHING_ROD_ENABLED.getBoolean());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onRodLand(ProjectileHitEvent e) {
         if (e.getEntityType() != EntityType.FISHING_HOOK || !(e.getHitEntity() instanceof LivingEntity)) return;
 
@@ -56,7 +56,7 @@ public class FishingRodKnockback extends Module {
         debug(holder, "&6Velocity: &a" + livingEntity.getVelocity());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onHook(PlayerFishEvent e) {
         if (!Config.Setting.FISHING_ROD_CANCEL_DRAG.getBoolean() || e.getState() != PlayerFishEvent.State.CAUGHT_ENTITY)
             return;
