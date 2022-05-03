@@ -1,5 +1,5 @@
 # ⚔️ Combat Plus ⚔️ ~ The all in one Combat System!
-⋙ Custom Attack Speed | CombatLog | Custom Tool Damages | Golden Apple Cooldowns | And much more! ⋘
+⋙ Custom Attack Speed | CombatLog | Custom Knockback | Golden Apple Cooldowns | And much more! ⋘
 
 ## License
 ```
