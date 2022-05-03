@@ -1,7 +1,7 @@
 package me.nik.combatplus.managers;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.ChatUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -33,10 +33,10 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
         }
 
         if (!plugin.getDescription().getVersion().equals(newVersion)) {
-            Messenger.consoleMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
+            ChatUtils.consoleMessage(MsgType.UPDATE_REMINDER.getMessage().replaceAll("%current%", plugin.getDescription().getVersion()).replaceAll("%new%", newVersion));
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
         } else {
-            Messenger.consoleMessage(MsgType.CONSOLE_UPDATE_NOT_FOUND.getMessage());
+            ChatUtils.consoleMessage(MsgType.CONSOLE_UPDATE_NOT_FOUND.getMessage());
         }
     }
 

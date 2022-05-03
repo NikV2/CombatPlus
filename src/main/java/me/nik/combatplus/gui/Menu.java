@@ -2,7 +2,7 @@ package me.nik.combatplus.gui;
 
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -48,11 +48,11 @@ public abstract class Menu implements InventoryHolder {
 
         ItemStack item = new ItemStack(material, amount);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName(Messenger.format(displayName));
+        itemMeta.setDisplayName(ChatUtils.format(displayName));
         if (lore != null) {
             List<String> loreList = new ArrayList<>();
             for (String l : lore) {
-                loreList.add(Messenger.format(l));
+                loreList.add(ChatUtils.format(l));
             }
             itemMeta.setLore(loreList);
         }

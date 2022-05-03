@@ -129,7 +129,7 @@ public class CustomPlayerKnockback extends Module {
 
         Player player = e.getPlayer();
 
-        Vector velocity = this.knockbackQueue.getIfPresent(player.getUniqueId());
+        Vector velocity = this.knockbackQueue.get(player.getUniqueId());
 
         if (velocity == null) return;
 

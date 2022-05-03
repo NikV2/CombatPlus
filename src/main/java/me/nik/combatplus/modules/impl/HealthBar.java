@@ -2,7 +2,7 @@ package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.attribute.Attribute;
@@ -42,7 +42,7 @@ public class HealthBar extends Module {
 
         if (player == null || disabledWorld(player)) return;
 
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messenger.format(getHealth((LivingEntity) e.getEntity()))));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatUtils.format(getHealth((LivingEntity) e.getEntity()))));
     }
 
     private boolean disabledWorld(Player player) {

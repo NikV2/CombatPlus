@@ -4,9 +4,9 @@ import me.nik.combatplus.utils.custom.CombatPlusException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-public final class Messenger {
+public final class ChatUtils {
 
-    private Messenger() {
+    private ChatUtils() {
         throw new CombatPlusException("This is a static class dummy!");
     }
 

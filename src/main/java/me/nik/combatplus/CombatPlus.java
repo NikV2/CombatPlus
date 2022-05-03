@@ -26,7 +26,7 @@ import me.nik.combatplus.modules.impl.FishingRodKnockback;
 import me.nik.combatplus.modules.impl.GoldenAppleCooldown;
 import me.nik.combatplus.modules.impl.HealthBar;
 import me.nik.combatplus.modules.impl.HideToolFlags;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -132,7 +132,7 @@ public final class CombatPlus extends JavaPlugin {
         if (Config.Setting.CHECK_FOR_UPDATES.getBoolean()) {
             new UpdateChecker(this).runTaskAsynchronously(this);
         } else {
-            Messenger.consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
+            ChatUtils.consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
         }
 
         //Load bStats

@@ -31,6 +31,7 @@ public class Config {
 
     private final CombatPlus plugin;
     private CommentedFileConfiguration configuration;
+    private static boolean exists;
 
     public Config(CombatPlus plugin) {
         this.plugin = plugin;
@@ -38,7 +39,11 @@ public class Config {
 
     public void setup() {
         File configFile = new File(this.plugin.getDataFolder(), "config.yml");
-        boolean setHeaderFooter = !configFile.exists();
+
+        exists = configFile.exists();
+
+        boolean setHeaderFooter = !exists;
+
         boolean changed = setHeaderFooter;
 
         this.configuration = CommentedFileConfiguration.loadConfiguration(this.plugin, configFile);
@@ -208,12 +213,20 @@ public class Config {
 
         private final String key;
         private final Object defaultValue;
+        private boolean excluded;
         private final String[] comments;
         private Object value = null;
 
         Setting(String key, Object defaultValue, String... comments) {
             this.key = key;
             this.defaultValue = defaultValue;
+            this.comments = comments != null ? comments : new String[0];
+        }
+
+        Setting(String key, Object defaultValue, boolean excluded, String... comments) {
+            this.key = key;
+            this.defaultValue = defaultValue;
+            this.excluded = excluded;
             this.comments = comments != null ? comments : new String[0];
         }
 
@@ -296,6 +309,8 @@ public class Config {
 
         private boolean setIfNotExists(CommentedFileConfiguration fileConfiguration) {
             this.loadValue();
+
+            if (exists && this.excluded) return false;
 
             if (fileConfiguration.get(this.key) == null) {
                 List<String> comments = Stream.of(this.comments).collect(Collectors.toList());

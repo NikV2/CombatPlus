@@ -4,13 +4,13 @@ import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.managers.Permissions;
-import me.nik.combatplus.utils.Messenger;
+import me.nik.combatplus.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-public abstract class Module implements Listener {
+public class Module implements Listener {
 
     private final boolean enabled;
     private final String name;
@@ -36,7 +36,7 @@ public abstract class Module implements Listener {
 
     protected void debug(Player player, String information) {
         if (Config.Setting.DEVELOPER_MODE.getBoolean() && player.hasPermission(Permissions.DEBUG.getPermission())) {
-            player.sendMessage(MsgType.PREFIX.getMessage() + this.name + Messenger.format(" &f&l>> &r" + information));
+            player.sendMessage(MsgType.PREFIX.getMessage() + this.name + ChatUtils.format(" &f&l>> &r" + information));
         }
     }
 }
