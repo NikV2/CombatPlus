@@ -29,7 +29,7 @@ public class HideToolFlags extends Module {
     };
 
     public HideToolFlags() {
-        super("Hide Tool Flags", Config.Setting.HIDE_TOOL_FLAGS.getBoolean());
+        super(Config.Setting.HIDE_TOOL_FLAGS.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

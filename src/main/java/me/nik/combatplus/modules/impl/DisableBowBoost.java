@@ -12,7 +12,7 @@ import org.bukkit.projectiles.ProjectileSource;
 public class DisableBowBoost extends Module {
 
     public DisableBowBoost() {
-        super("Disable Bow Boost", Config.Setting.DISABLE_ARROW_BOOST.getBoolean());
+        super(Config.Setting.DISABLE_ARROW_BOOST.getBoolean());
     }
 
     @EventHandler

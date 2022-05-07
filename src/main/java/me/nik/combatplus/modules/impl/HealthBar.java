@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 public class HealthBar extends Module {
 
     public HealthBar() {
-        super("HealthBar", Config.Setting.HEALTHBAR_ENABLED.getBoolean());
+        super(Config.Setting.HEALTHBAR_ENABLED.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

@@ -22,7 +22,7 @@ public class Blocking extends Module {
     private final ExpiringMap<UUID, Long> blocking = new ExpiringMap<>(5000L);
 
     public Blocking() {
-        super("Sword Blocking", Config.Setting.SWORD_BLOCKING_ENABLED.getBoolean());
+        super(Config.Setting.SWORD_BLOCKING_ENABLED.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

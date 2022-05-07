@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class CustomAttackSpeed extends Module {
 
     public CustomAttackSpeed() {
-        super("Custom Attack Speed", Config.Setting.CUSTOM_ATTACK_SPEED_ENABLED.getBoolean());
+        super(Config.Setting.CUSTOM_ATTACK_SPEED_ENABLED.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

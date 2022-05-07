@@ -19,7 +19,7 @@ public class CustomPlayerRegeneration extends Module {
     private final ExpiringMap<UUID, Long> healTimes = new ExpiringMap<>(10000L);
 
     public CustomPlayerRegeneration() {
-        super("Custom Player Regeneration", Config.Setting.CUSTOM_PLAYER_REGENERATION_ENABLED.getBoolean());
+        super(Config.Setting.CUSTOM_PLAYER_REGENERATION_ENABLED.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

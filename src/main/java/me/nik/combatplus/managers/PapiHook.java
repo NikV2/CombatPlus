@@ -2,6 +2,7 @@ package me.nik.combatplus.managers;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.nik.combatplus.CombatPlus;
+import me.nik.combatplus.modules.impl.CombatLog;
 import me.nik.combatplus.modules.impl.EnchantedGoldenAppleCooldown;
 import me.nik.combatplus.modules.impl.EnderpearlCooldown;
 import me.nik.combatplus.modules.impl.GoldenAppleCooldown;
@@ -45,22 +46,26 @@ public class PapiHook extends PlaceholderExpansion {
 
         switch (identifier) {
             case "goldenapple":
-                GoldenAppleCooldown goldenApple = (GoldenAppleCooldown) this.plugin.getModule("Golden Apple Cooldown");
+                GoldenAppleCooldown goldenApple = (GoldenAppleCooldown) this.plugin.getModule(GoldenAppleCooldown.class);
                 if (goldenApple == null) return "";
                 return goldenApple.getCooldown(player.getUniqueId());
+
             case "enchantedgoldenapple":
-                EnchantedGoldenAppleCooldown enchantedGoldenApple = (EnchantedGoldenAppleCooldown) this.plugin.getModule("Enchanted Golden Apple Cooldown");
+                EnchantedGoldenAppleCooldown enchantedGoldenApple = (EnchantedGoldenAppleCooldown) this.plugin.getModule(EnchantedGoldenAppleCooldown.class);
                 if (enchantedGoldenApple == null) return "";
                 return enchantedGoldenApple.getCooldown(player.getUniqueId());
+
             case "enderpearl":
-                EnderpearlCooldown enderpearl = (EnderpearlCooldown) this.plugin.getModule("Enderpearl Cooldown");
+                EnderpearlCooldown enderpearl = (EnderpearlCooldown) this.plugin.getModule(EnderpearlCooldown.class);
                 if (enderpearl == null) return "";
                 return enderpearl.getCooldown(player.getUniqueId());
+
             case "combatlog":
-                me.nik.combatplus.modules.impl.CombatLog combatLog = (me.nik.combatplus.modules.impl.CombatLog) this.plugin.getModule("CombatLog");
+                CombatLog combatLog = (CombatLog) this.plugin.getModule(CombatLog.class);
                 if (combatLog == null) return "";
                 return combatLog.getCooldown(player.getUniqueId());
         }
+
         return null;
     }
 }

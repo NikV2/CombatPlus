@@ -61,7 +61,6 @@ public class Lang {
         get().addDefault("gui_combat", "&c&lCombat Settings");
         get().addDefault("gui_general", "&c&lGeneral Settings");
         get().addDefault("console_update_not_found", "&6&lNo updates are found, You're running the Latest Version <3");
-        get().addDefault("console_update_disabled", "&f&lUpdate Checker is Disabled, Skipping.");
         get().addDefault("console_commands", "&c&lYou cannot run this command through the console :(");
     }
 }

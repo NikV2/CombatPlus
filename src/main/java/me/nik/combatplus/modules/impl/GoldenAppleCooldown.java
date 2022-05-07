@@ -22,7 +22,7 @@ public class GoldenAppleCooldown extends Module {
     private final Map<UUID, Long> cooldowns = new ConcurrentHashMap<>();
 
     public GoldenAppleCooldown() {
-        super("Golden Apple Cooldown", Config.Setting.GOLDEN_APPLE_ENABLED.getBoolean());
+        super(Config.Setting.GOLDEN_APPLE_ENABLED.getBoolean());
 
         TaskUtils.taskTimerAsync(() -> this.cooldowns.keySet().forEach(uuid -> {
 

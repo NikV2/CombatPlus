@@ -19,7 +19,7 @@ public class DisableOffhand extends Module {
     private static final int OFFHANDSLOT = 40;
 
     public DisableOffhand() {
-        super("Disable Offhand", Config.Setting.DISABLE_OFFHAND.getBoolean());
+        super(Config.Setting.DISABLE_OFFHAND.getBoolean());
     }
 
     @EventHandler

@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class CustomHealth extends Module {
     public CustomHealth() {
-        super("Custom Health", Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean());
+        super(Config.Setting.CUSTOM_PLAYER_HEALTH_ENABLED.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

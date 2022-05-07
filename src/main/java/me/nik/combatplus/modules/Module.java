@@ -13,15 +13,9 @@ import org.bukkit.event.Listener;
 public class Module implements Listener {
 
     private final boolean enabled;
-    private final String name;
 
-    public Module(String name, boolean enabled) {
-        this.name = name;
+    public Module(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void load() {
@@ -36,7 +30,7 @@ public class Module implements Listener {
 
     protected void debug(Player player, String information) {
         if (Config.Setting.DEVELOPER_MODE.getBoolean() && player.hasPermission(Permissions.DEBUG.getPermission())) {
-            player.sendMessage(MsgType.PREFIX.getMessage() + this.name + ChatUtils.format(" &f&l>> &r" + information));
+            player.sendMessage(MsgType.PREFIX.getMessage() + this.getClass().getSimpleName() + ChatUtils.format(" &f&l>> &r" + information));
         }
     }
 }

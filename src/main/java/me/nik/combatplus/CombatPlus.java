@@ -6,7 +6,6 @@ import me.nik.combatplus.files.Config;
 import me.nik.combatplus.files.Lang;
 import me.nik.combatplus.files.commentedfiles.CommentedFileConfiguration;
 import me.nik.combatplus.listeners.GuiListener;
-import me.nik.combatplus.managers.MsgType;
 import me.nik.combatplus.managers.PapiHook;
 import me.nik.combatplus.managers.UpdateChecker;
 import me.nik.combatplus.metrics.MetricsLite;
@@ -26,12 +25,10 @@ import me.nik.combatplus.modules.impl.FishingRodKnockback;
 import me.nik.combatplus.modules.impl.GoldenAppleCooldown;
 import me.nik.combatplus.modules.impl.HealthBar;
 import me.nik.combatplus.modules.impl.HideToolFlags;
-import me.nik.combatplus.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -122,17 +119,12 @@ public final class CombatPlus extends JavaPlugin {
 
         this.modules.forEach(Module::load);
 
-        //Load Listeners
-        PluginManager pm = this.getServer().getPluginManager();
-
         //GUI Listener (Do not remove this, idiot nik)
-        pm.registerEvents(new GuiListener(), this);
+        Bukkit.getPluginManager().registerEvents(new GuiListener(), this);
 
         //Check for Updates
         if (Config.Setting.CHECK_FOR_UPDATES.getBoolean()) {
             new UpdateChecker(this).runTaskAsynchronously(this);
-        } else {
-            ChatUtils.consoleMessage(MsgType.CONSOLE_UPDATE_DISABLED.getMessage());
         }
 
         //Load bStats
@@ -146,14 +138,8 @@ public final class CombatPlus extends JavaPlugin {
         Bukkit.getPluginManager().callEvent(new CombatPlusLoadEvent());
     }
 
-    public Module getModule(String name) {
-        for (Module module : this.modules) {
-            if (module.getName().equals(name)) {
-                return module;
-            }
-        }
-
-        return null;
+    public Module getModule(Class<? extends Module> clazz) {
+        return this.modules.stream().filter(module -> module.getClass().equals(clazz)).findFirst().orElse(null);
     }
 
     public CommentedFileConfiguration getConfiguration() {

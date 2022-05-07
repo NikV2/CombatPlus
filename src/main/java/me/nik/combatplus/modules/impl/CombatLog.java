@@ -31,7 +31,7 @@ public class CombatLog extends Module {
     private final Map<UUID, Long> taggedPlayers = new ConcurrentHashMap<>();
 
     public CombatLog() {
-        super("CombatLog", Config.Setting.COMBATLOG_ENABLED.getBoolean());
+        super(Config.Setting.COMBATLOG_ENABLED.getBoolean());
 
         TaskUtils.taskTimerAsync(() -> this.taggedPlayers.keySet().forEach(uuid -> {
 

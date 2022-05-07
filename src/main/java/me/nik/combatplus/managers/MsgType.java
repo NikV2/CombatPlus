@@ -25,7 +25,6 @@ public enum MsgType {
     GUI_COMBAT(ChatUtils.format(CombatPlus.getInstance().getLang().get().getString("gui_combat"))),
     GUI_GENERAL(ChatUtils.format(CombatPlus.getInstance().getLang().get().getString("gui_general"))),
     CONSOLE_UPDATE_NOT_FOUND(PREFIX.getMessage() + ChatUtils.format(CombatPlus.getInstance().getLang().get().getString("console_update_not_found"))),
-    CONSOLE_UPDATE_DISABLED(PREFIX.getMessage() + ChatUtils.format(CombatPlus.getInstance().getLang().get().getString("console_update_disabled"))),
     CONSOLE_COMMANDS(PREFIX.getMessage() + ChatUtils.format(CombatPlus.getInstance().getLang().get().getString("console_commands")));
 
     private final String message;

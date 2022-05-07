@@ -25,7 +25,7 @@ public class CustomPlayerKnockback extends Module {
     private final ExpiringMap<UUID, Vector> knockbackQueue = new ExpiringMap<>(1000L);
 
     public CustomPlayerKnockback() {
-        super("Custom Player Knockback", Config.Setting.CUSTOM_PLAYER_KNOCKBACK_ENABLED.getBoolean());
+        super(Config.Setting.CUSTOM_PLAYER_KNOCKBACK_ENABLED.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

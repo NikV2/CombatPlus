@@ -22,7 +22,7 @@ public class EnderpearlCooldown extends Module {
     private final Map<UUID, Long> cooldowns = new ConcurrentHashMap<>();
 
     public EnderpearlCooldown() {
-        super("Enderpearl Cooldown", Config.Setting.ENDERPEARL_ENABLED.getBoolean());
+        super(Config.Setting.ENDERPEARL_ENABLED.getBoolean());
 
         TaskUtils.taskTimerAsync(() -> this.cooldowns.keySet().forEach(uuid -> {
 

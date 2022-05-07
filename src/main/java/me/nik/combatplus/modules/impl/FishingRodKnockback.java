@@ -21,7 +21,7 @@ public class FishingRodKnockback extends Module {
 
 
     public FishingRodKnockback() {
-        super("Fishing Rod Knockback", Config.Setting.FISHING_ROD_ENABLED.getBoolean());
+        super(Config.Setting.FISHING_ROD_ENABLED.getBoolean());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

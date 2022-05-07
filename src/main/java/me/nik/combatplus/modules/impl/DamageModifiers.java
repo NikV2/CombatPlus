@@ -16,7 +16,7 @@ public class DamageModifiers extends Module {
     private static final Vector ZERO_VELOCITY = new Vector();
 
     public DamageModifiers() {
-        super("Damage Modifiers", Config.Setting.DAMAGE_MODIFIERS_DISABLE_SWEEP.getBoolean()
+        super(Config.Setting.DAMAGE_MODIFIERS_DISABLE_SWEEP.getBoolean()
                 || Config.Setting.DAMAGE_MODIFIERS_OLD_SHARPNESS.getBoolean()
                 || Config.Setting.DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_ENABLED.getBoolean());
     }
