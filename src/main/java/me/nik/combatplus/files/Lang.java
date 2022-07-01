@@ -38,7 +38,6 @@ public class Lang {
     }
 
     public void addDefaults() {
-        //lang.yml
         get().options().header("+----------------------------------------------------------------------------------------------+" + "\n" + "|                                                                                              |" + "\n" + "|                                           Combat Plus                                        |" + "\n" + "|                                                                                              |" + "\n" + "|                               Discord: https://discord.gg/m7j2Y9H                            |" + "\n" + "|                                                                                              |" + "\n" + "|                                           Author: Nik                                        |" + "\n" + "|                                                                                              |" + "\n" + "+----------------------------------------------------------------------------------------------+" + "\n");
         get().addDefault("prefix", "&f&l[&cCombat+&f&l]&f: ");
         get().addDefault("no_perm", "&cYou do not have permission to do that!");
