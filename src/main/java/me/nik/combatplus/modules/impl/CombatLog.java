@@ -8,10 +8,13 @@ import me.nik.combatplus.utils.TaskUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Egg;
+import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -117,6 +120,8 @@ public class CombatLog extends Module {
         Player player = null;
 
         if (damager instanceof Projectile) {
+
+            if (damager instanceof EnderPearl || damager instanceof Snowball || damager instanceof Egg) return;
 
             if (((Projectile) damager).getShooter() instanceof Player && Config.Setting.COMBATLOG_PROJECTILES.getBoolean()) {
 
