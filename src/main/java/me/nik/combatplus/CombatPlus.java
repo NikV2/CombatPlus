@@ -1,8 +1,8 @@
 package me.nik.combatplus;
 
 import me.nik.combatplus.api.CombatPlusAPI;
+import me.nik.combatplus.api.CombatPlusAPIBackend;
 import me.nik.combatplus.api.CombatPlusAPIProvider;
-import me.nik.combatplus.api.events.CombatPlusAPIBackend;
 import me.nik.combatplus.api.events.CombatPlusLoadEvent;
 import me.nik.combatplus.commands.CommandManager;
 import me.nik.combatplus.files.Config;

@@ -1,7 +1,6 @@
-package me.nik.combatplus.api.events;
+package me.nik.combatplus.api;
 
 import me.nik.combatplus.CombatPlus;
-import me.nik.combatplus.api.CombatPlusAPI;
 import me.nik.combatplus.modules.impl.CombatLog;
 
 import java.util.UUID;
