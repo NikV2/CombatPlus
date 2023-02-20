@@ -42,7 +42,7 @@ public class CombatLog extends Module {
 
             if (player == null) {
 
-                this.taggedPlayers.remove(uuid);
+                unTagPlayer(uuid);
 
                 return;
             }
@@ -64,7 +64,7 @@ public class CombatLog extends Module {
 
         if (secondsLeft < 1L) {
 
-            this.taggedPlayers.remove(uuid);
+            unTagPlayer(uuid);
 
             return 0L;
         }
@@ -84,7 +84,10 @@ public class CombatLog extends Module {
         return "Ready";
     }
 
-    private void tagPlayer(Player player) {
+    public void tagPlayer(UUID uuid) {
+
+        Player player = Bukkit.getPlayer(uuid);
+
         if (Config.Setting.COMBATLOG_DISABLED_WORLDS.getStringList().stream().anyMatch(world -> world.equals(player.getWorld().getName()))
                 || (!Config.Setting.DISABLE_BYPASS_PERMISSIONS.getBoolean()
                 && player.hasPermission(Permissions.BYPASS_COMBATLOG.getPermission()))) return;
@@ -105,6 +108,10 @@ public class CombatLog extends Module {
         this.taggedPlayers.put(player.getUniqueId(), System.currentTimeMillis());
 
         debug(player, "&6Tagged");
+    }
+
+    public void unTagPlayer(UUID uuid) {
+        this.taggedPlayers.remove(uuid);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -142,9 +149,9 @@ public class CombatLog extends Module {
 
         if (player == null) return;
 
-        tagPlayer(player);
+        tagPlayer(player.getUniqueId());
 
-        if (target instanceof Player) tagPlayer((Player) target);
+        if (target instanceof Player) tagPlayer(target.getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

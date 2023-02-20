@@ -1,5 +1,8 @@
 package me.nik.combatplus;
 
+import me.nik.combatplus.api.CombatPlusAPI;
+import me.nik.combatplus.api.CombatPlusAPIProvider;
+import me.nik.combatplus.api.events.CombatPlusAPIBackend;
 import me.nik.combatplus.api.events.CombatPlusLoadEvent;
 import me.nik.combatplus.commands.CommandManager;
 import me.nik.combatplus.files.Config;
@@ -45,6 +48,8 @@ public final class CombatPlus extends JavaPlugin {
 
     private final List<Module> modules = new ArrayList<>();
 
+    private static CombatPlusAPI api;
+
     public static CombatPlus getInstance() {
         return instance;
     }
@@ -79,10 +84,20 @@ public final class CombatPlus extends JavaPlugin {
         instance = null;
     }
 
+    public static CombatPlusAPI getApi() {
+        return api;
+    }
+
+    public Module getModule(Class<? extends Module> clazz) {
+        return this.modules.stream().filter(module -> module.getClass().equals(clazz)).findFirst().orElse(null);
+    }
+
     @Override
     public void onEnable() {
 
         instance = this;
+
+        CombatPlusAPIProvider.register(api = new CombatPlusAPIBackend(this));
 
         //Load Files
         this.config.setup();
@@ -136,10 +151,6 @@ public final class CombatPlus extends JavaPlugin {
         }
 
         Bukkit.getPluginManager().callEvent(new CombatPlusLoadEvent());
-    }
-
-    public Module getModule(Class<? extends Module> clazz) {
-        return this.modules.stream().filter(module -> module.getClass().equals(clazz)).findFirst().orElse(null);
     }
 
     public CommentedFileConfiguration getConfiguration() {
