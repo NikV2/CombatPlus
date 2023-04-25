@@ -27,7 +27,6 @@ import me.nik.combatplus.modules.impl.EnderpearlCooldown;
 import me.nik.combatplus.modules.impl.FishingRodKnockback;
 import me.nik.combatplus.modules.impl.GoldenAppleCooldown;
 import me.nik.combatplus.modules.impl.HealthBar;
-import me.nik.combatplus.modules.impl.HideToolFlags;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -128,7 +127,6 @@ public final class CombatPlus extends JavaPlugin {
                 new CombatLog(),
                 new DisableBowBoost(),
                 new Blocking(),
-                new HideToolFlags(),
                 new CustomPlayerKnockback()
         ));
 
