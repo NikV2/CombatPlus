@@ -6,7 +6,7 @@
 
     <groupId>me.nik</groupId>
     <artifactId>CombatPlus</artifactId>
-    <version>1.6.7</version>
+    <version>1.6.8</version>
     <packaging>jar</packaging>
 
     <name>CombatPlus</name>

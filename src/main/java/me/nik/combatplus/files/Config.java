@@ -130,8 +130,6 @@ public class Config {
         DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_DIAMOND_HOE("damage_modifiers.custom_tool_damages.tools.DIAMOND_HOE", 0),
         DAMAGE_MODIFIERS_CUSTOM_TOOL_DAMAGES_TOOLS_NETHERITE_HOE("damage_modifiers.custom_tool_damages.tools.NETHERITE_HOE", 0),
 
-        HIDE_TOOL_FLAGS("hide_tool_flags", true, "Would you like to hide the item flags shown on tools indicating their damage and attack speed?"),
-
         DISABLE_ARROW_BOOST("disable_arrow_boost", false, "Would you like to prevent players from boosting themselves by using Arrows?"),
 
         CUSTOM_PLAYER_KNOCKBACK("custom_player_knockback", "", "Custom player knockback properties"),

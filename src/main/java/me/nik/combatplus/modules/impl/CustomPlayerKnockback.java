@@ -2,6 +2,7 @@ package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.utils.MathUtils;
 import me.nik.combatplus.utils.ServerUtils;
 import me.nik.combatplus.utils.custom.ExpiringMap;
 import org.bukkit.Location;
@@ -63,7 +64,7 @@ public class CustomPlayerKnockback extends Module {
 
         Vector newVelocity = player.getVelocity();
 
-        double magnitude = Math.sqrt(directionX * directionX + directionZ * directionZ);
+        double magnitude = MathUtils.sqrt(directionX * directionX + directionZ * directionZ);
 
         //Calculate the velocity values just like the server, and also apply the custom friction.
         double velocityX = (newVelocity.getX() / Config.Setting.CUSTOM_PLAYER_KNOCKBACK_FRICTION.getDouble())
@@ -96,10 +97,10 @@ public class CustomPlayerKnockback extends Module {
                 float damagerYaw = damagerLocation.getYaw();
 
                 //Calculate additional velocity just like the server.
-                double additionalX = (-Math.sin(damagerYaw * 3.1415927F / 180.0F)
+                double additionalX = (-MathUtils.sin(damagerYaw * 3.1415927F / 180.0F)
                         * (float) knockbackMultiplier * Config.Setting.CUSTOM_PLAYER_KNOCKBACK_EXTRA_HORIZONTAL.getDouble());
 
-                double additionalZ = Math.cos(damagerYaw * 3.1415927F / 180.0F) *
+                double additionalZ = MathUtils.cos(damagerYaw * 3.1415927F / 180.0F) *
                         (float) knockbackMultiplier * Config.Setting.CUSTOM_PLAYER_KNOCKBACK_EXTRA_HORIZONTAL.getDouble();
 
                 newVelocity.setX(newVelocity.getX() + additionalX);
