@@ -3,7 +3,9 @@ package me.nik.combatplus.managers;
 import me.nik.combatplus.CombatPlus;
 import me.nik.combatplus.utils.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -35,32 +37,38 @@ public class UpdateChecker extends BukkitRunnable implements Listener {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-            final String line = reader.readLine();
+            this.newVersion = reader.readLine();
 
             reader.close();
 
-            this.newVersion = line;
-
         } catch (IOException e) {
-            plugin.getLogger().warning("Couldn't check for updates, Is the server connected to the internet?");
+            ChatUtils.log("Couldn't check for updates, Is the server connected to the internet?");
             return;
         }
 
-        if (!plugin.getDescription().getVersion().equals(newVersion)) {
-            ChatUtils.consoleMessage(MsgType.UPDATE_REMINDER.getMessage()
-                    .replace("%current%", plugin.getDescription().getVersion())
-                    .replace("%new%", newVersion));
+        if (!this.plugin.getDescription().getVersion().equals(this.newVersion)) {
 
-            Bukkit.getPluginManager().registerEvents(this, plugin);
-        } else ChatUtils.consoleMessage(MsgType.CONSOLE_UPDATE_NOT_FOUND.getMessage());
+            Bukkit.getServer().getConsoleSender().sendMessage(
+                    MsgType.UPDATE_REMINDER.getMessage()
+                            .replace("%current%", this.plugin.getDescription().getVersion())
+                            .replace("%new%", this.newVersion)
+            );
+
+            Bukkit.getPluginManager().registerEvents(this, this.plugin);
+
+        } else Bukkit.getServer().getConsoleSender().sendMessage(MsgType.CONSOLE_UPDATE_NOT_FOUND.getMessage());
     }
 
-    @EventHandler
-    public void onJoin(final PlayerJoinEvent e) {
-        if (!e.getPlayer().hasPermission(Permissions.ADMIN.getPermission())) return;
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onJoin(PlayerJoinEvent e) {
 
-        e.getPlayer().sendMessage(MsgType.UPDATE_REMINDER.getMessage()
-                .replace("%current%", plugin.getDescription().getVersion())
-                .replace("%new%", newVersion));
+        Player player = e.getPlayer();
+
+        if (player.hasPermission(Permissions.ADMIN.getPermission())) {
+
+            player.sendMessage(MsgType.UPDATE_REMINDER.getMessage()
+                    .replace("%current%", this.plugin.getDescription().getVersion())
+                    .replace("%new%", this.newVersion));
+        }
     }
 }
