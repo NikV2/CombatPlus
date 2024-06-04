@@ -2,6 +2,7 @@ package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.custom.ExpiringMap;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,7 +13,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -45,8 +45,8 @@ public class Blocking extends Module {
             return;
 
         player.addPotionEffects(Arrays.asList(
-                new PotionEffect(PotionEffectType.getByName(Config.Setting.SWORD_BLOCKING_EFFECT.getString()), Config.Setting.SWORD_BLOCKING_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_AMPLIFIER.getInt()),
-                new PotionEffect(PotionEffectType.SLOW, Config.Setting.SWORD_BLOCKING_SLOW_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_SLOW_AMPLIFIER.getInt())
+                new PotionEffect(MiscUtils.RESISTANCE, Config.Setting.SWORD_BLOCKING_RESISTANCE_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_RESISTANCE_LEVEL.getInt()),
+                new PotionEffect(MiscUtils.SLOWNESS, Config.Setting.SWORD_BLOCKING_SLOWNESS_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_SLOWNESS_LEVEL.getInt())
         ));
 
         final UUID uuid = player.getUniqueId();
@@ -64,7 +64,7 @@ public class Blocking extends Module {
 
         UUID uuid = e.getDamager().getUniqueId();
 
-        long secondsLeft = ((this.blocking.get(uuid) / 100L) + Config.Setting.SWORD_BLOCKING_DURATION_TICKS.getInt()) - (System.currentTimeMillis() / 100L);
+        long secondsLeft = ((this.blocking.get(uuid) / 100L) + Config.Setting.SWORD_BLOCKING_RESISTANCE_DURATION_TICKS.getInt()) - (System.currentTimeMillis() / 100L);
 
         if (secondsLeft > 0L) {
 

@@ -150,11 +150,10 @@ public class Config {
         SWORD_BLOCKING("sword_blocking", "", "Sword blocking properties"),
         SWORD_BLOCKING_ENABLED("sword_blocking.enabled", true, "Would you like players to get a Resistance and a Slowness Effect if they hold Right Click?"),
         SWORD_BLOCKING_IGNORE_SHIELDS("sword_blocking.ignore_shields", true, "Should we ignore it if the player is holding a shield on his offhand?"),
-        SWORD_BLOCKING_EFFECT("sword_blocking.effect", "DAMAGE_RESISTANCE", "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html"),
-        SWORD_BLOCKING_DURATION_TICKS("sword_blocking.duration_ticks", 8, "The duration in ticks (20 ticks = 1 second)"),
-        SWORD_BLOCKING_AMPLIFIER("sword_blocking.amplifier", 0, "The effect amplifier"),
-        SWORD_BLOCKING_SLOW_DURATION_TICKS("sword_blocking.slow_duration_ticks", 8, "The slow duration in ticks (20 ticks = 1 second)"),
-        SWORD_BLOCKING_SLOW_AMPLIFIER("sword_blocking.slow_amplifier", 2, "The slow amplifier"),
+        SWORD_BLOCKING_RESISTANCE_DURATION_TICKS("sword_blocking.resistance_duration_ticks", 8, "The resistance duration in ticks (20 ticks = 1 second)"),
+        SWORD_BLOCKING_RESISTANCE_LEVEL("sword_blocking.resistance_level", 0, "The resistance level"),
+        SWORD_BLOCKING_SLOWNESS_DURATION_TICKS("sword_blocking.slowness_duration_ticks", 8, "The slowness duration in ticks (20 ticks = 1 second)"),
+        SWORD_BLOCKING_SLOWNESS_LEVEL("sword_blocking.slowness_level", 2, "The slowness level"),
 
         COOLDOWNS("cooldowns", "", "Cooldowns properties"),
 
@@ -181,7 +180,7 @@ public class Config {
         FISHING_ROD_DAMAGE("fishing_rod_knockback.damage", 0.01, "The knockback damage to be applied"),
         FISHING_ROD_CANCEL_DRAG("fishing_rod_knockback.cancel_dragging", true, "Should we disable the Fishing Rod dragging?"),
 
-        DISABLE_OFFHAND("disable_offhand", true, "Would you like to completely disable the use of the player's offhand?"),
+        DISABLE_OFFHAND("disable_offhand", false, "Would you like to completely disable the use of the player's offhand?"),
 
         HEALTHBAR("healthbar", "", "Healthbar Properties"),
         HEALTHBAR_ENABLED("healthbar.enabled", true, "Would you like Combat Plus to send an Actionbar message to the Attacker indicating the Target's Health and Damage Dealt?"),

@@ -2,10 +2,10 @@ package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class FishingRodKnockback extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onRodLand(ProjectileHitEvent e) {
-        if (e.getEntityType() != EntityType.FISHING_HOOK || !(e.getHitEntity() instanceof LivingEntity)) return;
+        if (e.getEntityType() != MiscUtils.FISHING_HOOK || !(e.getHitEntity() instanceof LivingEntity)) return;
 
         Entity target = e.getHitEntity();
 
@@ -74,6 +74,7 @@ public class FishingRodKnockback extends Module {
 
      Return a new EntityDamageByEntityEvent, Return if it's cancelled by a Protection Plugin
      */
+    @SuppressWarnings("removal")
     private EntityDamageEvent customEvent(Player rodder, Entity entity, double damage) {
         return new EntityDamageByEntityEvent(rodder, entity, EntityDamageEvent.DamageCause.PROJECTILE, damage);
     }

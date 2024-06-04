@@ -2,7 +2,7 @@ package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
-import org.bukkit.enchantments.Enchantment;
+import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -195,9 +195,9 @@ public class DamageModifiers extends Module {
 
                 double newDmg = damageDealt + modifiedDamage;
 
-                if (Config.Setting.DAMAGE_MODIFIERS_OLD_SHARPNESS.getBoolean() && item.containsEnchantment(Enchantment.DAMAGE_ALL)) {
+                if (Config.Setting.DAMAGE_MODIFIERS_OLD_SHARPNESS.getBoolean() && item.containsEnchantment(MiscUtils.SHARPNESS)) {
 
-                    double sharpLvl = item.getEnchantmentLevel(Enchantment.DAMAGE_ALL);
+                    double sharpLvl = item.getEnchantmentLevel(MiscUtils.SHARPNESS);
 
                     double oldSharpDmg = sharpLvl >= 1 ? 1 + (sharpLvl - 1) * 0.5 : 0; //1.9+
 
