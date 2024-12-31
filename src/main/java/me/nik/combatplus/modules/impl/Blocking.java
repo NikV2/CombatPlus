@@ -45,8 +45,14 @@ public class Blocking extends Module {
             return;
 
         player.addPotionEffects(Arrays.asList(
-                new PotionEffect(MiscUtils.RESISTANCE, Config.Setting.SWORD_BLOCKING_RESISTANCE_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_RESISTANCE_LEVEL.getInt()),
-                new PotionEffect(MiscUtils.SLOWNESS, Config.Setting.SWORD_BLOCKING_SLOWNESS_DURATION_TICKS.getInt(), Config.Setting.SWORD_BLOCKING_SLOWNESS_LEVEL.getInt())
+                new PotionEffect(MiscUtils.RESISTANCE,
+                        Config.Setting.SWORD_BLOCKING_RESISTANCE_DURATION_TICKS.getInt(),
+                        Config.Setting.SWORD_BLOCKING_RESISTANCE_LEVEL.getInt()
+                ),
+                new PotionEffect(MiscUtils.SLOWNESS,
+                        Config.Setting.SWORD_BLOCKING_SLOWNESS_DURATION_TICKS.getInt(),
+                        Config.Setting.SWORD_BLOCKING_SLOWNESS_LEVEL.getInt()
+                )
         ));
 
         final UUID uuid = player.getUniqueId();

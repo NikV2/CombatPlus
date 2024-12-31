@@ -21,6 +21,8 @@ public class HealthBar extends Module {
         super(Config.Setting.HEALTHBAR_ENABLED.getBoolean());
     }
 
+    private static final String HEALTHBAR = "&8>> &7|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| &8<<";
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCombat(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof LivingEntity)
@@ -51,7 +53,7 @@ public class HealthBar extends Module {
 
     private String getHealth(LivingEntity entity) {
         if (entity.getLastDamageCause() == null) {
-            return "&8>> &a|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| &8<<";
+            return HEALTHBAR;
         }
 
         final double health = entity.getHealth() - entity.getLastDamage();
@@ -61,7 +63,7 @@ public class HealthBar extends Module {
         final int currentPercent = (int) Math.round((health / onePercent));
 
         if (currentPercent <= 0) {
-            return "&8>> &7|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| &8<<";
+            return HEALTHBAR;
         }
 
         final int missingPercent = (100 - currentPercent);

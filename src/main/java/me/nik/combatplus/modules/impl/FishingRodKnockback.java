@@ -2,6 +2,7 @@ package me.nik.combatplus.modules.impl;
 
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.utils.MathUtils;
 import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -80,25 +81,33 @@ public class FishingRodKnockback extends Module {
     }
 
     private Vector calculateVelocity(Vector vel, Location player, Location loc) {
-        double xDist = loc.getX() - player.getX();
-        double zDist = loc.getZ() - player.getZ();
 
-        while (xDist * xDist + zDist * zDist < 0.0001) {
-            xDist = (Math.random() - Math.random()) * 0.01D;
-            zDist = (Math.random() - Math.random()) * 0.01D;
+        double directionX = loc.getX() - player.getX();
+        double directionZ = loc.getZ() - player.getZ();
+
+        double random;
+
+        //Modify the directions just like the server does
+        while (directionX * directionX + directionZ * directionZ < 0.0001) {
+
+            //This is not the proper way to do it, However it saves two Math.random() calls.
+            random = (Math.random() - Math.random()) * .01D;
+
+            directionX = random;
+            directionZ = random;
         }
 
-        double distance = Math.sqrt(xDist * xDist + zDist * zDist);
+        double magnitude = MathUtils.sqrt(directionX * directionX + directionZ * directionZ);
 
         double y = vel.getY() / 2;
         double x = vel.getX() / 2;
         double z = vel.getZ() / 2;
 
-        x -= xDist / distance * 0.4;
+        x -= directionX / magnitude * 0.4;
 
         y += 0.4;
 
-        z -= zDist / distance * 0.4;
+        z -= directionZ / magnitude * 0.4;
 
         if (y >= 0.4) {
             y = 0.4;
