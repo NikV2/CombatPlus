@@ -3,11 +3,11 @@ package me.nik.combatplus.modules.impl;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.MathUtils;
-import me.nik.combatplus.utils.ServerUtils;
+import me.nik.combatplus.utils.MiscUtils;
+import me.nik.combatplus.utils.ServerVersion;
 import me.nik.combatplus.utils.custom.ExpiringMap;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -110,9 +110,9 @@ public class CustomPlayerKnockback extends Module {
         }
 
         //Handle knockback resistance introduced in 1.16+
-        if (ServerUtils.isNetherUpdate()) {
+        if (ServerVersion.getVersion().isHigherThan(ServerVersion.v1_15_R1)) {
 
-            double knockbackResistance = player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getValue();
+            double knockbackResistance = player.getAttribute(MiscUtils.KNOCKBACK_RESISTANCE).getValue();
 
             if (knockbackResistance > 1D) {
                 newVelocity.setX(newVelocity.getX() * knockbackResistance);

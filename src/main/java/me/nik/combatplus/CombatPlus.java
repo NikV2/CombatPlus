@@ -27,9 +27,9 @@ import me.nik.combatplus.modules.impl.EnderpearlCooldown;
 import me.nik.combatplus.modules.impl.FishingRodKnockback;
 import me.nik.combatplus.modules.impl.GoldenAppleCooldown;
 import me.nik.combatplus.modules.impl.HealthBar;
+import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -66,8 +66,8 @@ public final class CombatPlus extends JavaPlugin {
 
         //Load Default Stats to avoid server damage
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(Config.Setting.CUSTOM_PLAYER_HEALTH_DEFAULT_MAX_HEALTH.getDouble());
-            player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(Config.Setting.CUSTOM_ATTACK_SPEED_DEFAULT_ATTACK_SPEED.getDouble());
+            player.getAttribute(MiscUtils.MAX_HEALTH).setBaseValue(Config.Setting.CUSTOM_PLAYER_HEALTH_DEFAULT_MAX_HEALTH.getDouble());
+            player.getAttribute(MiscUtils.ATTACK_SPEED).setBaseValue(Config.Setting.CUSTOM_ATTACK_SPEED_DEFAULT_ATTACK_SPEED.getDouble());
             player.saveData();
         });
 

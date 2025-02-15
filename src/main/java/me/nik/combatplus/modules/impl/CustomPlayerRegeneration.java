@@ -3,9 +3,9 @@ package me.nik.combatplus.modules.impl;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.MathUtils;
+import me.nik.combatplus.utils.MiscUtils;
 import me.nik.combatplus.utils.TaskUtils;
 import me.nik.combatplus.utils.custom.ExpiringMap;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,7 +55,7 @@ public class CustomPlayerRegeneration extends Module {
             return;
         }
 
-        double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        double maxHealth = player.getAttribute(MiscUtils.MAX_HEALTH).getValue();
 
         if (playerHealth < maxHealth) {
 

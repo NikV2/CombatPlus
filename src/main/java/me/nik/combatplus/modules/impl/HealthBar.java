@@ -3,9 +3,9 @@ package me.nik.combatplus.modules.impl;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
 import me.nik.combatplus.utils.ChatUtils;
+import me.nik.combatplus.utils.MiscUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -58,7 +58,7 @@ public class HealthBar extends Module {
 
         final double health = entity.getHealth() - entity.getLastDamage();
 
-        final double onePercent = (entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() / 100);
+        final double onePercent = (entity.getAttribute(MiscUtils.MAX_HEALTH).getValue() / 100);
 
         final int currentPercent = (int) Math.round((health / onePercent));
 

@@ -3,8 +3,8 @@ package me.nik.combatplus.modules.impl;
 import me.nik.combatplus.api.events.CombatPlusLoadEvent;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,7 +26,7 @@ public class CustomHealth extends Module {
 
         Player player = e.getPlayer();
 
-        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(Config.Setting.CUSTOM_PLAYER_HEALTH_DEFAULT_MAX_HEALTH.getDouble());
+        player.getAttribute(MiscUtils.MAX_HEALTH).setBaseValue(Config.Setting.CUSTOM_PLAYER_HEALTH_DEFAULT_MAX_HEALTH.getDouble());
 
         player.saveData();
     }
@@ -38,7 +38,7 @@ public class CustomHealth extends Module {
 
     private void setMaxHealth(Player player) {
 
-        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(Config.Setting.CUSTOM_PLAYER_HEALTH_HEALTH.getDouble());
+        player.getAttribute(MiscUtils.MAX_HEALTH).setBaseValue(Config.Setting.CUSTOM_PLAYER_HEALTH_HEALTH.getDouble());
 
         player.saveData();
     }

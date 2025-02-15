@@ -3,8 +3,8 @@ package me.nik.combatplus.modules.impl;
 import me.nik.combatplus.api.events.CombatPlusLoadEvent;
 import me.nik.combatplus.files.Config;
 import me.nik.combatplus.modules.Module;
+import me.nik.combatplus.utils.MiscUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +30,7 @@ public class CustomAttackSpeed extends Module {
         Player player = e.getPlayer();
 
         //Reset to default attack speed to avoid issues.
-        player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(Config.Setting.CUSTOM_ATTACK_SPEED_DEFAULT_ATTACK_SPEED.getDouble());
+        player.getAttribute(MiscUtils.ATTACK_SPEED).setBaseValue(Config.Setting.CUSTOM_ATTACK_SPEED_DEFAULT_ATTACK_SPEED.getDouble());
         player.saveData();
     }
 
@@ -46,7 +46,7 @@ public class CustomAttackSpeed extends Module {
 
     private void setAttackSpeed(Player player) {
 
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        AttributeInstance attribute = player.getAttribute(MiscUtils.ATTACK_SPEED);
 
         if (attribute == null) return;
 
