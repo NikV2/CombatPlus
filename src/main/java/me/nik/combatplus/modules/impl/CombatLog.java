@@ -203,8 +203,6 @@ public class CombatLog extends Module {
 
             player.setGliding(false);
 
-            e.setTo(e.getFrom());
-
             debug(player, "&6Cancelled: &aElytra usage");
         }
     }
