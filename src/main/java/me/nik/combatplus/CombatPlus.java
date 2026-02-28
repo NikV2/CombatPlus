@@ -41,9 +41,6 @@ public final class CombatPlus extends JavaPlugin {
 
     private static CombatPlus instance;
 
-    //Folia
-    private boolean folia;
-
     private final Config config = new Config(this);
 
     private final Lang lang = new Lang();
@@ -99,13 +96,6 @@ public final class CombatPlus extends JavaPlugin {
 
         instance = this;
 
-        //Folia
-        try {
-            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
-            folia = true;
-        } catch (ClassNotFoundException ignored) {
-        }
-
         CombatPlusAPIProvider.register(api = new CombatPlusAPIBackend(this));
 
         //Load Files
@@ -159,10 +149,6 @@ public final class CombatPlus extends JavaPlugin {
         }
 
         Bukkit.getPluginManager().callEvent(new CombatPlusLoadEvent());
-    }
-
-    public boolean isFolia() {
-        return folia;
     }
 
     public CommentedFileConfiguration getConfiguration() {

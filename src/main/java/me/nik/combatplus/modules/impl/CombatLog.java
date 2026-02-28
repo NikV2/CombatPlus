@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -188,6 +189,23 @@ public class CombatLog extends Module {
 
         if (Config.Setting.COMBATLOG_BROADCAST.getBoolean()) {
             Bukkit.broadcastMessage(MsgType.COMBATLOG_BROADCAST.getMessage().replace("%player%", player.getName()));
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onMove(PlayerMoveEvent e) {
+        if (!Config.Setting.COMBATLOG_DISABLE_ELYTRA.getBoolean() || !this.taggedPlayers.containsKey(e.getPlayer().getUniqueId()))
+            return;
+
+        Player player = e.getPlayer();
+
+        if (player.isGliding()) {
+
+            player.setGliding(false);
+
+            e.setTo(e.getFrom());
+
+            debug(player, "&6Cancelled: &aElytra usage");
         }
     }
 

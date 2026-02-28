@@ -195,6 +195,7 @@ public class Config {
         COMBATLOG_ACTIONBAR("combatlog.actionbar", true, "Should Combat Plus send an Actionbar message to the player?"),
         COMBATLOG_BROADCAST("combatlog.broadcast", true, "Should Combat Plus broadcast when a player dies due to logging out when tagged?"),
         COMBATLOG_DISABLE_FLY("combatlog.disable_fly", true, "Should we disable the tagged player's flight?"),
+        COMBATLOG_DISABLE_ELYTRA("combatlog.disable_elytra", true, "Should we disable the tagged player's elytra flight?"),
         COMBATLOG_PREVENT_TELEPORTATIONS("combatlog.prevent_teleportations", true, "Should we prevent tagged players from Teleporting?"),
         COMBATLOG_PREVENT_DROPPING_ITEMS("combatlog.prevent_dropping_items", true, "Should we prevent tagged players from Dropping Items?"),
         COMBATLOG_PREVENT_PICKING_ITEMS("combatlog.prevent_picking_items", true, "Should we prevent tagged players from Picking Up Items?"),
