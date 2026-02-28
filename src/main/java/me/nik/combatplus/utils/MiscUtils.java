@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 
+@SuppressWarnings("all")
 public final class MiscUtils {
 
     //We need to do something similar to this in order for this module to work on pre 1.13

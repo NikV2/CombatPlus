@@ -4,6 +4,13 @@ import org.bukkit.Bukkit;
 
 public enum ServerVersion {
     LATEST(Integer.MAX_VALUE),
+    v1_21_11(35),
+    v1_21_10(34),
+    v1_21_8(33),
+    v1_21_7(32),
+    v1_21_6(31),
+    v1_21_5(30),
+    v1_21_4(29),
     v1_21_3(28),
     v1_21(27),
     v1_20_6(26),
