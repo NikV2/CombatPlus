@@ -152,7 +152,9 @@ public class CombatLog extends Module {
 
         tagPlayer(player.getUniqueId());
 
-        if (target instanceof Player) tagPlayer(target.getUniqueId());
+        if (target instanceof Player) {
+            tagPlayer(target.getUniqueId());
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

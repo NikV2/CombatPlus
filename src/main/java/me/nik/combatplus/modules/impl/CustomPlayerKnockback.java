@@ -23,6 +23,7 @@ import org.bukkit.util.Vector;
 import java.util.UUID;
 
 public class CustomPlayerKnockback extends Module {
+
     private final ExpiringMap<UUID, Vector> knockbackQueue = new ExpiringMap<>(1000L);
 
     public CustomPlayerKnockback() {
@@ -84,7 +85,7 @@ public class CustomPlayerKnockback extends Module {
 
         if (damagerEquipment != null) {
 
-            ItemStack damagerHandItem = damagerEquipment.getItemInMainHand();
+            ItemStack damagerHandItem = damagerEquipment.getItemInHand();
 
             int knockbackMultiplier = damagerHandItem != null && damagerHandItem.getType() != Material.AIR
                     ? damagerHandItem.getEnchantmentLevel(Enchantment.KNOCKBACK)

@@ -20,7 +20,6 @@ import org.bukkit.util.Vector;
 
 public class FishingRodKnockback extends Module {
 
-
     public FishingRodKnockback() {
         super(Config.Setting.FISHING_ROD_ENABLED.getBoolean());
     }
